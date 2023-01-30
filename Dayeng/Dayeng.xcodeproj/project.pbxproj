@@ -13,6 +13,14 @@
 		76280CEE29878A3F0061206A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76280CEC29878A3F0061206A /* Main.storyboard */; };
 		76280CF029878A410061206A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76280CEF29878A410061206A /* Assets.xcassets */; };
 		76280CF329878A410061206A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76280CF129878A410061206A /* LaunchScreen.storyboard */; };
+		76280CFC29878B8C0061206A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 76280CFB29878B8C0061206A /* SnapKit */; };
+		76280CFF29878BAE0061206A /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 76280CFE29878BAE0061206A /* RxCocoa */; };
+		76280D0129878BAE0061206A /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 76280D0029878BAE0061206A /* RxRelay */; };
+		76280D0329878BAE0061206A /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 76280D0229878BAE0061206A /* RxSwift */; };
+		76280D0629878C870061206A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 76280D0529878C870061206A /* FirebaseAuth */; };
+		76280D0829878C870061206A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 76280D0729878C870061206A /* FirebaseFirestore */; };
+		76280D0A29878C870061206A /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 76280D0929878C870061206A /* FirebaseFirestoreSwift */; };
+		76280D0C29878C870061206A /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 76280D0B29878C870061206A /* FirebaseMessaging */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +39,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76280D0C29878C870061206A /* FirebaseMessaging in Frameworks */,
+				76280D0129878BAE0061206A /* RxRelay in Frameworks */,
+				76280D0629878C870061206A /* FirebaseAuth in Frameworks */,
+				76280CFF29878BAE0061206A /* RxCocoa in Frameworks */,
+				76280D0A29878C870061206A /* FirebaseFirestoreSwift in Frameworks */,
+				76280D0329878BAE0061206A /* RxSwift in Frameworks */,
+				76280CFC29878B8C0061206A /* SnapKit in Frameworks */,
+				76280D0829878C870061206A /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,12 +93,23 @@
 				76280CDF29878A3F0061206A /* Sources */,
 				76280CE029878A3F0061206A /* Frameworks */,
 				76280CE129878A3F0061206A /* Resources */,
+				76280D0D29878CC90061206A /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = Dayeng;
+			packageProductDependencies = (
+				76280CFB29878B8C0061206A /* SnapKit */,
+				76280CFE29878BAE0061206A /* RxCocoa */,
+				76280D0029878BAE0061206A /* RxRelay */,
+				76280D0229878BAE0061206A /* RxSwift */,
+				76280D0529878C870061206A /* FirebaseAuth */,
+				76280D0729878C870061206A /* FirebaseFirestore */,
+				76280D0929878C870061206A /* FirebaseFirestoreSwift */,
+				76280D0B29878C870061206A /* FirebaseMessaging */,
+			);
 			productName = Dayeng;
 			productReference = 76280CE329878A3F0061206A /* Dayeng.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +138,11 @@
 				Base,
 			);
 			mainGroup = 76280CDA29878A3F0061206A;
+			packageReferences = (
+				76280CFA29878B8C0061206A /* XCRemoteSwiftPackageReference "SnapKit" */,
+				76280CFD29878BAE0061206A /* XCRemoteSwiftPackageReference "RxSwift" */,
+				76280D0429878C870061206A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 76280CE429878A3F0061206A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -132,6 +164,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		76280D0D29878CC90061206A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		76280CDF29878A3F0061206A /* Sources */ = {
@@ -358,6 +410,76 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		76280CFA29878B8C0061206A /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		76280CFD29878BAE0061206A /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		76280D0429878C870061206A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		76280CFB29878B8C0061206A /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 76280CFA29878B8C0061206A /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		76280CFE29878BAE0061206A /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 76280CFD29878BAE0061206A /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		76280D0029878BAE0061206A /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 76280CFD29878BAE0061206A /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		76280D0229878BAE0061206A /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 76280CFD29878BAE0061206A /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		76280D0529878C870061206A /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 76280D0429878C870061206A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		76280D0729878C870061206A /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 76280D0429878C870061206A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		76280D0929878C870061206A /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 76280D0429878C870061206A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
+		76280D0B29878C870061206A /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 76280D0429878C870061206A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 76280CDB29878A3F0061206A /* Project object */;
 }
