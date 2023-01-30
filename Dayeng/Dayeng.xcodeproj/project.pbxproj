@@ -74,6 +74,7 @@
 				76280D1729878E4E0061206A /* App */,
 				76280D0E29878DF50061206A /* Data */,
 				76280D1129878E280061206A /* Domain */,
+				76280D182987918E0061206A /* Presentation */,
 				76280D1429878E380061206A /* Util */,
 			);
 			path = Dayeng;
@@ -98,6 +99,7 @@
 		76280D1029878E230061206A /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				76280D212987925D0061206A /* Protocol */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -114,6 +116,11 @@
 		76280D1229878E2B0061206A /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				76280D29298792A00061206A /* Auth */,
+				76280D272987929A0061206A /* Main */,
+				76280D25298792900061206A /* Calendar */,
+				76280D23298792850061206A /* Friend */,
+				76280D22298792680061206A /* Setting */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -158,6 +165,143 @@
 				76280CF429878A410061206A /* Info.plist */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		76280D182987918E0061206A /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				76280D19298791BF0061206A /* Common */,
+				76280D1A298791C60061206A /* Auth */,
+				76280D1B298791CD0061206A /* Main */,
+				76280D1C298791D10061206A /* Calendar */,
+				76280D1D298791DD0061206A /* Friend */,
+				76280D1E298791E40061206A /* Setting */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		76280D19298791BF0061206A /* Common */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		76280D1A298791C60061206A /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		76280D1B298791CD0061206A /* Main */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		76280D1C298791D10061206A /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		76280D1D298791DD0061206A /* Friend */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Friend;
+			sourceTree = "<group>";
+		};
+		76280D1E298791E40061206A /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		76280D1F2987922C0061206A /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		76280D212987925D0061206A /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		76280D22298792680061206A /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				76280D1F2987922C0061206A /* Protocol */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		76280D23298792850061206A /* Friend */ = {
+			isa = PBXGroup;
+			children = (
+				76280D242987928B0061206A /* Protocol */,
+			);
+			path = Friend;
+			sourceTree = "<group>";
+		};
+		76280D242987928B0061206A /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		76280D25298792900061206A /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				76280D26298792940061206A /* Protocol */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		76280D26298792940061206A /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		76280D272987929A0061206A /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				76280D282987929C0061206A /* Protocol */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		76280D282987929C0061206A /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		76280D29298792A00061206A /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				76280D2A298792A20061206A /* Protocol */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		76280D2A298792A20061206A /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Protocol;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
