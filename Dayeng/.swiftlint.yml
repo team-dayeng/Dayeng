@@ -3,5 +3,5 @@ disabled_rules:
 - large_tuple
 - function_body_length
 excluded:
-- Dayeng/AppDelegate.swift
-- Dayeng/SceneDelegate.swift
+- Dayeng/App/AppDelegate.swift
+- Dayeng/App/SceneDelegate.swift
