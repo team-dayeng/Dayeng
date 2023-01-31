@@ -22,6 +22,8 @@
 		76280D0C29878C870061206A /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 76280D0B29878C870061206A /* FirebaseMessaging */; };
 		76280D2D29879F770061206A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 76280D2C29879F770061206A /* Lottie */; };
 		76280D2F2987A7B50061206A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76280D2E2987A7B50061206A /* GoogleService-Info.plist */; };
+		E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */; };
+		E5D4342E2988E22F004EDFC7 /* Dayeng-Book.json in Resources */ = {isa = PBXBuildFile; fileRef = E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +35,8 @@
 		76280CF229878A410061206A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		76280CF429878A410061206A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		76280D2E2987A7B50061206A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Dayeng-Book.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +143,7 @@
 		76280D1429878E380061206A /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				E5D434012988D416004EDFC7 /* Etc */,
 				76280D1629878E460061206A /* Service */,
 				76280D1529878E410061206A /* Extension */,
 			);
@@ -166,7 +171,6 @@
 				76280CE629878A3F0061206A /* AppDelegate.swift */,
 				76280CE829878A3F0061206A /* SceneDelegate.swift */,
 				76280CEF29878A410061206A /* Assets.xcassets */,
-				76280CF129878A410061206A /* LaunchScreen.storyboard */,
 				76280CF429878A410061206A /* Info.plist */,
 			);
 			path = App;
@@ -175,6 +179,7 @@
 		76280D182987918E0061206A /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				E5D433FC2988CD9F004EDFC7 /* Splash */,
 				76280D19298791BF0061206A /* Common */,
 				76280D1A298791C60061206A /* Auth */,
 				76280D1B298791CD0061206A /* Main */,
@@ -309,6 +314,23 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		E5D433FC2988CD9F004EDFC7 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				76280CF129878A410061206A /* LaunchScreen.storyboard */,
+				E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
+		E5D434012988D416004EDFC7 /* Etc */ = {
+			isa = PBXGroup;
+			children = (
+				E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */,
+			);
+			path = Etc;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -386,6 +408,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				76280CF329878A410061206A /* LaunchScreen.storyboard in Resources */,
+				E5D4342E2988E22F004EDFC7 /* Dayeng-Book.json in Resources */,
 				76280CF029878A410061206A /* Assets.xcassets in Resources */,
 				76280D2F2987A7B50061206A /* GoogleService-Info.plist in Resources */,
 			);
@@ -421,6 +444,7 @@
 				76280CEB29878A3F0061206A /* ViewController.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
 				76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */,
+				E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
