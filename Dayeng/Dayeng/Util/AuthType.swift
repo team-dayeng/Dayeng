@@ -11,7 +11,7 @@ enum AuthType {
     case apple
     case kakao
     
-    var logoImageName: UIImage? {
+    var logoImage: UIImage? {
         switch self {
         case .apple: return UIImage(systemName: "applelogo")
         case .kakao: return UIImage(named: "Kakao")
