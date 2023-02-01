@@ -22,6 +22,9 @@ class LoginViewController: UIViewController {
         return imageView
     }()
     
+    private var appleLoginButton = AuthButton(type: .apple)
+    private var kakaoLoginButton = AuthButton(type: .kakao)
+    
     // MARK: - Properties
     
     // MARK: - Lifecycles
@@ -35,14 +38,26 @@ class LoginViewController: UIViewController {
     private func configureUI() {
         view.addSubview(backgroundImage)
         view.addSubview(logoImage)
+        view.addSubview(appleLoginButton)
+        view.addSubview(kakaoLoginButton)
         backgroundImage.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         logoImage.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(60)
+            $0.leading.trailing.equalToSuperview().inset(50)
             $0.centerX.equalToSuperview()
             $0.centerY.equalToSuperview().offset(-130)
             $0.height.equalTo(150)
+        }
+        appleLoginButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(130)
+            $0.leading.trailing.equalToSuperview().inset(60)
+            $0.height.equalTo(45)
+        }
+        kakaoLoginButton.snp.makeConstraints {
+            $0.top.equalTo(appleLoginButton.snp.bottom).offset(15)
+            $0.centerX.height.leading.trailing.equalTo(appleLoginButton)
         }
     }
 }
