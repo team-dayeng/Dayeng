@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		47D18359298A86F10058C0EC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18358298A86F10058C0EC /* LoginViewController.swift */; };
+		47D1835F298A94790058C0EC /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D1835E298A94790058C0EC /* UIColor+.swift */; };
 		76280CE729878A3F0061206A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE629878A3F0061206A /* AppDelegate.swift */; };
 		76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE829878A3F0061206A /* SceneDelegate.swift */; };
 		76280CEB29878A3F0061206A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CEA29878A3F0061206A /* ViewController.swift */; };
@@ -29,6 +30,7 @@
 
 /* Begin PBXFileReference section */
 		47D18358298A86F10058C0EC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		47D1835E298A94790058C0EC /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		76280CE329878A3F0061206A /* Dayeng.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dayeng.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76280CE629878A3F0061206A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		76280CE829878A3F0061206A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 		76280D1529878E410061206A /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				47D1835E298A94790058C0EC /* UIColor+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				76280CEB29878A3F0061206A /* ViewController.swift in Sources */,
+				47D1835F298A94790058C0EC /* UIColor+.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
 				76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */,
 				47D18359298A86F10058C0EC /* LoginViewController.swift in Sources */,
