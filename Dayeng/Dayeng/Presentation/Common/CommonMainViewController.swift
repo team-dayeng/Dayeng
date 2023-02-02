@@ -32,6 +32,13 @@ class CommonMainViewController: UIViewController {
         label.numberOfLines = 0
         return label
     }()
+    lazy var koreanQuestionLabel = {
+        var label: UILabel = UILabel()
+        label.font = UIFont(name: "Chalkboard SE", size: 15)
+        label.textColor = .gray
+        label.text = "어디에 살고 싶나요?"
+        return label
+    }()
     
     lazy var answerLabel = {
         var label: UILabel = UILabel()
@@ -50,7 +57,14 @@ class CommonMainViewController: UIViewController {
     }
     // MARK: - Helpers
     private func setupViews() {
-        [backgroundImage, dateLabel, questionLabel, answerLabel].forEach { view.addSubview($0) }
+        [backgroundImage,
+         dateLabel,
+         questionLabel,
+         koreanQuestionLabel,
+         answerLabel
+        ].forEach {
+            view.addSubview($0)
+        }
     }
     private func configureUI() {
         navigationItem.titleView = UIImageView(image: UIImage(named: "LogoImage"))
@@ -69,8 +83,13 @@ class CommonMainViewController: UIViewController {
             $0.left.right.equalTo(dateLabel)
         }
         
+        koreanQuestionLabel.snp.makeConstraints {
+            $0.top.equalTo(questionLabel.snp.bottom).offset(0)
+            $0.left.right.equalTo(dateLabel)
+        }
+        
         answerLabel.snp.makeConstraints {
-            $0.top.equalTo(dateLabel.snp.bottom).offset(80)
+            $0.top.equalTo(koreanQuestionLabel.snp.bottom).offset(40)
             $0.left.equalTo(dateLabel)
         }
     }
