@@ -12,19 +12,10 @@ final class CommonCalendarViewController: UIViewController {
     // MARK: - UI properties
     private var collectionView: UICollectionView!
     
-    private lazy var backgroundImage: UIImageView = {
-        var imageView: UIImageView = UIImageView()
-        imageView.image = UIImage(named: "paperBackground")
-        
-        return imageView
-    }()
-    
     // MARK: - Properties
-    private let owner: OwnerType
     
     // MARK: - Lifecycles
-    init(owner: OwnerType) {
-        self.owner = owner
+    init() {
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -37,61 +28,23 @@ final class CommonCalendarViewController: UIViewController {
         
         view.backgroundColor = .white
         
-        setupViews()
-        configureUI()
-    }
-    
-    // MARK: - Helpers
-    private func setupViews() {
-        view.addSubview(backgroundImage)
-    }
-    
-    private func configureUI() {
-        view.backgroundColor = .white
-        
-        backgroundImage.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(-50)
-            $0.top.bottom.equalToSuperview().inset(-100)
-        }
-        
-        configureNavigationBar()
         configureCollectionView()
     }
     
-    private func configureNavigationBar() {
-        var title = "달력"
-        
-        if owner == .friend {
-            title = "userName님의 달력"
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "house"),
-                                                                       style: .plain,
-                                                                       target: self,
-                                                                       action: #selector(rightBarButtonDidTapped))
-        }
-        
-        self.navigationItem.title = title
-        self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont.systemFont(ofSize: 20,
-                                                                                                 weight: .bold),
-                                                                        .foregroundColor: UIColor.black]
-        self.navigationController?.navigationBar.tintColor = .black
-        self.navigationController?.navigationBar.topItem?.title = ""
-    }
-    
+    // MARK: - Helpers
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.contentInsetAdjustmentBehavior = .never
-        collectionView.backgroundColor = .clear
-        collectionView.isScrollEnabled = false
+        collectionView.backgroundColor = .white
         
         collectionView.register(CommonCalendarCell.self, forCellWithReuseIdentifier: CommonCalendarCell.identifier)
         
         view.addSubview(collectionView)
         
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(30)
+            $0.top.equalToSuperview().inset(30)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview().inset(view.frame.height/3)
         }
@@ -121,10 +74,6 @@ final class CommonCalendarViewController: UIViewController {
         
         return UICollectionViewCompositionalLayout(section: section)
     }
-    
-    @objc private func rightBarButtonDidTapped() {
-        // 자신의 화면으로 돌아가기
-    }
 }
 
 extension CommonCalendarViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -143,10 +92,5 @@ extension CommonCalendarViewController: UICollectionViewDelegate, UICollectionVi
         cell.configureNumberLabel(number: indexPath.row + 1)
         
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //싱글톤에서 알맞은 질문과 대답을 찾은 후, 뷰전환
-        print(indexPath.row + 1)
     }
 }
