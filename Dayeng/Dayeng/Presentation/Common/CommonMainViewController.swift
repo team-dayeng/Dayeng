@@ -45,12 +45,15 @@ class CommonMainViewController: UIViewController {
     // MARK: - Lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupViews()
         configureUI()
     }
     // MARK: - Helpers
+    private func setupViews() {
+        [backgroundImage, dateLabel, questionLabel, answerLabel].forEach { view.addSubview($0) }
+    }
     private func configureUI() {
         navigationItem.titleView = UIImageView(image: UIImage(named: "LogoImage"))
-        [backgroundImage, dateLabel, questionLabel, answerLabel].forEach { view.addSubview($0) }
         
         backgroundImage.snp.makeConstraints {
             $0.edges.equalToSuperview()
