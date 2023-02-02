@@ -40,6 +40,13 @@ class CommonMainViewController: UIViewController {
         return label
     }()
     
+    lazy var answerBackground = {
+        var view: UIView = UIView()
+        view.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        view.layer.cornerRadius = 20
+        return view
+    }()
+    
     lazy var answerLabel = {
         var label: UILabel = UILabel()
         label.font = UIFont(name: "HoeflerText-Regular", size: 17)
@@ -61,6 +68,7 @@ class CommonMainViewController: UIViewController {
          dateLabel,
          questionLabel,
          koreanQuestionLabel,
+         answerBackground,
          answerLabel
         ].forEach {
             view.addSubview($0)
@@ -68,6 +76,7 @@ class CommonMainViewController: UIViewController {
     }
     private func configureUI() {
         navigationItem.titleView = UIImageView(image: UIImage(named: "LogoImage"))
+        navigationController?.navigationBar.tintColor = .black
         
         backgroundImage.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -86,6 +95,12 @@ class CommonMainViewController: UIViewController {
         koreanQuestionLabel.snp.makeConstraints {
             $0.top.equalTo(questionLabel.snp.bottom).offset(0)
             $0.left.right.equalTo(dateLabel)
+        }
+        
+        answerBackground.snp.makeConstraints {
+            $0.left.right.equalToSuperview().inset(20)
+            $0.top.equalTo(koreanQuestionLabel.snp.bottom).offset(30)
+            $0.bottom.equalTo(view.snp.centerY).offset(30)
         }
         
         answerLabel.snp.makeConstraints {
