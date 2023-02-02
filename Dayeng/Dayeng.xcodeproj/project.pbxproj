@@ -22,22 +22,8 @@
 		76280D0C29878C870061206A /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 76280D0B29878C870061206A /* FirebaseMessaging */; };
 		76280D2D29879F770061206A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 76280D2C29879F770061206A /* Lottie */; };
 		76280D2F2987A7B50061206A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76280D2E2987A7B50061206A /* GoogleService-Info.plist */; };
-		768D40AF2987E7C70017E328 /* File1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768D40AE2987E7C70017E328 /* File1.swift */; };
-		768D40B12987E7CC0017E328 /* File2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768D40B02987E7CC0017E328 /* File2.swift */; };
-		768D40B32987E7CF0017E328 /* File3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768D40B22987E7CF0017E328 /* File3.swift */; };
-		768D40B52987E7D30017E328 /* File4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768D40B42987E7D30017E328 /* File4.swift */; };
-		768D40B72987E7D70017E328 /* File5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768D40B62987E7D70017E328 /* File5.swift */; };
-		768D40B92987E7DA0017E328 /* File6.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768D40B82987E7DA0017E328 /* File6.swift */; };
-		768D40BB2987E7DD0017E328 /* File7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768D40BA2987E7DD0017E328 /* File7.swift */; };
-		768D40BD2987E7E20017E328 /* File8.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768D40BC2987E7E20017E328 /* File8.swift */; };
-		768D40BF2987E7E60017E328 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768D40BE2987E7E60017E328 /* MainViewController.swift */; };
-		768D40C12987E7E90017E328 /* File9.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768D40C02987E7E90017E328 /* File9.swift */; };
-		768D40C32987E7EC0017E328 /* File10.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768D40C22987E7EC0017E328 /* File10.swift */; };
-		768D40C52987E7EF0017E328 /* File11.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768D40C42987E7EF0017E328 /* File11.swift */; };
-		768D40C72987E7F10017E328 /* File12.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768D40C62987E7F10017E328 /* File12.swift */; };
-		768D40C92987E7F50017E328 /* File13.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768D40C82987E7F40017E328 /* File13.swift */; };
+		768D40BF2987E7E60017E328 /* CommonMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768D40BE2987E7E60017E328 /* CommonMainViewController.swift */; };
 		768D40CB2987E7F70017E328 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768D40CA2987E7F70017E328 /* Date+.swift */; };
-		768D40CD2987E7FA0017E328 /* File14.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768D40CC2987E7FA0017E328 /* File14.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,22 +35,8 @@
 		76280CF229878A410061206A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		76280CF429878A410061206A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		76280D2E2987A7B50061206A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		768D40AE2987E7C70017E328 /* File1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File1.swift; sourceTree = "<group>"; };
-		768D40B02987E7CC0017E328 /* File2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File2.swift; sourceTree = "<group>"; };
-		768D40B22987E7CF0017E328 /* File3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File3.swift; sourceTree = "<group>"; };
-		768D40B42987E7D30017E328 /* File4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File4.swift; sourceTree = "<group>"; };
-		768D40B62987E7D70017E328 /* File5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File5.swift; sourceTree = "<group>"; };
-		768D40B82987E7DA0017E328 /* File6.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File6.swift; sourceTree = "<group>"; };
-		768D40BA2987E7DD0017E328 /* File7.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File7.swift; sourceTree = "<group>"; };
-		768D40BC2987E7E20017E328 /* File8.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File8.swift; sourceTree = "<group>"; };
-		768D40BE2987E7E60017E328 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		768D40C02987E7E90017E328 /* File9.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File9.swift; sourceTree = "<group>"; };
-		768D40C22987E7EC0017E328 /* File10.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File10.swift; sourceTree = "<group>"; };
-		768D40C42987E7EF0017E328 /* File11.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File11.swift; sourceTree = "<group>"; };
-		768D40C62987E7F10017E328 /* File12.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File12.swift; sourceTree = "<group>"; };
-		768D40C82987E7F40017E328 /* File13.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File13.swift; sourceTree = "<group>"; };
+		768D40BE2987E7E60017E328 /* CommonMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMainViewController.swift; sourceTree = "<group>"; };
 		768D40CA2987E7F70017E328 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
-		768D40CC2987E7FA0017E328 /* File14.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File14.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,7 +100,6 @@
 		76280D0F29878E200061206A /* DTO */ = {
 			isa = PBXGroup;
 			children = (
-				768D40AE2987E7C70017E328 /* File1.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -165,7 +136,6 @@
 		76280D1329878E340061206A /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				768D40BC2987E7E20017E328 /* File8.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -190,7 +160,6 @@
 		76280D1629878E460061206A /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				768D40CC2987E7FA0017E328 /* File14.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -224,7 +193,7 @@
 		76280D19298791BF0061206A /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				768D40BE2987E7E60017E328 /* MainViewController.swift */,
+				768D40BE2987E7E60017E328 /* CommonMainViewController.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -232,7 +201,6 @@
 		76280D1A298791C60061206A /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				768D40C02987E7E90017E328 /* File9.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -240,7 +208,6 @@
 		76280D1B298791CD0061206A /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				768D40C22987E7EC0017E328 /* File10.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -248,7 +215,6 @@
 		76280D1C298791D10061206A /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
-				768D40C42987E7EF0017E328 /* File11.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -256,7 +222,6 @@
 		76280D1D298791DD0061206A /* Friend */ = {
 			isa = PBXGroup;
 			children = (
-				768D40C62987E7F10017E328 /* File12.swift */,
 			);
 			path = Friend;
 			sourceTree = "<group>";
@@ -264,7 +229,6 @@
 		76280D1E298791E40061206A /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				768D40C82987E7F40017E328 /* File13.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -272,7 +236,6 @@
 		76280D1F2987922C0061206A /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
-				768D40BA2987E7DD0017E328 /* File7.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -280,7 +243,6 @@
 		76280D212987925D0061206A /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
-				768D40B02987E7CC0017E328 /* File2.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -304,7 +266,6 @@
 		76280D242987928B0061206A /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
-				768D40B82987E7DA0017E328 /* File6.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -320,7 +281,6 @@
 		76280D26298792940061206A /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
-				768D40B62987E7D70017E328 /* File5.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -336,7 +296,6 @@
 		76280D282987929C0061206A /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
-				768D40B42987E7D30017E328 /* File4.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -352,7 +311,6 @@
 		76280D2A298792A20061206A /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
-				768D40B22987E7CF0017E328 /* File3.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -466,24 +424,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				768D40B12987E7CC0017E328 /* File2.swift in Sources */,
-				768D40BF2987E7E60017E328 /* MainViewController.swift in Sources */,
-				768D40B32987E7CF0017E328 /* File3.swift in Sources */,
-				768D40B52987E7D30017E328 /* File4.swift in Sources */,
+				768D40BF2987E7E60017E328 /* CommonMainViewController.swift in Sources */,
 				76280CEB29878A3F0061206A /* ViewController.swift in Sources */,
-				768D40C72987E7F10017E328 /* File12.swift in Sources */,
-				768D40AF2987E7C70017E328 /* File1.swift in Sources */,
 				768D40CB2987E7F70017E328 /* Date+.swift in Sources */,
-				768D40BB2987E7DD0017E328 /* File7.swift in Sources */,
-				768D40B72987E7D70017E328 /* File5.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
-				768D40C32987E7EC0017E328 /* File10.swift in Sources */,
-				768D40C92987E7F50017E328 /* File13.swift in Sources */,
-				768D40C52987E7EF0017E328 /* File11.swift in Sources */,
-				768D40B92987E7DA0017E328 /* File6.swift in Sources */,
-				768D40C12987E7E90017E328 /* File9.swift in Sources */,
-				768D40BD2987E7E20017E328 /* File8.swift in Sources */,
-				768D40CD2987E7FA0017E328 /* File14.swift in Sources */,
 				76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
