@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		47D1836C298D40940058C0EC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D1836B298D40940058C0EC /* User.swift */; };
 		76280CE729878A3F0061206A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE629878A3F0061206A /* AppDelegate.swift */; };
 		76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE829878A3F0061206A /* SceneDelegate.swift */; };
 		76280CEB29878A3F0061206A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CEA29878A3F0061206A /* ViewController.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		47D1836B298D40940058C0EC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		76280CE329878A3F0061206A /* Dayeng.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dayeng.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76280CE629878A3F0061206A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		76280CE829878A3F0061206A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 		76280D1329878E340061206A /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				47D1836B298D40940058C0EC /* User.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -463,6 +466,7 @@
 			files = (
 				76280CEB29878A3F0061206A /* ViewController.swift in Sources */,
 				E552C1F2298B911F00F51179 /* OwnerType.swift in Sources */,
+				47D1836C298D40940058C0EC /* User.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
 				76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */,
 				E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */,
