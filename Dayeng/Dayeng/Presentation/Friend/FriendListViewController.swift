@@ -148,9 +148,9 @@ extension FriendListViewController {
 extension FriendListViewController {
     
     private func bind() {
-        let input = FriendListViewModel.Input()
         let input = FriendListViewModel.Input(
             plusButtonDidTapped: plusButton.rx.tap.asObservable(),
+            friendIndexDidTapped: collectionView.rx.itemSelected.asObservable().map{ $0.row }
         )
         let output = viewModel.transform(input: input)
         

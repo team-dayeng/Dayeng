@@ -14,8 +14,8 @@ final class FriendListViewModel {
     
     // MARK: - Input
     struct Input {
-        
         var plusButtonDidTapped: Observable<Void>
+        var friendIndexDidTapped: Observable<Int>
     }
     
     // MARK: - Output
@@ -32,9 +32,6 @@ final class FriendListViewModel {
         let output = Output()
         
         #warning("dummy")
-        output.friends.onNext([User(uid: "옹이"),
-                               User(uid: "멍이"),
-                               User(uid: "남석12!")])
         let friends = [User(uid: "옹이"),
                        User(uid: "멍이"),
                        User(uid: "남석12!")]
@@ -43,6 +40,13 @@ final class FriendListViewModel {
         input.plusButtonDidTapped
             .subscribe(onNext: {
                 print("plusButtonDidTapped")
+                // TODO: 화면 전환
+            })
+            .disposed(by: disposeBag)
+        
+        input.friendIndexDidTapped
+            .subscribe(onNext: {
+                print("friendIndexDidTapped, \(friends[$0])")
                 // TODO: 화면 전환
             })
             .disposed(by: disposeBag)
