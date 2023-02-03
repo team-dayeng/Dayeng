@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import RxSwift
+import RxCocoa
 
 final class FriendListViewController: UIViewController {
     
@@ -148,6 +149,9 @@ extension FriendListViewController {
     
     private func bind() {
         let input = FriendListViewModel.Input()
+        let input = FriendListViewModel.Input(
+            plusButtonDidTapped: plusButton.rx.tap.asObservable(),
+        )
         let output = viewModel.transform(input: input)
         
         output.friends

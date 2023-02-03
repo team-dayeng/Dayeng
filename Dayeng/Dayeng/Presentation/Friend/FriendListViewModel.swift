@@ -9,9 +9,13 @@ import Foundation
 import RxSwift
 
 final class FriendListViewModel {
+    
+    private var disposeBag = DisposeBag()
+    
     // MARK: - Input
     struct Input {
         
+        var plusButtonDidTapped: Observable<Void>
     }
     
     // MARK: - Output
@@ -31,6 +35,17 @@ final class FriendListViewModel {
         output.friends.onNext([User(uid: "옹이"),
                                User(uid: "멍이"),
                                User(uid: "남석12!")])
+        let friends = [User(uid: "옹이"),
+                       User(uid: "멍이"),
+                       User(uid: "남석12!")]
+        output.friends.onNext(friends)
+        
+        input.plusButtonDidTapped
+            .subscribe(onNext: {
+                print("plusButtonDidTapped")
+                // TODO: 화면 전환
+            })
+            .disposed(by: disposeBag)
         
         return output
     }
