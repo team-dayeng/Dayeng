@@ -29,6 +29,11 @@ final class AuthButton: UIButton {
         self.layer.borderWidth = 0.5
         self.imageView?.contentMode = .scaleAspectFit
         
+        self.layer.shadowOpacity = 1.0
+        self.layer.shadowColor = UIColor.gray.cgColor
+        self.layer.shadowOffset = CGSize.zero
+        self.layer.shadowRadius = 2
+        
         if #available(iOS 15.0, *) {
             var config = UIButton.Configuration.filled()
             config.baseBackgroundColor = type.backgroundColor

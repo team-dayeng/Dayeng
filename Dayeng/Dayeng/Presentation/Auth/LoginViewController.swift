@@ -23,10 +23,17 @@ final class LoginViewController: UIViewController {
         imageView.image = UIImage(named: "LogoImage")
         return imageView
     }()
-    private var appleLoginButton = ASAuthorizationAppleIDButton(
-        type: .signIn,
-        style: .whiteOutline
-    )
+    private var appleLoginButton: ASAuthorizationAppleIDButton = {
+        var button = ASAuthorizationAppleIDButton(
+            type: .signIn,
+            style: .whiteOutline
+        )
+        button.layer.shadowOpacity = 1.0
+        button.layer.shadowColor = UIColor.gray.cgColor
+        button.layer.shadowOffset = CGSize.zero
+        button.layer.shadowRadius = 2
+        return button
+    }()
     private var kakaoLoginButton = AuthButton(type: .kakao)
     
     // MARK: - Properties
