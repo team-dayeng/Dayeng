@@ -18,21 +18,21 @@ class CommonMainViewController: UIViewController {
         return imageView
     }()
     
-    lazy var dateLabel = {
+    lazy var dateLabel: UILabel = {
         var label: UILabel = UILabel()
         label.font = UIFont(name: "HoeflerText-Regular", size: 14)
         label.text = Date().convertToString(format: "yyyy.MM.dd.E")
         return label
     }()
     
-    lazy var questionLabel = {
+    lazy var questionLabel: UILabel = {
         var label: UILabel = UILabel()
         label.font = UIFont(name: "HoeflerText-Black", size: 21)
         label.text = "Q1. where do you want to live? where do you want to live  "
         label.numberOfLines = 0
         return label
     }()
-    lazy var koreanQuestionLabel = {
+    lazy var koreanQuestionLabel: UILabel = {
         var label: UILabel = UILabel()
         label.font = UIFont(name: "Chalkboard SE", size: 15)
         label.textColor = .gray
