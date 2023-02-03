@@ -82,7 +82,7 @@ class MainViewController: CommonMainViewController {
     }
     
     private func configureUI() {
-        answerBackground.isHidden = answerLabel.text?.count == 0
+        answerBackground.isHidden = answerLabel.text?.count != 0
         
         let answerTapGesture = UITapGestureRecognizer()
         answerLabel.addGestureRecognizer(answerTapGesture)
