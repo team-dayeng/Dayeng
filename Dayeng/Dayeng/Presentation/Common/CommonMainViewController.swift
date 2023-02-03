@@ -18,7 +18,7 @@ class CommonMainViewController: UIViewController {
         return imageView
     }()
     
-    private lazy var dateLabel = {
+    lazy var dateLabel = {
         var label: UILabel = UILabel()
         label.font = UIFont(name: "HoeflerText-Regular", size: 14)
         label.text = Date().convertToString(format: "yyyy.MM.dd.E")
@@ -105,7 +105,7 @@ class CommonMainViewController: UIViewController {
         
         answerLabel.snp.makeConstraints {
             $0.top.equalTo(koreanQuestionLabel.snp.bottom).offset(40)
-            $0.left.equalTo(dateLabel)
+            $0.left.right.equalTo(dateLabel)
         }
     }
 }
