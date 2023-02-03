@@ -40,17 +40,21 @@ class CommonMainViewController: UIViewController {
         return label
     }()
     
-    lazy var answerBackground = {
-        var view: UIView = UIView()
-        view.backgroundColor = UIColor(white: 1, alpha: 0.5)
-        view.layer.cornerRadius = 20
-        return view
+    lazy var answerBackground: UITextView = {
+        var label: UITextView = UITextView()
+        label.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        label.layer.cornerRadius = 20
+        label.font = UIFont(name: "HoeflerText-Regular", size: 21)
+        label.text = " A1."
+        label.textColor = .lightGray
+        label.isEditable = false
+        return label
     }()
     
-    lazy var answerLabel = {
+    lazy var answerLabel: UILabel = {
         var label: UILabel = UILabel()
         label.font = UIFont(name: "HoeflerText-Regular", size: 17)
-        label.text = "I want to live han river view house"
+        label.text = ""
         return label
     }()
     
