@@ -30,17 +30,17 @@ final class LoginViewController: UIViewController {
     private var kakaoLoginButton = AuthButton(type: .kakao)
     
     // MARK: - Properties
-    private let viewModel: LoginViewModel
+//    private let viewModel: LoginViewModel
     
     // MARK: - Lifecycles
-    init(viewModel: LoginViewModel) {
-        self.viewModel = viewModel
-        super.init()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+//    init(viewModel: LoginViewModel) {
+//        self.viewModel = viewModel
+//        super.init()
+//    }
+//
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,7 +87,6 @@ final class LoginViewController: UIViewController {
 
 extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     
-    @objc func appleLoginButtonDidTap() {
     private func setupAppleLogin() {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()

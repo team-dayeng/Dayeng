@@ -38,7 +38,6 @@
 		47D1835C298A92C10058C0EC /* AuthType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthType.swift; sourceTree = "<group>"; };
 		47D1835E298A94790058C0EC /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		47D18360298B8D750058C0EC /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
-		47D18362298CF1D30058C0EC /* Dayeng.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dayeng.entitlements; sourceTree = "<group>"; };
 		47D18363298D0EDC0058C0EC /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		76280CE329878A3F0061206A /* Dayeng.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dayeng.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76280CE629878A3F0061206A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -91,7 +90,6 @@
 		76280CE529878A3F0061206A /* Dayeng */ = {
 			isa = PBXGroup;
 			children = (
-				47D18362298CF1D30058C0EC /* Dayeng.entitlements */,
 				76280CEA29878A3F0061206A /* ViewController.swift */,
 				76280D1729878E4E0061206A /* App */,
 				76280D0E29878DF50061206A /* Data */,
@@ -607,7 +605,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Dayeng/Dayeng.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WW8WYM6B54;
@@ -636,7 +633,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Dayeng/Dayeng.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WW8WYM6B54;
