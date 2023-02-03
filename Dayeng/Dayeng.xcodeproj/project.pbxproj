@@ -22,9 +22,11 @@
 		76280D0C29878C870061206A /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 76280D0B29878C870061206A /* FirebaseMessaging */; };
 		76280D2D29879F770061206A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 76280D2C29879F770061206A /* Lottie */; };
 		76280D2F2987A7B50061206A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76280D2E2987A7B50061206A /* GoogleService-Info.plist */; };
+		7628E67C298D9D31002D86F2 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E67B298D9D31002D86F2 /* AddFriendViewController.swift */; };
+		7628E67E298DA61D002D86F2 /* AcceptFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E67D298DA61D002D86F2 /* AcceptFriendViewController.swift */; };
+		E552C1F2298B911F00F51179 /* OwnerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C1F1298B911F00F51179 /* OwnerType.swift */; };
 		E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */; };
 		E5D4342E2988E22F004EDFC7 /* Dayeng-Book.json in Resources */ = {isa = PBXBuildFile; fileRef = E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */; };
-		E552C1F2298B911F00F51179 /* OwnerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C1F1298B911F00F51179 /* OwnerType.swift */; };
 		E5D43435298A3291004EDFC7 /* CommonCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43434298A3291004EDFC7 /* CommonCalendarViewController.swift */; };
 		E5D43437298A3905004EDFC7 /* CommonCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43436298A3905004EDFC7 /* CommonCalendarCell.swift */; };
 		E5D43439298A4892004EDFC7 /* NSTextAttachment+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43438298A4892004EDFC7 /* NSTextAttachment+.swift */; };
@@ -39,9 +41,11 @@
 		76280CF229878A410061206A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		76280CF429878A410061206A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		76280D2E2987A7B50061206A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7628E67B298D9D31002D86F2 /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
+		7628E67D298DA61D002D86F2 /* AcceptFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptFriendViewController.swift; sourceTree = "<group>"; };
+		E552C1F1298B911F00F51179 /* OwnerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerType.swift; sourceTree = "<group>"; };
 		E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Dayeng-Book.json"; sourceTree = "<group>"; };
-		E552C1F1298B911F00F51179 /* OwnerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerType.swift; sourceTree = "<group>"; };
 		E5D43434298A3291004EDFC7 /* CommonCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonCalendarViewController.swift; sourceTree = "<group>"; };
 		E5D43436298A3905004EDFC7 /* CommonCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonCalendarCell.swift; sourceTree = "<group>"; };
 		E5D43438298A4892004EDFC7 /* NSTextAttachment+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextAttachment+.swift"; sourceTree = "<group>"; };
@@ -233,6 +237,8 @@
 		76280D1D298791DD0061206A /* Friend */ = {
 			isa = PBXGroup;
 			children = (
+				7628E67B298D9D31002D86F2 /* AddFriendViewController.swift */,
+				7628E67D298DA61D002D86F2 /* AcceptFriendViewController.swift */,
 			);
 			path = Friend;
 			sourceTree = "<group>";
@@ -326,6 +332,14 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		E52CF84B298A59C700829661 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				E552C1F1298B911F00F51179 /* OwnerType.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
 		E5D433FC2988CD9F004EDFC7 /* Splash */ = {
 			isa = PBXGroup;
 			children = (
@@ -341,14 +355,6 @@
 				E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */,
 			);
 			path = Etc;
-			sourceTree = "<group>";
-		};
-		E52CF84B298A59C700829661 /* Enums */ = {
-			isa = PBXGroup;
-			children = (
-				E552C1F1298B911F00F51179 /* OwnerType.swift */,
-			);
-			path = Enums;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -464,8 +470,10 @@
 				76280CEB29878A3F0061206A /* ViewController.swift in Sources */,
 				E552C1F2298B911F00F51179 /* OwnerType.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
+				7628E67C298D9D31002D86F2 /* AddFriendViewController.swift in Sources */,
 				76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */,
 				E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */,
+				7628E67E298DA61D002D86F2 /* AcceptFriendViewController.swift in Sources */,
 				E5D43435298A3291004EDFC7 /* CommonCalendarViewController.swift in Sources */,
 				E5D43439298A4892004EDFC7 /* NSTextAttachment+.swift in Sources */,
 				E5D43437298A3905004EDFC7 /* CommonCalendarCell.swift in Sources */,
