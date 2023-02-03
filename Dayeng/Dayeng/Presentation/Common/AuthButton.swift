@@ -24,14 +24,21 @@ class AuthButton: UIButton {
         self.backgroundColor = type.backgroundColor
         self.tintColor = .black
         self.setTitleColor(.black, for: .normal)
-        self.layer.cornerRadius = 5
+        self.layer.cornerRadius = 7
         self.layer.borderColor = UIColor.black.cgColor
-        self.layer.borderWidth = 1
+        self.layer.borderWidth = 0.5
+        self.imageView?.contentMode = .scaleAspectFit
         
-        self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
-        self.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
-        self.contentMode = .scaleToFill
-//        self.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-
+        if #available(iOS 15.0, *) {
+            var config = UIButton.Configuration.filled()
+            config.baseBackgroundColor = type.backgroundColor
+            config.baseForegroundColor = .black
+            config.imagePadding = 5
+            self.configuration = config
+        } else {
+            self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -5)
+            self.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 5)
+            self.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        }
     }
 }

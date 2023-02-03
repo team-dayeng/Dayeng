@@ -13,22 +13,22 @@ enum AuthType {
     
     var logoImage: UIImage? {
         switch self {
-        case .apple: return UIImage(systemName: "applelogo")
-        case .kakao: return UIImage(named: "Kakao")
+        case .apple: return UIImage(systemName: "applelogo")?.resized(scaledToWidth: 22)
+        case .kakao: return UIImage(named: "Kakao")?.resized(scaledToWidth: 12)
         }
     }
     
     var backgroundColor: UIColor {
         switch self {
         case .apple: return .white
-        case .kakao: return UIColor(red: 250, green: 230, blue: 77)
+        case .kakao: return UIColor(hexString: "FEE500")
         }
     }
     
     var loginMessage: String {
         switch self {
-        case .apple: return "Apple로 로그인"
-        case .kakao: return "KaKao로 로그인"
+        case .apple: return "Apple로 시작하기"
+        case .kakao: return "카카오로 시작하기"
         }
     }
 }

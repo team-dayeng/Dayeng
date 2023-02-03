@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AuthenticationServices
 
 class LoginViewController: UIViewController {
     
@@ -22,7 +23,11 @@ class LoginViewController: UIViewController {
         return imageView
     }()
     
-    private var appleLoginButton = AuthButton(type: .apple)
+//    private var appleLoginButton = AuthButton(type: .apple)
+    private var appleLoginButton = ASAuthorizationAppleIDButton(
+        type: .signIn,
+        style: .whiteOutline
+    )
     private var kakaoLoginButton = AuthButton(type: .kakao)
     
     // MARK: - Properties
