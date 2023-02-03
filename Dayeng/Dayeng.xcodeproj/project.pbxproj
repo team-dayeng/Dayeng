@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		47D18366298D16640058C0EC /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18365298D16640058C0EC /* FriendListViewController.swift */; };
+		47D18368298D16730058C0EC /* FriendListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18367298D16730058C0EC /* FriendListViewModel.swift */; };
 		47D1836A298D1A610058C0EC /* FriendListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18369298D1A610058C0EC /* FriendListCell.swift */; };
 		47D1836C298D40940058C0EC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D1836B298D40940058C0EC /* User.swift */; };
 		76280CE729878A3F0061206A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE629878A3F0061206A /* AppDelegate.swift */; };
@@ -33,6 +35,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		47D18365298D16640058C0EC /* FriendListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewController.swift; sourceTree = "<group>"; };
+		47D18367298D16730058C0EC /* FriendListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewModel.swift; sourceTree = "<group>"; };
 		47D18369298D1A610058C0EC /* FriendListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListCell.swift; sourceTree = "<group>"; };
 		47D1836B298D40940058C0EC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		76280CE329878A3F0061206A /* Dayeng.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dayeng.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -238,6 +242,8 @@
 		76280D1D298791DD0061206A /* Friend */ = {
 			isa = PBXGroup;
 			children = (
+				47D18365298D16640058C0EC /* FriendListViewController.swift */,
+				47D18367298D16730058C0EC /* FriendListViewModel.swift */,
 				47D18369298D1A610058C0EC /* FriendListCell.swift */,
 			);
 			path = Friend;
@@ -469,8 +475,10 @@
 			files = (
 				76280CEB29878A3F0061206A /* ViewController.swift in Sources */,
 				E552C1F2298B911F00F51179 /* OwnerType.swift in Sources */,
+				47D18366298D16640058C0EC /* FriendListViewController.swift in Sources */,
 				47D1836C298D40940058C0EC /* User.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
+				47D18368298D16730058C0EC /* FriendListViewModel.swift in Sources */,
 				76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */,
 				E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */,
 				E5D43435298A3291004EDFC7 /* CommonCalendarViewController.swift in Sources */,
