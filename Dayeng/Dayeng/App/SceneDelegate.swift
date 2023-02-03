@@ -29,7 +29,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 print("Apple ID 사용 중단")
                 // 로그인 페이지로 이동
                 DispatchQueue.main.async {
-                    self.window?.rootViewController = LoginViewController()
+                    self.window?.rootViewController = LoginViewController(
+                        viewModel: LoginViewModel()
+                    )
                     self.window?.makeKeyAndVisible()
                 }
             })
@@ -50,7 +52,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 // 해당 userID 값이 앱과 연결 취소되어 있거나 연결되어 있지 않으므로 로그인 UI를 표시
                 print("ID가 연동되어 있지 않거나 ID를 찾을 수 없음")
                 DispatchQueue.main.async {
-                    self.window?.rootViewController = LoginViewController()
+                    self.window?.rootViewController = LoginViewController(
+                        viewModel: LoginViewModel()
+                    )
                     self.window?.makeKeyAndVisible()
                 }
             default:

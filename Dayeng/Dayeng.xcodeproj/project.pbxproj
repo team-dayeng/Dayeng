@@ -12,6 +12,7 @@
 		47D1835D298A92C10058C0EC /* AuthType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D1835C298A92C10058C0EC /* AuthType.swift */; };
 		47D1835F298A94790058C0EC /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D1835E298A94790058C0EC /* UIColor+.swift */; };
 		47D18361298B8D760058C0EC /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18360298B8D750058C0EC /* UIImage+.swift */; };
+		47D18364298D0EDC0058C0EC /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18363298D0EDC0058C0EC /* LoginViewModel.swift */; };
 		76280CE729878A3F0061206A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE629878A3F0061206A /* AppDelegate.swift */; };
 		76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE829878A3F0061206A /* SceneDelegate.swift */; };
 		76280CEB29878A3F0061206A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CEA29878A3F0061206A /* ViewController.swift */; };
@@ -37,6 +38,8 @@
 		47D1835C298A92C10058C0EC /* AuthType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthType.swift; sourceTree = "<group>"; };
 		47D1835E298A94790058C0EC /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		47D18360298B8D750058C0EC /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
+		47D18362298CF1D30058C0EC /* Dayeng.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dayeng.entitlements; sourceTree = "<group>"; };
+		47D18363298D0EDC0058C0EC /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		76280CE329878A3F0061206A /* Dayeng.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dayeng.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76280CE629878A3F0061206A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		76280CE829878A3F0061206A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +91,7 @@
 		76280CE529878A3F0061206A /* Dayeng */ = {
 			isa = PBXGroup;
 			children = (
+				47D18362298CF1D30058C0EC /* Dayeng.entitlements */,
 				76280CEA29878A3F0061206A /* ViewController.swift */,
 				76280D1729878E4E0061206A /* App */,
 				76280D0E29878DF50061206A /* Data */,
@@ -215,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				47D18358298A86F10058C0EC /* LoginViewController.swift */,
+				47D18363298D0EDC0058C0EC /* LoginViewModel.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -464,6 +469,7 @@
 				76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */,
 				47D18361298B8D760058C0EC /* UIImage+.swift in Sources */,
 				47D18359298A86F10058C0EC /* LoginViewController.swift in Sources */,
+				47D18364298D0EDC0058C0EC /* LoginViewModel.swift in Sources */,
 				E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -601,9 +607,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Dayeng/Dayeng.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5R9YHBW9BJ;
+				DEVELOPMENT_TEAM = WW8WYM6B54;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Dayeng/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -629,9 +636,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Dayeng/Dayeng.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5R9YHBW9BJ;
+				DEVELOPMENT_TEAM = WW8WYM6B54;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Dayeng/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

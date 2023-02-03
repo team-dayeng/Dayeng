@@ -7,6 +7,7 @@
 
 import UIKit
 import AuthenticationServices
+import RxSwift
 
 @available(iOS 13.0, *)     // Apple 로그인은 iOS 13.0 버전 이후부터 지원
 class LoginViewController: UIViewController {
@@ -29,13 +30,24 @@ class LoginViewController: UIViewController {
     private var kakaoLoginButton = AuthButton(type: .kakao)
     
     // MARK: - Properties
+    private let viewModel: LoginViewModel
     
     // MARK: - Lifecycles
+    init(viewModel: LoginViewModel) {
+        self.viewModel = viewModel
+        super.init()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureUI()
         setup()
+        bind()
     }
     
     // MARK: - Helpers
@@ -66,16 +78,17 @@ class LoginViewController: UIViewController {
     }
     
     private func setup() {
-        appleLoginButton.addTarget(
-            self,
-            action: #selector(appleLoginButtonDidTap),
-            for: .touchUpInside)
+        setupAppleLogin()
+    }
+    private func bind() {
+        // TODO: rx delegate proxy
     }
 }
 
 extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     
     @objc func appleLoginButtonDidTap() {
+    private func setupAppleLogin() {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
         request.requestedScopes = [.fullName, .email]
