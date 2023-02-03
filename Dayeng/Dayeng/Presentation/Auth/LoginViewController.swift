@@ -10,7 +10,7 @@ import AuthenticationServices
 import RxSwift
 
 @available(iOS 13.0, *)     // Apple 로그인은 iOS 13.0 버전 이후부터 지원
-class LoginViewController: UIViewController {
+final class LoginViewController: UIViewController {
     
     // MARK: - UI properties
     private lazy var backgroundImage: UIImageView = {

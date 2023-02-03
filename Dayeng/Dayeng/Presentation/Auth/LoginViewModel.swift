@@ -10,7 +10,7 @@ import Foundation
 import AuthenticationServices
 import RxSwift
 
-class LoginViewModel {
+final class LoginViewModel {
     
     var disposeBag = DisposeBag()
     
