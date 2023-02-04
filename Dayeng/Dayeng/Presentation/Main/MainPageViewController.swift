@@ -49,6 +49,7 @@ class MainPageViewController: ViewController {
     
     // MARK: - Helpers
     private func setupNaviagationBar() {
+        navigationItem.titleView = UIImageView(image: UIImage(named: "LogoImage"))
         let calendarButton = UIBarButtonItem(image: UIImage(systemName: "calendar"),
                                              style: .plain,
                                              target: nil,
