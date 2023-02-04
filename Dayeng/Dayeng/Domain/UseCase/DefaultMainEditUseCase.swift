@@ -16,7 +16,7 @@ final class DefaultMainEditUseCase {
         var errorDescription: String? {
             switch self {
             case .notEnterInput:
-                return NSLocalizedString("plese enter your answer", comment: "")
+                return NSLocalizedString("데잉을 입력해주세요!", comment: "")
             }
         }
     }
