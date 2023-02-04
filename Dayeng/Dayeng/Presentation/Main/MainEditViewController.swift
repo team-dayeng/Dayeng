@@ -30,6 +30,11 @@ class MainEditViewController: CommonMainViewController {
     
     // MARK: - Properties
     var disposeBag = DisposeBag()
+    let viewModel = MainEditViewModel(
+        useCase: DefaultMainEditUseCase(
+            userRepository: DefaultUserRepository(
+                firestoreService: DefaultFirestoreDatabaseService())))
+    
     var submitButtonDidTapped: Observable<Void>!
     
     // MARK: - Lifecycles
@@ -39,6 +44,7 @@ class MainEditViewController: CommonMainViewController {
         setupNaviagationBar()
         setupViews()
         configureUI()
+        bind()
     }
     // MARK: - Helpers
     private func setupNaviagationBar() {
@@ -129,6 +135,25 @@ class MainEditViewController: CommonMainViewController {
                 
                 self.answerTextView.snp.updateConstraints {
                     $0.height.equalTo(self.answerTextView.sizeThatFits(textViewWidth).height)
+                }
+            }).disposed(by: disposeBag)
+    }
+    
+    private func bind() {
+        let output = viewModel.transform(
+            input: .init(
+                submitButtonTapped: submitButtonDidTapped,
+                answerText: answerTextView.rx.text.orEmpty.asObservable()
+            )
+        )
+        
+        output.submitResult
+            .subscribe(onNext: { [weak self] error in
+                guard let self else { return }
+                if let error {
+                    self.showAlert(title: "데잉 작성에 실패했습니다.", message: error.localizedDescription)
+                } else {
+                    self.navigationController?.popViewController(animated: true)
                 }
             }).disposed(by: disposeBag)
     }
