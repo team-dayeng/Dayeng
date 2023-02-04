@@ -57,6 +57,7 @@ class MainViewController: CommonMainViewController {
         configureUI()
         bind()
     }
+    
     // MARK: - Helpers
     private func setupNaviagationBar() {
         let calendarButton = UIBarButtonItem(image: UIImage(systemName: "calendar"),
@@ -104,6 +105,7 @@ class MainViewController: CommonMainViewController {
             $0.height.width.equalTo(50)
         }
     }
+    
     func bind() {
         backgroundDidTapped
             .subscribe(onNext: { [weak self] in
