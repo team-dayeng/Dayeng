@@ -8,6 +8,7 @@
 import UIKit
 import AuthenticationServices
 import RxSwift
+import RxCocoa
 
 @available(iOS 13.0, *)     // Apple 로그인은 iOS 13.0 버전 이후부터 지원
 final class LoginViewController: UIViewController {
@@ -18,22 +19,14 @@ final class LoginViewController: UIViewController {
         imageView.image = UIImage(named: "paperBackground")
         return imageView
     }()
+    
     private lazy var logoImage: UIImageView = {
         var imageView: UIImageView = UIImageView()
         imageView.image = UIImage(named: "LogoImage")
         return imageView
     }()
-    private var appleLoginButton: ASAuthorizationAppleIDButton = {
-        var button = ASAuthorizationAppleIDButton(
-            type: .signIn,
-            style: .whiteOutline
-        )
-        button.layer.shadowOpacity = 1.0
-        button.layer.shadowColor = UIColor.gray.cgColor
-        button.layer.shadowOffset = CGSize.zero
-        button.layer.shadowRadius = 2
-        return button
-    }()
+
+    private var appleLoginButton = AuthButton(type: .apple)
     private var kakaoLoginButton = AuthButton(type: .kakao)
     
     // MARK: - Properties
@@ -76,7 +69,7 @@ final class LoginViewController: UIViewController {
             $0.centerX.equalToSuperview()
             $0.centerY.equalToSuperview().offset(130)
             $0.leading.trailing.equalToSuperview().inset(60)
-            $0.height.equalTo(45)
+            $0.height.equalTo(50)
         }
         kakaoLoginButton.snp.makeConstraints {
             $0.top.equalTo(appleLoginButton.snp.bottom).offset(15)

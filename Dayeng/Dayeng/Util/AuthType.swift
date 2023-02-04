@@ -13,8 +13,8 @@ enum AuthType {
     
     var logoImage: UIImage? {
         switch self {
-        case .apple: return UIImage(systemName: "applelogo")?.resized(scaledToWidth: 22)
-        case .kakao: return UIImage(named: "Kakao")?.resized(scaledToWidth: 12)
+        case .apple: return UIImage(systemName: "applelogo")
+        case .kakao: return UIImage(named: "Kakao")
         }
     }
     

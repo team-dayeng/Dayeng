@@ -6,8 +6,12 @@
 //
 
 import UIKit
+import SnapKit
 
 final class AuthButton: UIButton {
+    
+    private var logoImageView: UIImageView!
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
     }
@@ -18,32 +22,32 @@ final class AuthButton: UIButton {
     
     init(type: AuthType) {
         super.init(frame: CGRect.zero)
+        configureUI(type)
+    }
+    
+    private func configureUI(_ type: AuthType) {
         
         self.setTitle(type.loginMessage, for: .normal)
-        self.setImage(type.logoImage, for: .normal)
-        self.backgroundColor = type.backgroundColor
-        self.tintColor = .black
         self.setTitleColor(.black, for: .normal)
+        self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
+        self.tintColor = .black
+        self.backgroundColor = type.backgroundColor
+        
         self.layer.cornerRadius = 7
         self.layer.borderColor = UIColor.black.cgColor
         self.layer.borderWidth = 0.5
-        self.imageView?.contentMode = .scaleAspectFit
-        
         self.layer.shadowOpacity = 1.0
         self.layer.shadowColor = UIColor.gray.cgColor
-        self.layer.shadowOffset = CGSize.zero
+        self.layer.shadowOffset = CGSize(width: 2, height: 2)
         self.layer.shadowRadius = 2
         
-        if #available(iOS 15.0, *) {
-            var config = UIButton.Configuration.filled()
-            config.baseBackgroundColor = type.backgroundColor
-            config.baseForegroundColor = .black
-            config.imagePadding = 5
-            self.configuration = config
-        } else {
-            self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -5)
-            self.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 5)
-            self.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        logoImageView = UIImageView(image: type.logoImage)
+        self.addSubview(logoImageView)
+        logoImageView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().offset(15)
+            $0.width.height.equalTo(18)
         }
+        logoImageView.contentMode = .scaleAspectFill
     }
 }
