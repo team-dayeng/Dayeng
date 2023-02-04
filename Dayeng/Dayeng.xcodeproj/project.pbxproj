@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		47549415298E4AE2008B581D /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47549414298E4AE2008B581D /* UIColor+.swift */; };
 		47549417298E4C16008B581D /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47549416298E4C16008B581D /* UIViewController+.swift */; };
+		47549419298E5A30008B581D /* AlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47549418298E5A30008B581D /* AlertType.swift */; };
 		47C38781298E390D0030833F /* DayengAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C38780298E390D0030833F /* DayengAlertViewController.swift */; };
 		76280CE729878A3F0061206A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE629878A3F0061206A /* AppDelegate.swift */; };
 		76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE829878A3F0061206A /* SceneDelegate.swift */; };
@@ -36,6 +37,7 @@
 /* Begin PBXFileReference section */
 		47549414298E4AE2008B581D /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		47549416298E4C16008B581D /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
+		47549418298E5A30008B581D /* AlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertType.swift; sourceTree = "<group>"; };
 		47C38780298E390D0030833F /* DayengAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayengAlertViewController.swift; sourceTree = "<group>"; };
 		76280CE329878A3F0061206A /* Dayeng.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dayeng.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76280CE629878A3F0061206A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -335,6 +337,14 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		E52CF84B298A59C700829661 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				47549418298E5A30008B581D /* AlertType.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
 		E5D433FC2988CD9F004EDFC7 /* Splash */ = {
 			isa = PBXGroup;
 			children = (
@@ -478,6 +488,7 @@
 				76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */,
 				E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */,
 				E5D43435298A3291004EDFC7 /* CommonCalendarViewController.swift in Sources */,
+				47549419298E5A30008B581D /* AlertType.swift in Sources */,
 				47549417298E4C16008B581D /* UIViewController+.swift in Sources */,
 				E5D43439298A4892004EDFC7 /* NSTextAttachment+.swift in Sources */,
 				E5D43437298A3905004EDFC7 /* CommonCalendarCell.swift in Sources */,
