@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		47549415298E4AE2008B581D /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47549414298E4AE2008B581D /* UIColor+.swift */; };
 		76280CE729878A3F0061206A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE629878A3F0061206A /* AppDelegate.swift */; };
 		76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE829878A3F0061206A /* SceneDelegate.swift */; };
 		76280CEB29878A3F0061206A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CEA29878A3F0061206A /* ViewController.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		47549414298E4AE2008B581D /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		76280CE329878A3F0061206A /* Dayeng.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dayeng.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76280CE629878A3F0061206A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		76280CE829878A3F0061206A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				E5D43438298A4892004EDFC7 /* NSTextAttachment+.swift */,
+				47549414298E4AE2008B581D /* UIColor+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -464,6 +467,7 @@
 				76280CEB29878A3F0061206A /* ViewController.swift in Sources */,
 				E552C1F2298B911F00F51179 /* OwnerType.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
+				47549415298E4AE2008B581D /* UIColor+.swift in Sources */,
 				76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */,
 				E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */,
 				E5D43435298A3291004EDFC7 /* CommonCalendarViewController.swift in Sources */,
