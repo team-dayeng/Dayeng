@@ -64,3 +64,55 @@ class MainPageViewController: ViewController {
         navigationItem.leftBarButtonItem = calendarButton
         navigationItem.rightBarButtonItem = resetButton
     }
+    
+    private func setupViews() {
+        addChild(pageViewController)
+        view.addSubview(pageViewController.view)
+        pageViewController.dataSource = self
+        pageViewController.delegate = self
+        pageViewController.setViewControllers([centerViewController],
+                                              direction: .forward,
+                                              animated: true)
+    }
+    
+    private func configureUI() {
+        pageViewController.view.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
+}
+
+extension MainPageViewController: UIPageViewControllerDataSource {
+    func pageViewController(
+        _ pageViewController: UIPageViewController,
+        viewControllerBefore viewController: UIViewController
+    ) -> UIViewController? {
+        guard let viewControllerBefore = viewController as? CommonMainViewController,
+              let index = arrayViewControllers.firstIndex(of: viewControllerBefore) else {
+            return nil
+        }
+        return arrayViewControllers[(index - 1) < 0 ? 2 : index - 1]
+    }
+    
+    func pageViewController(
+        _ pageViewController: UIPageViewController,
+        viewControllerAfter viewController: UIViewController
+    ) -> UIViewController? {
+        guard let viewControllerAfter = viewController as? CommonMainViewController,
+              let index = arrayViewControllers.firstIndex(of: viewControllerAfter) else {
+            return nil
+        }
+        return arrayViewControllers[(index + 1) % 3]
+    }
+}
+
+extension MainPageViewController: UIPageViewControllerDelegate {
+    func pageViewController(
+        _ pageViewController: UIPageViewController,
+        didFinishAnimating finished: Bool,
+        previousViewControllers: [UIViewController],
+        transitionCompleted completed: Bool
+    ) {
+        
+    }
+}
