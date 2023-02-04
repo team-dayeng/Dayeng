@@ -11,6 +11,7 @@ extension UIViewController {
     func showAlert(
         title: String,
         message: String? = nil,
+        type: AlertType,
         leftActionTitle: String = "취소",
         rightActionTitle: String = "확인",
         leftActionHandler: (() -> Void)? = nil,
@@ -22,15 +23,19 @@ extension UIViewController {
             leftActionTitle: leftActionTitle,
             rightActionTitle: rightActionTitle)
         
-        present(alertViewController, animated: false)
+        showAlert(alertViewController,
+                  type: type,
+                  leftActionHandler: leftActionHandler,
+                  rightActionHandler: rightActionHandler)
     }
     
     private func showAlert(
         _ alertViewController: DayengAlertViewController,
+        type: AlertType,
         leftActionHandler: (() -> Void)? = nil,
         rightActionHandler: (() -> Void)? = nil
     ) {
-        if let leftActionHandler {
+        if type == .twoButton {
             alertViewController.setLeftButtonAction {
                 alertViewController.dismiss(
                     animated: false,
@@ -38,13 +43,11 @@ extension UIViewController {
                 )
             }
         }
-        if let rightActionHandler {
-            alertViewController.setRightButtonAction() {
-                alertViewController.dismiss(
-                    animated: false,
-                    completion: rightActionHandler
-                )
-            }
+        alertViewController.setRightButtonAction {
+            alertViewController.dismiss(
+                animated: false,
+                completion: rightActionHandler
+            )
         }
         present(alertViewController, animated: false)
     }
