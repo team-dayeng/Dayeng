@@ -31,6 +31,7 @@ class MainViewController: CommonMainViewController {
     }()
     
     // MARK: - Properties
+    var disposeBag = DisposeBag()
     let viewModel: MainViewModel
     var backgroundDidTapped: Observable<Void>!
     var answerLabelDidTapped: Observable<Void>!
@@ -90,6 +91,6 @@ class MainViewController: CommonMainViewController {
                 guard let self else { return }
                 let editViewController = MainEditViewController()
                 self.navigationController?.pushViewController(editViewController, animated: true)
-            })
+            }).disposed(by: disposeBag)
     }
 }
