@@ -31,6 +31,7 @@
 		7628E68C298E4E80002D86F2 /* DefaultFirestoreDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E68B298E4E80002D86F2 /* DefaultFirestoreDatabaseService.swift */; };
 		7628E68E298E4E83002D86F2 /* FirestoreDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E68D298E4E82002D86F2 /* FirestoreDatabaseService.swift */; };
 		7628E690298E4E9B002D86F2 /* FirestoreAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E68F298E4E9B002D86F2 /* FirestoreAPI.swift */; };
+		7628E692298E5009002D86F2 /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E691298E5009002D86F2 /* MainPageViewController.swift */; };
 		76F6C0A3298D968D00A124CD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0A2298D968D00A124CD /* MainViewController.swift */; };
 		76F6C0A5298D969700A124CD /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0A4298D969700A124CD /* MainViewModel.swift */; };
 		76F6C0A7298D96CF00A124CD /* CommonMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0A6298D96CF00A124CD /* CommonMainViewController.swift */; };
@@ -63,6 +64,7 @@
 		7628E68B298E4E80002D86F2 /* DefaultFirestoreDatabaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFirestoreDatabaseService.swift; sourceTree = "<group>"; };
 		7628E68D298E4E82002D86F2 /* FirestoreDatabaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreDatabaseService.swift; sourceTree = "<group>"; };
 		7628E68F298E4E9B002D86F2 /* FirestoreAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreAPI.swift; sourceTree = "<group>"; };
+		7628E691298E5009002D86F2 /* MainPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageViewController.swift; sourceTree = "<group>"; };
 		76F6C0A2298D968D00A124CD /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		76F6C0A4298D969700A124CD /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		76F6C0A6298D96CF00A124CD /* CommonMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonMainViewController.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 				76F6C0A4298D969700A124CD /* MainViewModel.swift */,
 				76F6C0A8298D97A700A124CD /* MainEditViewController.swift */,
 				7628E689298E4E76002D86F2 /* MainEditViewModel.swift */,
+				7628E691298E5009002D86F2 /* MainPageViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 				E5D43435298A3291004EDFC7 /* CommonCalendarViewController.swift in Sources */,
 				76F6C0A7298D96CF00A124CD /* CommonMainViewController.swift in Sources */,
 				7628E68A298E4E76002D86F2 /* MainEditViewModel.swift in Sources */,
+				7628E692298E5009002D86F2 /* MainPageViewController.swift in Sources */,
 				76F6C0A3298D968D00A124CD /* MainViewController.swift in Sources */,
 				E5D43439298A4892004EDFC7 /* NSTextAttachment+.swift in Sources */,
 				7628E690298E4E9B002D86F2 /* FirestoreAPI.swift in Sources */,
