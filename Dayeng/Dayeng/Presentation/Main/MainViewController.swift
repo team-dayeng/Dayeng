@@ -18,7 +18,6 @@ class MainViewController: CommonMainViewController {
         let image = UIImage(systemName: "person.2.fill",
                             withConfiguration: UIImage.SymbolConfiguration(pointSize: 35))
         button.setImage(image, for: .normal)
-//        button.imageView?.contentMode = .scaleAspectFill
         return button
     }()
     
@@ -28,7 +27,6 @@ class MainViewController: CommonMainViewController {
         let image = UIImage(systemName: "gear",
                             withConfiguration: UIImage.SymbolConfiguration(pointSize: 35))
         button.setImage(image, for: .normal)
-        button.imageView?.contentMode = .scaleAspectFit
         return button
     }()
     
