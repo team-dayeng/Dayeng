@@ -82,7 +82,7 @@ class AcceptFriendViewController: UIViewController {
         logoImageView.snp.makeConstraints {
             $0.top.equalTo(introductionLabel.snp.bottom).offset(30)
             $0.height.equalTo(149*heightRatio)
-            $0.width.equalTo(295*widthRatio)
+            $0.width.equalTo(295*heightRatio)
             $0.centerX.equalToSuperview()
         }
         
