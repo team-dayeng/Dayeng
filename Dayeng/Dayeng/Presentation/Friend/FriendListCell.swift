@@ -33,6 +33,7 @@ final class FriendListCell: UICollectionViewCell {
     // MARK: - Lifecycles
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupViews()
         configureUI()
     }
     
@@ -40,15 +41,17 @@ final class FriendListCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setupViews() {
+        addSubview(nameLabel)
+        addSubview(dayLabel)
+    }
+    
     // MARK: - Helpers
     private func configureUI() {
-        self.backgroundColor = .white
-        self.layer.cornerRadius = 20
-        self.layer.borderWidth = 0.5
-        self.layer.borderColor = UIColor.black.cgColor
-        
-        self.addSubview(nameLabel)
-        self.addSubview(dayLabel)
+        backgroundColor = .white
+        layer.cornerRadius = 20
+        layer.borderWidth = 0.5
+        layer.borderColor = UIColor.black.cgColor
         
         nameLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)

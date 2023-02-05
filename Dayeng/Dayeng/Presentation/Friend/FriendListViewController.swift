@@ -59,6 +59,7 @@ final class FriendListViewController: UIViewController {
         
         setupNavigationBar()
         setupCollectionView()
+        setupViews()
         configureUI()
         bind()
     }
@@ -127,11 +128,13 @@ extension FriendListViewController {
         })
     }
     
-    private func configureUI() {
+    private func setupViews() {
         view.addSubview(backgroundImage)
         view.addSubview(collectionView)
         view.addSubview(emptyLabel)
-        
+    }
+    
+    private func configureUI() {
         backgroundImage.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
