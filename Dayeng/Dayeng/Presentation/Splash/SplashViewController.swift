@@ -20,7 +20,7 @@ class SplashViewController: UIViewController {
     
     private lazy var logoImage: UIImageView = {
         var imageView: UIImageView = UIImageView()
-        imageView.image = UIImage(named: "LogoImage")
+        imageView.image = .dayengLogo
         
         return imageView
     }()
