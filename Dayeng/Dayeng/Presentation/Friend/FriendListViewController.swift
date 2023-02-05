@@ -136,7 +136,8 @@ extension FriendListViewController {
             $0.edges.equalToSuperview()
         }
         collectionView.snp.makeConstraints {
-            $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(5)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
         }
         emptyLabel.snp.makeConstraints {
