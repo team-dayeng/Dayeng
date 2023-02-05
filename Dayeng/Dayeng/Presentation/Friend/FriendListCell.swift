@@ -14,7 +14,7 @@ final class FriendListCell: UICollectionViewCell {
     private var nameLabel: UILabel = {
         var label = UILabel()
         label.text = "James Mcavoy"
-        label.textColor = UIColor(named: "MainColor")
+        label.textColor = .dayengMain
         label.font = UIFont.boldSystemFont(ofSize: 20)
         return label
     }()
