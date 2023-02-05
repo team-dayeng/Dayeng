@@ -182,7 +182,6 @@
 				76280D1629878E460061206A /* Service */,
 				76280D1529878E410061206A /* Extension */,
 				E52CF84B298A59C700829661 /* Enums */,
-				47D1835C298A92C10058C0EC /* AuthType.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -367,6 +366,7 @@
 		E52CF84B298A59C700829661 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
+				47D1835C298A92C10058C0EC /* AuthType.swift */,
 				E552C1F1298B911F00F51179 /* OwnerType.swift */,
 				47549423298F966B008B581D /* AlertType.swift */,
 			);
