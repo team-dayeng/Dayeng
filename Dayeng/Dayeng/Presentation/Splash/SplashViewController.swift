@@ -11,13 +11,6 @@ import Lottie
 
 class SplashViewController: UIViewController {
     // MARK: - UI properties
-    private lazy var backgroundImage: UIImageView = {
-        var imageView: UIImageView = UIImageView()
-        imageView.image = UIImage(named: "paperBackground")
-        
-        return imageView
-    }()
-    
     private lazy var logoImage: UIImageView = {
         var imageView: UIImageView = UIImageView()
         imageView.image = .dayengLogo
@@ -61,7 +54,7 @@ class SplashViewController: UIViewController {
     
     // MARK: - Helpers
     private func setupViews() {
-        view.addSubview(backgroundImage)
+        addBackgroundImage()
         view.addSubview(bookAnimationView)
         view.addSubview(logoImage)
     }
@@ -77,12 +70,6 @@ class SplashViewController: UIViewController {
             $0.centerX.equalToSuperview()
             $0.centerY.equalToSuperview().offset(50)
             $0.height.width.equalTo(300)
-        }
-        
-        backgroundImage.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(-50)
-            $0.top.bottom.equalToSuperview().inset(-100)
         }
     }
     
