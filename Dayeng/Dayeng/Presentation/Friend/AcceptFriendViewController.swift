@@ -64,6 +64,9 @@ class AcceptFriendViewController: UIViewController {
         }
     }
     private func configureUI() {
+        let heightRatio = view.frame.height / 852
+        let widthRatio = view.frame.width / 393
+        
         backgroundImage.snp.makeConstraints {
             $0.center.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(-50)
@@ -71,20 +74,20 @@ class AcceptFriendViewController: UIViewController {
         }
         
         introductionLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(200)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(200*heightRatio)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
         }
         
         logoImageView.snp.makeConstraints {
             $0.top.equalTo(introductionLabel.snp.bottom).offset(30)
-            $0.height.equalTo(149)
-            $0.width.equalTo(295)
+            $0.height.equalTo(149*heightRatio)
+            $0.width.equalTo(295*widthRatio)
             $0.centerX.equalToSuperview()
         }
         
         shareLabel.snp.makeConstraints {
-            $0.top.equalTo(logoImageView.snp.bottom).offset(70)
+            $0.top.equalTo(logoImageView.snp.bottom).offset(70*heightRatio)
             $0.centerX.equalToSuperview()
         }
         

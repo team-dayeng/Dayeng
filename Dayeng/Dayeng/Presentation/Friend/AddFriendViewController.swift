@@ -112,24 +112,27 @@ final class AddFriendViewController: UIViewController {
         }
     }
     private func configureUI() {
+        let heightRatio = view.frame.height / 852
+        let widthRatio = view.frame.width / 393
+        
         backgroundImage.snp.makeConstraints {
             $0.center.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(-50)
             $0.top.bottom.equalToSuperview().inset(-100)
         }
         introductionLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(180)
+            $0.top.equalToSuperview().offset(180*heightRatio)
             $0.centerX.equalToSuperview()
         }
         logoImageView.snp.makeConstraints {
             $0.top.equalTo(introductionLabel.snp.bottom).offset(12)
-            $0.height.equalTo(149)
-            $0.width.equalTo(295)
+            $0.height.equalTo(149*heightRatio)
+            $0.width.equalTo(295*widthRatio)
             $0.centerX.equalToSuperview()
         }
         codeButton.snp.makeConstraints {
             $0.top.equalTo(logoImageView.snp.bottom).offset(5)
-            $0.height.equalTo(50)
+            $0.height.equalTo(50*heightRatio)
             $0.centerX.equalToSuperview()
         }
         copyButton.snp.makeConstraints {
@@ -137,30 +140,28 @@ final class AddFriendViewController: UIViewController {
             $0.centerX.equalToSuperview()
         }
         shareButton.snp.makeConstraints {
-            $0.top.equalTo(copyButton.snp.bottom).offset(20)
-            $0.height.equalTo(50)
-            $0.leading.equalToSuperview().offset(66)
-            $0.trailing.equalToSuperview().offset(-66)
+            $0.top.equalTo(copyButton.snp.bottom).offset(20*heightRatio)
+            $0.height.equalTo(50*heightRatio)
+            $0.width.equalTo(262*widthRatio)
             $0.centerX.equalToSuperview()
         }
         separatorView.snp.makeConstraints {
-            $0.top.equalTo(shareButton.snp.bottom).offset(40)
-            $0.leading.equalToSuperview().offset(66)
-            $0.trailing.equalToSuperview().offset(-66)
+            $0.top.equalTo(shareButton.snp.bottom).offset(40*heightRatio)
             $0.height.equalTo(1)
+            $0.width.equalTo(shareButton)
+            $0.centerX.equalToSuperview()
         }
         codeTextField.snp.makeConstraints {
-            $0.top.equalTo(separatorView.snp.bottom).offset(40)
-            $0.height.equalTo(50)
-            $0.leading.equalToSuperview().offset(66)
-            $0.trailing.equalToSuperview().offset(-66)
+            $0.top.equalTo(separatorView.snp.bottom).offset(40*heightRatio)
+            $0.height.equalTo(50*heightRatio)
+            $0.width.equalTo(shareButton)
+            $0.centerX.equalToSuperview()
         }
         addButton.snp.makeConstraints {
-            $0.top.equalTo(codeTextField.snp.bottom).offset(20)
-            $0.height.equalTo(50)
-            $0.leading.equalToSuperview().offset(66)
-            $0.trailing.equalToSuperview().offset(-66)
+            $0.top.equalTo(codeTextField.snp.bottom).offset(20*heightRatio)
+            $0.height.equalTo(50*heightRatio)
+            $0.width.equalTo(shareButton)
+            $0.centerX.equalToSuperview()
         }
     }
 }
-
