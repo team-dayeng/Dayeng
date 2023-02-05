@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		47549417298E4C16008B581D /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47549416298E4C16008B581D /* UIViewController+.swift */; };
+		47549424298F966B008B581D /* AlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47549423298F966B008B581D /* AlertType.swift */; };
+		47C38781298E390D0030833F /* DayengAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C38780298E390D0030833F /* DayengAlertViewController.swift */; };
+		47D18359298A86F10058C0EC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18358298A86F10058C0EC /* LoginViewController.swift */; };
+		47D1835B298A8DDD0058C0EC /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D1835A298A8DDD0058C0EC /* AuthButton.swift */; };
+		47D1835D298A92C10058C0EC /* AuthType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D1835C298A92C10058C0EC /* AuthType.swift */; };
+		47D1835F298A94790058C0EC /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D1835E298A94790058C0EC /* UIColor+.swift */; };
+		47D18361298B8D760058C0EC /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18360298B8D750058C0EC /* UIImage+.swift */; };
+		47D18364298D0EDC0058C0EC /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18363298D0EDC0058C0EC /* LoginViewModel.swift */; };
 		47D18366298D16640058C0EC /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18365298D16640058C0EC /* FriendListViewController.swift */; };
 		47D18368298D16730058C0EC /* FriendListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18367298D16730058C0EC /* FriendListViewModel.swift */; };
 		47D1836A298D1A610058C0EC /* FriendListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18369298D1A610058C0EC /* FriendListCell.swift */; };
@@ -26,15 +35,24 @@
 		76280D0C29878C870061206A /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 76280D0B29878C870061206A /* FirebaseMessaging */; };
 		76280D2D29879F770061206A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 76280D2C29879F770061206A /* Lottie */; };
 		76280D2F2987A7B50061206A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76280D2E2987A7B50061206A /* GoogleService-Info.plist */; };
+		E552C1F2298B911F00F51179 /* OwnerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C1F1298B911F00F51179 /* OwnerType.swift */; };
 		E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */; };
 		E5D4342E2988E22F004EDFC7 /* Dayeng-Book.json in Resources */ = {isa = PBXBuildFile; fileRef = E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */; };
-		E552C1F2298B911F00F51179 /* OwnerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C1F1298B911F00F51179 /* OwnerType.swift */; };
 		E5D43435298A3291004EDFC7 /* CommonCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43434298A3291004EDFC7 /* CommonCalendarViewController.swift */; };
 		E5D43437298A3905004EDFC7 /* CommonCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43436298A3905004EDFC7 /* CommonCalendarCell.swift */; };
 		E5D43439298A4892004EDFC7 /* NSTextAttachment+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43438298A4892004EDFC7 /* NSTextAttachment+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		47549416298E4C16008B581D /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
+		47549423298F966B008B581D /* AlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertType.swift; sourceTree = "<group>"; };
+		47C38780298E390D0030833F /* DayengAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayengAlertViewController.swift; sourceTree = "<group>"; };
+		47D18358298A86F10058C0EC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		47D1835A298A8DDD0058C0EC /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
+		47D1835C298A92C10058C0EC /* AuthType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthType.swift; sourceTree = "<group>"; };
+		47D1835E298A94790058C0EC /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		47D18360298B8D750058C0EC /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
+		47D18363298D0EDC0058C0EC /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		47D18365298D16640058C0EC /* FriendListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewController.swift; sourceTree = "<group>"; };
 		47D18367298D16730058C0EC /* FriendListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewModel.swift; sourceTree = "<group>"; };
 		47D18369298D1A610058C0EC /* FriendListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListCell.swift; sourceTree = "<group>"; };
@@ -47,9 +65,9 @@
 		76280CF229878A410061206A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		76280CF429878A410061206A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		76280D2E2987A7B50061206A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E552C1F1298B911F00F51179 /* OwnerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerType.swift; sourceTree = "<group>"; };
 		E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Dayeng-Book.json"; sourceTree = "<group>"; };
-		E552C1F1298B911F00F51179 /* OwnerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerType.swift; sourceTree = "<group>"; };
 		E5D43434298A3291004EDFC7 /* CommonCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonCalendarViewController.swift; sourceTree = "<group>"; };
 		E5D43436298A3905004EDFC7 /* CommonCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonCalendarCell.swift; sourceTree = "<group>"; };
 		E5D43438298A4892004EDFC7 /* NSTextAttachment+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextAttachment+.swift"; sourceTree = "<group>"; };
@@ -164,6 +182,7 @@
 				76280D1629878E460061206A /* Service */,
 				76280D1529878E410061206A /* Extension */,
 				E52CF84B298A59C700829661 /* Enums */,
+				47D1835C298A92C10058C0EC /* AuthType.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -172,6 +191,9 @@
 			isa = PBXGroup;
 			children = (
 				E5D43438298A4892004EDFC7 /* NSTextAttachment+.swift */,
+				47D1835E298A94790058C0EC /* UIColor+.swift */,
+				47D18360298B8D750058C0EC /* UIImage+.swift */,
+				47549416298E4C16008B581D /* UIViewController+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -214,6 +236,8 @@
 			children = (
 				E5D43434298A3291004EDFC7 /* CommonCalendarViewController.swift */,
 				E5D43436298A3905004EDFC7 /* CommonCalendarCell.swift */,
+				47C38780298E390D0030833F /* DayengAlertViewController.swift */,
+				47D1835A298A8DDD0058C0EC /* AuthButton.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -221,6 +245,8 @@
 		76280D1A298791C60061206A /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				47D18358298A86F10058C0EC /* LoginViewController.swift */,
+				47D18363298D0EDC0058C0EC /* LoginViewModel.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -338,6 +364,15 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		E52CF84B298A59C700829661 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				E552C1F1298B911F00F51179 /* OwnerType.swift */,
+				47549423298F966B008B581D /* AlertType.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
 		E5D433FC2988CD9F004EDFC7 /* Splash */ = {
 			isa = PBXGroup;
 			children = (
@@ -353,14 +388,6 @@
 				E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */,
 			);
 			path = Etc;
-			sourceTree = "<group>";
-		};
-		E52CF84B298A59C700829661 /* Enums */ = {
-			isa = PBXGroup;
-			children = (
-				E552C1F1298B911F00F51179 /* OwnerType.swift */,
-			);
-			path = Enums;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -475,14 +502,25 @@
 			files = (
 				76280CEB29878A3F0061206A /* ViewController.swift in Sources */,
 				E552C1F2298B911F00F51179 /* OwnerType.swift in Sources */,
+				47C38781298E390D0030833F /* DayengAlertViewController.swift in Sources */,
+				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
+				47D1835F298A94790058C0EC /* UIColor+.swift in Sources */,
+				47D1835B298A8DDD0058C0EC /* AuthButton.swift in Sources */,
+				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
+				47D1835D298A92C10058C0EC /* AuthType.swift in Sources */,
 				47D18366298D16640058C0EC /* FriendListViewController.swift in Sources */,
 				47D1836C298D40940058C0EC /* User.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
 				47D18368298D16730058C0EC /* FriendListViewModel.swift in Sources */,
 				76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */,
+				47D18361298B8D760058C0EC /* UIImage+.swift in Sources */,
+				47D18359298A86F10058C0EC /* LoginViewController.swift in Sources */,
+				47D18364298D0EDC0058C0EC /* LoginViewModel.swift in Sources */,
 				E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */,
 				E5D43435298A3291004EDFC7 /* CommonCalendarViewController.swift in Sources */,
 				47D1836A298D1A610058C0EC /* FriendListCell.swift in Sources */,
+				47549424298F966B008B581D /* AlertType.swift in Sources */,
+				47549417298E4C16008B581D /* UIViewController+.swift in Sources */,
 				E5D43439298A4892004EDFC7 /* NSTextAttachment+.swift in Sources */,
 				E5D43437298A3905004EDFC7 /* CommonCalendarCell.swift in Sources */,
 			);
@@ -623,13 +661,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5R9YHBW9BJ;
+				DEVELOPMENT_TEAM = WW8WYM6B54;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Dayeng/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -650,13 +689,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5R9YHBW9BJ;
+				DEVELOPMENT_TEAM = WW8WYM6B54;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Dayeng/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
