@@ -87,18 +87,21 @@ final class DayengAlertViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupViews()
         configureUI()
     }
     
     // MARK: - Helpers
-    private func configureUI() {
-        view.backgroundColor = .gray.withAlphaComponent(0.8)
-        
+    private func setupViews() {
         view.addSubview(containerView)
         containerView.addSubview(titleLabel)
         containerView.addSubview(messageLabel)
         containerView.addSubview(buttonStackView)
         buttonStackView.addArrangedSubview(rightButton)
+    }
+    
+    private func configureUI() {
+        view.backgroundColor = .gray.withAlphaComponent(0.8)
         
         containerView.snp.makeConstraints {
             $0.centerY.equalToSuperview().offset(-2)
