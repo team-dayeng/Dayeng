@@ -45,17 +45,22 @@ final class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupViews()
         configureUI()
         setup()
         bind()
     }
     
     // MARK: - Helpers
-    private func configureUI() {
+    
+    private func setupViews() {
         view.addSubview(backgroundImage)
         view.addSubview(logoImage)
         view.addSubview(appleLoginButton)
         view.addSubview(kakaoLoginButton)
+    }
+    
+    private func configureUI() {
         backgroundImage.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
