@@ -6,24 +6,63 @@
 //
 
 import UIKit
+import AuthenticationServices
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let scene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: scene)
         
-        let viewController = UINavigationController(rootViewController: MainViewController(viewModel: MainViewModel()))
-//        let viewController = SplashViewController()
-        self.window?.rootViewController = viewController
-        self.window?.makeKeyAndVisible()
-//        navigationController.pushViewController(viewController, animated: false)
+//        let viewController = LoginViewController()
+//        self.window?.rootViewController = viewController
+//        self.window?.makeKeyAndVisible()
+        
+        // 앱 실행 중 'Apple ID 사용 중단' 할 경우
+        NotificationCenter.default.addObserver(
+            forName: ASAuthorizationAppleIDProvider.credentialRevokedNotification,
+            object: nil,
+            queue: nil,
+            using: { (Notification) in
+                print("Apple ID 사용 중단")
+                // 로그인 페이지로 이동
+                DispatchQueue.main.async {
+//                    self.window?.rootViewController = LoginViewController(
+//                        viewModel: LoginViewModel()
+//                    )
+                    self.window?.rootViewController = LoginViewController()
+                    self.window?.makeKeyAndVisible()
+                }
+            })
+        
+        // 앱 실행시 로그인 상태 확인 (Apple)
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        // TODO: UserDefaults?로부터 userID 얻어 forUserID에 입력
+        appleIDProvider.getCredentialState(forUserID: ""/* 로그인 할 userID */) { (credentialState, error) in
+            switch credentialState {
+            case .authorized:
+                // apple ID credential 유효
+                print("ID 연동 O")
+                DispatchQueue.main.async {
+                    self.window?.rootViewController = ViewController()
+                    self.window?.makeKeyAndVisible()
+                }
+            case .revoked, .notFound:
+                // 해당 userID 값이 앱과 연결 취소되어 있거나 연결되어 있지 않으므로 로그인 UI를 표시
+                print("ID가 연동되어 있지 않거나 ID를 찾을 수 없음")
+                DispatchQueue.main.async {
+//                    self.window?.rootViewController = LoginViewController(
+//                        viewModel: LoginViewModel()
+//                    )
+                    self.window?.rootViewController = LoginViewController()
+                    self.window?.makeKeyAndVisible()
+                }
+            default:
+                break
+            }
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
