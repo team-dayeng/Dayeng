@@ -57,13 +57,13 @@ class MainEditViewController: CommonMainViewController {
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
                 self.showAlert(title: "작성을 그만두시겠습니까?",
-                               message: "변경 사항은 저장되지 않습니다.",
-                               actionTitle: "나가기",
-                               actionHandler: {
+                          message: "변경 사항은 저장되지 않습니다.",
+                          type: .twoButton,
+                          rightActionTitle: "나가기",
+                          rightActionHandler: {
                     self.navigationController?.popViewController(animated: true)
                 })
             }).disposed(by: disposeBag)
-        
         
         let submitButton = UIBarButtonItem(title: "완료",
                                            style: .done,
@@ -151,11 +151,12 @@ class MainEditViewController: CommonMainViewController {
             .subscribe(onNext: { [weak self] error in
                 guard let self else { return }
                 if let error {
-                    self.showAlert(title: "데잉 작성에 실패했습니다.", message: error.localizedDescription)
+                    self.showAlert(title: "데잉 작성에 실패했습니다.",
+                                   message: error.localizedDescription,
+                                   type: .oneButton)
                 } else {
                     self.navigationController?.popViewController(animated: true)
                 }
             }).disposed(by: disposeBag)
     }
 }
-
