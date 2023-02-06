@@ -1,5 +1,5 @@
 //
-//  CommonMainViewController.swift
+//  CommonMainView.swift
 //  Dayeng
 //
 //  Created by 조승기 on 2023/01/30.
@@ -10,7 +10,7 @@ import SnapKit
 import RxCocoa
 import RxSwift
 
-class CommonMainViewController: UIViewController {
+class CommonMainView: UIView {
     // MARK: - UI properties
     lazy var backgroundImage: UIImageView = {
         var imageView: UIImageView = UIImageView()
@@ -62,11 +62,16 @@ class CommonMainViewController: UIViewController {
     // MARK: - Properties
     
     // MARK: - Lifecycles
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    init() {
+        super.init(frame: CGRect())
         setupViews()
         configureUI()
     }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Helpers
     private func setupViews() {
         [backgroundImage,
@@ -76,13 +81,10 @@ class CommonMainViewController: UIViewController {
          answerBackground,
          answerLabel
         ].forEach {
-            view.addSubview($0)
+            addSubview($0)
         }
     }
     private func configureUI() {
-        navigationItem.titleView = UIImageView(image: UIImage(named: "LogoImage"))
-        navigationController?.navigationBar.tintColor = .black
-        
         backgroundImage.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
@@ -105,7 +107,7 @@ class CommonMainViewController: UIViewController {
         answerBackground.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(20)
             $0.top.equalTo(koreanQuestionLabel.snp.bottom).offset(35)
-            $0.bottom.equalTo(view.snp.centerY).offset(60)
+            $0.bottom.equalTo(snp.centerY).offset(60)
         }
         
         answerLabel.snp.makeConstraints {
