@@ -27,8 +27,9 @@ final class AppCoordinator: AppCoordinatorProtocol {
     }
     
     func showSplashViewController() {
-        let viewController = SplashViewController()
-        navigationController.pushViewController(viewController, animated: false)
+        let viewModel = SplashViewModel(coordinator: self)
+        let viewController = SplashViewController(viewModel: viewModel)
+        navigationController.viewControllers = [viewController]
     }
     
     func showLoginViewController() {

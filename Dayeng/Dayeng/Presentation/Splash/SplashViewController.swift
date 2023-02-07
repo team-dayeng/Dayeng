@@ -36,9 +36,11 @@ class SplashViewController: UIViewController {
     }()
     
     // MARK: - Properties
+    private let viewModel: SplashViewModel
     
     // MARK: - Lifecycles
-    init() {
+    init(viewModel: SplashViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -95,6 +97,7 @@ class SplashViewController: UIViewController {
             self.view.layoutIfNeeded()
         } completion: { _ in
             self.bookAnimationView.play()
+            
         }
     }
 }

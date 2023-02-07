@@ -54,6 +54,7 @@
 		E552C2442992136000F51179 /* MainCoordiantor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2432992136000F51179 /* MainCoordiantor.swift */; };
 		E552C2462992136B00F51179 /* FriendCoordiantor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2452992136B00F51179 /* FriendCoordiantor.swift */; };
 		E552C2482992137400F51179 /* SettingCoordiantor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2472992137400F51179 /* SettingCoordiantor.swift */; };
+		E552C24C299217E100F51179 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C24B299217E100F51179 /* SplashViewModel.swift */; };
 		E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */; };
 		E5D4342E2988E22F004EDFC7 /* Dayeng-Book.json in Resources */ = {isa = PBXBuildFile; fileRef = E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */; };
 		E5D43435298A3291004EDFC7 /* CommonCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43434298A3291004EDFC7 /* CommonCalendarViewController.swift */; };
@@ -102,6 +103,7 @@
 		E552C2432992136000F51179 /* MainCoordiantor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordiantor.swift; sourceTree = "<group>"; };
 		E552C2452992136B00F51179 /* FriendCoordiantor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCoordiantor.swift; sourceTree = "<group>"; };
 		E552C2472992137400F51179 /* SettingCoordiantor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCoordiantor.swift; sourceTree = "<group>"; };
+		E552C24B299217E100F51179 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Dayeng-Book.json"; sourceTree = "<group>"; };
 		E5D43434298A3291004EDFC7 /* CommonCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonCalendarViewController.swift; sourceTree = "<group>"; };
@@ -448,6 +450,7 @@
 			children = (
 				76280CF129878A410061206A /* LaunchScreen.storyboard */,
 				E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */,
+				E552C24B299217E100F51179 /* SplashViewModel.swift */,
 			);
 			path = Splash;
 			sourceTree = "<group>";
@@ -573,6 +576,7 @@
 				7628E68E298E4E83002D86F2 /* FirestoreDatabaseService.swift in Sources */,
 				76280CEB29878A3F0061206A /* ViewController.swift in Sources */,
 				76F6C0A9298D97A700A124CD /* MainEditViewController.swift in Sources */,
+				E552C24C299217E100F51179 /* SplashViewModel.swift in Sources */,
 				7628E68C298E4E80002D86F2 /* DefaultFirestoreDatabaseService.swift in Sources */,
 				7628E684298E4DA7002D86F2 /* DefaultUserRepository.swift in Sources */,
 				7628E680298E4D9C002D86F2 /* UserDTO.swift in Sources */,
