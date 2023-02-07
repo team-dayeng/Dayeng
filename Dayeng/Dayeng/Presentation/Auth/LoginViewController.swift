@@ -90,7 +90,8 @@ final class LoginViewController: UIViewController {
     }
 }
 
-extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+extension LoginViewController: ASAuthorizationControllerDelegate,
+                               ASAuthorizationControllerPresentationContextProviding {
     
     private func setupAppleLogin() {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
@@ -111,7 +112,9 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
     }
     
     /// apple ID 연동 성공시
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+    func authorizationController(controller: ASAuthorizationController,
+                                 didCompleteWithAuthorization authorization: ASAuthorization
+    ) {
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
             // get user info
