@@ -11,6 +11,7 @@ import FirebaseFirestoreSwift
 
 enum FirestoreAPI {
     case answer(userID: String)
+    case questions
     
     var reference: DocumentReference {
         switch self {
@@ -20,6 +21,10 @@ enum FirestoreAPI {
                 .document(userID)
                 .collection("answers")
                 .document("answer")
+        case .questions:
+            return Firestore.firestore()
+                .collection("questions")
+                .document("questions")
         }
     }
 }

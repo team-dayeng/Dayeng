@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 import Lottie
+import RxSwift
+import RxRelay
 
 class SplashViewController: UIViewController {
     // MARK: - UI properties
@@ -37,6 +39,8 @@ class SplashViewController: UIViewController {
     
     // MARK: - Properties
     private let viewModel: SplashViewModel
+    private let disposeBag = DisposeBag()
+    private let animationStartEvent = PublishRelay<Void>()
     
     // MARK: - Lifecycles
     init(viewModel: SplashViewModel) {
@@ -53,15 +57,24 @@ class SplashViewController: UIViewController {
         
         setupViews()
         configureUI()
+        bind()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         configureAnimation()
     }
     
     // MARK: - Helpers
+    private func bind() {
+        let input = SplashViewModel.Input(
+            animationStartEvent: animationStartEvent.asObservable()
+        )
+        
+        let output = viewModel.transform(input: input)
+    }
+    
     private func setupViews() {
         view.addSubview(backgroundImage)
         view.addSubview(bookAnimationView)
@@ -97,7 +110,7 @@ class SplashViewController: UIViewController {
             self.view.layoutIfNeeded()
         } completion: { _ in
             self.bookAnimationView.play()
-            
+            self.animationStartEvent.accept(())
         }
     }
 }
