@@ -49,6 +49,13 @@
 		76F6C0A7298D96CF00A124CD /* CommonMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0A6298D96CF00A124CD /* CommonMainViewController.swift */; };
 		76F6C0A9298D97A700A124CD /* MainEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0A8298D97A700A124CD /* MainEditViewController.swift */; };
 		76F6C0AD298D985F00A124CD /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0AC298D985F00A124CD /* Date+.swift */; };
+		E552C2202990BE9300F51179 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C21F2990BE9300F51179 /* SettingViewController.swift */; };
+		E552C2222990BEA700F51179 /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2212990BEA700F51179 /* AlarmSettingViewController.swift */; };
+		E552C2242990BEB300F51179 /* AlarmDaySettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2232990BEB300F51179 /* AlarmDaySettingViewController.swift */; };
+		E552C2262990BEBB00F51179 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2252990BEBB00F51179 /* SettingViewModel.swift */; };
+		E552C2282990BECC00F51179 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2272990BECC00F51179 /* SettingCell.swift */; };
+		E552C22A2990BED800F51179 /* SettingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2292990BED800F51179 /* SettingHeaderView.swift */; };
+		E552C22C2990BEF200F51179 /* AlarmDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C22B2990BEF200F51179 /* AlarmDayCell.swift */; };
 		E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */; };
 		E5D4342E2988E22F004EDFC7 /* Dayeng-Book.json in Resources */ = {isa = PBXBuildFile; fileRef = E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */; };
 		E5D43435298A3291004EDFC7 /* CommonCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43434298A3291004EDFC7 /* CommonCalendarViewController.swift */; };
@@ -92,6 +99,13 @@
 		76F6C0A6298D96CF00A124CD /* CommonMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonMainViewController.swift; sourceTree = "<group>"; };
 		76F6C0A8298D97A700A124CD /* MainEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainEditViewController.swift; sourceTree = "<group>"; };
 		76F6C0AC298D985F00A124CD /* Date+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		E552C21F2990BE9300F51179 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		E552C2212990BEA700F51179 /* AlarmSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewController.swift; sourceTree = "<group>"; };
+		E552C2232990BEB300F51179 /* AlarmDaySettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDaySettingViewController.swift; sourceTree = "<group>"; };
+		E552C2252990BEBB00F51179 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		E552C2272990BECC00F51179 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
+		E552C2292990BED800F51179 /* SettingHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingHeaderView.swift; sourceTree = "<group>"; };
+		E552C22B2990BEF200F51179 /* AlarmDayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDayCell.swift; sourceTree = "<group>"; };
 		E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Dayeng-Book.json"; sourceTree = "<group>"; };
 		E5D43434298A3291004EDFC7 /* CommonCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonCalendarViewController.swift; sourceTree = "<group>"; };
@@ -316,6 +330,9 @@
 		76280D1E298791E40061206A /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				E552C21E2990BE7F00F51179 /* View */,
+				E552C21D2990BE7A00F51179 /* ViewModel */,
+				E552C21C2990BE7300F51179 /* ViewController */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -410,6 +427,34 @@
 				47549423298F966B008B581D /* AlertType.swift */,
 			);
 			path = Enums;
+			sourceTree = "<group>";
+		};
+		E552C21C2990BE7300F51179 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E552C21F2990BE9300F51179 /* SettingViewController.swift */,
+				E552C2212990BEA700F51179 /* AlarmSettingViewController.swift */,
+				E552C2232990BEB300F51179 /* AlarmDaySettingViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		E552C21D2990BE7A00F51179 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E552C2252990BEBB00F51179 /* SettingViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		E552C21E2990BE7F00F51179 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E552C2272990BECC00F51179 /* SettingCell.swift */,
+				E552C2292990BED800F51179 /* SettingHeaderView.swift */,
+				E552C22B2990BEF200F51179 /* AlarmDayCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		E5D433FC2988CD9F004EDFC7 /* Splash */ = {
@@ -545,18 +590,25 @@
 				7628E68C298E4E80002D86F2 /* DefaultFirestoreDatabaseService.swift in Sources */,
 				7628E684298E4DA7002D86F2 /* DefaultUserRepository.swift in Sources */,
 				7628E680298E4D9C002D86F2 /* UserDTO.swift in Sources */,
+				E552C22A2990BED800F51179 /* SettingHeaderView.swift in Sources */,
 				47C38781298E390D0030833F /* DayengAlertViewController.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
 				47D1835F298A94790058C0EC /* UIColor+.swift in Sources */,
 				47D1835B298A8DDD0058C0EC /* AuthButton.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
 				47D1835D298A92C10058C0EC /* AuthType.swift in Sources */,
+				E552C2242990BEB300F51179 /* AlarmDaySettingViewController.swift in Sources */,
 				47D18366298D16640058C0EC /* FriendListViewController.swift in Sources */,
 				47D1836C298D40940058C0EC /* User.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
+				E552C2202990BE9300F51179 /* SettingViewController.swift in Sources */,
 				47D18368298D16730058C0EC /* FriendListViewModel.swift in Sources */,
 				76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */,
+				E552C22C2990BEF200F51179 /* AlarmDayCell.swift in Sources */,
+				E552C2222990BEA700F51179 /* AlarmSettingViewController.swift in Sources */,
+				E552C2262990BEBB00F51179 /* SettingViewModel.swift in Sources */,
 				47D18361298B8D760058C0EC /* UIImage+.swift in Sources */,
+				E552C2282990BECC00F51179 /* SettingCell.swift in Sources */,
 				47D18359298A86F10058C0EC /* LoginViewController.swift in Sources */,
 				47D18364298D0EDC0058C0EC /* LoginViewModel.swift in Sources */,
 				E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */,
