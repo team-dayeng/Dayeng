@@ -25,17 +25,15 @@ final class MainCoordinator: MainCoordinatorProtocol {
     }
     
     func showMainViewController() {
-        let viewModel = 0
-        let viewController = UIViewController()
-        
-        self.navigationController.viewControllers = [viewController]
+        let viewController = MainPageViewController()
+        navigationController.viewControllers = [viewController]
     }
     
     func showCalendarViewController() {
         let viewModel = 0
         let viewController = UIViewController()
         
-        self.navigationController.pushViewController(viewController, animated: true)
+        navigationController.pushViewController(viewController, animated: true)
     }
     
     func showFriendViewController() {
