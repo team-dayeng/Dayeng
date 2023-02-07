@@ -43,3 +43,9 @@ final class AppCoordinator: AppCoordinatorProtocol {
         coordinator.start()
     }
 }
+
+extension AppCoordinator: CoordinatorDelegate {
+    func didFinished(childCoordinator: Coordinator) {
+        childCoordinators = childCoordinators.filter({ $0 !== childCoordinator })
+    }
+}
