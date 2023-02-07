@@ -49,6 +49,11 @@
 		76F6C0A7298D96CF00A124CD /* CommonMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0A6298D96CF00A124CD /* CommonMainViewController.swift */; };
 		76F6C0A9298D97A700A124CD /* MainEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0A8298D97A700A124CD /* MainEditViewController.swift */; };
 		76F6C0AD298D985F00A124CD /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0AC298D985F00A124CD /* Date+.swift */; };
+		E552C2402992130600F51179 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C23F2992130600F51179 /* Coordinator.swift */; };
+		E552C2422992131700F51179 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2412992131700F51179 /* AppCoordinator.swift */; };
+		E552C2442992136000F51179 /* MainCoordiantor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2432992136000F51179 /* MainCoordiantor.swift */; };
+		E552C2462992136B00F51179 /* FriendCoordiantor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2452992136B00F51179 /* FriendCoordiantor.swift */; };
+		E552C2482992137400F51179 /* SettingCoordiantor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2472992137400F51179 /* SettingCoordiantor.swift */; };
 		E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */; };
 		E5D4342E2988E22F004EDFC7 /* Dayeng-Book.json in Resources */ = {isa = PBXBuildFile; fileRef = E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */; };
 		E5D43435298A3291004EDFC7 /* CommonCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43434298A3291004EDFC7 /* CommonCalendarViewController.swift */; };
@@ -92,6 +97,11 @@
 		76F6C0A6298D96CF00A124CD /* CommonMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonMainViewController.swift; sourceTree = "<group>"; };
 		76F6C0A8298D97A700A124CD /* MainEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainEditViewController.swift; sourceTree = "<group>"; };
 		76F6C0AC298D985F00A124CD /* Date+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		E552C23F2992130600F51179 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		E552C2412992131700F51179 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		E552C2432992136000F51179 /* MainCoordiantor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordiantor.swift; sourceTree = "<group>"; };
+		E552C2452992136B00F51179 /* FriendCoordiantor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCoordiantor.swift; sourceTree = "<group>"; };
+		E552C2472992137400F51179 /* SettingCoordiantor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCoordiantor.swift; sourceTree = "<group>"; };
 		E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Dayeng-Book.json"; sourceTree = "<group>"; };
 		E5D43434298A3291004EDFC7 /* CommonCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonCalendarViewController.swift; sourceTree = "<group>"; };
@@ -240,6 +250,7 @@
 		76280D1729878E4E0061206A /* App */ = {
 			isa = PBXGroup;
 			children = (
+				E552C23D299212D000F51179 /* Coordinator */,
 				76280D2E2987A7B50061206A /* GoogleService-Info.plist */,
 				76280CE629878A3F0061206A /* AppDelegate.swift */,
 				76280CE829878A3F0061206A /* SceneDelegate.swift */,
@@ -252,6 +263,7 @@
 		76280D182987918E0061206A /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				E552C23E299212D800F51179 /* Coordinator */,
 				E5D433FC2988CD9F004EDFC7 /* Splash */,
 				76280D19298791BF0061206A /* Common */,
 				76280D1A298791C60061206A /* Auth */,
@@ -412,6 +424,25 @@
 			path = Enums;
 			sourceTree = "<group>";
 		};
+		E552C23D299212D000F51179 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				E552C23F2992130600F51179 /* Coordinator.swift */,
+				E552C2412992131700F51179 /* AppCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		E552C23E299212D800F51179 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				E552C2432992136000F51179 /* MainCoordiantor.swift */,
+				E552C2452992136B00F51179 /* FriendCoordiantor.swift */,
+				E552C2472992137400F51179 /* SettingCoordiantor.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		E5D433FC2988CD9F004EDFC7 /* Splash */ = {
 			isa = PBXGroup;
 			children = (
@@ -553,7 +584,9 @@
 				47D1835D298A92C10058C0EC /* AuthType.swift in Sources */,
 				47D18366298D16640058C0EC /* FriendListViewController.swift in Sources */,
 				47D1836C298D40940058C0EC /* User.swift in Sources */,
+				E552C2442992136000F51179 /* MainCoordiantor.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
+				E552C2402992130600F51179 /* Coordinator.swift in Sources */,
 				47D18368298D16730058C0EC /* FriendListViewModel.swift in Sources */,
 				76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */,
 				47D18361298B8D760058C0EC /* UIImage+.swift in Sources */,
@@ -567,11 +600,14 @@
 				7628E68A298E4E76002D86F2 /* MainEditViewModel.swift in Sources */,
 				7628E692298E5009002D86F2 /* MainPageViewController.swift in Sources */,
 				76F6C0A3298D968D00A124CD /* MainViewController.swift in Sources */,
+				E552C2462992136B00F51179 /* FriendCoordiantor.swift in Sources */,
 				47D1836A298D1A610058C0EC /* FriendListCell.swift in Sources */,
 				47549424298F966B008B581D /* AlertType.swift in Sources */,
 				47549417298E4C16008B581D /* UIViewController+.swift in Sources */,
+				E552C2482992137400F51179 /* SettingCoordiantor.swift in Sources */,
 				E5D43439298A4892004EDFC7 /* NSTextAttachment+.swift in Sources */,
 				7628E690298E4E9B002D86F2 /* FirestoreAPI.swift in Sources */,
+				E552C2422992131700F51179 /* AppCoordinator.swift in Sources */,
 				7628E682298E4DA4002D86F2 /* UserRepository.swift in Sources */,
 				7628E686298E4DB4002D86F2 /* DefaultMainEditUseCase.swift in Sources */,
 				E5D43437298A3905004EDFC7 /* CommonCalendarCell.swift in Sources */,
