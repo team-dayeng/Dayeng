@@ -223,7 +223,6 @@
 				76280D1629878E460061206A /* Service */,
 				76280D1529878E410061206A /* Extension */,
 				E52CF84B298A59C700829661 /* Enums */,
-				47D1835C298A92C10058C0EC /* AuthType.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -422,6 +421,7 @@
 			children = (
 				7628E68F298E4E9B002D86F2 /* FirestoreAPI.swift */,
 				47549423298F966B008B581D /* AlertType.swift */,
+				47D1835C298A92C10058C0EC /* AuthType.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
