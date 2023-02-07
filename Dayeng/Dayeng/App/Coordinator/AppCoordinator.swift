@@ -33,6 +33,7 @@ final class AppCoordinator: AppCoordinatorProtocol {
     }
     
     func showLoginViewController() {
+        let viewModel = LoginViewModel(coordinator: self)
         let viewController = LoginViewController()
         navigationController.pushViewController(viewController, animated: false)
     }
