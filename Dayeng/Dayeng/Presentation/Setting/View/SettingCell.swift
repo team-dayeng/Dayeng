@@ -8,10 +8,11 @@
 import UIKit
 import SnapKit
 import RxSwift
+import RxRelay
 
 final class SettingCell: UICollectionViewCell {
     // MARK: - UI properties
-    private let titleLable: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = ""
         label.font = .systemFont(ofSize: 16, weight: .regular)
@@ -23,7 +24,7 @@ final class SettingCell: UICollectionViewCell {
     
     // MARK: - Properties
     static let identifier: String = "SettingCell"
-    var touchHandler: (() -> Void)?
+    var tappedView: Observable<Void>!
     
     // MARK: - Lifecycles
     override init(frame: CGRect) {
@@ -39,28 +40,21 @@ final class SettingCell: UICollectionViewCell {
     
     // MARK: - Helpers
     private func setupViews() {
-        contentView.addSubview(titleLable)
+        contentView.addSubview(titleLabel)
     }
     
     private func configureUI() {
-        titleLable.snp.makeConstraints {
+        titleLabel.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
             $0.leading.equalToSuperview().inset(10)
         }
         
-        let tapGestureRecognizer = UITapGestureRecognizer(
-            target: self,
-            action: #selector(tappedView)
-        )
+        let tapGestureRecognizer = UITapGestureRecognizer()
         contentView.addGestureRecognizer(tapGestureRecognizer)
+        tappedView = tapGestureRecognizer.rx.event.map {_ in}.asObservable()
     }
     
-    @objc private func tappedView() {
-        touchHandler?()
-    }
-    
-    func bind(text: String, completion: (() -> Void)? = nil) {
-        titleLable.text = text
-        touchHandler = completion
+    func bind(text: String) {
+        titleLabel.text = text
     }
 }

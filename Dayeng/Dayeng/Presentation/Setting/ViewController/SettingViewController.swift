@@ -131,7 +131,6 @@ final class SettingViewController: UIViewController {
     private func configureNavigationBar() {
         navigationItem.title = "설정"
         navigationController?.navigationBar.tintColor = .black
-        navigationController?.navigationBar.topItem?.title = ""
     }
     
     private func configureCollectionView() {
@@ -187,10 +186,13 @@ final class SettingViewController: UIViewController {
                 return UICollectionViewCell()
             }
             
-            cell.bind(text: item.title) { [weak self] in
-                guard let self else { return }
-                self.alarmCellTapped.onNext(())
-            }
+            cell.tappedView
+                .subscribe(onNext: { _ in
+                    self.alarmCellTapped.onNext(())
+                })
+                .disposed(by: self.disposeBag)
+            cell.bind(text: item.title)
+            
             return cell
         })
         

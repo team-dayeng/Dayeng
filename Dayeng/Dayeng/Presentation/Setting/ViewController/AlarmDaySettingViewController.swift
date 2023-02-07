@@ -154,12 +154,7 @@ extension AlarmDaySettingViewController: UICollectionViewDelegate, UICollectionV
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell  = collectionView.cellForItem(at: indexPath) as? AlarmDayCell else { return }
         
-        if cell.isSelect {
-            isSelectedCells[indexPath] = false
-            cell.tappedCell(isSelected: false)
-        } else {
-            isSelectedCells[indexPath] = true
-            cell.tappedCell(isSelected: true)
-        }
+        isSelectedCells[indexPath] = !cell.isSelect
+        cell.tappedCell(isSelected: !cell.isSelect)
     }
 }
