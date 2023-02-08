@@ -10,8 +10,10 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-class MainViewController: CommonMainViewController {
+final class MainViewController: UIViewController {
     // MARK: - UI properties
+    private var collectionView: UICollectionView!
+    
     private lazy var friendButton = {
         var button: UIButton = UIButton()
         button.tintColor = .black
@@ -33,6 +35,8 @@ class MainViewController: CommonMainViewController {
     // MARK: - Properties
     var disposeBag = DisposeBag()
     let viewModel: MainViewModel
+    var calendarButtonDidTapped: Observable<Void>!
+    var resetButtonDidTapped: Observable<Void>!
     var backgroundDidTapped: Observable<Void>!
     var answerLabelDidTapped: Observable<Void>!
     
@@ -49,29 +53,71 @@ class MainViewController: CommonMainViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupNaviagationBar()
+        addBackgroundImage()
+        configureCollectionView()
         setupViews()
-        configureUI()
         bind()
     }
     
     // MARK: - Helpers
+    private func setupNaviagationBar() {
+        navigationItem.titleView = UIImageView(image: .dayengLogo)
+        navigationController?.navigationBar.tintColor = .black
+        
+        let calendarButton = UIBarButtonItem(image: UIImage(systemName: "calendar"),
+                                             style: .plain,
+                                             target: nil,
+                                             action: nil)
+        calendarButtonDidTapped = calendarButton.rx.tap.asObservable()
+        
+        let resetButton = UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise"),
+                                          style: .plain,
+                                          target: nil,
+                                          action: nil)
+        resetButtonDidTapped = resetButton.rx.tap.asObservable()
+        
+        navigationItem.leftBarButtonItem = calendarButton
+        navigationItem.rightBarButtonItem = resetButton
+    }
+    
     private func setupViews() {
         [friendButton, settingButton].forEach {
             view.addSubview($0)
         }
+        configureUI()
+    }
+    
+    private func configureCollectionView() {
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints {
+            $0.top.left.right.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalToSuperview()
+        }
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(MainCell.self, forCellWithReuseIdentifier: MainCell.identifier)
+        collectionView.isPagingEnabled = true
+        collectionView.bounces = false
+        collectionView.backgroundColor = .clear
+    }
+    
+    private func collectionViewLayout() -> UICollectionViewCompositionalLayout {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                              heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                               heightDimension: .fractionalHeight(1))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .paging
+        return UICollectionViewCompositionalLayout(section: section)
     }
     
     private func configureUI() {
-        answerBackground.isHidden = answerLabel.text?.count != 0
-        
-        let answerTapGesture = UITapGestureRecognizer()
-        answerLabel.addGestureRecognizer(answerTapGesture)
-        answerLabelDidTapped = answerTapGesture.rx.event.map { _ in }.asObservable()
-        
-        let backgroundTapGesture = UITapGestureRecognizer()
-        answerBackground.addGestureRecognizer(backgroundTapGesture)
-        backgroundDidTapped = backgroundTapGesture.rx.event.map { _ in }.asObservable()
-        
         friendButton.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             $0.right.equalToSuperview().offset(-55)
@@ -86,11 +132,22 @@ class MainViewController: CommonMainViewController {
     }
     
     func bind() {
-        backgroundDidTapped
-            .subscribe(onNext: { [weak self] in
-                guard let self else { return }
-                let editViewController = MainEditViewController()
-                self.navigationController?.pushViewController(editViewController, animated: true)
-            }).disposed(by: disposeBag)
+
+    }
+}
+
+extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCell.identifier,
+                                                            for: indexPath) as? MainCell else {
+            return UICollectionViewCell()
+        }
+        return cell
     }
 }

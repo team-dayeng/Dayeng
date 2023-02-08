@@ -9,8 +9,11 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class MainEditViewController: CommonMainViewController {
+final class MainEditViewController: UIViewController {
     // MARK: - UI properties
+    private lazy var mainView = {
+       CommonMainView()
+    }()
     private lazy var answerTextView: UITextView = {
         var textView: UITextView = UITextView()
         textView.backgroundColor = .clear
@@ -43,11 +46,13 @@ class MainEditViewController: CommonMainViewController {
         
         setupNaviagationBar()
         setupViews()
-        configureUI()
         bind()
     }
     // MARK: - Helpers
     private func setupNaviagationBar() {
+        navigationItem.titleView = UIImageView(image: .dayengLogo)
+        navigationController?.navigationBar.tintColor = .black
+        
         let backButton = UIBarButtonItem(image: UIImage(systemName: "arrow.left"),
                                          style: .plain,
                                          target: nil,
@@ -75,25 +80,30 @@ class MainEditViewController: CommonMainViewController {
     }
     
     private func setupViews() {
-        answerLabel.isHidden = true
-        answerBackground.isHidden = true
+        mainView.answerLabel.isHidden = true
+        mainView.answerBackground.isHidden = true
         
-        [textCountLabel, answerTextView].forEach {
+        [mainView, textCountLabel, answerTextView].forEach {
             view.addSubview($0)
         }
+        configureUI()
     }
     private func configureUI() {
         let textViewWidth = CGSize(width: (self.view.frame.width - 40), height: .infinity)
         
+        mainView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
         answerTextView.snp.makeConstraints {
-            $0.top.equalTo(koreanQuestionLabel.snp.bottom).offset(40)
-            $0.left.right.equalTo(dateLabel)
+            $0.top.equalTo(mainView.koreanQuestionLabel.snp.bottom).offset(40)
+            $0.left.right.equalTo(mainView.dateLabel)
             $0.height.equalTo(self.answerTextView.sizeThatFits(textViewWidth).height)
         }
         
         textCountLabel.snp.makeConstraints {
             $0.top.equalTo(answerTextView.snp.bottom)
-            $0.right.equalTo(dateLabel)
+            $0.right.equalTo(mainView.dateLabel)
         }
         
         configureTextView()

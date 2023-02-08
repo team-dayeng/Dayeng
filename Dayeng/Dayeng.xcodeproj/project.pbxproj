@@ -46,10 +46,10 @@
 		7628E68C298E4E80002D86F2 /* DefaultFirestoreDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E68B298E4E80002D86F2 /* DefaultFirestoreDatabaseService.swift */; };
 		7628E68E298E4E83002D86F2 /* FirestoreDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E68D298E4E82002D86F2 /* FirestoreDatabaseService.swift */; };
 		7628E690298E4E9B002D86F2 /* FirestoreAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E68F298E4E9B002D86F2 /* FirestoreAPI.swift */; };
-		7628E692298E5009002D86F2 /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E691298E5009002D86F2 /* MainPageViewController.swift */; };
+		76D47BB1298F91330091F8FB /* MainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D47BB0298F91330091F8FB /* MainCell.swift */; };
 		76F6C0A3298D968D00A124CD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0A2298D968D00A124CD /* MainViewController.swift */; };
 		76F6C0A5298D969700A124CD /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0A4298D969700A124CD /* MainViewModel.swift */; };
-		76F6C0A7298D96CF00A124CD /* CommonMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0A6298D96CF00A124CD /* CommonMainViewController.swift */; };
+		76F6C0A7298D96CF00A124CD /* CommonMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0A6298D96CF00A124CD /* CommonMainView.swift */; };
 		76F6C0A9298D97A700A124CD /* MainEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0A8298D97A700A124CD /* MainEditViewController.swift */; };
 		76F6C0AD298D985F00A124CD /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0AC298D985F00A124CD /* Date+.swift */; };
 		E552C2202990BE9300F51179 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C21F2990BE9300F51179 /* SettingViewController.swift */; };
@@ -99,10 +99,10 @@
 		7628E68B298E4E80002D86F2 /* DefaultFirestoreDatabaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFirestoreDatabaseService.swift; sourceTree = "<group>"; };
 		7628E68D298E4E82002D86F2 /* FirestoreDatabaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreDatabaseService.swift; sourceTree = "<group>"; };
 		7628E68F298E4E9B002D86F2 /* FirestoreAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreAPI.swift; sourceTree = "<group>"; };
-		7628E691298E5009002D86F2 /* MainPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageViewController.swift; sourceTree = "<group>"; };
+		76D47BB0298F91330091F8FB /* MainCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCell.swift; sourceTree = "<group>"; };
 		76F6C0A2298D968D00A124CD /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		76F6C0A4298D969700A124CD /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
-		76F6C0A6298D96CF00A124CD /* CommonMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonMainViewController.swift; sourceTree = "<group>"; };
+		76F6C0A6298D96CF00A124CD /* CommonMainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonMainView.swift; sourceTree = "<group>"; };
 		76F6C0A8298D97A700A124CD /* MainEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainEditViewController.swift; sourceTree = "<group>"; };
 		76F6C0AC298D985F00A124CD /* Date+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		E552C21F2990BE9300F51179 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -285,7 +285,7 @@
 		76280D19298791BF0061206A /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				76F6C0A6298D96CF00A124CD /* CommonMainViewController.swift */,
+				76F6C0A6298D96CF00A124CD /* CommonMainView.swift */,
 				E5D43434298A3291004EDFC7 /* CommonCalendarViewController.swift */,
 				E5D43436298A3905004EDFC7 /* CommonCalendarCell.swift */,
 				47C38780298E390D0030833F /* DayengAlertViewController.swift */,
@@ -307,10 +307,10 @@
 			isa = PBXGroup;
 			children = (
 				76F6C0A2298D968D00A124CD /* MainViewController.swift */,
+				76D47BB0298F91330091F8FB /* MainCell.swift */,
 				76F6C0A4298D969700A124CD /* MainViewModel.swift */,
 				76F6C0A8298D97A700A124CD /* MainEditViewController.swift */,
 				7628E689298E4E76002D86F2 /* MainEditViewModel.swift */,
-				7628E691298E5009002D86F2 /* MainPageViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -626,9 +626,8 @@
 				76F6C0A5298D969700A124CD /* MainViewModel.swift in Sources */,
 				76F6C0AD298D985F00A124CD /* Date+.swift in Sources */,
 				E5D43435298A3291004EDFC7 /* CommonCalendarViewController.swift in Sources */,
-				76F6C0A7298D96CF00A124CD /* CommonMainViewController.swift in Sources */,
+				76F6C0A7298D96CF00A124CD /* CommonMainView.swift in Sources */,
 				7628E68A298E4E76002D86F2 /* MainEditViewModel.swift in Sources */,
-				7628E692298E5009002D86F2 /* MainPageViewController.swift in Sources */,
 				76F6C0A3298D968D00A124CD /* MainViewController.swift in Sources */,
 				47D1836A298D1A610058C0EC /* FriendListCell.swift in Sources */,
 				47549424298F966B008B581D /* AlertType.swift in Sources */,
@@ -638,6 +637,7 @@
 				7628E682298E4DA4002D86F2 /* UserRepository.swift in Sources */,
 				7628E686298E4DB4002D86F2 /* DefaultMainEditUseCase.swift in Sources */,
 				E5D43437298A3905004EDFC7 /* CommonCalendarCell.swift in Sources */,
+				76D47BB1298F91330091F8FB /* MainCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

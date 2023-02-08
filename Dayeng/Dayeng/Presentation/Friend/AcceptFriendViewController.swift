@@ -26,7 +26,7 @@ final class AcceptFriendViewController: UIViewController {
     
     private lazy var logoImageView: UIImageView = {
         var imageView = UIImageView()
-        imageView.image = UIImage(named: "LogoImage")
+        imageView.image = .dayengLogo
         return imageView
     }()
     
