@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AcceptFriendViewController: UIViewController {
+final class AcceptFriendViewController: UIViewController {
     // MARK: - UI properties
     private lazy var backgroundImage: UIImageView = {
         var imageView: UIImageView = UIImageView()

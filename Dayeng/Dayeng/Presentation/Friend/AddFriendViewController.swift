@@ -93,7 +93,6 @@ final class AddFriendViewController: UIViewController {
     // MARK: - Lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "친구 추가"
         setupViews()
         configureUI()
     }
@@ -112,6 +111,7 @@ final class AddFriendViewController: UIViewController {
         }
     }
     private func configureUI() {
+        title = "친구 추가"
         let heightRatio = view.frame.height / 852
         let widthRatio = view.frame.width / 393
         
