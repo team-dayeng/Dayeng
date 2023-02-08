@@ -27,6 +27,7 @@ final class LoginViewController: UIViewController {
     }()
 
     private var appleLoginButton = AuthButton(type: .apple)
+//    private var appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn, style: .whiteOutline)
     private var kakaoLoginButton = AuthButton(type: .kakao)
     
     // MARK: - Properties
@@ -111,7 +112,10 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
     }
     
     /// apple ID 연동 성공시
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+    func authorizationController(
+        controller: ASAuthorizationController,
+        didCompleteWithAuthorization authorization: ASAuthorization
+    ) {
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
             // get user info

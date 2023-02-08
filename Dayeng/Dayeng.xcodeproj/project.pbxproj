@@ -46,6 +46,7 @@
 /* Begin PBXFileReference section */
 		47549416298E4C16008B581D /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		47549423298F966B008B581D /* AlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertType.swift; sourceTree = "<group>"; };
+		4754946C2993704F008B581D /* Dayeng.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dayeng.entitlements; sourceTree = "<group>"; };
 		47C38780298E390D0030833F /* DayengAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayengAlertViewController.swift; sourceTree = "<group>"; };
 		47D18358298A86F10058C0EC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		47D1835A298A8DDD0058C0EC /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
@@ -213,6 +214,7 @@
 				76280CE829878A3F0061206A /* SceneDelegate.swift */,
 				76280CEF29878A410061206A /* Assets.xcassets */,
 				76280CF429878A410061206A /* Info.plist */,
+				4754946C2993704F008B581D /* Dayeng.entitlements */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -659,6 +661,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Dayeng/App/Dayeng.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WW8WYM6B54;
@@ -687,6 +690,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Dayeng/App/Dayeng.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WW8WYM6B54;
