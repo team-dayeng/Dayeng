@@ -14,12 +14,6 @@ final class MainViewController: UIViewController {
     // MARK: - UI properties
     private var collectionView: UICollectionView!
     
-    lazy var backgroundImage: UIImageView = {
-        var imageView: UIImageView = UIImageView()
-        imageView.image = UIImage(named: "paperBackground")
-        return imageView
-    }()
-    
     private lazy var friendButton = {
         var button: UIButton = UIButton()
         button.tintColor = .black
@@ -60,8 +54,8 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
         
         setupNaviagationBar()
-        configureCollectionView()
         setupViews()
+        configureCollectionView()
         bind()
     }
     
@@ -87,6 +81,7 @@ final class MainViewController: UIViewController {
     }
     
     private func setupViews() {
+        addBackgroundImage()
         [friendButton, settingButton].forEach {
             view.addSubview($0)
         }
@@ -94,13 +89,6 @@ final class MainViewController: UIViewController {
     }
     
     private func configureCollectionView() {
-        view.addSubview(backgroundImage)
-        backgroundImage.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(-50)
-            $0.top.bottom.equalToSuperview().inset(-100)
-        }
-        
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints {
@@ -128,12 +116,6 @@ final class MainViewController: UIViewController {
     }
     
     private func configureUI() {
-        backgroundImage.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(-50)
-            $0.top.bottom.equalToSuperview().inset(-100)
-        }
-        
         friendButton.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             $0.right.equalToSuperview().offset(-55)
