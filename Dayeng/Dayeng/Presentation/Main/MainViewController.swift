@@ -67,7 +67,7 @@ final class MainViewController: UIViewController {
     
     // MARK: - Helpers
     private func setupNaviagationBar() {
-        navigationItem.titleView = UIImageView(image: UIImage(named: "LogoImage"))
+        navigationItem.titleView = UIImageView(image: .dayengLogo)
         navigationController?.navigationBar.tintColor = .black
         
         let calendarButton = UIBarButtonItem(image: UIImage(systemName: "calendar"),

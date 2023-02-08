@@ -50,7 +50,7 @@ final class MainEditViewController: UIViewController {
     }
     // MARK: - Helpers
     private func setupNaviagationBar() {
-        navigationItem.titleView = UIImageView(image: UIImage(named: "LogoImage"))
+        navigationItem.titleView = UIImageView(image: .dayengLogo)
         navigationController?.navigationBar.tintColor = .black
         
         let backButton = UIBarButtonItem(image: UIImage(systemName: "arrow.left"),
