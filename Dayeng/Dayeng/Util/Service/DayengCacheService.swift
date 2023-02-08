@@ -19,19 +19,19 @@ final class DayengCacheService {
         diskCache = DiskCache(name: name)
     }
     
-    func load(_ key: String) -> String? {
+    func load(_ key: String) -> Data? {
         if let data = memoryCache.load(key) {
             return data
         } else if let data = diskCache.load(key) {
-            memoryCache.write(key, text: data)
+            memoryCache.write(key, data: data)
             return data
         }
         return nil
     }
     
-    func write(_ key: String, text: String) {
-        memoryCache.write(key, text: text)
-        diskCache.write(key, text: text)
+    func write(_ key: String, data: Data) {
+        memoryCache.write(key, data: data)
+        diskCache.write(key, data: data)
     }
     
     func isExist(_ key: String) -> Bool {
@@ -48,18 +48,18 @@ final class MemoryCache {
     
     static let shared = MemoryCache(name: "cache")
     
-    private let cache = NSCache<NSString, NSString>()
+    private let cache = NSCache<NSString, AnyObject>()
     
     init(name: String) {
         cache.name = name
     }
     
-    func load(_ key: String) -> String? {
-        cache.object(forKey: key as NSString) as? String
+    func load(_ key: String) -> Data? {
+        cache.object(forKey: key as NSString) as? Data
     }
     
-    func write(_ key: String, text: String) {
-        cache.setObject(NSString(string: text), forKey: key as NSString)
+    func write(_ key: String, data: Data) {
+        cache.setObject(data as AnyObject, forKey: key as NSString)
     }
     
     func isExist(_ key: String) -> Bool {
@@ -99,16 +99,16 @@ final class DiskCache {
         )
     }
     
-    func load(_ key: String) -> String? {
+    func load(_ key: String) -> Data? {
         guard let fileURL = URL(string: key),
               let loadURL = folderURL?.appendingPathComponent(fileURL.lastPathComponent),
               let data = FileManager.default.contents(atPath: loadURL.path) else {
             return nil
         }
-        return String(data: data, encoding: .utf8)
+        return data
     }
     
-    func write(_ key: String, text: String?) {
+    func write(_ key: String, data: Data) {
         guard let fileURL = URL(string: key),
               let writeURL = folderURL?.appendingPathComponent(fileURL.lastPathComponent) else {
             return
@@ -117,7 +117,7 @@ final class DiskCache {
         let attributes: [FileAttributeKey: Any] = [.modificationDate: Date()]
         FileManager.default.createFile(
             atPath: writeURL.path,
-            contents: text?.data(using: .utf8),
+            contents: data,
             attributes: attributes
         )
     }
