@@ -14,15 +14,9 @@ import RxCocoa
 final class LoginViewController: UIViewController {
     
     // MARK: - UI properties
-    private lazy var backgroundImage: UIImageView = {
-        var imageView: UIImageView = UIImageView()
-        imageView.image = UIImage(named: "paperBackground")
-        return imageView
-    }()
-    
     private lazy var logoImage: UIImageView = {
         var imageView: UIImageView = UIImageView()
-        imageView.image = UIImage(named: "LogoImage")
+        imageView.image = .dayengLogo
         return imageView
     }()
 
@@ -54,16 +48,13 @@ final class LoginViewController: UIViewController {
     // MARK: - Helpers
     
     private func setupViews() {
-        view.addSubview(backgroundImage)
+        addBackgroundImage()
         view.addSubview(logoImage)
         view.addSubview(appleLoginButton)
         view.addSubview(kakaoLoginButton)
     }
     
     private func configureUI() {
-        backgroundImage.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
         logoImage.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(50)
             $0.centerX.equalToSuperview()
@@ -90,7 +81,8 @@ final class LoginViewController: UIViewController {
     }
 }
 
-extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+extension LoginViewController: ASAuthorizationControllerDelegate,
+                               ASAuthorizationControllerPresentationContextProviding {
     
     private func setupAppleLogin() {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
@@ -111,7 +103,9 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
     }
     
     /// apple ID 연동 성공시
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+    func authorizationController(controller: ASAuthorizationController,
+                                 didCompleteWithAuthorization authorization: ASAuthorization
+    ) {
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
             // get user info

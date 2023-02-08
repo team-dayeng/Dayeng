@@ -8,6 +8,10 @@
 import UIKit
 
 extension UIColor {
+    
+    static let dayengMain = UIColor(named: "MainColor") ?? UIColor.red
+    static let dayengGray = UIColor(red: 242, green: 242, blue: 242)
+    
     convenience init(red: Int, green: Int, blue: Int) {
         self.init(red: CGFloat(red) / 255.0,
                   green: CGFloat(green) / 255.0,

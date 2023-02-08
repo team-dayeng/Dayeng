@@ -13,12 +13,6 @@ import RxCocoa
 final class FriendListViewController: UIViewController {
     
     // MARK: - UI properties
-    private lazy var backgroundImage: UIImageView = {
-        var imageView: UIImageView = UIImageView()
-        imageView.image = UIImage(named: "paperBackground")
-        return imageView
-    }()
-    
     private let plusButton = UIBarButtonItem(
         image: UIImage(systemName: "plus"),
         style: .plain,
@@ -129,15 +123,12 @@ extension FriendListViewController {
     }
     
     private func setupViews() {
-        view.addSubview(backgroundImage)
+        addBackgroundImage()
         view.addSubview(collectionView)
         view.addSubview(emptyLabel)
     }
     
     private func configureUI() {
-        backgroundImage.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
         collectionView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(5)
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
@@ -154,7 +145,7 @@ extension FriendListViewController {
     private func bind() {
         let input = FriendListViewModel.Input(
             plusButtonDidTapped: plusButton.rx.tap.asObservable(),
-            friendIndexDidTapped: collectionView.rx.itemSelected.asObservable().map{ $0.row }
+            friendIndexDidTapped: collectionView.rx.itemSelected.asObservable().map { $0.row }
         )
         let output = viewModel.transform(input: input)
         
