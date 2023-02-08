@@ -22,14 +22,20 @@ final class DayengCacheService {
     func load(_ key: String) -> String? {
         if let data = memoryCache.load(key) {
             return data
-        } else {
-            return diskCache.load(key)
+        } else if let data = diskCache.load(key) {
+            memoryCache.write(key, text: data)
+            return data
         }
+        return nil
     }
     
     func write(_ key: String, text: String) {
         memoryCache.write(key, text: text)
         diskCache.write(key, text: text)
+    }
+    
+    func isExist(_ key: String) -> Bool {
+        memoryCache.isExist(key) || diskCache.isExist(key)
     }
     
     func removeAll() {
@@ -49,11 +55,15 @@ final class MemoryCache {
     }
     
     func load(_ key: String) -> String? {
-        return cache.object(forKey: key as NSString) as? String
+        cache.object(forKey: key as NSString) as? String
     }
     
     func write(_ key: String, text: String) {
         cache.setObject(NSString(string: text), forKey: key as NSString)
+    }
+    
+    func isExist(_ key: String) -> Bool {
+        cache.object(forKey: key as NSString) != nil
     }
     
     func removeAll() {
@@ -110,6 +120,14 @@ final class DiskCache {
             contents: text?.data(using: .utf8),
             attributes: attributes
         )
+    }
+    
+    func isExist(_ key: String) -> Bool {
+        guard let fileURL = URL(string: key),
+              let findURL = folderURL?.appendingPathComponent(fileURL.lastPathComponent) else {
+            return false
+        }
+        return FileManager.default.fileExists(atPath: findURL.path)
     }
     
     func removeAll() {
