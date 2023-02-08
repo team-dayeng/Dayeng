@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		47549417298E4C16008B581D /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47549416298E4C16008B581D /* UIViewController+.swift */; };
+		47549424298F966B008B581D /* AlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47549423298F966B008B581D /* AlertType.swift */; };
+		47C38781298E390D0030833F /* DayengAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C38780298E390D0030833F /* DayengAlertViewController.swift */; };
+		47D18359298A86F10058C0EC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18358298A86F10058C0EC /* LoginViewController.swift */; };
+		47D1835B298A8DDD0058C0EC /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D1835A298A8DDD0058C0EC /* AuthButton.swift */; };
+		47D1835D298A92C10058C0EC /* AuthType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D1835C298A92C10058C0EC /* AuthType.swift */; };
+		47D1835F298A94790058C0EC /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D1835E298A94790058C0EC /* UIColor+.swift */; };
+		47D18361298B8D760058C0EC /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18360298B8D750058C0EC /* UIImage+.swift */; };
+		47D18364298D0EDC0058C0EC /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18363298D0EDC0058C0EC /* LoginViewModel.swift */; };
+		47D18366298D16640058C0EC /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18365298D16640058C0EC /* FriendListViewController.swift */; };
+		47D18368298D16730058C0EC /* FriendListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18367298D16730058C0EC /* FriendListViewModel.swift */; };
+		47D1836A298D1A610058C0EC /* FriendListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18369298D1A610058C0EC /* FriendListCell.swift */; };
+		47D1836C298D40940058C0EC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D1836B298D40940058C0EC /* User.swift */; };
 		76280CE729878A3F0061206A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE629878A3F0061206A /* AppDelegate.swift */; };
 		76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE829878A3F0061206A /* SceneDelegate.swift */; };
 		76280CEB29878A3F0061206A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CEA29878A3F0061206A /* ViewController.swift */; };
@@ -26,7 +39,6 @@
 		7628E682298E4DA4002D86F2 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E681298E4DA4002D86F2 /* UserRepository.swift */; };
 		7628E684298E4DA7002D86F2 /* DefaultUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E683298E4DA7002D86F2 /* DefaultUserRepository.swift */; };
 		7628E686298E4DB4002D86F2 /* DefaultMainEditUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E685298E4DB4002D86F2 /* DefaultMainEditUseCase.swift */; };
-		7628E688298E4DC0002D86F2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E687298E4DC0002D86F2 /* User.swift */; };
 		7628E68A298E4E76002D86F2 /* MainEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E689298E4E76002D86F2 /* MainEditViewModel.swift */; };
 		7628E68C298E4E80002D86F2 /* DefaultFirestoreDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E68B298E4E80002D86F2 /* DefaultFirestoreDatabaseService.swift */; };
 		7628E68E298E4E83002D86F2 /* FirestoreDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E68D298E4E82002D86F2 /* FirestoreDatabaseService.swift */; };
@@ -36,9 +48,14 @@
 		76F6C0A5298D969700A124CD /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0A4298D969700A124CD /* MainViewModel.swift */; };
 		76F6C0A7298D96CF00A124CD /* CommonMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0A6298D96CF00A124CD /* CommonMainView.swift */; };
 		76F6C0A9298D97A700A124CD /* MainEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0A8298D97A700A124CD /* MainEditViewController.swift */; };
-		76F6C0AB298D97EB00A124CD /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0AA298D97EB00A124CD /* UIViewController+.swift */; };
 		76F6C0AD298D985F00A124CD /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0AC298D985F00A124CD /* Date+.swift */; };
-		E552C1F2298B911F00F51179 /* OwnerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C1F1298B911F00F51179 /* OwnerType.swift */; };
+		E552C2202990BE9300F51179 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C21F2990BE9300F51179 /* SettingViewController.swift */; };
+		E552C2222990BEA700F51179 /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2212990BEA700F51179 /* AlarmSettingViewController.swift */; };
+		E552C2242990BEB300F51179 /* AlarmDaySettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2232990BEB300F51179 /* AlarmDaySettingViewController.swift */; };
+		E552C2262990BEBB00F51179 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2252990BEBB00F51179 /* SettingViewModel.swift */; };
+		E552C2282990BECC00F51179 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2272990BECC00F51179 /* SettingCell.swift */; };
+		E552C22A2990BED800F51179 /* SettingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2292990BED800F51179 /* SettingHeaderView.swift */; };
+		E552C22C2990BEF200F51179 /* AlarmDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C22B2990BEF200F51179 /* AlarmDayCell.swift */; };
 		E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */; };
 		E5D4342E2988E22F004EDFC7 /* Dayeng-Book.json in Resources */ = {isa = PBXBuildFile; fileRef = E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */; };
 		E5D43435298A3291004EDFC7 /* CommonCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43434298A3291004EDFC7 /* CommonCalendarViewController.swift */; };
@@ -47,6 +64,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		47549416298E4C16008B581D /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
+		47549423298F966B008B581D /* AlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertType.swift; sourceTree = "<group>"; };
+		47C38780298E390D0030833F /* DayengAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayengAlertViewController.swift; sourceTree = "<group>"; };
+		47D18358298A86F10058C0EC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		47D1835A298A8DDD0058C0EC /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
+		47D1835C298A92C10058C0EC /* AuthType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthType.swift; sourceTree = "<group>"; };
+		47D1835E298A94790058C0EC /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		47D18360298B8D750058C0EC /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
+		47D18363298D0EDC0058C0EC /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		47D18365298D16640058C0EC /* FriendListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewController.swift; sourceTree = "<group>"; };
+		47D18367298D16730058C0EC /* FriendListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewModel.swift; sourceTree = "<group>"; };
+		47D18369298D1A610058C0EC /* FriendListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListCell.swift; sourceTree = "<group>"; };
+		47D1836B298D40940058C0EC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		76280CE329878A3F0061206A /* Dayeng.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dayeng.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76280CE629878A3F0061206A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		76280CE829878A3F0061206A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,7 +89,6 @@
 		7628E681298E4DA4002D86F2 /* UserRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		7628E683298E4DA7002D86F2 /* DefaultUserRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultUserRepository.swift; sourceTree = "<group>"; };
 		7628E685298E4DB4002D86F2 /* DefaultMainEditUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultMainEditUseCase.swift; sourceTree = "<group>"; };
-		7628E687298E4DC0002D86F2 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7628E689298E4E76002D86F2 /* MainEditViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainEditViewModel.swift; sourceTree = "<group>"; };
 		7628E68B298E4E80002D86F2 /* DefaultFirestoreDatabaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFirestoreDatabaseService.swift; sourceTree = "<group>"; };
 		7628E68D298E4E82002D86F2 /* FirestoreDatabaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreDatabaseService.swift; sourceTree = "<group>"; };
@@ -69,9 +98,14 @@
 		76F6C0A4298D969700A124CD /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		76F6C0A6298D96CF00A124CD /* CommonMainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonMainView.swift; sourceTree = "<group>"; };
 		76F6C0A8298D97A700A124CD /* MainEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainEditViewController.swift; sourceTree = "<group>"; };
-		76F6C0AA298D97EB00A124CD /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		76F6C0AC298D985F00A124CD /* Date+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
-		E552C1F1298B911F00F51179 /* OwnerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerType.swift; sourceTree = "<group>"; };
+		E552C21F2990BE9300F51179 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		E552C2212990BEA700F51179 /* AlarmSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewController.swift; sourceTree = "<group>"; };
+		E552C2232990BEB300F51179 /* AlarmDaySettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDaySettingViewController.swift; sourceTree = "<group>"; };
+		E552C2252990BEBB00F51179 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		E552C2272990BECC00F51179 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
+		E552C2292990BED800F51179 /* SettingHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingHeaderView.swift; sourceTree = "<group>"; };
+		E552C22B2990BEF200F51179 /* AlarmDayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDayCell.swift; sourceTree = "<group>"; };
 		E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Dayeng-Book.json"; sourceTree = "<group>"; };
 		E5D43434298A3291004EDFC7 /* CommonCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonCalendarViewController.swift; sourceTree = "<group>"; };
@@ -179,7 +213,7 @@
 		76280D1329878E340061206A /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				7628E687298E4DC0002D86F2 /* User.swift */,
+				47D1836B298D40940058C0EC /* User.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -191,6 +225,7 @@
 				76280D1629878E460061206A /* Service */,
 				76280D1529878E410061206A /* Extension */,
 				E52CF84B298A59C700829661 /* Enums */,
+				47D1835C298A92C10058C0EC /* AuthType.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -200,7 +235,9 @@
 			children = (
 				76F6C0AC298D985F00A124CD /* Date+.swift */,
 				E5D43438298A4892004EDFC7 /* NSTextAttachment+.swift */,
-				76F6C0AA298D97EB00A124CD /* UIViewController+.swift */,
+				47D1835E298A94790058C0EC /* UIColor+.swift */,
+				47D18360298B8D750058C0EC /* UIImage+.swift */,
+				47549416298E4C16008B581D /* UIViewController+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -246,6 +283,8 @@
 				76F6C0A6298D96CF00A124CD /* CommonMainView.swift */,
 				E5D43434298A3291004EDFC7 /* CommonCalendarViewController.swift */,
 				E5D43436298A3905004EDFC7 /* CommonCalendarCell.swift */,
+				47C38780298E390D0030833F /* DayengAlertViewController.swift */,
+				47D1835A298A8DDD0058C0EC /* AuthButton.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -253,6 +292,8 @@
 		76280D1A298791C60061206A /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				47D18358298A86F10058C0EC /* LoginViewController.swift */,
+				47D18363298D0EDC0058C0EC /* LoginViewModel.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -279,6 +320,9 @@
 		76280D1D298791DD0061206A /* Friend */ = {
 			isa = PBXGroup;
 			children = (
+				47D18365298D16640058C0EC /* FriendListViewController.swift */,
+				47D18367298D16730058C0EC /* FriendListViewModel.swift */,
+				47D18369298D1A610058C0EC /* FriendListCell.swift */,
 			);
 			path = Friend;
 			sourceTree = "<group>";
@@ -286,6 +330,9 @@
 		76280D1E298791E40061206A /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				E552C21E2990BE7F00F51179 /* View */,
+				E552C21D2990BE7A00F51179 /* ViewModel */,
+				E552C21C2990BE7300F51179 /* ViewController */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -377,9 +424,37 @@
 			isa = PBXGroup;
 			children = (
 				7628E68F298E4E9B002D86F2 /* FirestoreAPI.swift */,
-				E552C1F1298B911F00F51179 /* OwnerType.swift */,
+				47549423298F966B008B581D /* AlertType.swift */,
 			);
 			path = Enums;
+			sourceTree = "<group>";
+		};
+		E552C21C2990BE7300F51179 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E552C21F2990BE9300F51179 /* SettingViewController.swift */,
+				E552C2212990BEA700F51179 /* AlarmSettingViewController.swift */,
+				E552C2232990BEB300F51179 /* AlarmDaySettingViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		E552C21D2990BE7A00F51179 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E552C2252990BEBB00F51179 /* SettingViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		E552C21E2990BE7F00F51179 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E552C2272990BECC00F51179 /* SettingCell.swift */,
+				E552C2292990BED800F51179 /* SettingHeaderView.swift */,
+				E552C22B2990BEF200F51179 /* AlarmDayCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		E5D433FC2988CD9F004EDFC7 /* Splash */ = {
@@ -514,24 +589,43 @@
 				76F6C0A9298D97A700A124CD /* MainEditViewController.swift in Sources */,
 				7628E68C298E4E80002D86F2 /* DefaultFirestoreDatabaseService.swift in Sources */,
 				7628E684298E4DA7002D86F2 /* DefaultUserRepository.swift in Sources */,
-				E552C1F2298B911F00F51179 /* OwnerType.swift in Sources */,
 				7628E680298E4D9C002D86F2 /* UserDTO.swift in Sources */,
+				E552C22A2990BED800F51179 /* SettingHeaderView.swift in Sources */,
+				47C38781298E390D0030833F /* DayengAlertViewController.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
+				47D1835F298A94790058C0EC /* UIColor+.swift in Sources */,
+				47D1835B298A8DDD0058C0EC /* AuthButton.swift in Sources */,
+				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
+				47D1835D298A92C10058C0EC /* AuthType.swift in Sources */,
+				E552C2242990BEB300F51179 /* AlarmDaySettingViewController.swift in Sources */,
+				47D18366298D16640058C0EC /* FriendListViewController.swift in Sources */,
+				47D1836C298D40940058C0EC /* User.swift in Sources */,
+				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
+				E552C2202990BE9300F51179 /* SettingViewController.swift in Sources */,
+				47D18368298D16730058C0EC /* FriendListViewModel.swift in Sources */,
 				76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */,
+				E552C22C2990BEF200F51179 /* AlarmDayCell.swift in Sources */,
+				E552C2222990BEA700F51179 /* AlarmSettingViewController.swift in Sources */,
+				E552C2262990BEBB00F51179 /* SettingViewModel.swift in Sources */,
+				47D18361298B8D760058C0EC /* UIImage+.swift in Sources */,
+				E552C2282990BECC00F51179 /* SettingCell.swift in Sources */,
+				47D18359298A86F10058C0EC /* LoginViewController.swift in Sources */,
+				47D18364298D0EDC0058C0EC /* LoginViewModel.swift in Sources */,
 				E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */,
 				76F6C0A5298D969700A124CD /* MainViewModel.swift in Sources */,
 				76F6C0AD298D985F00A124CD /* Date+.swift in Sources */,
-				76F6C0AB298D97EB00A124CD /* UIViewController+.swift in Sources */,
 				E5D43435298A3291004EDFC7 /* CommonCalendarViewController.swift in Sources */,
 				76F6C0A7298D96CF00A124CD /* CommonMainView.swift in Sources */,
 				7628E68A298E4E76002D86F2 /* MainEditViewModel.swift in Sources */,
 				76F6C0A3298D968D00A124CD /* MainViewController.swift in Sources */,
+				47D1836A298D1A610058C0EC /* FriendListCell.swift in Sources */,
+				47549424298F966B008B581D /* AlertType.swift in Sources */,
+				47549417298E4C16008B581D /* UIViewController+.swift in Sources */,
 				E5D43439298A4892004EDFC7 /* NSTextAttachment+.swift in Sources */,
 				7628E690298E4E9B002D86F2 /* FirestoreAPI.swift in Sources */,
 				7628E682298E4DA4002D86F2 /* UserRepository.swift in Sources */,
 				7628E686298E4DB4002D86F2 /* DefaultMainEditUseCase.swift in Sources */,
 				E5D43437298A3905004EDFC7 /* CommonCalendarCell.swift in Sources */,
-				7628E688298E4DC0002D86F2 /* User.swift in Sources */,
 				76D47BB1298F91330091F8FB /* MainCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -678,12 +772,13 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "cho-seungki.Dayeng";
+				PRODUCT_BUNDLE_IDENTIFIER = "cho-seungki.Dayeng1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -705,12 +800,13 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "cho-seungki.Dayeng";
+				PRODUCT_BUNDLE_IDENTIFIER = "cho-seungki.Dayeng1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

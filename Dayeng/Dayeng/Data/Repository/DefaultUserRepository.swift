@@ -26,15 +26,15 @@ final class DefaultUserRepository: UserRepository {
                     }
                 }
                 
-                return User(answers: answerDictonary,
-                            currentIndex: userDTO.currentIndex,
-                            friends: userDTO.friends)
+                return User(uid: "uid",
+                            currentIndex: userDTO.currentIndex ?? 0,
+                            answers: userDTO.answers?.values.map { $0 } ?? [],
+                            friends: userDTO.friends ?? [])
             }
     }
     
     func uploadUser(userID: String, user: User) -> Observable<Void> {
-        var answerDictionary = [String: String]()
-        user.answers?.forEach { answerDictionary["\($0.key)"] = $0.value }
+        let answerDictionary = [String: String]()
         
         return firestoreService
             .upload(collection: "user",

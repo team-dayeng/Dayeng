@@ -2,36 +2,54 @@
 //  UIViewController+.swift
 //  Dayeng
 //
-//  Created by 조승기 on 2023/02/04.
+//  Created by  sangyeon on 2023/02/04.
 //
 
 import UIKit
 
 extension UIViewController {
-    func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
-        alert.addAction(okAction)
-        present(alert, animated: true, completion: nil)
-    }
     
-    /// 액션 핸들러를 포함한 버튼, 취소 버튼을 포함하는 핸들러
     func showAlert(
         title: String,
-        message: String,
-        actionTitle: String,
-        actionHandler: @escaping (() -> Void)
+        message: String? = nil,
+        type: AlertType,
+        leftActionTitle: String = "취소",
+        rightActionTitle: String = "확인",
+        leftActionHandler: (() -> Void)? = nil,
+        rightActionHandler: (() -> Void)? = nil
     ) {
-        let alert = UIAlertController(title: title,
-                                      message: message,
-                                      preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        let alertViewController = DayengAlertViewController(
+            title: title,
+            message: message,
+            leftActionTitle: leftActionTitle,
+            rightActionTitle: rightActionTitle)
         
-        let action = UIAlertAction(title: actionTitle, style: .default, handler: { _ in
-            actionHandler()
-        })
-        alert.addAction(cancelAction)
-        alert.addAction(action)
-        present(alert, animated: true)
+        showAlert(alertViewController,
+                  type: type,
+                  leftActionHandler: leftActionHandler,
+                  rightActionHandler: rightActionHandler)
+    }
+    
+    private func showAlert(
+        _ alertViewController: DayengAlertViewController,
+        type: AlertType,
+        leftActionHandler: (() -> Void)? = nil,
+        rightActionHandler: (() -> Void)? = nil
+    ) {
+        if type == .twoButton {
+            alertViewController.setLeftButtonAction {
+                alertViewController.dismiss(
+                    animated: false,
+                    completion: leftActionHandler
+                )
+            }
+        }
+        alertViewController.setRightButtonAction {
+            alertViewController.dismiss(
+                animated: false,
+                completion: rightActionHandler
+            )
+        }
+        present(alertViewController, animated: false)
     }
 }
