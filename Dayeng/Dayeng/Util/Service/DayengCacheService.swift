@@ -32,6 +32,10 @@ final class DayengCacheService {
         diskCache.write(key, text: text)
     }
     
+    func removeAll() {
+        memoryCache.removeAll()
+        diskCache.removeAll()
+    }
 }
 
 final class MemoryCache {
@@ -50,6 +54,10 @@ final class MemoryCache {
     
     func write(_ key: String, text: String) {
         cache.setObject(NSString(string: text), forKey: key as NSString)
+    }
+    
+    func removeAll() {
+        self.cache.removeAllObjects()
     }
     
 }
@@ -102,5 +110,12 @@ final class DiskCache {
             contents: text?.data(using: .utf8),
             attributes: attributes
         )
+    }
+    
+    func removeAll() {
+        if let folderURL {
+            try? FileManager.default.removeItem(at: folderURL)
+        }
+        self.createFolder()
     }
 }
