@@ -35,6 +35,9 @@
 		76280D0C29878C870061206A /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 76280D0B29878C870061206A /* FirebaseMessaging */; };
 		76280D2D29879F770061206A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 76280D2C29879F770061206A /* Lottie */; };
 		76280D2F2987A7B50061206A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76280D2E2987A7B50061206A /* GoogleService-Info.plist */; };
+		7628E67C298D9D31002D86F2 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E67B298D9D31002D86F2 /* AddFriendViewController.swift */; };
+		7628E67E298DA61D002D86F2 /* AcceptFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E67D298DA61D002D86F2 /* AcceptFriendViewController.swift */; };
+		E552C1F2298B911F00F51179 /* OwnerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C1F1298B911F00F51179 /* OwnerType.swift */; };
 		7628E680298E4D9C002D86F2 /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E67F298E4D9C002D86F2 /* UserDTO.swift */; };
 		7628E682298E4DA4002D86F2 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E681298E4DA4002D86F2 /* UserRepository.swift */; };
 		7628E684298E4DA7002D86F2 /* DefaultUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E683298E4DA7002D86F2 /* DefaultUserRepository.swift */; };
@@ -85,6 +88,9 @@
 		76280CF229878A410061206A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		76280CF429878A410061206A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		76280D2E2987A7B50061206A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7628E67B298D9D31002D86F2 /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
+		7628E67D298DA61D002D86F2 /* AcceptFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptFriendViewController.swift; sourceTree = "<group>"; };
+		E552C1F1298B911F00F51179 /* OwnerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerType.swift; sourceTree = "<group>"; };
 		7628E67F298E4D9C002D86F2 /* UserDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
 		7628E681298E4DA4002D86F2 /* UserRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		7628E683298E4DA7002D86F2 /* DefaultUserRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultUserRepository.swift; sourceTree = "<group>"; };
@@ -225,7 +231,6 @@
 				76280D1629878E460061206A /* Service */,
 				76280D1529878E410061206A /* Extension */,
 				E52CF84B298A59C700829661 /* Enums */,
-				47D1835C298A92C10058C0EC /* AuthType.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -320,6 +325,8 @@
 		76280D1D298791DD0061206A /* Friend */ = {
 			isa = PBXGroup;
 			children = (
+				7628E67B298D9D31002D86F2 /* AddFriendViewController.swift */,
+				7628E67D298DA61D002D86F2 /* AcceptFriendViewController.swift */,
 				47D18365298D16640058C0EC /* FriendListViewController.swift */,
 				47D18367298D16730058C0EC /* FriendListViewModel.swift */,
 				47D18369298D1A610058C0EC /* FriendListCell.swift */,
@@ -424,7 +431,9 @@
 			isa = PBXGroup;
 			children = (
 				7628E68F298E4E9B002D86F2 /* FirestoreAPI.swift */,
+				47D1835C298A92C10058C0EC /* AuthType.swift */,
 				47549423298F966B008B581D /* AlertType.swift */,
+				E552C1F1298B911F00F51179 /* OwnerType.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -593,6 +602,7 @@
 				E552C22A2990BED800F51179 /* SettingHeaderView.swift in Sources */,
 				47C38781298E390D0030833F /* DayengAlertViewController.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
+				7628E67C298D9D31002D86F2 /* AddFriendViewController.swift in Sources */,
 				47D1835F298A94790058C0EC /* UIColor+.swift in Sources */,
 				47D1835B298A8DDD0058C0EC /* AuthButton.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
@@ -612,6 +622,7 @@
 				47D18359298A86F10058C0EC /* LoginViewController.swift in Sources */,
 				47D18364298D0EDC0058C0EC /* LoginViewModel.swift in Sources */,
 				E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */,
+				7628E67E298DA61D002D86F2 /* AcceptFriendViewController.swift in Sources */,
 				76F6C0A5298D969700A124CD /* MainViewModel.swift in Sources */,
 				76F6C0AD298D985F00A124CD /* Date+.swift in Sources */,
 				E5D43435298A3291004EDFC7 /* CommonCalendarViewController.swift in Sources */,

@@ -8,6 +8,11 @@
 import UIKit
 
 extension UIImage {
+    
+    static let dayengBackground = UIImage(named: "paperBackground")
+    static let dayengLogo = UIImage(named: "LogoImage")
+    
+    /// 입력한 width, height로 이미지 리사이즈
     func resized(to size: CGSize) -> UIImage {
         return UIGraphicsImageRenderer(size: size).image { _ in
             draw(in: CGRect(origin: .zero, size: size))
