@@ -10,7 +10,7 @@ import SnapKit
 import RxCocoa
 import RxSwift
 
-class CommonMainView: UIView {
+final class CommonMainView: UIView {
     // MARK: - UI properties
     lazy var backgroundImage: UIImageView = {
         var imageView: UIImageView = UIImageView()
