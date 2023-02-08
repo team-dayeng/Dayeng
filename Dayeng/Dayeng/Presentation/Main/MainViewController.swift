@@ -54,8 +54,9 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
         
         setupNaviagationBar()
-        setupViews()
+        addBackgroundImage()
         configureCollectionView()
+        setupViews()
         bind()
     }
     
@@ -81,7 +82,6 @@ final class MainViewController: UIViewController {
     }
     
     private func setupViews() {
-        addBackgroundImage()
         [friendButton, settingButton].forEach {
             view.addSubview($0)
         }
@@ -92,7 +92,8 @@ final class MainViewController: UIViewController {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
+            $0.top.left.right.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalToSuperview()
         }
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
@@ -101,6 +102,7 @@ final class MainViewController: UIViewController {
         collectionView.register(MainCell.self, forCellWithReuseIdentifier: MainCell.identifier)
         collectionView.isPagingEnabled = true
         collectionView.bounces = false
+        collectionView.backgroundColor = .clear
     }
     
     private func collectionViewLayout() -> UICollectionViewCompositionalLayout {

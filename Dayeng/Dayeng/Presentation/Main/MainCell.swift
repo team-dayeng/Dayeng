@@ -34,6 +34,7 @@ final class MainCell: UICollectionViewCell {
     }
     
     private func configureUI() {
+        mainView.backgroundImage.removeFromSuperview()
         mainView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
