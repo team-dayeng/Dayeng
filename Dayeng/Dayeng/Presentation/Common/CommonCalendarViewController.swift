@@ -13,9 +13,11 @@ final class CommonCalendarViewController: UIViewController {
     private var collectionView: UICollectionView!
     
     // MARK: - Properties
+    private let owner: OwnerType
     
     // MARK: - Lifecycles
-    init() {
+    init(owner: OwnerType) {
+        self.owner = owner
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -28,23 +30,55 @@ final class CommonCalendarViewController: UIViewController {
         
         view.backgroundColor = .white
         
-        configureCollectionView()
+        setupViews()
+        configureUI()
     }
     
     // MARK: - Helpers
+    private func setupViews() {
+        
+    }
+    
+    private func configureUI() {
+        view.backgroundColor = .white
+        addBackgroundImage()
+        configureNavigationBar()
+        configureCollectionView()
+    }
+    
+    private func configureNavigationBar() {
+        var title = "달력"
+        
+        if owner == .friend {
+            title = "userName님의 달력"
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "house"),
+                                                                       style: .plain,
+                                                                       target: self,
+                                                                       action: #selector(rightBarButtonDidTapped))
+        }
+        
+        navigationItem.title = title
+        navigationController?.navigationBar.titleTextAttributes = [.font: UIFont.systemFont(ofSize: 20,
+                                                                                                 weight: .bold),
+                                                                        .foregroundColor: UIColor.black]
+        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.topItem?.title = ""
+    }
+    
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.contentInsetAdjustmentBehavior = .never
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .clear
+        collectionView.isScrollEnabled = false
         
         collectionView.register(CommonCalendarCell.self, forCellWithReuseIdentifier: CommonCalendarCell.identifier)
         
         view.addSubview(collectionView)
         
         collectionView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(30)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(30)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview().inset(view.frame.height/3)
         }
@@ -74,6 +108,10 @@ final class CommonCalendarViewController: UIViewController {
         
         return UICollectionViewCompositionalLayout(section: section)
     }
+    
+    @objc private func rightBarButtonDidTapped() {
+        // 자신의 화면으로 돌아가기
+    }
 }
 
 extension CommonCalendarViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -92,5 +130,10 @@ extension CommonCalendarViewController: UICollectionViewDelegate, UICollectionVi
         cell.configureNumberLabel(number: indexPath.row + 1)
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //싱글톤에서 알맞은 질문과 대답을 찾은 후, 뷰전환
+        print(indexPath.row + 1)
     }
 }
