@@ -37,7 +37,6 @@
 		76280D2F2987A7B50061206A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76280D2E2987A7B50061206A /* GoogleService-Info.plist */; };
 		7628E67C298D9D31002D86F2 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E67B298D9D31002D86F2 /* AddFriendViewController.swift */; };
 		7628E67E298DA61D002D86F2 /* AcceptFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E67D298DA61D002D86F2 /* AcceptFriendViewController.swift */; };
-		E552C1F2298B911F00F51179 /* OwnerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C1F1298B911F00F51179 /* OwnerType.swift */; };
 		7628E680298E4D9C002D86F2 /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E67F298E4D9C002D86F2 /* UserDTO.swift */; };
 		7628E682298E4DA4002D86F2 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E681298E4DA4002D86F2 /* UserRepository.swift */; };
 		7628E684298E4DA7002D86F2 /* DefaultUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E683298E4DA7002D86F2 /* DefaultUserRepository.swift */; };
@@ -59,6 +58,7 @@
 		E552C2282990BECC00F51179 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2272990BECC00F51179 /* SettingCell.swift */; };
 		E552C22A2990BED800F51179 /* SettingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2292990BED800F51179 /* SettingHeaderView.swift */; };
 		E552C22C2990BEF200F51179 /* AlarmDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C22B2990BEF200F51179 /* AlarmDayCell.swift */; };
+		E552C2522994BD3700F51179 /* OwnerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C1F1298B911F00F51179 /* OwnerType.swift */; };
 		E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */; };
 		E5D4342E2988E22F004EDFC7 /* Dayeng-Book.json in Resources */ = {isa = PBXBuildFile; fileRef = E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */; };
 		E5D43435298A3291004EDFC7 /* CommonCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43434298A3291004EDFC7 /* CommonCalendarViewController.swift */; };
@@ -90,7 +90,6 @@
 		76280D2E2987A7B50061206A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7628E67B298D9D31002D86F2 /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
 		7628E67D298DA61D002D86F2 /* AcceptFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptFriendViewController.swift; sourceTree = "<group>"; };
-		E552C1F1298B911F00F51179 /* OwnerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerType.swift; sourceTree = "<group>"; };
 		7628E67F298E4D9C002D86F2 /* UserDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
 		7628E681298E4DA4002D86F2 /* UserRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		7628E683298E4DA7002D86F2 /* DefaultUserRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultUserRepository.swift; sourceTree = "<group>"; };
@@ -105,6 +104,7 @@
 		76F6C0A6298D96CF00A124CD /* CommonMainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonMainView.swift; sourceTree = "<group>"; };
 		76F6C0A8298D97A700A124CD /* MainEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainEditViewController.swift; sourceTree = "<group>"; };
 		76F6C0AC298D985F00A124CD /* Date+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		E552C1F1298B911F00F51179 /* OwnerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerType.swift; sourceTree = "<group>"; };
 		E552C21F2990BE9300F51179 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		E552C2212990BEA700F51179 /* AlarmSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewController.swift; sourceTree = "<group>"; };
 		E552C2232990BEB300F51179 /* AlarmDaySettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDaySettingViewController.swift; sourceTree = "<group>"; };
@@ -614,6 +614,7 @@
 				E552C2202990BE9300F51179 /* SettingViewController.swift in Sources */,
 				47D18368298D16730058C0EC /* FriendListViewModel.swift in Sources */,
 				76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */,
+				E552C2522994BD3700F51179 /* OwnerType.swift in Sources */,
 				E552C22C2990BEF200F51179 /* AlarmDayCell.swift in Sources */,
 				E552C2222990BEA700F51179 /* AlarmSettingViewController.swift in Sources */,
 				E552C2262990BEBB00F51179 /* SettingViewModel.swift in Sources */,
