@@ -65,6 +65,7 @@
 		E552C25C299656F600F51179 /* FriendCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C25B299656F600F51179 /* FriendCoordinator.swift */; };
 		E552C25E2996570000F51179 /* SettingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C25D2996570000F51179 /* SettingCoordinator.swift */; };
 		E552C2602996573A00F51179 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C25F2996573A00F51179 /* SplashViewModel.swift */; };
+		E552C262299658F100F51179 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C261299658F100F51179 /* CalendarViewModel.swift */; };
 		E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */; };
 		E5D4342E2988E22F004EDFC7 /* Dayeng-Book.json in Resources */ = {isa = PBXBuildFile; fileRef = E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */; };
 		E5D43435298A3291004EDFC7 /* CommonCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43434298A3291004EDFC7 /* CommonCalendarViewController.swift */; };
@@ -124,6 +125,7 @@
 		E552C25B299656F600F51179 /* FriendCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCoordinator.swift; sourceTree = "<group>"; };
 		E552C25D2996570000F51179 /* SettingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCoordinator.swift; sourceTree = "<group>"; };
 		E552C25F2996573A00F51179 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
+		E552C261299658F100F51179 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Dayeng-Book.json"; sourceTree = "<group>"; };
 		E5D43434298A3291004EDFC7 /* CommonCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonCalendarViewController.swift; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 		76280D1C298791D10061206A /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				E552C261299658F100F51179 /* CalendarViewModel.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -658,6 +661,7 @@
 				47D18361298B8D760058C0EC /* UIImage+.swift in Sources */,
 				E552C2282990BECC00F51179 /* SettingCell.swift in Sources */,
 				47D18359298A86F10058C0EC /* LoginViewController.swift in Sources */,
+				E552C262299658F100F51179 /* CalendarViewModel.swift in Sources */,
 				E552C25A299656EA00F51179 /* MainCoordinator.swift in Sources */,
 				47D18364298D0EDC0058C0EC /* LoginViewModel.swift in Sources */,
 				E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */,
