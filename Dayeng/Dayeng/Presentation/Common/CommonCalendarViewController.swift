@@ -13,11 +13,11 @@ final class CommonCalendarViewController: UIViewController {
     private var collectionView: UICollectionView!
     
     // MARK: - Properties
-    private let owner: OwnerType
+    private let ownerType: OwnerType
     
     // MARK: - Lifecycles
-    init(owner: OwnerType) {
-        self.owner = owner
+    init(ownerType: OwnerType) {
+        self.ownerType = ownerType
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -49,7 +49,7 @@ final class CommonCalendarViewController: UIViewController {
     private func configureNavigationBar() {
         var title = "달력"
         
-        if owner == .friend {
+        if ownerType == .friend {
             title = "userName님의 달력"
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "house"),
                                                                        style: .plain,
