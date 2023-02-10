@@ -8,16 +8,23 @@
 import UIKit
 import SnapKit
 
-final class CommonCalendarViewController: UIViewController {
+final class CalendarViewController: UIViewController {
     // MARK: - UI properties
     private var collectionView: UICollectionView!
     
+    private lazy var homeButton = UIBarButtonItem(image: UIImage(systemName: "house"),
+                                                  style: .plain,
+                                                  target: nil,
+                                                  action: nil)
+    
     // MARK: - Properties
     private let ownerType: OwnerType
+    private let viewModel: CalendarViewModel
     
     // MARK: - Lifecycles
-    init(ownerType: OwnerType) {
+    init(ownerType: OwnerType, viewModel: CalendarViewModel) {
         self.ownerType = ownerType
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -32,9 +39,18 @@ final class CommonCalendarViewController: UIViewController {
         
         setupViews()
         configureUI()
+        bind()
     }
     
     // MARK: - Helpers
+    private func bind() {
+        let input = CalendarViewModel.Input(
+            homeButtonDidTapped: homeButton.rx.tap.asObservable()
+        )
+        
+        let output = viewModel.transform(input: input)
+    }
+    
     private func setupViews() {
         
     }
@@ -51,10 +67,7 @@ final class CommonCalendarViewController: UIViewController {
         
         if ownerType == .friend {
             title = "userName님의 달력"
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "house"),
-                                                                       style: .plain,
-                                                                       target: self,
-                                                                       action: #selector(rightBarButtonDidTapped))
+            navigationItem.rightBarButtonItem = homeButton
         }
         
         navigationItem.title = title
@@ -108,13 +121,9 @@ final class CommonCalendarViewController: UIViewController {
         
         return UICollectionViewCompositionalLayout(section: section)
     }
-    
-    @objc private func rightBarButtonDidTapped() {
-        // 자신의 화면으로 돌아가기
-    }
 }
 
-extension CommonCalendarViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension CalendarViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         // 365 대신 싱글톤에 저장되어있는 질문 개수

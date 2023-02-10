@@ -53,8 +53,9 @@ final class MainCoordinator: MainCoordinatorProtocol {
     }
     
     func showCalendarViewController(ownerType: OwnerType) {
-        let viewModel = CalendarViewModel(ownerType: ownerType)
-        let viewController = CommonCalendarViewController(ownerType: ownerType)
+        let viewModel = CalendarViewModel()
+        let viewController = CalendarViewController(ownerType: ownerType,
+                                                    viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
     }
     

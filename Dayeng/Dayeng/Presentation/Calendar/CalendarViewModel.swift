@@ -12,7 +12,7 @@ import RxRelay
 final class CalendarViewModel {
     // MARK: - Input
     struct Input {
-        
+        var homeButtonDidTapped: Observable<Void>
     }
     
     // MARK: - Output
@@ -21,17 +21,21 @@ final class CalendarViewModel {
     }
     
     // MARK: - Dependency
-    private let ownerType: OwnerType
     private let disposeBag = DisposeBag()
+    let homeButtonDidTapped = PublishRelay<Void>()
     
     // MARK: - LifeCycle
-    init(ownerType: OwnerType) {
-        self.ownerType = ownerType
-    }
     
     // MARK: - Helper
     func transform(input: Input) -> Output {
         let output = Output()
+        
+        input.homeButtonDidTapped
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.homeButtonDidTapped.accept(())
+            })
+            .disposed(by: disposeBag)
         
         return output
     }
