@@ -29,9 +29,11 @@ class SplashViewController: UIViewController {
     }()
     
     // MARK: - Properties
+    private let viewModel: SplashViewModel
     
     // MARK: - Lifecycles
-    init() {
+    init(viewModel: SplashViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
