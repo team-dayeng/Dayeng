@@ -18,6 +18,7 @@ final class AppCoordinator: AppCoordinatorProtocol {
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []
     weak var delegate: CoordinatorDelegate?
+    var disposeBag = DisposeBag()
     
     required init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -30,6 +31,12 @@ final class AppCoordinator: AppCoordinatorProtocol {
     func showSplashViewController() {
         let viewModel = SplashViewModel()
         let viewController = SplashViewController(viewModel: viewModel)
+        viewModel.dataDidLoaded
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.showMainViewController()
+            })
+            .disposed(by: disposeBag)
         navigationController.viewControllers = [viewController]
     }
     

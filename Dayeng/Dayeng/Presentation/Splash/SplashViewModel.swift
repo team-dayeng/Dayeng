@@ -12,7 +12,7 @@ import RxRelay
 final class SplashViewModel {
     // MARK: - Input
     struct Input {
-        var animationStartEvent: Observable<Void>
+        var animationDidStarted: Observable<Void>
     }
     
     // MARK: - Output
@@ -24,7 +24,7 @@ final class SplashViewModel {
     var disposeBag = DisposeBag()
     private weak var coordinator: AppCoordinator?
     private let firestoreService = DefaultFirestoreDatabaseService()
-    let showMainEvent = PublishRelay<Void>()
+    let dataDidLoaded = PublishRelay<Void>()
     
     // MARK: - Lifecycles
     
@@ -32,12 +32,13 @@ final class SplashViewModel {
     func transform(input: Input) -> Output {
         let output = Output()
         
-        input.animationStartEvent
+        input.animationDidStarted
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
-                self.firestoreService.fetch(api: .questions)
-                    .subscribe(onNext: { (result: [String: String]) in
-                        self.showMainEvent.accept(())
+                self.firestoreService.fetch(collection: "questions")
+                    .subscribe(onNext: { (result: [[String: String]]) in
+                        print(result)
+                        self.dataDidLoaded.accept(())
                     })
                     .disposed(by: self.disposeBag)
             })

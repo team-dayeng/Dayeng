@@ -23,8 +23,6 @@ final class CalendarViewModel {
     // MARK: - Dependency
     private let ownerType: OwnerType
     private let disposeBag = DisposeBag()
-    private let tappedBackButton = PublishRelay<Void>()
-    
     
     // MARK: - LifeCycle
     init(ownerType: OwnerType) {

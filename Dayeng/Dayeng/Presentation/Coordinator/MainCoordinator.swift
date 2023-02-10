@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxRelay
 
 protocol MainCoordinatorProtocol: Coordinator {
     func showMainViewController()
@@ -15,6 +17,7 @@ final class MainCoordinator: MainCoordinatorProtocol {
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []
     var delegate: CoordinatorDelegate?
+    var disposeBag = DisposeBag()
     
     required init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -25,14 +28,33 @@ final class MainCoordinator: MainCoordinatorProtocol {
     }
     
     func showMainViewController() {
-        let viewController = MainViewController(viewModel: MainViewModel())
+        let viewModel = MainViewModel()
+        let viewController = MainViewController(viewModel: viewModel)
+        viewModel.friendButtonDidTapped
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.showFriendViewController()
+            })
+            .disposed(by: disposeBag)
+        viewModel.settingButtonDidTapped
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.showSettingViewController()
+            })
+            .disposed(by: disposeBag)
+        viewModel.calendarButtonDidTapped
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.showCalendarViewController(ownerType: .me)
+            })
+            .disposed(by: disposeBag)
+        
         navigationController.viewControllers = [viewController]
     }
     
     func showCalendarViewController(ownerType: OwnerType) {
         let viewModel = CalendarViewModel(ownerType: ownerType)
         let viewController = CommonCalendarViewController(ownerType: ownerType)
-        
         navigationController.pushViewController(viewController, animated: true)
     }
     

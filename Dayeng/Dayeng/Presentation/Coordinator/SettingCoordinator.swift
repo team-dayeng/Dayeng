@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxRelay
 
 protocol SettingCoordinatorProtocol: Coordinator {
     func showSettingViewController()
@@ -15,6 +17,7 @@ final class SettingCoordinator: SettingCoordinatorProtocol {
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []
     var delegate: CoordinatorDelegate?
+    var disposeBag = DisposeBag()
     
     required init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -25,9 +28,8 @@ final class SettingCoordinator: SettingCoordinatorProtocol {
     }
     
     func showSettingViewController() {
-        let viewModel = 0
-        let viewController = UIViewController()
-        
+        let viewModel = SettingViewModel()
+        let viewController = SettingViewController(viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
     }
 }
