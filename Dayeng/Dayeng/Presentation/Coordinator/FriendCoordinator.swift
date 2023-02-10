@@ -30,6 +30,40 @@ final class FriendCoordinator: FriendCoordinatorProtocol {
     func showFriendViewController() {
         let viewModel = FriendListViewModel()
         let viewController = FriendListViewController(viewModel: viewModel)
+        viewModel.plusButtonDidTapped
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.showAddFriendViewController()
+            })
+            .disposed(by: disposeBag)
+        viewModel.friendIndexDidTapped
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.showFriendCalendarViewController()
+            })
+            .disposed(by: disposeBag)
         navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showAddFriendViewController() {
+        let viewController = AddFriendViewController()
+        navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showFriendCalendarViewController() {
+        let viewModel = CalendarViewModel()
+        let viewController = CalendarViewController(ownerType: .friend,
+                                                    viewModel: viewModel)
+        viewModel.homeButtonDidTapped
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.returnMainViewController()
+            })
+            .disposed(by: disposeBag)
+        navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func returnMainViewController() {
+        navigationController.popToRootViewController(animated: true)
     }
 }

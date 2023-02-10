@@ -68,7 +68,7 @@
 		E552C262299658F100F51179 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C261299658F100F51179 /* CalendarViewModel.swift */; };
 		E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */; };
 		E5D4342E2988E22F004EDFC7 /* Dayeng-Book.json in Resources */ = {isa = PBXBuildFile; fileRef = E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */; };
-		E5D43435298A3291004EDFC7 /* CommonCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43434298A3291004EDFC7 /* CommonCalendarViewController.swift */; };
+		E5D43435298A3291004EDFC7 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43434298A3291004EDFC7 /* CalendarViewController.swift */; };
 		E5D43437298A3905004EDFC7 /* CommonCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43436298A3905004EDFC7 /* CommonCalendarCell.swift */; };
 		E5D43439298A4892004EDFC7 /* NSTextAttachment+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43438298A4892004EDFC7 /* NSTextAttachment+.swift */; };
 /* End PBXBuildFile section */
@@ -128,7 +128,7 @@
 		E552C261299658F100F51179 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Dayeng-Book.json"; sourceTree = "<group>"; };
-		E5D43434298A3291004EDFC7 /* CommonCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonCalendarViewController.swift; sourceTree = "<group>"; };
+		E5D43434298A3291004EDFC7 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		E5D43436298A3905004EDFC7 /* CommonCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonCalendarCell.swift; sourceTree = "<group>"; };
 		E5D43438298A4892004EDFC7 /* NSTextAttachment+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextAttachment+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -302,7 +302,6 @@
 			isa = PBXGroup;
 			children = (
 				76F6C0A6298D96CF00A124CD /* CommonMainView.swift */,
-				E5D43434298A3291004EDFC7 /* CommonCalendarViewController.swift */,
 				E5D43436298A3905004EDFC7 /* CommonCalendarCell.swift */,
 				47C38780298E390D0030833F /* DayengAlertViewController.swift */,
 				47D1835A298A8DDD0058C0EC /* AuthButton.swift */,
@@ -334,6 +333,7 @@
 		76280D1C298791D10061206A /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				E5D43434298A3291004EDFC7 /* CalendarViewController.swift */,
 				E552C261299658F100F51179 /* CalendarViewModel.swift */,
 			);
 			path = Calendar;
@@ -668,7 +668,7 @@
 				7628E67E298DA61D002D86F2 /* AcceptFriendViewController.swift in Sources */,
 				76F6C0A5298D969700A124CD /* MainViewModel.swift in Sources */,
 				76F6C0AD298D985F00A124CD /* Date+.swift in Sources */,
-				E5D43435298A3291004EDFC7 /* CommonCalendarViewController.swift in Sources */,
+				E5D43435298A3291004EDFC7 /* CalendarViewController.swift in Sources */,
 				76F6C0A7298D96CF00A124CD /* CommonMainView.swift in Sources */,
 				E552C2572994C93700F51179 /* AppCoordinator.swift in Sources */,
 				7628E68A298E4E76002D86F2 /* MainEditViewModel.swift in Sources */,
