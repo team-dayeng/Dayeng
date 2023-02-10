@@ -29,7 +29,7 @@ final class DayengCacheService {
         return nil
     }
     
-    func write(_ key: String, data: Data) {
+    func write(_ key: String, data: Data?) {
         memoryCache.write(key, data: data)
         diskCache.write(key, data: data)
     }
@@ -58,7 +58,7 @@ final class MemoryCache {
         cache.object(forKey: key as NSString) as? Data
     }
     
-    func write(_ key: String, data: Data) {
+    func write(_ key: String, data: Data?) {
         cache.setObject(data as AnyObject, forKey: key as NSString)
     }
     
@@ -108,9 +108,10 @@ final class DiskCache {
         return data
     }
     
-    func write(_ key: String, data: Data) {
+    func write(_ key: String, data: Data?) {
         guard let fileURL = URL(string: key),
-              let writeURL = folderURL?.appendingPathComponent(fileURL.lastPathComponent) else {
+              let writeURL = folderURL?.appendingPathComponent(fileURL.lastPathComponent),
+              let data else {
             return
         }
         
