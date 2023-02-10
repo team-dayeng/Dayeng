@@ -15,6 +15,7 @@ final class DefaultFirestoreDatabaseService: FirestoreDatabaseService {
     enum FirestoreError: Error {
         case snapshotNotFoundError
         case dataNotFoundError
+        case decodeError
     }
     
     func fetch<T: Decodable>(collection: String, document: String) -> Observable<T> {
@@ -119,5 +120,31 @@ final class DefaultFirestoreDatabaseService: FirestoreDatabaseService {
             return Disposables.create()
         }
     }
-    
+
+    /// collection 내 모든 document를 조회
+    func fetch<T: Decodable>(collection: String) -> Observable<[T]> {
+        return Observable.create { observer in
+            self.firestore.collection(collection)
+                .getDocuments { snapshot, error in
+                    if let error = error {
+                        observer.onError(error)
+                        return
+                    }
+                    
+                    guard let snapshot = snapshot else {
+                        observer.onError(FirestoreError.snapshotNotFoundError)
+                        return
+                    }
+                    
+                    let dtos = snapshot.documents.compactMap {
+                        if let data = try? $0.data(as: T.self) { return data }
+                        observer.onError(FirestoreError.decodeError)
+                        return nil
+                    }
+                    observer.onNext(dtos)
+                }
+            
+            return Disposables.create()
+        }
+    }
 }
