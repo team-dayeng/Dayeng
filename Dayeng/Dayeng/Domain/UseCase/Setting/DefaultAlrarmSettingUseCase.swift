@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+final class DefaultAlrarmSettingUseCase: AlrarmSettingUseCase  {
+    
+    func registAlarm() {
+        
+    }
+}
