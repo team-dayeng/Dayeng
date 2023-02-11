@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import SnapKit
+import RxRelay
 
 final class AlarmDaySettingViewController: UIViewController {
     enum DayType: Int {
@@ -50,11 +51,12 @@ final class AlarmDaySettingViewController: UIViewController {
     
     private var collectionView: UICollectionView!
     // MARK: - Properties
-    var isSelectedCells: [IndexPath: Bool]
+    var disposeBag = DisposeBag()
+    let isSelectedCells: BehaviorRelay<[Bool]>
     
     // MARK: - Lifecycles
-    init() {
-        isSelectedCells = [:]
+    init(isSelectedCells: BehaviorRelay<[Bool]>) {
+        self.isSelectedCells = isSelectedCells
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -64,7 +66,7 @@ final class AlarmDaySettingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupViews()
         configureUI()
         configureCollectionView()
@@ -77,9 +79,20 @@ final class AlarmDaySettingViewController: UIViewController {
     }
     
     // MARK: - Helpers
-
+    
     private func setupViews() {
         view.addSubview(backgroundImage)
+        
+        isSelectedCells
+            .subscribe(onNext: { [weak self] isSelectedCells in
+                guard let self else { return }
+                isSelectedCells
+                    .filter { $0 }
+                    .enumerated()
+                    .forEach { index, _ in
+                        let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0))
+                    }
+            }).disposed(by: disposeBag)
     }
     
     private func configureUI() {
@@ -154,7 +167,10 @@ extension AlarmDaySettingViewController: UICollectionViewDelegate, UICollectionV
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell  = collectionView.cellForItem(at: indexPath) as? AlarmDayCell else { return }
         
-        isSelectedCells[indexPath] = !cell.isSelect
+        var isSelectedCellsValue =  isSelectedCells.value
+        isSelectedCellsValue[indexPath.row] = !cell.isSelect
+        isSelectedCells.accept(isSelectedCellsValue)
+        
         cell.tappedCell(isSelected: !cell.isSelect)
     }
 }
