@@ -15,6 +15,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         
+        if #available(iOS 10.0, *) {
+            let center = UNUserNotificationCenter.current()
+            center.requestAuthorization(options: [.alert], completionHandler: { allow, error in
+                if allow {
+                    print("notification allowed")
+                }
+
+            })
+        }
+        
         return true
     }
 
