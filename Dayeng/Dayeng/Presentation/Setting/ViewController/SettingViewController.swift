@@ -18,13 +18,13 @@ final class SettingViewController: UIViewController {
         
         var title: String {
             switch self {
-                case .alarm:
-                    return "알람"
-                case .account:
-                    return "계정"
-                case .etc:
-                    return "기타"
-                }
+            case .alarm:
+                return "알람"
+            case .account:
+                return "계정"
+            case .etc:
+                return "기타"
+            }
         }
     }
     
@@ -39,20 +39,20 @@ final class SettingViewController: UIViewController {
         
         var title: String {
             switch self {
-                case .alarm:
-                    return "알람 설정"
-                case .logout:
-                    return "로그아웃"
-                case .withDrwal:
-                    return "회원탈퇴"
-                case .recommend:
-                    return "질문 추천하기"
-                case .openSource:
-                    return "오픈소스 목록보기"
-                case .aboutMe:
-                    return "정보"
-                case .inquiry:
-                    return "문의하기"
+            case .alarm:
+                return "알람 설정"
+            case .logout:
+                return "로그아웃"
+            case .withDrwal:
+                return "회원탈퇴"
+            case .recommend:
+                return "질문 추천하기"
+            case .openSource:
+                return "오픈소스 목록보기"
+            case .aboutMe:
+                return "정보"
+            case .inquiry:
+                return "문의하기"
             }
         }
     }
@@ -223,7 +223,11 @@ final class SettingViewController: UIViewController {
     }
     
     private func transformAlarm() {
-        let alarmViewController = AlarmSettingViewController()
+        let alarmViewController = AlarmSettingViewController(
+            alarmSettingViewModel: AlarmSettingViewModel(
+                useCase: DefaultAlrarmSettingUseCase())
+        )
+
         navigationController?.pushViewController(alarmViewController, animated: true)
     }
 }
