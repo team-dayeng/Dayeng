@@ -26,6 +26,8 @@
 		47D1836C298D40940058C0EC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D1836B298D40940058C0EC /* User.swift */; };
 		47E0A5DB299770890093645B /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5DA299770890093645B /* Answer.swift */; };
 		47E0A5DD299770EA0093645B /* AnswerDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5DC299770EA0093645B /* AnswerDTO.swift */; };
+		47E0A5E7299774C20093645B /* QuestionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5E6299774C20093645B /* QuestionRepository.swift */; };
+		47E0A5E9299775060093645B /* DefaultQuestionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5E8299775060093645B /* DefaultQuestionRepository.swift */; };
 		76280CE729878A3F0061206A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE629878A3F0061206A /* AppDelegate.swift */; };
 		76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE829878A3F0061206A /* SceneDelegate.swift */; };
 		76280CEB29878A3F0061206A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CEA29878A3F0061206A /* ViewController.swift */; };
@@ -92,6 +94,8 @@
 		47D1836B298D40940058C0EC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		47E0A5DA299770890093645B /* Answer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
 		47E0A5DC299770EA0093645B /* AnswerDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerDTO.swift; sourceTree = "<group>"; };
+		47E0A5E6299774C20093645B /* QuestionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionRepository.swift; sourceTree = "<group>"; };
+		47E0A5E8299775060093645B /* DefaultQuestionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultQuestionRepository.swift; sourceTree = "<group>"; };
 		76280CE329878A3F0061206A /* Dayeng.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dayeng.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76280CE629878A3F0061206A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		76280CE829878A3F0061206A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -204,6 +208,7 @@
 			children = (
 				76280D212987925D0061206A /* Protocol */,
 				7628E683298E4DA7002D86F2 /* DefaultUserRepository.swift */,
+				47E0A5E8299775060093645B /* DefaultQuestionRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -373,6 +378,7 @@
 			isa = PBXGroup;
 			children = (
 				7628E681298E4DA4002D86F2 /* UserRepository.swift */,
+				47E0A5E6299774C20093645B /* QuestionRepository.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -625,6 +631,7 @@
 				47D1835F298A94790058C0EC /* UIColor+.swift in Sources */,
 				47D1835B298A8DDD0058C0EC /* AuthButton.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
+				47E0A5E9299775060093645B /* DefaultQuestionRepository.swift in Sources */,
 				47D1835D298A92C10058C0EC /* AuthType.swift in Sources */,
 				E552C2242990BEB300F51179 /* AlarmDaySettingViewController.swift in Sources */,
 				47D18366298D16640058C0EC /* FriendListViewController.swift in Sources */,
@@ -648,6 +655,7 @@
 				76F6C0A5298D969700A124CD /* MainViewModel.swift in Sources */,
 				76F6C0AD298D985F00A124CD /* Date+.swift in Sources */,
 				E5D43435298A3291004EDFC7 /* CommonCalendarViewController.swift in Sources */,
+				47E0A5E7299774C20093645B /* QuestionRepository.swift in Sources */,
 				76F6C0A7298D96CF00A124CD /* CommonMainView.swift in Sources */,
 				7628E68A298E4E76002D86F2 /* MainEditViewModel.swift in Sources */,
 				76F6C0A3298D968D00A124CD /* MainViewController.swift in Sources */,
