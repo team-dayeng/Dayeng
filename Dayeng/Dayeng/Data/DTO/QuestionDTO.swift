@@ -10,4 +10,8 @@ import Foundation
 struct QuestionDTO: Codable {
     let english: String
     let korean: String
+    
+    func toDomain() -> Question {
+        Question(english: english, korean: korean)
+    }
 }
