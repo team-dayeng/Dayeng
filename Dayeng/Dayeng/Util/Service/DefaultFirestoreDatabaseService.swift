@@ -48,6 +48,33 @@ final class DefaultFirestoreDatabaseService: FirestoreDatabaseService {
         }
     }
     
+    func fetch<T: Decodable>(collection: String) -> Observable<T> {
+        return Observable.create { observer in
+            self.firestore.collection(collection).getDocuments { snapshot, error in
+                if let error = error {
+                    observer.onError(error)
+                    return
+                }
+                
+                guard let snapshot = snapshot else {
+                    observer.onError(FirestoreError.snapshotNotFoundError)
+                    return
+                }
+                
+                let data = snapshot.documents.map { $0.data() }
+                
+                do {
+                    let dto = try Firestore.Decoder().decode(T.self, from: data)
+                    observer.onNext(dto)
+                } catch {
+                    observer.onError(error)
+                }
+            }
+        
+            return Disposables.create()
+        }
+    }
+    
     func upload<T: Encodable>(collection: String, document: String, dto: T) -> Observable<Void> {
         return Observable.create { observer in
             do {
