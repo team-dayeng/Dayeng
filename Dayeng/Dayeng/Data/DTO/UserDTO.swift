@@ -8,7 +8,13 @@
 import Foundation
 
 struct UserDTO: Codable {
-    var answers: [String: String]?
-    var currentIndex: Int?
-    var friends: [String]?
+    var answers: [AnswerDTO]
+    var currentIndex: Int
+    var friends: [String]
+    
+    func toDomain() -> User {
+        User(currentIndex: currentIndex,
+             answers: answers.map { $0.toDomain() },
+             friends: friends)
+    }
 }
