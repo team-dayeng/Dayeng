@@ -41,12 +41,7 @@ final class FriendListViewModel {
         output.friends.onNext(friends)
         
         input.plusButtonDidTapped
-            .subscribe(onNext: { [weak self] in
-                guard let self else { return }
-                print("plusButtonDidTapped")
-                // TODO: 화면 전환
-                self.plusButtonDidTapped.accept(())
-            })
+            .bind(to: plusButtonDidTapped)
             .disposed(by: disposeBag)
         
         input.friendIndexDidTapped

@@ -38,6 +38,7 @@ final class SplashViewModel {
                 self.firestoreService.fetch(collection: "questions")
                     .subscribe(onNext: { (result: [[String: String]]) in
                         print(result)
+                        // TODO: 캐시에 데이터 저장
                         self.dataDidLoaded.accept(())
                     })
                     .disposed(by: self.disposeBag)
