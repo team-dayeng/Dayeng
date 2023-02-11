@@ -10,20 +10,12 @@ import SnapKit
 
 final class AlarmSettingViewController: UIViewController {
     // MARK: - UI properties
-    private lazy var backgroundImage: UIImageView = {
-        var imageView: UIImageView = UIImageView()
-        imageView.image = UIImage(named: "paperBackground")
-        
-        return imageView
-    }()
-    
     private lazy var contentView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 10
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.gray.cgColor
-        
         return view
     }()
     
@@ -37,7 +29,7 @@ final class AlarmSettingViewController: UIViewController {
     }()
     
     private lazy var discriptionLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "설정한 시간에 오늘의 질문을 알려드려요."
         label.textColor = .gray
         label.font = .systemFont(ofSize: 16, weight: .regular)
@@ -137,9 +129,9 @@ final class AlarmSettingViewController: UIViewController {
     }
     
     // MARK: - Helpers
-
+    
     private func setupViews() {
-        view.addSubview(backgroundImage)
+        addBackgroundImage()
         view.addSubview(contentView)
         contentView.addSubview(titleLable)
         contentView.addSubview(discriptionLabel)
