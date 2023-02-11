@@ -23,17 +23,3 @@ enum FirestoreAPI {
         }
     }
 }
-
-struct AnswerDTO: Codable {
-    var answer: [Int: String]
-    
-    func toDomain() -> Answer {
-        var answerArray = Array(repeating: "", count: answer.keys.max() ?? 0)
-        answer.forEach { answerArray[$0.key] = $0.value }
-        return Answer(answer: answerArray)
-    }
-}
-
-struct Answer {
-    var answer: [String]
-}
