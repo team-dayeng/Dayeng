@@ -24,7 +24,6 @@ final class SettingCell: UICollectionViewCell {
     
     // MARK: - Properties
     static let identifier: String = "SettingCell"
-    var tappedView: Observable<Void>!
     
     // MARK: - Lifecycles
     override init(frame: CGRect) {
@@ -48,10 +47,6 @@ final class SettingCell: UICollectionViewCell {
             $0.top.bottom.equalToSuperview()
             $0.leading.equalToSuperview().inset(10)
         }
-        
-        let tapGestureRecognizer = UITapGestureRecognizer()
-        contentView.addGestureRecognizer(tapGestureRecognizer)
-        tappedView = tapGestureRecognizer.rx.event.map {_ in}.asObservable()
     }
     
     func bind(text: String) {

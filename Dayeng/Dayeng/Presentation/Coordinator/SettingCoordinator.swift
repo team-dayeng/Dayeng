@@ -30,6 +30,17 @@ final class SettingCoordinator: SettingCoordinatorProtocol {
     func showSettingViewController() {
         let viewModel = SettingViewModel()
         let viewController = SettingViewController(viewModel: viewModel)
+        viewModel.alarmCellDidTapped
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.showAlarmSettingViewController()
+            })
+            .disposed(by: disposeBag)
+        navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showAlarmSettingViewController() {
+        let viewController = AlarmSettingViewController()
         navigationController.pushViewController(viewController, animated: true)
     }
 }
