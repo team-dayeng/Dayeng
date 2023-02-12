@@ -26,6 +26,7 @@
 		47D1836C298D40940058C0EC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D1836B298D40940058C0EC /* User.swift */; };
 		47E0A5DB299770890093645B /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5DA299770890093645B /* Answer.swift */; };
 		47E0A5DD299770EA0093645B /* AnswerDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5DC299770EA0093645B /* AnswerDTO.swift */; };
+		47E0A5DF299772650093645B /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5DE299772650093645B /* SplashViewModel.swift */; };
 		47E0A5E3299773CB0093645B /* SplashUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5E2299773CB0093645B /* SplashUseCase.swift */; };
 		47E0A5E52997743F0093645B /* DefaultSplashUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5E42997743F0093645B /* DefaultSplashUseCase.swift */; };
 		47E0A5E7299774C20093645B /* QuestionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5E6299774C20093645B /* QuestionRepository.swift */; };
@@ -97,6 +98,7 @@
 		47D1836B298D40940058C0EC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		47E0A5DA299770890093645B /* Answer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
 		47E0A5DC299770EA0093645B /* AnswerDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerDTO.swift; sourceTree = "<group>"; };
+		47E0A5DE299772650093645B /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		47E0A5E2299773CB0093645B /* SplashUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashUseCase.swift; sourceTree = "<group>"; };
 		47E0A5E42997743F0093645B /* DefaultSplashUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSplashUseCase.swift; sourceTree = "<group>"; };
 		47E0A5E6299774C20093645B /* QuestionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionRepository.swift; sourceTree = "<group>"; };
@@ -504,6 +506,7 @@
 			children = (
 				76280CF129878A410061206A /* LaunchScreen.storyboard */,
 				E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */,
+				47E0A5DE299772650093645B /* SplashViewModel.swift */,
 			);
 			path = Splash;
 			sourceTree = "<group>";
@@ -678,6 +681,7 @@
 				476A626D2996646A0074231E /* DayengCacheService.swift in Sources */,
 				7628E690298E4E9B002D86F2 /* FirestoreAPI.swift in Sources */,
 				476A62692993FE460074231E /* QuestionDTO.swift in Sources */,
+				47E0A5DF299772650093645B /* SplashViewModel.swift in Sources */,
 				7628E682298E4DA4002D86F2 /* UserRepository.swift in Sources */,
 				7628E686298E4DB4002D86F2 /* DefaultMainEditUseCase.swift in Sources */,
 				E5D43437298A3905004EDFC7 /* CommonCalendarCell.swift in Sources */,

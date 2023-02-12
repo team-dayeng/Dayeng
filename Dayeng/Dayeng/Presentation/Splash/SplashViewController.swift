@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Lottie
+import RxSwift
 
 class SplashViewController: UIViewController {
     // MARK: - UI properties
@@ -29,9 +30,12 @@ class SplashViewController: UIViewController {
     }()
     
     // MARK: - Properties
+    private let viewModel: SplashViewModel
+    private var disposeBag = DisposeBag()
     
     // MARK: - Lifecycles
-    init() {
+    init(viewModel: SplashViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -44,6 +48,7 @@ class SplashViewController: UIViewController {
         
         setupViews()
         configureUI()
+        bind()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -83,5 +88,12 @@ class SplashViewController: UIViewController {
         } completion: { _ in
             self.bookAnimationView.play()
         }
+    }
+    
+    private func bind() {
+        let input = SplashViewModel.Input(
+            viewDidLoad: rx.methodInvoked(#selector(viewDidLoad)).map { _ in }.asObservable()
+        )
+        _ = viewModel.transform(input: input)
     }
 }
