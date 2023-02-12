@@ -9,6 +9,11 @@ import Foundation
 import RxSwift
 
 final class DefaultUserRepository: UserRepository {
+    
+    enum UserRepositoryError: Error {
+        case dataConvertError
+    }
+    
     let firestoreService: FirestoreDatabaseService
     
     init(firestoreService: FirestoreDatabaseService) {
@@ -16,35 +21,64 @@ final class DefaultUserRepository: UserRepository {
     }
     
     func fetchUser(userID: String) -> Observable<User> {
-        firestoreService
-            .fetch(collection: "users", document: userID)
-            .map { (userDTO: UserDTO) in
-                var answerDictonary = [Int: String]()
-                userDTO.answers?.forEach {
-                    if let key = Int($0.key) {
-                        answerDictonary[key] = $0.value
-                    }
-                }
-                
-                return User(uid: "uid",
-                            currentIndex: userDTO.currentIndex ?? 0,
-                            answers: userDTO.answers?.values.map { $0 } ?? [],
-                            friends: userDTO.friends ?? [])
-            }
+        Observable.zip(
+            firestoreService.fetch(collection: "users", document: userID),
+            firestoreService.fetch(api: .answer(userID: userID))
+        ).map { (userDTO: UserDTO, answers: [AnswerDTO]) in
+            
+            var user = userDTO.toDomain(uid: userID)
+            user.answers = answers.map { $0.toDomain() }
+            
+            // cache
+            DefaultDayengCacheService.shared.write("userID", data: userID)
+            DefaultDayengCacheService.shared.write("userName", data: user.name)
+            DefaultDayengCacheService.shared.write("currentIndex", data: user.currentIndex)
+            DefaultDayengCacheService.shared.write("friends", data: user.friends)
+            DefaultDayengCacheService.shared.write("answers", data: answers)
+            
+            return user
+        }
     }
     
-    func uploadUser(userID: String, user: User) -> Observable<Void> {
-        let answerDictionary = [String: String]()
+    func uploadUser(user: User) -> Observable<Void> {
+        firestoreService.upload(
+            collection: "users",
+            document: user.name,
+            dto: UserDTO(name: user.name,
+                         answers: nil,
+                         currentIndex: user.currentIndex,
+                         friends: user.friends)
+        )
+    }
+    
+    func uploadAnswer(answer: String) -> Observable<Void> {
         
-        return firestoreService
-            .upload(collection: "user",
-                    document: userID,
-                    dto: UserDTO(answers: answerDictionary,
-                                 currentIndex: user.currentIndex,
-                                 friends: user.friends))
-    }
-    
-    func uploadAnswer(userID: String, index: Int, answer: String) -> Observable<Void> {
-        firestoreService.upload(api: .answer(userID: userID), dto: AnswerDTO(answer: [index: answer]))
+        guard let userIDData = DefaultDayengCacheService.shared.load("userID"),
+              let indexData = DefaultDayengCacheService.shared.load("currentIndex"),
+              let userID = userIDData.toString(),
+              let index = indexData.toInt() else {
+            return Observable<Void>.create { observer in
+                observer.onError(UserRepositoryError.dataConvertError)
+                return Disposables.create()
+            }
+        }
+        
+        DefaultDayengCacheService.shared.write("currentIndex", data: index + 1)
+        return Observable.merge(
+            firestoreService.upload(
+                api: .answer(userID: userID, index: index),
+                dto: AnswerDTO(
+                    date: Date().convertToString(format: "yyyy.MM.dd.E"),
+                    answer: answer
+                )
+            )
+            ,
+            firestoreService.upload(
+                api: .currentIndex(userID: userID),
+                dto: ["currentIndex": index + 1]
+            )
+        )
+        
+        // 캐시에 answers도 업데이트
     }
 }
