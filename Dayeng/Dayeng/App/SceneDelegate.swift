@@ -57,6 +57,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //                        viewModel: LoginViewModel()
 //                    )
                     let viewController = SettingViewController(viewModel: SettingViewModel())
+                    let firestoreService = DefaultFirestoreDatabaseService()
+                    let useCase = DefaultSplashUseCase(
+                        userRepository: DefaultUserRepository(firestoreService: firestoreService),
+                        questionRepository: DefaultQuestionRepository(firestoreService: firestoreService)
+                    )
+                    let viewModel = SplashViewModel(useCase: useCase)
+                    let viewController = SplashViewController(viewModel: viewModel)
                     let navigationController = UINavigationController(rootViewController: viewController)
                     self.window?.rootViewController = navigationController
                     self.window?.makeKeyAndVisible()
