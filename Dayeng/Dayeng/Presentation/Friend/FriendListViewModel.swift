@@ -7,6 +7,7 @@
 
 import Foundation
 import RxSwift
+import RxRelay
 
 final class FriendListViewModel {
     
@@ -24,6 +25,8 @@ final class FriendListViewModel {
     }
     
     // MARK: - Dependency
+    var plusButtonDidTapped = PublishRelay<Void>()
+    var friendIndexDidTapped = PublishRelay<Void>()
     
     // MARK: - Lifecycles
     
@@ -38,16 +41,15 @@ final class FriendListViewModel {
         output.friends.onNext(friends)
         
         input.plusButtonDidTapped
-            .subscribe(onNext: {
-                print("plusButtonDidTapped")
-                // TODO: 화면 전환
-            })
+            .bind(to: plusButtonDidTapped)
             .disposed(by: disposeBag)
         
         input.friendIndexDidTapped
-            .subscribe(onNext: {
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
                 print("friendIndexDidTapped, \(friends[$0])")
                 // TODO: 화면 전환
+                self.friendIndexDidTapped.accept(())
             })
             .disposed(by: disposeBag)
         
