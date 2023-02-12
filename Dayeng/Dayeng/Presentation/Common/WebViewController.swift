@@ -8,23 +8,52 @@
 import UIKit
 import WebKit
 
-class WebViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+final class WebViewController: UIViewController {
+    // MARK: - UI properties
+    private var webView: WKWebView!
+    
+    // MARK: - Properties
+    private let url: String
+    
+    // MARK: - Lifecycles
+    init(url: String) {
+        self.url = url
+        super.init(nibName: nil, bundle: nil)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-    */
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupViews()
+        configureUI()
+        
+        guard let url = URL(string: self.url) else { return }
+        let request = URLRequest(url: url)
+        webView.load(request)
+    }
+    
+    // MARK: - Helpers
 
+    private func setupViews() {
+        webView = WKWebView(frame: view.frame)
+        view.addSubview(webView)
+    }
+    
+    private func configureUI() {
+        view.backgroundColor = .white
+        
+        webView.uiDelegate = self
+        webView.navigationDelegate = self
+        webView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+}
+
+extension WebViewController: WKUIDelegate, WKNavigationDelegate{
+    
 }
