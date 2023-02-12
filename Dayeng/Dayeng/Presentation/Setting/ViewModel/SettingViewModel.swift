@@ -21,6 +21,8 @@ final class SettingViewModel {
     // MARK: - Dependency
     var disposeBag = DisposeBag()
     var alarmCellDidTapped = PublishRelay<Void>()
+    var openSourceCellDidTapped = PublishRelay<Void>()
+    var aboutCellDidTapped = PublishRelay<Void>()
     
     // MARK: - LifeCycle
     
@@ -35,20 +37,20 @@ final class SettingViewModel {
                 let row = $0.row
                 
                 switch (section, row) {
-                case (0,0):
+                case (0, 0):
                     self.alarmCellDidTapped.accept(())
-                case (1,0):
+                case (1, 0):
                     break
-                case (1,1):
+                case (1, 1):
                     break
-                case (2,0):
+                case (2, 0):
                     break
-                case (2,1):
+                case (2, 1):
                     break
-                case (2,2):
-                    break
-                case (2,3):
-                    break
+                case (2, 2):
+                    self.openSourceCellDidTapped.accept(())
+                case (2, 3):
+                    self.aboutCellDidTapped.accept(())
                 default:
                     break
                 }
