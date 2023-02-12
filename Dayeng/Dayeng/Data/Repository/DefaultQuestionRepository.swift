@@ -10,9 +10,14 @@ import RxSwift
 
 final class DefaultQuestionRepository: QuestionRepository {
     
+    private let firestoreService: FirestoreDatabaseService
+    
+    init(firestoreService: FirestoreDatabaseService) {
+        self.firestoreService = firestoreService
+    }
+    
     func fetchAll() -> Observable<[Question]> {
-        DefaultFirestoreDatabaseService()
-            .fetch(collection: "questions")
+        firestoreService.fetch(collection: "questions")
             .map { (questions: [QuestionDTO]) in
                 DefaultDayengCacheService.shared.write("questions", data: questions)
                 return questions.map { $0.toDomain() }
@@ -20,8 +25,7 @@ final class DefaultQuestionRepository: QuestionRepository {
     }
     
     func fetch(index: Int) -> Observable<Question> {
-        DefaultFirestoreDatabaseService()
-            .fetch(collection: "questions", document: String(index))
+        firestoreService.fetch(collection: "questions", document: String(index))
             .map { (question: QuestionDTO) in
                 question.toDomain()
             }
