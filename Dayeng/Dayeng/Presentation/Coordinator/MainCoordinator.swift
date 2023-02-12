@@ -49,7 +49,10 @@ final class MainCoordinator: MainCoordinatorProtocol {
             })
             .disposed(by: disposeBag)
         
-        navigationController.viewControllers = [viewController]
+        let navigationController = UINavigationController(rootViewController: viewController)
+        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?
+            .changeRootVC(navigationController, animated: false)
+        self.navigationController = navigationController
     }
     
     func showCalendarViewController(ownerType: OwnerType) {
