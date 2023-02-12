@@ -31,7 +31,7 @@ final class DefaultFirestoreDatabaseService: FirestoreDatabaseService {
                         observer.onError(FirestoreError.snapshotNotFoundError)
                         return
                     }
-                    
+                
                     guard let data = snapshot.data() else {
                         observer.onError(FirestoreError.dataNotFoundError)
                         return
@@ -50,6 +50,26 @@ final class DefaultFirestoreDatabaseService: FirestoreDatabaseService {
     }
     
     func upload<T: Encodable>(collection: String, document: String, dto: T) -> Observable<Void> {
+        return Observable.create { observer in
+            do {
+                let data = try Firestore.Encoder().encode(dto)
+                self.firestore.collection(collection).document(document)
+                    .setData(data, merge: true) { error in
+                        if let error = error {
+                            observer.onError(error)
+                            return
+                        }
+                        observer.onNext(())
+                    }
+            } catch {
+                observer.onError(error)
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func update<T: Encodable>(collection: String, document: String, dto: T) -> Observable<Void> {
         return Observable.create { observer in
             do {
                 let data = try Firestore.Encoder().encode(dto)
