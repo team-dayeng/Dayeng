@@ -26,6 +26,8 @@
 		47D1836C298D40940058C0EC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D1836B298D40940058C0EC /* User.swift */; };
 		47E0A5DB299770890093645B /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5DA299770890093645B /* Answer.swift */; };
 		47E0A5DD299770EA0093645B /* AnswerDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5DC299770EA0093645B /* AnswerDTO.swift */; };
+		47E0A5E3299773CB0093645B /* SplashUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5E2299773CB0093645B /* SplashUseCase.swift */; };
+		47E0A5E52997743F0093645B /* DefaultSplashUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5E42997743F0093645B /* DefaultSplashUseCase.swift */; };
 		47E0A5E7299774C20093645B /* QuestionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5E6299774C20093645B /* QuestionRepository.swift */; };
 		47E0A5E9299775060093645B /* DefaultQuestionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5E8299775060093645B /* DefaultQuestionRepository.swift */; };
 		47E0A5EB2998ED8C0093645B /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5EA2998ED8C0093645B /* Data+.swift */; };
@@ -95,6 +97,8 @@
 		47D1836B298D40940058C0EC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		47E0A5DA299770890093645B /* Answer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
 		47E0A5DC299770EA0093645B /* AnswerDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerDTO.swift; sourceTree = "<group>"; };
+		47E0A5E2299773CB0093645B /* SplashUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashUseCase.swift; sourceTree = "<group>"; };
+		47E0A5E42997743F0093645B /* DefaultSplashUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSplashUseCase.swift; sourceTree = "<group>"; };
 		47E0A5E6299774C20093645B /* QuestionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionRepository.swift; sourceTree = "<group>"; };
 		47E0A5E8299775060093645B /* DefaultQuestionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultQuestionRepository.swift; sourceTree = "<group>"; };
 		47E0A5EA2998ED8C0093645B /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
@@ -233,6 +237,8 @@
 				76280D25298792900061206A /* Calendar */,
 				76280D23298792850061206A /* Friend */,
 				76280D22298792680061206A /* Setting */,
+				47E0A5E2299773CB0093645B /* SplashUseCase.swift */,
+				47E0A5E42997743F0093645B /* DefaultSplashUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -635,6 +641,7 @@
 				47E0A5EB2998ED8C0093645B /* Data+.swift in Sources */,
 				47D1835B298A8DDD0058C0EC /* AuthButton.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
+				47E0A5E52997743F0093645B /* DefaultSplashUseCase.swift in Sources */,
 				47E0A5E9299775060093645B /* DefaultQuestionRepository.swift in Sources */,
 				47D1835D298A92C10058C0EC /* AuthType.swift in Sources */,
 				E552C2242990BEB300F51179 /* AlarmDaySettingViewController.swift in Sources */,
@@ -664,6 +671,7 @@
 				7628E68A298E4E76002D86F2 /* MainEditViewModel.swift in Sources */,
 				76F6C0A3298D968D00A124CD /* MainViewController.swift in Sources */,
 				47D1836A298D1A610058C0EC /* FriendListCell.swift in Sources */,
+				47E0A5E3299773CB0093645B /* SplashUseCase.swift in Sources */,
 				47549424298F966B008B581D /* AlertType.swift in Sources */,
 				47549417298E4C16008B581D /* UIViewController+.swift in Sources */,
 				E5D43439298A4892004EDFC7 /* NSTextAttachment+.swift in Sources */,
