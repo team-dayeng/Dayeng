@@ -16,6 +16,7 @@ final class DefaultFirestoreDatabaseService: FirestoreDatabaseService {
         case snapshotNotFoundError
         case dataNotFoundError
         case decodeError
+        case firestoreReferenceError
     }
     
     func fetch<T: Decodable>(collection: String, document: String) -> Observable<T> {
@@ -90,9 +91,15 @@ final class DefaultFirestoreDatabaseService: FirestoreDatabaseService {
     }
     
     /// 컬렉션 세분화 방법
-    func fetch<T: Decodable>(api: FirestoreAPI) -> Observable<T> {
+    func fetch<T: Decodable>(api: FirestoreAPI) -> Observable<[T]> {
         return Observable.create { observer in
-            api.reference.getDocument { snapshot, error in
+            
+            guard let reference = api.collectionReference else {
+                observer.onError(FirestoreError.firestoreReferenceError)
+                return Disposables.create()
+            }
+            
+            reference.getDocuments { snapshot, error in
                 if let error = error {
                     observer.onError(error)
                     return
@@ -102,18 +109,13 @@ final class DefaultFirestoreDatabaseService: FirestoreDatabaseService {
                     observer.onError(FirestoreError.snapshotNotFoundError)
                     return
                 }
-                
-                guard let data = snapshot.data() else {
-                    observer.onError(FirestoreError.dataNotFoundError)
-                    return
+
+                let dtos = snapshot.documents.compactMap {
+                    if let data = try? $0.data(as: T.self) { return data }
+                    observer.onError(FirestoreError.decodeError)
+                    return nil
                 }
-                
-                do {
-                    let dto = try Firestore.Decoder().decode(T.self, from: data)
-                    observer.onNext(dto)
-                } catch {
-                    observer.onError(error)
-                }
+                observer.onNext(dtos)
             }
             
             return Disposables.create()
@@ -123,16 +125,20 @@ final class DefaultFirestoreDatabaseService: FirestoreDatabaseService {
     func upload<T: Encodable>(api: FirestoreAPI, dto: T) -> Observable<Void> {
         return Observable.create { observer in
             do {
+                
+                guard let reference = api.documentReference else {
+                    observer.onError(FirestoreError.firestoreReferenceError)
+                    return Disposables.create()
+                }
+                
                 let data = try Firestore.Encoder().encode(dto)
-                api.reference
-                    .setData(data, merge: true) { error in
-                        if let error = error {
-                            observer.onError(error)
-                            return
-                        }
-                        
-                        observer.onNext(())
+                reference.setData(data, merge: true) { error in
+                    if let error = error {
+                        observer.onError(error)
+                        return
                     }
+                    observer.onNext(())
+                }
             } catch {
                 observer.onError(error)
             }
