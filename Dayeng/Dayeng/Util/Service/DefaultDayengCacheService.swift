@@ -33,8 +33,9 @@ final class DefaultDayengCacheService: DayengCacheService {
         return nil
     }
     
-    func write<T: Encodable>(_ key: String, data: T) {
-        guard let encodedData = try? JSONEncoder().encode(data) else {
+    func write<T: Encodable>(_ key: String, data: T?) {
+        guard let data,
+              let encodedData = try? JSONEncoder().encode(data) else {
             print(CacheError.encodeError)
             return
         }
