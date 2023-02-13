@@ -43,9 +43,6 @@ final class WebViewController: UIViewController {
     private func setupWebView() {
         webView = WKWebView(frame: view.frame)
         view.addSubview(webView)
-        
-        webView.uiDelegate = self
-        webView.navigationDelegate = self
     }
     
     private func configureUI() {
@@ -61,8 +58,4 @@ final class WebViewController: UIViewController {
         let request = URLRequest(url: url)
         webView.load(request)
     }
-}
-
-extension WebViewController: WKUIDelegate, WKNavigationDelegate{
-    
 }
