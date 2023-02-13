@@ -51,7 +51,7 @@ final class MainCoordinator: MainCoordinatorProtocol {
         
         let navigationController = UINavigationController(rootViewController: viewController)
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?
-            .changeRootViewController(navigationController, animated: false)
+            .changeRootViewController(navigationController)
         self.navigationController = navigationController
     }
     

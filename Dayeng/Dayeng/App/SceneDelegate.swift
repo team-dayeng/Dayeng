@@ -97,18 +97,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
-    func changeRootViewController(_ vc: UIViewController, animated: Bool) {
+    func changeRootViewController(_ viewController: UIViewController) {
         guard let window = self.window else { return }
-        window.rootViewController = vc
+        window.rootViewController = viewController
         
         UIView.transition(with: window, duration: 1.0, options: [.transitionCurlUp], animations: nil, completion: nil)
     }
     
-    func transitionViewController(_ vc: UIViewController, option: UIView.AnimationOptions) {
+    func transitionViewController(_ viewController: UIViewController, option: UIView.AnimationOptions) {
         guard let window = self.window else { return }
-        guard let navi = window.rootViewController as? UINavigationController else { return }
+        guard let navigationController = window.rootViewController as? UINavigationController else { return }
         UIView.transition(with: window, duration: 1.0, options: option) {
-            navi.viewControllers.append(vc)
+            navigationController.viewControllers.append(viewController)
         }
     }
 }
