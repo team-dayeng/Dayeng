@@ -7,6 +7,7 @@
 
 import Foundation
 import RxSwift
+import RxRelay
 
 final class SplashViewModel {
     // MARK: - Input
@@ -21,9 +22,11 @@ final class SplashViewModel {
     
     // MARK: - Properites
     private var disposeBag = DisposeBag()
+    var dataDidLoaded = PublishRelay<Void>()
     
     // MARK: - Dependency
     private let useCase: SplashUseCase
+	private weak var coordinator: AppCoordinator?
     
     // MARK: - Lifecycles
     init(useCase: SplashUseCase) {
@@ -40,9 +43,9 @@ final class SplashViewModel {
                     self.useCase.fetchQuestions(),
                     self.useCase.fetchUser(userID: "ongeee")
                 )
-                .subscribe(onNext: { (_, _) in
-                    // 화면전환
-                    
+                .subscribe(onNext: { [weak self] (_, _) in
+                    guard let self else { return }
+                    self.dataDidLoaded.accept(())
                 }, onError: {
                     print($0)
                 })

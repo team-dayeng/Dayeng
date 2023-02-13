@@ -19,6 +19,7 @@ final class SettingViewModel {
     }
     // MARK: - Dependency
     var disposeBag = DisposeBag()
+    let backButtonDidTapped = PublishSubject<Void>()
     
     // MARK: - LifeCycle
     

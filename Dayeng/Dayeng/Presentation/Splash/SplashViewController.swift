@@ -31,7 +31,6 @@ final class SplashViewController: UIViewController {
     
     // MARK: - Properties
     private let viewModel: SplashViewModel
-    private var disposeBag = DisposeBag()
     
     // MARK: - Lifecycles
     init(viewModel: SplashViewModel) {
@@ -57,7 +56,7 @@ final class SplashViewController: UIViewController {
         configureAnimation()
     }
     
-    // MARK: - Helpers
+    // MARK: - Helpers    
     private func setupViews() {
         addBackgroundImage()
         view.addSubview(bookAnimationView)

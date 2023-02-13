@@ -32,13 +32,21 @@ final class MainViewController: UIViewController {
         return button
     }()
     
+    private lazy var calendarButton = UIBarButtonItem(
+        image: UIImage(systemName: "calendar"),
+        style: .plain,
+        target: nil,
+        action: nil)
+    
+    private lazy var resetButton = UIBarButtonItem(
+        image: UIImage(systemName: "arrow.clockwise"),
+        style: .plain,
+        target: nil,
+        action: nil)
+    
     // MARK: - Properties
     var disposeBag = DisposeBag()
     let viewModel: MainViewModel
-    var calendarButtonDidTapped: Observable<Void>!
-    var resetButtonDidTapped: Observable<Void>!
-    var backgroundDidTapped: Observable<Void>!
-    var answerLabelDidTapped: Observable<Void>!
     
     // MARK: - Lifecycles
     init(viewModel: MainViewModel) {
@@ -63,18 +71,6 @@ final class MainViewController: UIViewController {
     private func setupNaviagationBar() {
         navigationItem.titleView = UIImageView(image: .dayengLogo)
         navigationController?.navigationBar.tintColor = .black
-        
-        let calendarButton = UIBarButtonItem(image: UIImage(systemName: "calendar"),
-                                             style: .plain,
-                                             target: nil,
-                                             action: nil)
-        calendarButtonDidTapped = calendarButton.rx.tap.asObservable()
-        
-        let resetButton = UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise"),
-                                          style: .plain,
-                                          target: nil,
-                                          action: nil)
-        resetButtonDidTapped = resetButton.rx.tap.asObservable()
         
         navigationItem.leftBarButtonItem = calendarButton
         navigationItem.rightBarButtonItem = resetButton
@@ -139,7 +135,14 @@ final class MainViewController: UIViewController {
     }
     
     func bind() {
+        let input = MainViewModel.Input(
+            resetButtonDidTapped: resetButton.rx.tap.asObservable(),
+            friendButtonDidTapped: friendButton.rx.tap.asObservable(),
+            settingButtonDidTapped: settingButton.rx.tap.asObservable(),
+            calendarButtonDidTapped: calendarButton.rx.tap.asObservable()
+        )
         
+        let output = viewModel.transform(input: input)
     }
 }
 
