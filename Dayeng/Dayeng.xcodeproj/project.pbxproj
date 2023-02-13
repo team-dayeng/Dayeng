@@ -22,6 +22,9 @@
 		47D18368298D16730058C0EC /* FriendListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18367298D16730058C0EC /* FriendListViewModel.swift */; };
 		47D1836A298D1A610058C0EC /* FriendListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18369298D1A610058C0EC /* FriendListCell.swift */; };
 		47D1836C298D40940058C0EC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D1836B298D40940058C0EC /* User.swift */; };
+		76003E092998DF4A00F15CAE /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76003E082998DF4A00F15CAE /* UserDefaults+.swift */; };
+		76003E0D29990ED200F15CAE /* UserNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76003E0C29990ED200F15CAE /* UserNotificationService.swift */; };
+		76003E0F29990EE200F15CAE /* DefaultUserNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76003E0E29990EE200F15CAE /* DefaultUserNotificationService.swift */; };
 		7603FA1E2996522200D2C9C8 /* AlarmSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7603FA1D2996522200D2C9C8 /* AlarmSettingViewModel.swift */; };
 		7603FA202996556200D2C9C8 /* DefaultAlrarmSettingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7603FA1F2996556200D2C9C8 /* DefaultAlrarmSettingUseCase.swift */; };
 		7603FA22299793B500D2C9C8 /* AlrarmSettingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7603FA21299793B500D2C9C8 /* AlrarmSettingUseCase.swift */; };
@@ -94,6 +97,9 @@
 		47D18367298D16730058C0EC /* FriendListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewModel.swift; sourceTree = "<group>"; };
 		47D18369298D1A610058C0EC /* FriendListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListCell.swift; sourceTree = "<group>"; };
 		47D1836B298D40940058C0EC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		76003E082998DF4A00F15CAE /* UserDefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
+		76003E0C29990ED200F15CAE /* UserNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationService.swift; sourceTree = "<group>"; };
+		76003E0E29990EE200F15CAE /* DefaultUserNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserNotificationService.swift; sourceTree = "<group>"; };
 		7603FA1D2996522200D2C9C8 /* AlarmSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewModel.swift; sourceTree = "<group>"; };
 		7603FA1F2996556200D2C9C8 /* DefaultAlrarmSettingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAlrarmSettingUseCase.swift; sourceTree = "<group>"; };
 		7603FA21299793B500D2C9C8 /* AlrarmSettingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlrarmSettingUseCase.swift; sourceTree = "<group>"; };
@@ -267,6 +273,7 @@
 				47D1835E298A94790058C0EC /* UIColor+.swift */,
 				47D18360298B8D750058C0EC /* UIImage+.swift */,
 				47549416298E4C16008B581D /* UIViewController+.swift */,
+				76003E082998DF4A00F15CAE /* UserDefaults+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -278,6 +285,8 @@
 				7628E68D298E4E82002D86F2 /* FirestoreDatabaseService.swift */,
 				4754942729900414008B581D /* DefaultDayengCacheService.swift */,
 				476A626C2996646A0074231E /* DayengCacheService.swift */,
+				76003E0C29990ED200F15CAE /* UserNotificationService.swift */,
+				76003E0E29990EE200F15CAE /* DefaultUserNotificationService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -674,6 +683,7 @@
 				E552C22C2990BEF200F51179 /* AlarmDayCell.swift in Sources */,
 				E552C25E2996570000F51179 /* SettingCoordinator.swift in Sources */,
 				E552C2222990BEA700F51179 /* AlarmSettingViewController.swift in Sources */,
+				76003E092998DF4A00F15CAE /* UserDefaults+.swift in Sources */,
 				E552C2262990BEBB00F51179 /* SettingViewModel.swift in Sources */,
 				47D18361298B8D760058C0EC /* UIImage+.swift in Sources */,
 				E552C2282990BECC00F51179 /* SettingCell.swift in Sources */,
@@ -682,6 +692,7 @@
 				E552C262299658F100F51179 /* CalendarViewModel.swift in Sources */,
 				E552C25A299656EA00F51179 /* MainCoordinator.swift in Sources */,
 				47D18364298D0EDC0058C0EC /* LoginViewModel.swift in Sources */,
+				76003E0F29990EE200F15CAE /* DefaultUserNotificationService.swift in Sources */,
 				4754942829900414008B581D /* DefaultDayengCacheService.swift in Sources */,
 				E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */,
 				7628E67E298DA61D002D86F2 /* AcceptFriendViewController.swift in Sources */,
@@ -699,6 +710,7 @@
 				476A626D2996646A0074231E /* DayengCacheService.swift in Sources */,
 				7628E690298E4E9B002D86F2 /* FirestoreAPI.swift in Sources */,
 				E552C2602996573A00F51179 /* SplashViewModel.swift in Sources */,
+				76003E0D29990ED200F15CAE /* UserNotificationService.swift in Sources */,
 				7628E682298E4DA4002D86F2 /* UserRepository.swift in Sources */,
 				7628E686298E4DB4002D86F2 /* DefaultMainEditUseCase.swift in Sources */,
 				E5D43437298A3905004EDFC7 /* CommonCalendarCell.swift in Sources */,
