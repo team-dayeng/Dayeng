@@ -12,7 +12,7 @@ import RxRelay
 final class SplashViewModel {
     // MARK: - Input
     struct Input {
-        let viewDidLoad: Observable<Void>
+        let animationDidStarted: Observable<Void>
     }
     
     // MARK: - Output
@@ -35,7 +35,7 @@ final class SplashViewModel {
     
     // MARK: - Helpers
     func transform(input: Input) -> Output {
-        input.viewDidLoad
+        input.animationDidStarted
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
                 #warning("userID 변경")

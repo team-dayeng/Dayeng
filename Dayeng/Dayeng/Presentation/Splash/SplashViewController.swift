@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import Lottie
 import RxSwift
+import RxRelay
 
 final class SplashViewController: UIViewController {
     // MARK: - UI properties
@@ -31,6 +32,7 @@ final class SplashViewController: UIViewController {
     
     // MARK: - Properties
     private let viewModel: SplashViewModel
+    private let animationDidStarted = PublishRelay<Void>()
     
     // MARK: - Lifecycles
     init(viewModel: SplashViewModel) {
@@ -86,12 +88,13 @@ final class SplashViewController: UIViewController {
             self.view.layoutIfNeeded()
         } completion: { _ in
             self.bookAnimationView.play()
+            self.animationDidStarted.accept(())
         }
     }
     
     private func bind() {
         let input = SplashViewModel.Input(
-            viewDidLoad: rx.methodInvoked(#selector(viewDidLoad)).map { _ in }.asObservable()
+            animationDidStarted: animationDidStarted.asObservable()
         )
         _ = viewModel.transform(input: input)
     }
