@@ -68,6 +68,9 @@
 		E552C25E2996570000F51179 /* SettingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C25D2996570000F51179 /* SettingCoordinator.swift */; };
 		E552C2602996573A00F51179 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C25F2996573A00F51179 /* SplashViewModel.swift */; };
 		E552C262299658F100F51179 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C261299658F100F51179 /* CalendarViewModel.swift */; };
+		E569162B2998D1D9006D7231 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569162A2998D1D9006D7231 /* WebViewController.swift */; };
+		E569162E2998D1EB006D7231 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E569162D2998D1EB006D7231 /* WebKit.framework */; };
+		E56916302998D429006D7231 /* PageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569162F2998D429006D7231 /* PageType.swift */; };
 		E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */; };
 		E5D4342E2988E22F004EDFC7 /* Dayeng-Book.json in Resources */ = {isa = PBXBuildFile; fileRef = E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */; };
 		E5D43435298A3291004EDFC7 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43434298A3291004EDFC7 /* CalendarViewController.swift */; };
@@ -130,6 +133,9 @@
 		E552C25D2996570000F51179 /* SettingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCoordinator.swift; sourceTree = "<group>"; };
 		E552C25F2996573A00F51179 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		E552C261299658F100F51179 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
+		E569162A2998D1D9006D7231 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		E569162D2998D1EB006D7231 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		E569162F2998D429006D7231 /* PageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageType.swift; sourceTree = "<group>"; };
 		E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Dayeng-Book.json"; sourceTree = "<group>"; };
 		E5D43434298A3291004EDFC7 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
@@ -142,6 +148,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E569162E2998D1EB006D7231 /* WebKit.framework in Frameworks */,
 				76280D0C29878C870061206A /* FirebaseMessaging in Frameworks */,
 				76280D0129878BAE0061206A /* RxRelay in Frameworks */,
 				76280D2D29879F770061206A /* Lottie in Frameworks */,
@@ -162,6 +169,7 @@
 			children = (
 				76280CE529878A3F0061206A /* Dayeng */,
 				76280CE429878A3F0061206A /* Products */,
+				E569162C2998D1EA006D7231 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -311,6 +319,7 @@
 				E5D43436298A3905004EDFC7 /* CommonCalendarCell.swift */,
 				47C38780298E390D0030833F /* DayengAlertViewController.swift */,
 				47D1835A298A8DDD0058C0EC /* AuthButton.swift */,
+				E569162A2998D1D9006D7231 /* WebViewController.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -457,6 +466,7 @@
 				47D1835C298A92C10058C0EC /* AuthType.swift */,
 				47549423298F966B008B581D /* AlertType.swift */,
 				E552C1F1298B911F00F51179 /* OwnerType.swift */,
+				E569162F2998D429006D7231 /* PageType.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -506,6 +516,14 @@
 				E552C25D2996570000F51179 /* SettingCoordinator.swift */,
 			);
 			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		E569162C2998D1EA006D7231 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E569162D2998D1EB006D7231 /* WebKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		E5D433FC2988CD9F004EDFC7 /* Splash */ = {
@@ -643,6 +661,7 @@
 				7628E68C298E4E80002D86F2 /* DefaultFirestoreDatabaseService.swift in Sources */,
 				7628E684298E4DA7002D86F2 /* DefaultUserRepository.swift in Sources */,
 				7628E680298E4D9C002D86F2 /* UserDTO.swift in Sources */,
+				E56916302998D429006D7231 /* PageType.swift in Sources */,
 				E552C22A2990BED800F51179 /* SettingHeaderView.swift in Sources */,
 				47C38781298E390D0030833F /* DayengAlertViewController.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
@@ -675,6 +694,7 @@
 				7628E67E298DA61D002D86F2 /* AcceptFriendViewController.swift in Sources */,
 				76F6C0A5298D969700A124CD /* MainViewModel.swift in Sources */,
 				76F6C0AD298D985F00A124CD /* Date+.swift in Sources */,
+				E569162B2998D1D9006D7231 /* WebViewController.swift in Sources */,
 				E5D43435298A3291004EDFC7 /* CalendarViewController.swift in Sources */,
 				76F6C0A7298D96CF00A124CD /* CommonMainView.swift in Sources */,
 				E552C2572994C93700F51179 /* AppCoordinator.swift in Sources */,
