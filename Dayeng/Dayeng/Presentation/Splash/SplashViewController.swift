@@ -10,7 +10,7 @@ import SnapKit
 import Lottie
 import RxSwift
 
-class SplashViewController: UIViewController {
+final class SplashViewController: UIViewController {
     // MARK: - UI properties
     private lazy var logoImage: UIImageView = {
         var imageView: UIImageView = UIImageView()
