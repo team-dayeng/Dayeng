@@ -28,29 +28,38 @@ final class WebViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupViews()
+        setupWebView()
         configureUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        guard let url = URL(string: self.url) else { return }
-        let request = URLRequest(url: url)
-        webView.load(request)
+        loadWebView()
     }
     
     // MARK: - Helpers
-
-    private func setupViews() {
+    
+    private func setupWebView() {
         webView = WKWebView(frame: view.frame)
         view.addSubview(webView)
+        
+        webView.uiDelegate = self
+        webView.navigationDelegate = self
     }
     
     private func configureUI() {
         view.backgroundColor = .white
-        
-        webView.uiDelegate = self
-        webView.navigationDelegate = self
+       
         webView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+    
+    private func loadWebView() {
+        guard let url = URL(string: self.url) else { return }
+        let request = URLRequest(url: url)
+        webView.load(request)
     }
 }
 
