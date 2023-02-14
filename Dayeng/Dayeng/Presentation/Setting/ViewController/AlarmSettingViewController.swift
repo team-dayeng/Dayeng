@@ -204,27 +204,7 @@ final class AlarmSettingViewController: UIViewController {
         switchButton.rx.isOn
             .subscribe(onNext: { [weak self] isOn in
                 guard let self else { return }
-                if isOn {
-                    UIView.animate(withDuration: 0.5) { [weak self] in
-                        guard let self else { return }
-                        self.contentView.snp.updateConstraints {
-                            $0.height.equalTo(450)
-                        }
-                        self.view.layoutIfNeeded()
-                    } completion: { _ in
-                        self.hiddenContentView.isHidden = false
-                    }
-                } else {
-                    self.hiddenContentView.isHidden = true
-                    
-                    UIView.animate(withDuration: 0.5) { [weak self] in
-                        guard let self else { return }
-                        self.contentView.snp.updateConstraints {
-                            $0.height.equalTo(100)
-                        }
-                        self.view.layoutIfNeeded()
-                    }
-                }
+                self.showSwitchAnimation(isOn)
             }).disposed(by: disposeBag)
     }
     
@@ -273,5 +253,29 @@ final class AlarmSettingViewController: UIViewController {
                 
                 print("설정한 시간 : \(formatter.string(from: self.timePicker.date))")
             }).disposed(by: disposeBag)
+    }
+    
+    private func showSwitchAnimation(_ isOn: Bool) {
+        if isOn {
+            UIView.animate(withDuration: 0.5) { [weak self] in
+                guard let self else { return }
+                self.contentView.snp.updateConstraints {
+                    $0.height.equalTo(450)
+                }
+                self.view.layoutIfNeeded()
+            } completion: { _ in
+                self.hiddenContentView.isHidden = false
+            }
+        } else {
+            self.hiddenContentView.isHidden = true
+            
+            UIView.animate(withDuration: 0.5) { [weak self] in
+                guard let self else { return }
+                self.contentView.snp.updateConstraints {
+                    $0.height.equalTo(100)
+                }
+                self.view.layoutIfNeeded()
+            }
+        }
     }
 }
