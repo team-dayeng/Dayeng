@@ -61,6 +61,7 @@ final class AlarmDaySettingViewController: UIViewController {
         
         addBackgroundImage()
         configureCollectionView()
+        bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -101,6 +102,29 @@ final class AlarmDaySettingViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.topItem?.title = ""
     }
+    
+    private func bind() {
+        isSelectedCells
+            .subscribe(onNext: { [weak self] isSelectedCells in
+                guard let self else { return }
+                isSelectedCells
+                    .enumerated()
+                    .forEach { index, isSelected in
+                        let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0))
+                        guard let cell = cell as? AlarmDayCell else { return }
+                        cell.tappedCell(isSelected: isSelected)
+                    }
+                
+            }).disposed(by: disposeBag)
+        
+        collectionView.rx.itemSelected
+            .subscribe(onNext: { [weak self] indexPath in
+                guard let self else { return }
+                var isSelectedCellsValue = self.isSelectedCells.value
+                isSelectedCellsValue[indexPath.row].toggle()
+                self.isSelectedCells.accept(isSelectedCellsValue)
+            }).disposed(by: disposeBag)
+    }
 }
 
 extension AlarmDaySettingViewController: UICollectionViewDelegate, UICollectionViewDataSource,
@@ -127,17 +151,7 @@ extension AlarmDaySettingViewController: UICollectionViewDelegate, UICollectionV
         guard let dayType = DayType(rawValue: indexPath.row) else { return UICollectionViewCell() }
         
         cell.bind(text: dayType.string)
-        
+        cell.tappedCell(isSelected: isSelectedCells.value[indexPath.row])
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell  = collectionView.cellForItem(at: indexPath) as? AlarmDayCell else { return }
-        
-        var isSelectedCellsValue =  isSelectedCells.value
-        isSelectedCellsValue[indexPath.row] = !cell.isSelect
-        isSelectedCells.accept(isSelectedCellsValue)
-        
-        cell.tappedCell(isSelected: !cell.isSelect)
     }
 }
