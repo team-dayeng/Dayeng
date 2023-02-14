@@ -53,4 +53,14 @@ final class DefaultAlrarmSettingUseCase: AlrarmSettingUseCase {
                 }
             }).disposed(by: disposeBag)
     }
+    
+    func registAlarm(_ date: Date) -> Observable<Void> {
+        UserDefaults.selectedAlarmDays = selectedDays.value
+        UserDefaults.alarmDate = date
+        UserDefaults.isAlarmOn = true
+        
+        return userNotificationService
+            .requestAuthorization()
+            .withLatestFrom(userNotificationService.createNotification(time: date, daysOfWeek: selectedDays.value))
+    }
 }
