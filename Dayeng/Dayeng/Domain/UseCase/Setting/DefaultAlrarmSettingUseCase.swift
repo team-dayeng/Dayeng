@@ -6,10 +6,19 @@
 //
 
 import Foundation
+import UserNotifications
+import RxRelay
+import RxSwift
 
-final class DefaultAlrarmSettingUseCase: AlrarmSettingUseCase  {
+final class DefaultAlrarmSettingUseCase: AlrarmSettingUseCase {
+    private let userNotificationService: UserNotificationService
     
-    func registAlarm() {
+    private var disposeBag = DisposeBag()
+    var selectedDays: BehaviorRelay<[Bool]>
+    var alarmDate: BehaviorRelay<Date>
+    var isAlarmOn: BehaviorRelay<Bool>
+    var isAuthorized = PublishRelay<Bool>()
+    
         
     }
 }
