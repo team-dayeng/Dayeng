@@ -7,6 +7,7 @@
 
 import Foundation
 import RxSwift
+import RxRelay
 
 final class SettingViewModel {
     // MARK: - Input
@@ -15,22 +16,20 @@ final class SettingViewModel {
     }
     // MARK: - Output
     struct Output {
-        var transformAlarm = PublishSubject<Void>()
+        
     }
     // MARK: - Dependency
     var disposeBag = DisposeBag()
     let backButtonDidTapped = PublishSubject<Void>()
-    
+    let alarmCellDidTapped = PublishRelay<Void>()
     // MARK: - LifeCycle
     
     // MARK: - Helper
     func transform(input: Input) -> Output {
         let output = Output()
         input.alarmCellTapped
-            .subscribe(onNext: { [weak self] in
-                output.transformAlarm.onNext(())
-                
-            }).disposed(by: disposeBag)
+            .bind(to: alarmCellDidTapped)
+            .disposed(by: disposeBag)
         return output
     }
 }
