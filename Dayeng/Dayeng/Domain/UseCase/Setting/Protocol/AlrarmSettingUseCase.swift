@@ -6,7 +6,16 @@
 //
 
 import Foundation
+import RxSwift
+import RxRelay
 
 protocol AlrarmSettingUseCase {
-    func registAlarm()
+    var selectedDays: BehaviorRelay<[Bool]> { get set }
+    var alarmDate: BehaviorRelay<Date> { get set }
+    var isAlarmOn: BehaviorRelay<Bool> { get set }
+    var isAuthorized: PublishRelay<Bool> { get set }
+    var selectedDaysDescription: String { get }
+    func registAlarm(_ date: Date) -> Observable<Void>
+    func onAlarm() -> Observable<Void>
+    func offAlarm()
 }
