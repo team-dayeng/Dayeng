@@ -222,6 +222,14 @@ final class AlarmSettingViewController: UIViewController {
         
         let output = viewModel.transform(input: input)
         
+        output.isAlarmOn
+            .asDriver(onErrorJustReturn: false)
+            .drive(onNext: { [weak self] isOn in
+                guard let self else { return }
+                self.switchButton.isOn = isOn
+                self.showSwitchAnimation(isOn)
+            }).disposed(by: disposeBag)
+        
         output.dayList
             .asDriver(onErrorJustReturn: "안 함")
             .drive(onNext: { [weak self] dayList in
