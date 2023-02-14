@@ -19,7 +19,6 @@ final class DefaultQuestionRepository: QuestionRepository {
     func fetchAll() -> Observable<[Question]> {
         firestoreService.fetch(collection: "questions")
             .map { (questions: [QuestionDTO]) in
-                DefaultDayengCacheService.shared.write("questions", data: questions)
                 return questions.map { $0.toDomain() }
             }
     }

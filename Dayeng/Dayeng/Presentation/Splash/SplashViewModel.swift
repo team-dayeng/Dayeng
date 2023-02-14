@@ -34,7 +34,7 @@ final class SplashViewModel {
     }
     
     // MARK: - Helpers
-    func transform(input: Input) -> Output {
+    func transform(input: Input) -> Output {        
         input.animationDidStarted
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
@@ -43,8 +43,12 @@ final class SplashViewModel {
                     self.useCase.fetchQuestions(),
                     self.useCase.fetchUser(userID: "ongeee")
                 )
-                .subscribe(onNext: { [weak self] (_, _) in
+                .subscribe(onNext: { [weak self] (questions, user) in
                     guard let self else { return }
+                    
+                    DayengDefaults.shared.questions = questions
+                    DayengDefaults.shared.user = user
+                    
                     self.dataDidLoaded.accept(())
                 }, onError: {
                     print($0)

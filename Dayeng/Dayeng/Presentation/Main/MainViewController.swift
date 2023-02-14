@@ -113,6 +113,16 @@ final class MainViewController: UIViewController {
         collectionView.isPagingEnabled = true
         collectionView.bounces = false
         collectionView.backgroundColor = .clear
+        
+        if let user = DayengDefaults.shared.user {
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                self.collectionView.scrollToItem(
+                    at: IndexPath(row: user.currentIndex, section: 0),
+                    at: .centeredHorizontally,
+                    animated: false)
+            }
+        }
     }
     
     private func collectionViewLayout() -> UICollectionViewCompositionalLayout {
@@ -141,8 +151,7 @@ final class MainViewController: UIViewController {
             settingButtonDidTapped: settingButton.rx.tap.asObservable(),
             calendarButtonDidTapped: calendarButton.rx.tap.asObservable()
         )
-        
-        let output = viewModel.transform(input: input)
+        _ = viewModel.transform(input: input)
     }
 }
 
@@ -152,7 +161,10 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        3
+        if let user = DayengDefaults.shared.user {
+            return user.currentIndex + 1
+        }
+        return 0
     }
     
     func collectionView(
@@ -165,6 +177,15 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         ) as? MainCell else {
             return UICollectionViewCell()
         }
+        
+        if DayengDefaults.shared.questions.count > indexPath.row {
+            cell.bindQuestion(DayengDefaults.shared.questions[indexPath.row])
+        }
+        if let user = DayengDefaults.shared.user,
+           user.answers.count > indexPath.row {
+            cell.bindAnswer(user.answers[indexPath.row])
+        }
+        
         return cell
     }
 }
