@@ -32,8 +32,8 @@ final class DefaultUserNotificationService: UserNotificationService {
     func createNotification(time: Date, daysOfWeek: [Bool]) -> Observable<Void> {
         removeAllNotifications()
         let content = UNMutableNotificationContent()
-        content.title = "일기 쓸 시간"
-        content.body = "ㅆㅓ라"
+        content.title = "데잉을 쓸 시간이에요!"
+        content.body = "오늘의 일기를 작성해보아요"
         
         let this = daysOfWeek.enumerated().filter {$0.element}.map { (index, _) in
             let indexToWeekDay = ((index+1)%7)+1
