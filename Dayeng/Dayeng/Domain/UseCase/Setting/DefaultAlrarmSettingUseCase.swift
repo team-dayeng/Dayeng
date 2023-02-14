@@ -63,4 +63,8 @@ final class DefaultAlrarmSettingUseCase: AlrarmSettingUseCase {
             .requestAuthorization()
             .withLatestFrom(userNotificationService.createNotification(time: date, daysOfWeek: selectedDays.value))
     }
+    func offAlarm() {
+        UserDefaults.isAlarmOn = false
+        userNotificationService.removeAllNotifications()
+    }
 }
