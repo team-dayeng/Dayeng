@@ -215,15 +215,6 @@ final class AlarmSettingViewController: UIViewController {
     }
     
     private func bind() {
-        daysOfWeekDidTapped
-            .subscribe(onNext: { [weak self] in
-                guard let self else { return }
-                let viewController = AlarmDaySettingViewController(
-                    isSelectedCells: BehaviorRelay<[Bool]>(value: [true, false, true, false, true, false, true])
-                )
-                self.navigationController?.pushViewController(viewController, animated: true)
-            }).disposed(by: disposeBag)
-        #warning("위는 코디네이터로 변경 후 지울 코드입니다.")
         let input = AlarmSettingViewModel.Input(
             registButtonDidTapped:
                 registButton.rx.tap.withLatestFrom(timePicker.rx.date.changed),
