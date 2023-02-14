@@ -12,13 +12,18 @@ import RxRelay
 final class AlarmSettingViewModel {
     // MARK: - Input
     struct Input {
+        var viewWillAppear: Observable<Void>
+        var viewDidAppear: Observable<Void>
         var registButtonDidTapped: Observable<Date>
         var daysOfWeekDidTapped: Observable<Void>
+        var isAlarmSwitchOn: Observable<Bool>
     }
     // MARK: - Output
     struct Output {
+        var isAlarmOn = PublishRelay<Bool>()
         var dayList = PublishRelay<String>()
-        var date = PublishRelay<Date>()
+        var setDate = PublishRelay<Date>()
+        var isSuccessRegistResult = PublishRelay<Bool>()
     }
     // MARK: - Dependency
     var disposeBag = DisposeBag()
