@@ -62,9 +62,8 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
         
         setupNaviagationBar()
-        addBackgroundImage()
-        configureCollectionView()
         setupViews()
+        configureCollectionView()
         bind()
     }
     
@@ -78,10 +77,25 @@ final class MainViewController: UIViewController {
     }
     
     private func setupViews() {
+        addBackgroundImage()
         [friendButton, settingButton].forEach {
             view.addSubview($0)
         }
         configureUI()
+    }
+    
+    private func configureUI() {
+        friendButton.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            $0.right.equalToSuperview().offset(-55)
+            $0.height.width.equalTo(50)
+        }
+        
+        settingButton.snp.makeConstraints {
+            $0.bottom.equalTo(friendButton.snp.bottom)
+            $0.right.equalToSuperview().offset(-10)
+            $0.height.width.equalTo(50)
+        }
     }
     
     private func configureCollectionView() {
@@ -102,29 +116,22 @@ final class MainViewController: UIViewController {
     }
     
     private func collectionViewLayout() -> UICollectionViewCompositionalLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                              heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                               heightDimension: .fractionalHeight(1))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize,
+            subitems: [item]
+        )
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .paging
         return UICollectionViewCompositionalLayout(section: section)
-    }
-    
-    private func configureUI() {
-        friendButton.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-            $0.right.equalToSuperview().offset(-55)
-            $0.height.width.equalTo(50)
-        }
-        
-        settingButton.snp.makeConstraints {
-            $0.bottom.equalTo(friendButton.snp.bottom)
-            $0.right.equalToSuperview().offset(-10)
-            $0.height.width.equalTo(50)
-        }
     }
     
     func bind() {
@@ -140,15 +147,22 @@ final class MainViewController: UIViewController {
 }
 
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
         3
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCell.identifier,
-                                                            for: indexPath) as? MainCell else {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: MainCell.identifier,
+            for: indexPath
+        ) as? MainCell else {
             return UICollectionViewCell()
         }
         return cell
