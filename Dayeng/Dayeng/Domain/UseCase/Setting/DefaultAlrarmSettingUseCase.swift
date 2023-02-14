@@ -33,5 +33,13 @@ final class DefaultAlrarmSettingUseCase: AlrarmSettingUseCase {
         
         return Array(days).map {String($0)}.joined(separator: " ")
     }
+    
+    init(userNotificationService: UserNotificationService) {
+        self.userNotificationService = userNotificationService
+        
+        selectedDays = BehaviorRelay(value: UserDefaults.selectedAlarmDays)
+        alarmDate = BehaviorRelay(value: UserDefaults.alarmDate)
+        isAlarmOn = BehaviorRelay(value: UserDefaults.isAlarmOn)
+        
     }
 }
