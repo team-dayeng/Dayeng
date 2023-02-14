@@ -16,7 +16,7 @@ final class DefaultAlrarmSettingUseCase: AlrarmSettingUseCase {
     private var disposeBag = DisposeBag()
     var selectedDays: BehaviorRelay<[Bool]>
     var alarmDate: BehaviorRelay<Date>
-    var isAlarmOn: BehaviorRelay<Bool>
+    var initialyIsAlarmOn: BehaviorRelay<Bool>
     var isAuthorized = PublishRelay<Bool>()
     
     var selectedDaysDescription: String {
@@ -39,16 +39,16 @@ final class DefaultAlrarmSettingUseCase: AlrarmSettingUseCase {
         
         selectedDays = BehaviorRelay(value: UserDefaults.selectedAlarmDays)
         alarmDate = BehaviorRelay(value: UserDefaults.alarmDate)
-        isAlarmOn = BehaviorRelay(value: UserDefaults.isAlarmOn)
+        initialyIsAlarmOn = BehaviorRelay(value: UserDefaults.isAlarmOn)
         
-        isAlarmOn
+        initialyIsAlarmOn
             .subscribe(onNext: { [weak self] isOn in
                 guard let self else { return }
                 if isOn {
                     self.userNotificationService.requestAuthorization()
                         .subscribe(onError: { [weak self] _ in
                             guard let self else { return }
-                            self.isAlarmOn.accept(false)
+                            self.initialyIsAlarmOn.accept(false)
                         }).disposed(by: self.disposeBag)
                 }
             }).disposed(by: disposeBag)
@@ -63,8 +63,8 @@ final class DefaultAlrarmSettingUseCase: AlrarmSettingUseCase {
             userNotificationService.requestAuthorization(),
             userNotificationService.createNotification(time: date, daysOfWeek: selectedDays.value),
             resultSelector: { (_, _) in
-            return ()
-        })
+                return ()
+            })
     }
     
     func onAlarm() -> Observable<Void> {

@@ -230,7 +230,7 @@ final class AlarmSettingViewController: UIViewController {
         
         let output = viewModel.transform(input: input)
         
-        output.isAlarmOn
+        output.initialyIsAlarmOn
             .asDriver(onErrorJustReturn: false)
             .drive(onNext: { [weak self] isOn in
                 guard let self else { return }

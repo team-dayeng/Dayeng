@@ -20,9 +20,9 @@ final class AlarmSettingViewModel {
     }
     // MARK: - Output
     struct Output {
-        var isAlarmOn = PublishRelay<Bool>()
+        var initialyIsAlarmOn = ReplayRelay<Bool>.create(bufferSize: 1)
         var dayList = PublishRelay<String>()
-        var setDate = PublishRelay<Date>()
+        var setDate = ReplayRelay<Date>.create(bufferSize: 1)
         var isSuccessRegistResult = PublishRelay<Bool>()
     }
     // MARK: - Dependency
