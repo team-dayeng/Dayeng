@@ -62,8 +62,8 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
         
         setupNaviagationBar()
-        setupViews()
         configureCollectionView()
+        setupViews()
         bind()
     }
     
@@ -78,13 +78,18 @@ final class MainViewController: UIViewController {
     
     private func setupViews() {
         addBackgroundImage()
-        [friendButton, settingButton].forEach {
+        [collectionView, friendButton, settingButton].forEach {
             view.addSubview($0)
         }
         configureUI()
     }
     
     private func configureUI() {
+        collectionView.snp.makeConstraints {
+            $0.top.left.right.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalToSuperview()
+        }
+        
         friendButton.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             $0.right.equalToSuperview().offset(-55)
@@ -100,11 +105,6 @@ final class MainViewController: UIViewController {
     
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
-        view.addSubview(collectionView)
-        collectionView.snp.makeConstraints {
-            $0.top.left.right.equalTo(view.safeAreaLayoutGuide)
-            $0.bottom.equalToSuperview()
-        }
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.dataSource = self
