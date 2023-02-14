@@ -51,7 +51,6 @@ final class AlarmSettingViewModel {
                     .bind(to: output.setDate)
                     .disposed(by: self.disposeBag)
                 self.useCase.isAlarmOn
-                    .debug("isAlarmOn")
                     .bind(to: output.isAlarmOn)
                     .disposed(by: self.disposeBag)
             }).disposed(by: disposeBag)
@@ -70,8 +69,7 @@ final class AlarmSettingViewModel {
                         output.isSuccessRegistResult.accept(true)
                     }, onError: { _ in
                         output.isSuccessRegistResult.accept(false)
-                    })
-                    .disposed(by: self.disposeBag)
+                    }).disposed(by: self.disposeBag)
             }).disposed(by: disposeBag)
         
         input.isAlarmSwitchOn
