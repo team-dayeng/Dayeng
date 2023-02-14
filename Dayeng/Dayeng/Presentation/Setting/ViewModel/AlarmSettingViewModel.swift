@@ -13,7 +13,7 @@ final class AlarmSettingViewModel {
     // MARK: - Input
     struct Input {
         var viewWillAppear: Observable<Void>
-        var viewDidAppear: Observable<Void>
+        var viewDidLoad: Observable<Void>
         var registButtonDidTapped: Observable<Date>
         var daysOfWeekDidTapped: Observable<Void>
         var isAlarmSwitchOn: Observable<Bool>
@@ -44,7 +44,7 @@ final class AlarmSettingViewModel {
                 output.dayList.accept(self.useCase.selectedDaysDescription)
             }).disposed(by: disposeBag)
         
-        input.viewDidAppear
+        input.viewDidLoad
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
                 self.useCase.alarmDate
@@ -54,7 +54,6 @@ final class AlarmSettingViewModel {
                     .bind(to: output.isAlarmOn)
                     .disposed(by: self.disposeBag)
             }).disposed(by: disposeBag)
-        
         input.daysOfWeekDidTapped
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }

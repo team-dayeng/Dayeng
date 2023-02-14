@@ -218,8 +218,8 @@ final class AlarmSettingViewController: UIViewController {
         let input = AlarmSettingViewModel.Input(
             viewWillAppear:
                 rx.methodInvoked(#selector(viewWillAppear(_:))).map { _ in }.asObservable(),
-            viewDidAppear:
-                rx.methodInvoked(#selector(viewDidAppear(_:))).map { _ in }.asObservable(),
+            viewDidLoad:
+                rx.viewDidLoad.map { _ in }.asObservable(),
             registButtonDidTapped:
                 registButton.rx.tap.map { self.timePicker.date },
             daysOfWeekDidTapped:
@@ -269,14 +269,13 @@ final class AlarmSettingViewController: UIViewController {
                     })
                     self.switchButton.isOn = false
                     self.showSwitchAnimation(false)
-                    print(self.hiddenContentView.isHidden)
                 }
             }).disposed(by: disposeBag)
     }
     
     private func showSwitchAnimation(_ isOn: Bool) {
         if isOn {
-            UIView.animate(withDuration: 0.5) { [weak self] in
+            UIView.animate(withDuration: 0.51) { [weak self] in
                 guard let self else { return }
                 self.contentView.snp.updateConstraints {
                     $0.height.equalTo(450)
