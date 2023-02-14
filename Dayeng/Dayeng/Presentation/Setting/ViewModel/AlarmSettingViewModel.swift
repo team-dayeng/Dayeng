@@ -42,6 +42,16 @@ final class AlarmSettingViewModel {
         input.registButtonDidTapped
             .subscribe(onNext: { date in
                 
+        input.isAlarmSwitchOn
+            .subscribe(onNext: { isOn in
+                if isOn {
+                    self.useCase.onAlarm()
+                        .subscribe(onError: { _ in
+                            output.isSuccessRegistResult.accept(false)
+                        }).disposed(by: self.disposeBag)
+                } else {
+                    self.useCase.offAlarm()
+                }
             }).disposed(by: disposeBag)
         return output
     }
