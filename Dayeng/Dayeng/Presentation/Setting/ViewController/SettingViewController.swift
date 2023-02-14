@@ -18,13 +18,13 @@ final class SettingViewController: UIViewController {
         
         var title: String {
             switch self {
-                case .alarm:
-                    return "알람"
-                case .account:
-                    return "계정"
-                case .etc:
-                    return "기타"
-                }
+            case .alarm:
+                return "알람"
+            case .account:
+                return "계정"
+            case .etc:
+                return "기타"
+            }
         }
     }
     
@@ -39,20 +39,20 @@ final class SettingViewController: UIViewController {
         
         var title: String {
             switch self {
-                case .alarm:
-                    return "알람 설정"
-                case .logout:
-                    return "로그아웃"
-                case .withDrwal:
-                    return "회원탈퇴"
-                case .recommend:
-                    return "질문 추천하기"
-                case .openSource:
-                    return "오픈소스 목록보기"
-                case .aboutMe:
-                    return "정보"
-                case .inquiry:
-                    return "문의하기"
+            case .alarm:
+                return "알람 설정"
+            case .logout:
+                return "로그아웃"
+            case .withDrwal:
+                return "회원탈퇴"
+            case .recommend:
+                return "질문 추천하기"
+            case .openSource:
+                return "오픈소스 목록보기"
+            case .aboutMe:
+                return "정보"
+            case .inquiry:
+                return "문의하기"
             }
         }
     }
@@ -72,8 +72,6 @@ final class SettingViewController: UIViewController {
     private var viewModel: SettingViewModel
     private var dataSource: DataSource?
     private var disposeBag = DisposeBag()
-    
-    private var alarmCellTapped = PublishSubject<Void>()
     
     // MARK: - Lifecycles
     init(viewModel: SettingViewModel) {
@@ -102,16 +100,11 @@ final class SettingViewController: UIViewController {
     
     // MARK: - Helpers
     private func bind() {
-        let input = SettingViewModel.Input(alarmCellTapped: self.alarmCellTapped.asObservable())
+        let input = SettingViewModel.Input(
+            cellDidTapped: collectionView.rx.itemSelected.asObservable()
+        )
         
         let output = viewModel.transform(input: input)
-        
-        output.transformAlarm.asDriver(onErrorJustReturn: ())
-            .drive(onNext: { [weak self] in
-                guard let self else { return }
-                self.transformAlarm()
-            })
-            .disposed(by: disposeBag)
     }
     
     private func setupViews() {
@@ -136,6 +129,8 @@ final class SettingViewController: UIViewController {
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
         collectionView.contentInsetAdjustmentBehavior = .never
+        collectionView.alwaysBounceHorizontal = false
+        collectionView.alwaysBounceVertical = false
         collectionView.backgroundColor = .clear
         
         collectionView.register(SettingCell.self, forCellWithReuseIdentifier: SettingCell.identifier)
@@ -181,16 +176,11 @@ final class SettingViewController: UIViewController {
     private func configureDataSource() {
         dataSource = DataSource(collectionView: collectionView,
                                 cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell in
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SettingCell.identifier,
-                                                                for: indexPath) as? SettingCell else {
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: SettingCell.identifier,
+                for: indexPath) as? SettingCell else {
                 return UICollectionViewCell()
             }
-            
-            cell.tappedView
-                .subscribe(onNext: { _ in
-                    self.alarmCellTapped.onNext(())
-                })
-                .disposed(by: self.disposeBag)
             cell.bind(text: item.title)
             
             return cell
@@ -220,10 +210,5 @@ final class SettingViewController: UIViewController {
         snapshot.appendItems([.recommend, .inquiry, .openSource, .aboutMe], toSection: .etc)
         
         dataSource.apply(snapshot)
-    }
-    
-    private func transformAlarm() {
-        let alarmViewController = AlarmSettingViewController()
-        navigationController?.pushViewController(alarmViewController, animated: true)
     }
 }

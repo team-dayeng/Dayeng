@@ -19,32 +19,23 @@ final class DefaultUserRepository: UserRepository {
         firestoreService
             .fetch(collection: "users", document: userID)
             .map { (userDTO: UserDTO) in
-                var answerDictonary = [Int: String]()
-                userDTO.answers?.forEach {
-                    if let key = Int($0.key) {
-                        answerDictonary[key] = $0.value
-                    }
-                }
-                
                 return User(uid: "uid",
-                            currentIndex: userDTO.currentIndex ?? 0,
-                            answers: userDTO.answers?.values.map { $0 } ?? [],
-                            friends: userDTO.friends ?? [])
+                            currentIndex: userDTO.currentIndex,
+                            answers: userDTO.answers.map { $0.toDomain() },
+                            friends: userDTO.friends)
             }
     }
     
     func uploadUser(userID: String, user: User) -> Observable<Void> {
-        let answerDictionary = [String: String]()
-        
         return firestoreService
             .upload(collection: "user",
                     document: userID,
-                    dto: UserDTO(answers: answerDictionary,
+                    dto: UserDTO(answers: [],
                                  currentIndex: user.currentIndex,
                                  friends: user.friends))
     }
     
     func uploadAnswer(userID: String, index: Int, answer: String) -> Observable<Void> {
-        firestoreService.upload(api: .answer(userID: userID), dto: AnswerDTO(answer: [index: answer]))
+        firestoreService.upload(api: .answer(userID: userID), dto: AnswerDTO(date: Date().convertToString(format: "YYYY-mm-dd"), answer: ""))
     }
 }

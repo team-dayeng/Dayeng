@@ -11,6 +11,7 @@ import AuthenticationServices
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var coodinator: AppCoordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
@@ -56,10 +57,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //                    self.window?.rootViewController = LoginViewController(
 //                        viewModel: LoginViewModel()
 //                    )
-                    let viewController = SettingViewController(viewModel: SettingViewModel())
-                    let navigationController = UINavigationController(rootViewController: viewController)
+                    let navigationController = UINavigationController()
+                    self.coodinator = AppCoordinator(navigationController: navigationController)
                     self.window?.rootViewController = navigationController
                     self.window?.makeKeyAndVisible()
+                    self.coodinator?.start()
                 }
             default:
                 break
@@ -95,6 +97,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
-
+    func changeRootViewController(_ viewController: UIViewController) {
+        guard let window = self.window else { return }
+        window.rootViewController = viewController
+        
+        UIView.transition(with: window, duration: 1.0, options: [.transitionCurlUp], animations: nil, completion: nil)
+    }
+    
+    func transitionViewController(_ viewController: UIViewController, option: UIView.AnimationOptions) {
+        guard let window = self.window else { return }
+        guard let navigationController = window.rootViewController as? UINavigationController else { return }
+        UIView.transition(with: window, duration: 1.0, options: option) {
+            navigationController.viewControllers.append(viewController)
+        }
+    }
 }
 
