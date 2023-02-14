@@ -235,7 +235,6 @@ final class AlarmSettingViewController: UIViewController {
             .drive(onNext: { [weak self] isOn in
                 guard let self else { return }
                 self.switchButton.isOn = isOn
-                self.showSwitchAnimation(isOn)
             }).disposed(by: disposeBag)
         
         output.dayList
