@@ -223,7 +223,7 @@ final class AlarmSettingViewController: UIViewController {
         let output = viewModel.transform(input: input)
         
         output.dayList
-            .asDriver(onErrorJustReturn: "")
+            .asDriver(onErrorJustReturn: "안 함")
             .drive(onNext: { [weak self] dayList in
                 guard let self else { return }
                 self.dayListLabel.text = dayList
