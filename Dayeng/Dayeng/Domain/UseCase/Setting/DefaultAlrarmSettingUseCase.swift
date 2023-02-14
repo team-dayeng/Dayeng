@@ -63,6 +63,15 @@ final class DefaultAlrarmSettingUseCase: AlrarmSettingUseCase {
             .requestAuthorization()
             .withLatestFrom(userNotificationService.createNotification(time: date, daysOfWeek: selectedDays.value))
     }
+    
+    func onAlarm() -> Observable<Void> {
+        UserDefaults.isAlarmOn = true
+        return userNotificationService
+            .requestAuthorization()
+            .withLatestFrom(userNotificationService.createNotification(time: UserDefaults.alarmDate,
+                                                                       daysOfWeek: UserDefaults.selectedAlarmDays))
+    }
+    
     func offAlarm() {
         UserDefaults.isAlarmOn = false
         userNotificationService.removeAllNotifications()
