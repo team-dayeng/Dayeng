@@ -126,7 +126,6 @@ final class AlarmSettingViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         configureNavigationBar()
     }
     
@@ -225,7 +224,7 @@ final class AlarmSettingViewController: UIViewController {
             daysOfWeekDidTapped:
                 daysOfWeekDidTapped,
             isAlarmSwitchOn:
-                switchButton.rx.isOn.asObservable()
+                switchButton.rx.isOn.changed.asObservable()
         )
         
         let output = viewModel.transform(input: input)
