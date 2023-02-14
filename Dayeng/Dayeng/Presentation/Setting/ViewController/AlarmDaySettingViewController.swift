@@ -22,33 +22,25 @@ final class AlarmDaySettingViewController: UIViewController {
         
         var string: String {
             switch self {
-                    
-                case .mon:
-                    return "월요일마다"
-                case .tue:
-                    return "화요일마다"
-                case .wed:
-                    return "수요일마다"
-                case .thu:
-                    return "목요일마다"
-                case .fri:
-                    return "금요일마다"
-                case .sat:
-                    return "토요일마다"
-                case .sun:
-                    return "일요일마다"
+            case .mon:
+                return "월요일마다"
+            case .tue:
+                return "화요일마다"
+            case .wed:
+                return "수요일마다"
+            case .thu:
+                return "목요일마다"
+            case .fri:
+                return "금요일마다"
+            case .sat:
+                return "토요일마다"
+            case .sun:
+                return "일요일마다"
             }
         }
     }
     
     // MARK: - UI properties
-    private lazy var backgroundImage: UIImageView = {
-        var imageView: UIImageView = UIImageView()
-        imageView.image = UIImage(named: "paperBackground")
-        
-        return imageView
-    }()
-    
     private var collectionView: UICollectionView!
     // MARK: - Properties
     var disposeBag = DisposeBag()
@@ -67,8 +59,7 @@ final class AlarmDaySettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupViews()
-        configureUI()
+        addBackgroundImage()
         configureCollectionView()
     }
     
@@ -79,30 +70,6 @@ final class AlarmDaySettingViewController: UIViewController {
     }
     
     // MARK: - Helpers
-    
-    private func setupViews() {
-        view.addSubview(backgroundImage)
-        
-        isSelectedCells
-            .subscribe(onNext: { [weak self] isSelectedCells in
-                guard let self else { return }
-                isSelectedCells
-                    .filter { $0 }
-                    .enumerated()
-                    .forEach { index, _ in
-                        let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0))
-                    }
-            }).disposed(by: disposeBag)
-    }
-    
-    private func configureUI() {
-        backgroundImage.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(-50)
-            $0.top.bottom.equalToSuperview().inset(-100)
-        }
-    }
-    
     private func configureCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 1
