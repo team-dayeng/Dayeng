@@ -216,9 +216,17 @@ final class AlarmSettingViewController: UIViewController {
     
     private func bind() {
         let input = AlarmSettingViewModel.Input(
+            viewWillAppear:
+                rx.methodInvoked(#selector(viewWillAppear(_:))).map { _ in }.asObservable(),
+            viewDidAppear:
+                rx.methodInvoked(#selector(viewDidAppear(_:))).map { _ in }.asObservable(),
             registButtonDidTapped:
-                registButton.rx.tap.withLatestFrom(timePicker.rx.date.changed),
-            daysOfWeekDidTapped: daysOfWeekDidTapped)
+                registButton.rx.tap.map { self.timePicker.date },
+            daysOfWeekDidTapped:
+                daysOfWeekDidTapped,
+            isAlarmSwitchOn:
+                switchButton.rx.isOn.asObservable()
+        )
         
         let output = viewModel.transform(input: input)
         
