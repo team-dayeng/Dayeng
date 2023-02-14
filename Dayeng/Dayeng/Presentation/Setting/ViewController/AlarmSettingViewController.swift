@@ -252,13 +252,23 @@ final class AlarmSettingViewController: UIViewController {
                 self.timePicker.date = date
             }).disposed(by: disposeBag)
         
-        registButton.rx.tap
-            .subscribe(onNext: { [weak self] in
+        output.isSuccessRegistResult
+            .asDriver(onErrorJustReturn: false)
+            .drive(onNext: { [weak self] isSuccess in
                 guard let self else { return }
-                let formatter = DateFormatter() // DateFormatter 클래스 상수 선언
-                formatter.dateFormat = "HH:mm"
-                
-                print("설정한 시간 : \(formatter.string(from: self.timePicker.date))")
+                if isSuccess {
+                    self.showAlert(title: "알림 설정이 완료되었습니다.", type: .oneButton)
+                } else {
+                    self.showAlert(title: "알림 서비스를 사용할 수 없습니다.",
+                                   message: "기기의 '설정 > Dayeng'에서\n 알림 접근을 허용해주세요.",
+                                   type: .twoButton,
+                                   rightActionTitle: "설정으로 이동",
+                                   rightActionHandler: {
+                        guard let settingURL = URL(string: UIApplication.openSettingsURLString) else { return }
+                        UIApplication.shared.open(settingURL)
+                    })
+                    self.showSwitchAnimation(false)
+                }
             }).disposed(by: disposeBag)
     }
     
