@@ -103,15 +103,7 @@ final class SettingViewController: UIViewController {
     // MARK: - Helpers
     private func bind() {
         let input = SettingViewModel.Input(alarmCellTapped: self.alarmCellTapped.asObservable())
-        
-        let output = viewModel.transform(input: input)
-        
-        output.transformAlarm.asDriver(onErrorJustReturn: ())
-            .drive(onNext: { [weak self] in
-                guard let self else { return }
-                self.transformAlarm()
-            })
-            .disposed(by: disposeBag)
+        _ = viewModel.transform(input: input)
     }
     
     private func setupViews() {
@@ -220,14 +212,5 @@ final class SettingViewController: UIViewController {
         snapshot.appendItems([.recommend, .inquiry, .openSource, .aboutMe], toSection: .etc)
         
         dataSource.apply(snapshot)
-    }
-    
-    private func transformAlarm() {
-        let alarmViewController = AlarmSettingViewController(
-            alarmSettingViewModel: AlarmSettingViewModel(
-                useCase: DefaultAlrarmSettingUseCase())
-        )
-
-        navigationController?.pushViewController(alarmViewController, animated: true)
     }
 }
