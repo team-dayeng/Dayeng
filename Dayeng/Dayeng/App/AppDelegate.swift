@@ -18,10 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if #available(iOS 10.0, *) {
             let center = UNUserNotificationCenter.current()
             center.requestAuthorization(options: [.alert], completionHandler: { allow, error in
-                if allow {
-                    print("notification allowed")
+                if error == nil {
+                    UserDefaults.isAlarmOn = allow ? UserDefaults.isAlarmOn : allow
                 }
-
             })
         }
         
