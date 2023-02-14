@@ -68,7 +68,7 @@ final class AlarmSettingViewModel {
                 self.useCase.registAlarm(date)
                     .subscribe(onNext: {
                         output.isSuccessRegistResult.accept(true)
-                    }, onError: { error in
+                    }, onError: { _ in
                         output.isSuccessRegistResult.accept(false)
                     })
                     .disposed(by: self.disposeBag)
