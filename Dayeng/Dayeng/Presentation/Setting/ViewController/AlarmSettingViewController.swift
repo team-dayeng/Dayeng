@@ -229,7 +229,7 @@ final class AlarmSettingViewController: UIViewController {
                 self.dayListLabel.text = dayList
             }).disposed(by: disposeBag)
         
-        output.date
+        output.setDate
             .asDriver(onErrorJustReturn: Date())
             .drive(onNext: { [weak self] date in
                 guard let self else { return }
