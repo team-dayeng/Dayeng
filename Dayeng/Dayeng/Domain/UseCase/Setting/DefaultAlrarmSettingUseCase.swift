@@ -19,6 +19,19 @@ final class DefaultAlrarmSettingUseCase: AlrarmSettingUseCase {
     var isAlarmOn: BehaviorRelay<Bool>
     var isAuthorized = PublishRelay<Bool>()
     
+    var selectedDaysDescription: String {
+        let koreanDays = ["월", "화", "수", "목", "금", "토", "일"]
+        let days = selectedDays.value
+            .enumerated()
+            .map { $0.element ? koreanDays[$0.offset] : "" }
+            .joined()
         
+        if days == "" { return "안 함" }
+        if days == "월화수목금토일" { return "매일" }
+        if days == "토일" { return "주말" }
+        if days == "월화수목금" { return "주중" }
+        
+        return Array(days).map {String($0)}.joined(separator: " ")
+    }
     }
 }
