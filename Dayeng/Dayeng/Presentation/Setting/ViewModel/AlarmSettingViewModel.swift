@@ -23,6 +23,8 @@ final class AlarmSettingViewModel {
     // MARK: - Dependency
     var disposeBag = DisposeBag()
     let useCase: AlrarmSettingUseCase
+    let daysOfWeekDidTapped = PublishSubject<BehaviorRelay<[Bool]>>()
+    
     // MARK: - LifeCycle
     init(useCase: AlrarmSettingUseCase) {
         self.useCase = useCase
@@ -32,8 +34,9 @@ final class AlarmSettingViewModel {
     func transform(input: Input) -> Output {
         let output = Output()
         input.daysOfWeekDidTapped
-            .subscribe(onNext: {
-                // 코디네이터로 변경
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.daysOfWeekDidTapped.onNext(self.useCase.selectedDays)
             }).disposed(by: disposeBag)
         
         input.registButtonDidTapped
