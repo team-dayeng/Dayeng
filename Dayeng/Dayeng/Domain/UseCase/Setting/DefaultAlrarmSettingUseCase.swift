@@ -41,5 +41,16 @@ final class DefaultAlrarmSettingUseCase: AlrarmSettingUseCase {
         alarmDate = BehaviorRelay(value: UserDefaults.alarmDate)
         isAlarmOn = BehaviorRelay(value: UserDefaults.isAlarmOn)
         
+        isAlarmOn
+            .subscribe(onNext: { [weak self] isOn in
+                guard let self else { return }
+                if isOn {
+                    self.userNotificationService.requestAuthorization()
+                        .subscribe(onError: { [weak self] _ in
+                            guard let self else { return }
+                            self.isAlarmOn.accept(false)
+                        }).disposed(by: self.disposeBag)
+                }
+            }).disposed(by: disposeBag)
     }
 }
