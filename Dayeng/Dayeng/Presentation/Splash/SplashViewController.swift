@@ -58,7 +58,7 @@ final class SplashViewController: UIViewController {
         configureAnimation()
     }
     
-    // MARK: - Helpers    
+    // MARK: - Helpers
     private func setupViews() {
         addBackgroundImage()
         view.addSubview(bookAnimationView)
