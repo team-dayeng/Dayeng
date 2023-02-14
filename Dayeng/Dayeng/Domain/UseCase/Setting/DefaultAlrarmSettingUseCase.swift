@@ -59,9 +59,12 @@ final class DefaultAlrarmSettingUseCase: AlrarmSettingUseCase {
         UserDefaults.alarmDate = date
         UserDefaults.isAlarmOn = true
         
-        return userNotificationService
-            .requestAuthorization()
-            .withLatestFrom(userNotificationService.createNotification(time: date, daysOfWeek: selectedDays.value))
+        return Observable.combineLatest(
+            userNotificationService.requestAuthorization(),
+            userNotificationService.createNotification(time: date, daysOfWeek: selectedDays.value),
+            resultSelector: { (_, _) in
+            return ()
+        })
     }
     
     func onAlarm() -> Observable<Void> {
