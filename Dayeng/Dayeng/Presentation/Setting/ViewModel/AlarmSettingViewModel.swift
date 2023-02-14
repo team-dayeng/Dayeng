@@ -38,22 +38,21 @@ final class AlarmSettingViewModel {
     // MARK: - Helper
     func transform(input: Input) -> Output {
         let output = Output()
+        
+        self.useCase.initialyIsAlarmOn
+            .bind(to: output.initialyIsAlarmOn)
+           .disposed(by: self.disposeBag)
+        
+        self.useCase.alarmDate
+            .bind(to: output.setDate)
+            .disposed(by: self.disposeBag)
+        
         input.viewWillAppear
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
                 output.dayList.accept(self.useCase.selectedDaysDescription)
             }).disposed(by: disposeBag)
         
-        input.viewDidLoad
-            .subscribe(onNext: { [weak self] in
-                guard let self else { return }
-                self.useCase.alarmDate
-                    .bind(to: output.setDate)
-                    .disposed(by: self.disposeBag)
-                self.useCase.isAlarmOn
-                    .bind(to: output.isAlarmOn)
-                    .disposed(by: self.disposeBag)
-            }).disposed(by: disposeBag)
         input.daysOfWeekDidTapped
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
