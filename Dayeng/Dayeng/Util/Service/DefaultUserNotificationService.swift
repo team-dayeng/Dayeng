@@ -6,6 +6,14 @@
 //
 
 import Foundation
+import UserNotifications
+import RxSwift
+
+final class DefaultUserNotificationService: UserNotificationService {
+    enum UserNotificationError: Error {
+        case notAuthorized
+        case unknownError
+    }
     func requestAuthorization() -> Observable<Void> {
         Observable<Void>.create { observer in
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { (allow, error) in
@@ -48,3 +56,32 @@ import Foundation
                 .removePendingNotificationRequests(withIdentifiers: requests.map { $0.identifier })
         }
     }
+    
+    private func createNotification(time: Date, weekDay: Int, content: UNNotificationContent) -> Observable<Void> {
+        Observable<Void>.create { observer in
+            let center = UNUserNotificationCenter.current()
+            center.getNotificationSettings { settings in
+                guard settings.authorizationStatus == .authorized ||
+                        settings.authorizationStatus == .provisional,
+                      settings.alertSetting == .enabled else { return }
+                
+                var dateComponets = DateComponents()
+                dateComponets.hour = Calendar.current.component(.hour, from: time)
+                dateComponets.minute = Calendar.current.component(.minute, from: time)
+                dateComponets.weekday = weekDay
+                
+                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponets, repeats: true)
+                
+                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+                
+                UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
+                    if let error = error {
+                        return observer.onError(error)
+                    }
+                    return observer.onNext(())
+                })
+            }
+            return Disposables.create()
+        }
+    }
+}
