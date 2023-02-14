@@ -204,7 +204,7 @@ final class AlarmSettingViewController: UIViewController {
         switchButton.rx.isOn
             .subscribe(onNext: { [weak self] isOn in
                 guard let self else { return }
-                self.showSwitchAnimation(isOn)
+                    self.showSwitchAnimation(isOn)
             }).disposed(by: disposeBag)
     }
     
@@ -235,6 +235,7 @@ final class AlarmSettingViewController: UIViewController {
             .drive(onNext: { [weak self] isOn in
                 guard let self else { return }
                 self.switchButton.isOn = isOn
+                self.showSwitchAnimation(isOn)
             }).disposed(by: disposeBag)
         
         output.dayList
@@ -266,7 +267,9 @@ final class AlarmSettingViewController: UIViewController {
                         guard let settingURL = URL(string: UIApplication.openSettingsURLString) else { return }
                         UIApplication.shared.open(settingURL)
                     })
+                    self.switchButton.isOn = false
                     self.showSwitchAnimation(false)
+                    print(self.hiddenContentView.isHidden)
                 }
             }).disposed(by: disposeBag)
     }
@@ -284,13 +287,14 @@ final class AlarmSettingViewController: UIViewController {
             }
         } else {
             self.hiddenContentView.isHidden = true
-            
             UIView.animate(withDuration: 0.5) { [weak self] in
                 guard let self else { return }
                 self.contentView.snp.updateConstraints {
                     $0.height.equalTo(100)
                 }
                 self.view.layoutIfNeeded()
+            } completion: { _ in
+                self.hiddenContentView.isHidden = true
             }
         }
     }
