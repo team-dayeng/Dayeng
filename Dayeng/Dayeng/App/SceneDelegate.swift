@@ -11,14 +11,11 @@ import AuthenticationServices
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var coodinator: AppCoordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: scene)
-        
-//        let viewController = LoginViewController()
-//        self.window?.rootViewController = viewController
-//        self.window?.makeKeyAndVisible()
         
         // 앱 실행 중 'Apple ID 사용 중단' 할 경우
         NotificationCenter.default.addObserver(
@@ -29,9 +26,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 print("Apple ID 사용 중단")
                 // 로그인 페이지로 이동
                 DispatchQueue.main.async {
-//                    self.window?.rootViewController = LoginViewController(
-//                        viewModel: LoginViewModel()
-//                    )
                     self.window?.rootViewController = LoginViewController()
                     self.window?.makeKeyAndVisible()
                 }
@@ -53,11 +47,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 // 해당 userID 값이 앱과 연결 취소되어 있거나 연결되어 있지 않으므로 로그인 UI를 표시
                 print("ID가 연동되어 있지 않거나 ID를 찾을 수 없음")
                 DispatchQueue.main.async {
-//                    self.window?.rootViewController = LoginViewController(
-//                        viewModel: LoginViewModel()
-//                    )
-                    self.window?.rootViewController = LoginViewController()
+                    let navigationController = UINavigationController()
+                    self.coodinator = AppCoordinator(navigationController: navigationController)
+                    self.window?.rootViewController = navigationController
                     self.window?.makeKeyAndVisible()
+                    self.coodinator?.start()
                 }
             default:
                 break
@@ -93,6 +87,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
-
+    func changeRootViewController(_ viewController: UIViewController) {
+        guard let window = self.window else { return }
+        window.rootViewController = viewController
+        
+        UIView.transition(with: window, duration: 1.0, options: [.transitionCurlUp], animations: nil, completion: nil)
+    }
+    
+    func transitionViewController(_ viewController: UIViewController, option: UIView.AnimationOptions) {
+        guard let window = self.window else { return }
+        guard let navigationController = window.rootViewController as? UINavigationController else { return }
+        UIView.transition(with: window, duration: 1.0, options: option) {
+            navigationController.viewControllers.append(viewController)
+        }
+    }
 }
 

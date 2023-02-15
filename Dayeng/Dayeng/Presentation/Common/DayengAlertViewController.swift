@@ -48,7 +48,7 @@ final class DayengAlertViewController: UIViewController {
     
     private lazy var rightButton: UIButton = {
         var button = UIButton()
-        button.backgroundColor = UIColor(named: "MainColor")
+        button.backgroundColor = .dayengMain
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         button.layer.cornerRadius = 10

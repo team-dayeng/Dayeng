@@ -8,19 +8,14 @@
 import UIKit
 import SnapKit
 import Lottie
+import RxSwift
+import RxRelay
 
-class SplashViewController: UIViewController {
+final class SplashViewController: UIViewController {
     // MARK: - UI properties
-    private lazy var backgroundImage: UIImageView = {
-        var imageView: UIImageView = UIImageView()
-        imageView.image = UIImage(named: "paperBackground")
-        
-        return imageView
-    }()
-    
     private lazy var logoImage: UIImageView = {
         var imageView: UIImageView = UIImageView()
-        imageView.image = UIImage(named: "LogoImage")
+        imageView.image = .dayengLogo
         
         return imageView
     }()
@@ -36,9 +31,12 @@ class SplashViewController: UIViewController {
     }()
     
     // MARK: - Properties
+    private let viewModel: SplashViewModel
+    private let animationDidStarted = PublishRelay<Void>()
     
     // MARK: - Lifecycles
-    init() {
+    init(viewModel: SplashViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -51,6 +49,7 @@ class SplashViewController: UIViewController {
         
         setupViews()
         configureUI()
+        bind()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -61,7 +60,7 @@ class SplashViewController: UIViewController {
     
     // MARK: - Helpers
     private func setupViews() {
-        view.addSubview(backgroundImage)
+        addBackgroundImage()
         view.addSubview(bookAnimationView)
         view.addSubview(logoImage)
     }
@@ -78,12 +77,6 @@ class SplashViewController: UIViewController {
             $0.centerY.equalToSuperview().offset(50)
             $0.height.width.equalTo(300)
         }
-        
-        backgroundImage.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(-50)
-            $0.top.bottom.equalToSuperview().inset(-100)
-        }
     }
     
     private func configureAnimation() {
@@ -95,6 +88,14 @@ class SplashViewController: UIViewController {
             self.view.layoutIfNeeded()
         } completion: { _ in
             self.bookAnimationView.play()
+            self.animationDidStarted.accept(())
         }
+    }
+    
+    private func bind() {
+        let input = SplashViewModel.Input(
+            animationDidStarted: animationDidStarted.asObservable()
+        )
+        _ = viewModel.transform(input: input)
     }
 }
