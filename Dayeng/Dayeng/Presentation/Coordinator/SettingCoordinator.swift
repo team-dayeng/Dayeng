@@ -13,7 +13,7 @@ protocol SettingCoordinatorProtocol: Coordinator {
     func showSettingViewController()
 }
 
-final class SettingCoordinator: SettingCoordinatorProtocol {
+final class SettingCoordinator: NSObject, SettingCoordinatorProtocol {
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []
     var delegate: CoordinatorDelegate?
