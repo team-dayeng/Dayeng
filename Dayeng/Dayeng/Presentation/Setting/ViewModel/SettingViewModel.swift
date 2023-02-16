@@ -23,6 +23,7 @@ final class SettingViewModel {
     var alarmCellDidTapped = PublishRelay<Void>()
     var openSourceCellDidTapped = PublishRelay<Void>()
     var aboutCellDidTapped = PublishRelay<Void>()
+    var messageUICellDidTapped = PublishRelay<MessageUIType>()
     
     // MARK: - LifeCycle
     
@@ -43,10 +44,10 @@ final class SettingViewModel {
                     break
                 case (1, 1):
                     break
-                case (2, 0):
-                    break
-                case (2, 1):
-                    break
+                case (2, 0): // 추천
+                    self.messageUICellDidTapped.accept(.recommendQuestion)
+                case (2, 1): // 문의
+                    self.messageUICellDidTapped.accept(.inquiry)
                 case (2, 2):
                     self.openSourceCellDidTapped.accept(())
                 case (2, 3):
