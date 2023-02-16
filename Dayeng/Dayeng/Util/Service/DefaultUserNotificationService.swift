@@ -35,12 +35,12 @@ final class DefaultUserNotificationService: UserNotificationService {
         content.title = "데잉을 쓸 시간이에요!"
         content.body = "오늘의 일기를 작성해보아요"
         
-        let this = daysOfWeek.enumerated().filter {$0.element}.map { (index, _) in
+        let createdNotificationResults = daysOfWeek.enumerated().filter {$0.element}.map { (index, _) in
             let indexToWeekDay = ((index+1)%7)+1
             return createNotification(time: time, weekDay: indexToWeekDay, content: content)
         }
         
-        return Observable.zip(this)
+        return Observable.zip(createdNotificationResults)
             .flatMapLatest { _ in
                 Observable.create { observer in
                     observer.onNext(())
