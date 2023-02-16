@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MessageUI
 import RxSwift
 import RxRelay
 
@@ -48,6 +49,12 @@ final class SettingCoordinator: NSObject, SettingCoordinatorProtocol {
                 self.showWebViewController(url: PageType.about.url)
             })
             .disposed(by: disposeBag)
+        viewModel.messageUICellDidTapped
+            .subscribe(onNext: { [weak self] type in
+                guard let self else { return }
+                self.showMessgeUIViewController(type: type)
+            })
+            .disposed(by: disposeBag)
         navigationController.pushViewController(viewController, animated: true)
     }
     
@@ -59,5 +66,25 @@ final class SettingCoordinator: NSObject, SettingCoordinatorProtocol {
     func showWebViewController(url: String) {
         let viewController = WebViewController(url: url)
         navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showMessgeUIViewController(type: MessageUIType) {
+        let viewController = MFMailComposeViewController()
+        viewController.mailComposeDelegate = self
+        viewController.setToRecipients([type.recipient])
+        viewController.setSubject(type.subject)
+        viewController.setMessageBody(type.messageBody, isHTML: false)
+        
+        navigationController.present(viewController, animated: true)
+    }
+}
+
+extension SettingCoordinator: MFMailComposeViewControllerDelegate {
+    func mailComposeController(
+        _ controller: MFMailComposeViewController,
+        didFinishWith result: MFMailComposeResult,
+        error: Error?
+    ) {
+        controller.dismiss(animated: true)
     }
 }
