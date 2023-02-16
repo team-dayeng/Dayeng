@@ -12,6 +12,7 @@ import RxRelay
 final class AlarmSettingViewModel {
     enum RegistResult {
         case notAuthorized
+        case notInputDays
         case success
     }
     // MARK: - Input
@@ -66,6 +67,10 @@ final class AlarmSettingViewModel {
         input.registButtonDidTapped
             .subscribe(onNext: { [weak self] date in
                 guard let self else { return }
+                guard self.useCase.selectedDays.value != Array(repeating: false, count: 7) else {
+                    output.registResult.accept(.notInputDays)
+                    return
+                }
                 self.useCase.registAlarm(date)
                     .subscribe(onNext: {
                         output.registResult.accept(.success)

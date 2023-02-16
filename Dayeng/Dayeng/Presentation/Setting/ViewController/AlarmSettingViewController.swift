@@ -267,6 +267,8 @@ final class AlarmSettingViewController: UIViewController {
                     })
                     self.switchButton.isOn = false
                     self.showSwitchAnimation(false)
+                case .notInputDays:
+                        self.showAlert(title: "요일을 선택해 주세요.", type: .oneButton)
                 case .success:
                     self.showAlert(title: "알림 설정이 완료되었습니다.", type: .oneButton)
                 }
