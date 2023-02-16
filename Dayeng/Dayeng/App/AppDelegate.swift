@@ -15,15 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         
-        if #available(iOS 10.0, *) {
-            let center = UNUserNotificationCenter.current()
-            center.requestAuthorization(options: [.alert], completionHandler: { allow, error in
-                if error == nil {
-                    UserDefaults.isAlarmOn = allow ? UserDefaults.isAlarmOn : allow
-                }
-            })
-        }
-        
+        DefaultUserNotificationService().requestAuthorization()
+            .subscribe(onError: { _ in
+                print("권한 없음")
+                UserDefaults.isAlarmOn = false
+            }).dispose()
         return true
     }
 
