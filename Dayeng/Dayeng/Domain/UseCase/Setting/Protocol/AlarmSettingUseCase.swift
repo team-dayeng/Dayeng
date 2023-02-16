@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxRelay
 
-protocol AlrarmSettingUseCase {
+protocol AlarmSettingUseCase {
     var selectedDays: BehaviorRelay<[Bool]> { get set }
     var alarmDate: BehaviorRelay<Date> { get set }
     var initialyIsAlarmOn: BehaviorRelay<Bool> { get set }

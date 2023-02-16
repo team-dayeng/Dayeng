@@ -10,7 +10,7 @@ import UserNotifications
 import RxRelay
 import RxSwift
 
-final class DefaultAlrarmSettingUseCase: AlrarmSettingUseCase {
+final class DefaultAlarmSettingUseCase: AlarmSettingUseCase {
     private let userNotificationService: UserNotificationService
     
     private var disposeBag = DisposeBag()

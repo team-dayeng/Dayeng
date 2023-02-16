@@ -41,7 +41,7 @@ final class SettingCoordinator: SettingCoordinatorProtocol {
     }
     
     func showAlarmSettingViewController() {
-        let useCase = DefaultAlrarmSettingUseCase(userNotificationService: DefaultUserNotificationService())
+        let useCase = DefaultAlarmSettingUseCase(userNotificationService: DefaultUserNotificationService())
         let viewModel = AlarmSettingViewModel(useCase: useCase)
         viewModel.daysOfWeekDidTapped
             .subscribe(onNext: { [weak self] selectedDays in

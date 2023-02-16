@@ -27,11 +27,11 @@ final class AlarmSettingViewModel {
     }
     // MARK: - Dependency
     var disposeBag = DisposeBag()
-    let useCase: AlrarmSettingUseCase
+    let useCase: AlarmSettingUseCase
     let daysOfWeekDidTapped = PublishSubject<BehaviorRelay<[Bool]>>()
     
     // MARK: - LifeCycle
-    init(useCase: AlrarmSettingUseCase) {
+    init(useCase: AlarmSettingUseCase) {
         self.useCase = useCase
     }
     
