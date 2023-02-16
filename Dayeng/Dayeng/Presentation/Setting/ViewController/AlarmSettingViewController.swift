@@ -251,13 +251,12 @@ final class AlarmSettingViewController: UIViewController {
                 self.timePicker.date = date
             }).disposed(by: disposeBag)
         
-        output.isSuccessRegistResult
-            .asDriver(onErrorJustReturn: false)
-            .drive(onNext: { [weak self] isSuccess in
+        output.registResult
+            .asDriver(onErrorJustReturn: .notAuthorized)
+            .drive(onNext: { [weak self] result in
                 guard let self else { return }
-                if isSuccess {
-                    self.showAlert(title: "알림 설정이 완료되었습니다.", type: .oneButton)
-                } else {
+                switch result {
+                case .notAuthorized:
                     self.showAlert(title: "알림 서비스를 사용할 수 없습니다.",
                                    message: "기기의 '설정 > Dayeng'에서\n 알림 접근을 허용해주세요.",
                                    type: .twoButton,
@@ -268,6 +267,8 @@ final class AlarmSettingViewController: UIViewController {
                     })
                     self.switchButton.isOn = false
                     self.showSwitchAnimation(false)
+                case .success:
+                    self.showAlert(title: "알림 설정이 완료되었습니다.", type: .oneButton)
                 }
             }).disposed(by: disposeBag)
     }

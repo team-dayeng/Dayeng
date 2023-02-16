@@ -10,6 +10,10 @@ import RxSwift
 import RxRelay
 
 final class AlarmSettingViewModel {
+    enum RegistResult {
+        case notAuthorized
+        case success
+    }
     // MARK: - Input
     struct Input {
         var viewWillAppear: Observable<Void>
@@ -23,7 +27,7 @@ final class AlarmSettingViewModel {
         var initialyIsAlarmOn = ReplayRelay<Bool>.create(bufferSize: 1)
         var dayList = PublishRelay<String>()
         var setDate = ReplayRelay<Date>.create(bufferSize: 1)
-        var isSuccessRegistResult = PublishRelay<Bool>()
+        var registResult = PublishRelay<RegistResult>()
     }
     // MARK: - Dependency
     var disposeBag = DisposeBag()
@@ -64,9 +68,9 @@ final class AlarmSettingViewModel {
                 guard let self else { return }
                 self.useCase.registAlarm(date)
                     .subscribe(onNext: {
-                        output.isSuccessRegistResult.accept(true)
+                        output.registResult.accept(.success)
                     }, onError: { _ in
-                        output.isSuccessRegistResult.accept(false)
+                        output.registResult.accept(.notAuthorized)
                     }).disposed(by: self.disposeBag)
             }).disposed(by: disposeBag)
         
@@ -75,7 +79,7 @@ final class AlarmSettingViewModel {
                 if isOn {
                     self.useCase.onAlarm()
                         .subscribe(onError: { _ in
-                            output.isSuccessRegistResult.accept(false)
+                            output.registResult.accept(.notAuthorized)
                         }).disposed(by: self.disposeBag)
                 } else {
                     self.useCase.offAlarm()
