@@ -9,6 +9,28 @@ import UIKit
 
 extension UIViewController {
     
+    func showIndicator() {
+        let indicator = IndicatorView(frame: CGRect(x: 0,
+                                                    y: 0,
+                                                    width: view.frame.width,
+                                                    height: view.frame.height))
+        
+        navigationController?.view.addSubview(indicator)
+        indicator.start()
+    }
+    
+    func hideIndicator() {
+        if let navigationController = navigationController,
+           let indicator = navigationController.view.subviews.last as? IndicatorView {
+            indicator.stop()
+            indicator.removeFromSuperview()
+            return
+        }
+        guard let indicator = view.subviews.last as? IndicatorView else { return }
+        indicator.stop()
+        indicator.removeFromSuperview()
+    }
+    
     func addBackgroundImage() {
         let backgroundImage = UIImageView(image: UIImage.dayengBackground)
         view.addSubview(backgroundImage)

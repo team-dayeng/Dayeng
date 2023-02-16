@@ -28,6 +28,7 @@
 		47E0A5DD299770EA0093645B /* AnswerDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5DC299770EA0093645B /* AnswerDTO.swift */; };
 		47E0A5E7299774C20093645B /* QuestionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5E6299774C20093645B /* QuestionRepository.swift */; };
 		47E0A5E9299775060093645B /* DefaultQuestionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5E8299775060093645B /* DefaultQuestionRepository.swift */; };
+		76003E12299E361D00F15CAE /* IndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76003E11299E361D00F15CAE /* IndicatorView.swift */; };
 		76280CE729878A3F0061206A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE629878A3F0061206A /* AppDelegate.swift */; };
 		76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE829878A3F0061206A /* SceneDelegate.swift */; };
 		76280CEB29878A3F0061206A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CEA29878A3F0061206A /* ViewController.swift */; };
@@ -106,6 +107,7 @@
 		47E0A5DC299770EA0093645B /* AnswerDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerDTO.swift; sourceTree = "<group>"; };
 		47E0A5E6299774C20093645B /* QuestionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionRepository.swift; sourceTree = "<group>"; };
 		47E0A5E8299775060093645B /* DefaultQuestionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultQuestionRepository.swift; sourceTree = "<group>"; };
+		76003E11299E361D00F15CAE /* IndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorView.swift; sourceTree = "<group>"; };
 		76280CE329878A3F0061206A /* Dayeng.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dayeng.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76280CE629878A3F0061206A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		76280CE829878A3F0061206A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 				47C38780298E390D0030833F /* DayengAlertViewController.swift */,
 				47D1835A298A8DDD0058C0EC /* AuthButton.swift */,
 				E569162A2998D1D9006D7231 /* WebViewController.swift */,
+				76003E11299E361D00F15CAE /* IndicatorView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -710,6 +713,7 @@
 				47D18359298A86F10058C0EC /* LoginViewController.swift in Sources */,
 				E552C262299658F100F51179 /* CalendarViewModel.swift in Sources */,
 				E552C25A299656EA00F51179 /* MainCoordinator.swift in Sources */,
+				76003E12299E361D00F15CAE /* IndicatorView.swift in Sources */,
 				47D18364298D0EDC0058C0EC /* LoginViewModel.swift in Sources */,
 				4754942829900414008B581D /* DefaultDayengCacheService.swift in Sources */,
 				E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */,
