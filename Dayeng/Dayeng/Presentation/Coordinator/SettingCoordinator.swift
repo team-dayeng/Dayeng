@@ -52,7 +52,7 @@ final class SettingCoordinator: NSObject, SettingCoordinatorProtocol {
         viewModel.messageUICellDidTapped
             .subscribe(onNext: { [weak self] type in
                 guard let self else { return }
-                self.showMessgeUIViewController(type: type)
+                self.showMailComposeViewController(type: type)
             })
             .disposed(by: disposeBag)
         navigationController.pushViewController(viewController, animated: true)
@@ -68,14 +68,20 @@ final class SettingCoordinator: NSObject, SettingCoordinatorProtocol {
         navigationController.pushViewController(viewController, animated: true)
     }
     
-    func showMessgeUIViewController(type: MessageUIType) {
-        let viewController = MFMailComposeViewController()
-        viewController.mailComposeDelegate = self
-        viewController.setToRecipients([type.recipient])
-        viewController.setSubject(type.subject)
-        viewController.setMessageBody(type.messageBody, isHTML: false)
+    func showMailComposeViewController(type: MessageUIType) {
+        if !MFMailComposeViewController.canSendMail() {
+            return
+        }
         
-        navigationController.present(viewController, animated: true)
+        DispatchQueue.main.async {
+            let viewController = MFMailComposeViewController()
+            viewController.mailComposeDelegate = self
+            viewController.setToRecipients([type.recipient])
+            viewController.setSubject(type.subject)
+            viewController.setMessageBody(type.messageBody, isHTML: false)
+            
+            self.navigationController.present(viewController, animated: true)
+        }
     }
 }
 

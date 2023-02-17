@@ -62,8 +62,8 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
         
         setupNaviagationBar()
-        setupViews()
         configureCollectionView()
+        setupViews()
         bind()
     }
     
