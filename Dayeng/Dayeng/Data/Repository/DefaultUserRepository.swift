@@ -32,9 +32,9 @@ final class DefaultUserRepository: UserRepository {
     }
     
     func uploadUser(user: User) -> Observable<Void> {
-        firestoreService.upload(
+        return firestoreService.upload(
             collection: "users",
-            document: user.name,
+            document: user.uid,
             dto: UserDTO(name: user.name,
                          answers: nil,
                          currentIndex: user.currentIndex,
