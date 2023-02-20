@@ -11,7 +11,7 @@ import Lottie
 import RxSwift
 import RxRelay
 
-class SplashViewController: UIViewController {
+final class SplashViewController: UIViewController {
     // MARK: - UI properties
     private lazy var logoImage: UIImageView = {
         var imageView: UIImageView = UIImageView()
@@ -59,14 +59,6 @@ class SplashViewController: UIViewController {
     }
     
     // MARK: - Helpers
-    private func bind() {
-        let input = SplashViewModel.Input(
-            animationDidStarted: animationDidStarted.asObservable()
-        )
-        
-        let output = viewModel.transform(input: input)
-    }
-    
     private func setupViews() {
         addBackgroundImage()
         view.addSubview(bookAnimationView)
@@ -98,5 +90,12 @@ class SplashViewController: UIViewController {
             self.bookAnimationView.play()
             self.animationDidStarted.accept(())
         }
+    }
+    
+    private func bind() {
+        let input = SplashViewModel.Input(
+            animationDidStarted: animationDidStarted.asObservable()
+        )
+        _ = viewModel.transform(input: input)
     }
 }
