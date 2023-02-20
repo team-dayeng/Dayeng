@@ -9,6 +9,8 @@ import UIKit
 import AuthenticationServices
 import RxSwift
 import RxCocoa
+import CryptoKit
+import FirebaseAuth
 
 @available(iOS 13.0, *)     // Apple 로그인은 iOS 13.0 버전 이후부터 지원
 final class LoginViewController: UIViewController {
@@ -26,6 +28,8 @@ final class LoginViewController: UIViewController {
     
     // MARK: - Properties
 //    private let viewModel: LoginViewModel
+    private var disposeBag = DisposeBag()
+    var currentNonce: String?
     
     // MARK: - Lifecycles
 //    init(viewModel: LoginViewModel) {
@@ -42,8 +46,14 @@ final class LoginViewController: UIViewController {
         
         setupViews()
         configureUI()
-        setup()
         bind()
+        
+        // 임시: log out
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            print("sign out error: \(error)")
+        }
     }
     
     // MARK: - Helpers
@@ -73,60 +83,123 @@ final class LoginViewController: UIViewController {
             $0.centerX.height.leading.trailing.equalTo(appleLoginButton)
         }
     }
-    
-    private func setup() {
-        setupAppleLogin()
-    }
+
     private func bind() {
-        // TODO: rx delegate proxy
+        
+        appleLoginButton.rx.tap
+            .asObservable()
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.startSignInWithAppleFlow()
+            })
+            .disposed(by: disposeBag)
+
+    }
+    
+    func startSignInWithAppleFlow() {
+        
+        let nonce = randomNonceString()
+        currentNonce = nonce
+        
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        appleIDProvider.rx.login(
+            scope: [.fullName, .email],
+            on: view.window!,
+            nonce: sha256(nonce)
+        )
+        .subscribe(onNext: { [weak self] authorization in
+            
+            guard let self else { return }
+            if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+                guard let nonce = self.currentNonce else {
+                    fatalError("Invalid state: A login callback was received, but no login request was sent.")
+                }
+                guard let appleIDToken = appleIDCredential.identityToken else {
+                    print("Unable to fetch identity token")
+                    return
+                }
+                guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+                    print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
+                    return
+                }
+                
+                // Initialize a Firebase credential.
+                let credential = OAuthProvider.credential(withProviderID: "apple.com",
+                                                          idToken: idTokenString,
+                                                          rawNonce: nonce)
+                
+                // Sign in with Firebase.
+                Auth.auth().signIn(with: credential) { (authResult, error) in
+                    if let error {
+                        print(error.localizedDescription)
+                        return
+                    }
+                    
+                    let rep = DefaultUserRepository(firestoreService: DefaultFirestoreDatabaseService())
+                    guard let uid = Auth.auth().currentUser?.uid,
+                          let familyName = appleIDCredential.fullName?.familyName,
+                          let givenName = appleIDCredential.fullName?.givenName else {
+                        return
+                    }
+                    let fullName = familyName + givenName
+                    rep.uploadUser(user: User(uid: uid, name: fullName))
+                        .subscribe {
+                            print($0)
+                        }
+                        .disposed(by: self.disposeBag)
+                }
+            }
+        }, onError: { error in
+            // TODO: error handling
+            print("AppleID Credential failed with error: \(error.localizedDescription)")
+        })
+        .disposed(by: disposeBag)
     }
 }
 
-extension LoginViewController: ASAuthorizationControllerDelegate,
-                               ASAuthorizationControllerPresentationContextProviding {
+extension LoginViewController {
     
-    private func setupAppleLogin() {
-        let appleIDProvider = ASAuthorizationAppleIDProvider()
-        let request = appleIDProvider.createRequest()
-        request.requestedScopes = [.fullName, .email]
+    // Adapted from https://auth0.com/docs/api-auth/tutorials/nonce#generate-a-cryptographically-random-nonce
+    private func randomNonceString(length: Int = 32) -> String {
+        precondition(length > 0)
+        let charset: [Character] = Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+        var result = ""
+        var remainingLength = length
         
-        let authorizationController = ASAuthorizationController(
-            authorizationRequests: [request])
-        authorizationController.delegate = self
-        authorizationController.presentationContextProvider = self
-        authorizationController.performRequests()
-    }
-    
-    /// Apple 로그인 텍스트 프로바이딩
-    /// 애플 로그인 버튼을 눌렀을 때 애플 로그인을 modal sheet로 표시해주는 함수
-    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        return self.view.window!
-    }
-    
-    /// apple ID 연동 성공시
-    func authorizationController(
-        controller: ASAuthorizationController,
-        didCompleteWithAuthorization authorization: ASAuthorization
-    ) {
-        switch authorization.credential {
-        case let appleIDCredential as ASAuthorizationAppleIDCredential:
-            // get user info
-            let userIdentifier = appleIDCredential.user
-            let fullName = appleIDCredential.fullName
-            let email = appleIDCredential.email
+        while remainingLength > 0 {
+            let randoms: [UInt8] = (0 ..< 16).map { _ in
+                var random: UInt8 = 0
+                let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
+                if errorCode != errSecSuccess {
+                    fatalError(
+                        "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
+                    )
+                }
+                return random
+            }
             
-            print("user ID: \(userIdentifier)")
-            print("user Name: \(fullName)")
-            print("user email: \(email)")
-        default:
-            break
+            randoms.forEach { random in
+                if remainingLength == 0 {
+                    return
+                }
+                
+                if random < charset.count {
+                    result.append(charset[Int(random)])
+                    remainingLength -= 1
+                }
+            }
         }
+        return result
     }
     
-    /// apple ID 연동 실패시
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        // TODO: 개발자 계정 승인 후 signing에서 sign in with apple 추가
-        // TODO: error handling
-        print("AppleID Credential failed with error: \(error.localizedDescription)")
+    @available(iOS 13, *)
+    private func sha256(_ input: String) -> String {
+        let inputData = Data(input.utf8)
+        let hashedData = SHA256.hash(data: inputData)
+        let hashString = hashedData.compactMap {
+            String(format: "%02x", $0)
+        }.joined()
+        
+        return hashString
     }
 }
