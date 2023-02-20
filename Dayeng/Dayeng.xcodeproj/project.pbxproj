@@ -92,11 +92,12 @@
 		47549416298E4C16008B581D /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		47549423298F966B008B581D /* AlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertType.swift; sourceTree = "<group>"; };
 		4754942729900414008B581D /* DefaultDayengCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDayengCacheService.swift; sourceTree = "<group>"; };
+		4754946C2993704F008B581D /* Dayeng.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dayeng.entitlements; sourceTree = "<group>"; };
 		476A62662993FE010074231E /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		476A62682993FE460074231E /* QuestionDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionDTO.swift; sourceTree = "<group>"; };
 		476A626C2996646A0074231E /* DayengCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayengCacheService.swift; sourceTree = "<group>"; };
 		477800F4299B64FC008FFE79 /* DayengDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayengDefaults.swift; sourceTree = "<group>"; };
-		4754946C2993704F008B581D /* Dayeng.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dayeng.entitlements; sourceTree = "<group>"; };
+		47B04031299DE62A0018429C /* Dayeng.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dayeng.entitlements; sourceTree = "<group>"; };
 		47C38780298E390D0030833F /* DayengAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayengAlertViewController.swift; sourceTree = "<group>"; };
 		47D18358298A86F10058C0EC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		47D1835A298A8DDD0058C0EC /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
@@ -205,6 +206,7 @@
 		76280CE529878A3F0061206A /* Dayeng */ = {
 			isa = PBXGroup;
 			children = (
+				47B04031299DE62A0018429C /* Dayeng.entitlements */,
 				76280CEA29878A3F0061206A /* ViewController.swift */,
 				76280D1729878E4E0061206A /* App */,
 				76280D0E29878DF50061206A /* Data */,
@@ -889,6 +891,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Dayeng/Dayeng.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -909,7 +913,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.team.dayeng;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Dayeng;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Apple Sign";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -921,6 +925,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Dayeng/Dayeng.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -941,7 +947,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.team.dayeng;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Dayeng;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Apple Sign";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
