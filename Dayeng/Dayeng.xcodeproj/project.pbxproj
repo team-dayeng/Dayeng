@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		474A62B629A22E42002176AB /* ASAuthorizationControllerProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474A62B529A22E42002176AB /* ASAuthorizationControllerProxy.swift */; };
+		474A62B829A2346A002176AB /* AuthenticationServices+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474A62B729A2346A002176AB /* AuthenticationServices+Rx.swift */; };
 		47549417298E4C16008B581D /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47549416298E4C16008B581D /* UIViewController+.swift */; };
 		47549424298F966B008B581D /* AlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47549423298F966B008B581D /* AlertType.swift */; };
 		4754942829900414008B581D /* DefaultDayengCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4754942729900414008B581D /* DefaultDayengCacheService.swift */; };
@@ -89,6 +91,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		474A62B529A22E42002176AB /* ASAuthorizationControllerProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASAuthorizationControllerProxy.swift; sourceTree = "<group>"; };
+		474A62B729A2346A002176AB /* AuthenticationServices+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationServices+Rx.swift"; sourceTree = "<group>"; };
 		47549416298E4C16008B581D /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		47549423298F966B008B581D /* AlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertType.swift; sourceTree = "<group>"; };
 		4754942729900414008B581D /* DefaultDayengCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDayengCacheService.swift; sourceTree = "<group>"; };
@@ -213,6 +217,8 @@
 				76280D1129878E280061206A /* Domain */,
 				76280D182987918E0061206A /* Presentation */,
 				76280D1429878E380061206A /* Util */,
+				474A62B529A22E42002176AB /* ASAuthorizationControllerProxy.swift */,
+				474A62B729A2346A002176AB /* AuthenticationServices+Rx.swift */,
 			);
 			path = Dayeng;
 			sourceTree = "<group>";
@@ -734,6 +740,8 @@
 				7628E67E298DA61D002D86F2 /* AcceptFriendViewController.swift in Sources */,
 				76F6C0A5298D969700A124CD /* MainViewModel.swift in Sources */,
 				76F6C0AD298D985F00A124CD /* Date+.swift in Sources */,
+				474A62B829A2346A002176AB /* AuthenticationServices+Rx.swift in Sources */,
+				474A62B629A22E42002176AB /* ASAuthorizationControllerProxy.swift in Sources */,
 				47E0A5E7299774C20093645B /* QuestionRepository.swift in Sources */,
 				E569162B2998D1D9006D7231 /* WebViewController.swift in Sources */,
 				E5D43435298A3291004EDFC7 /* CalendarViewController.swift in Sources */,
