@@ -26,12 +26,18 @@ final class DefaultAlarmSettingUseCase: AlarmSettingUseCase {
             .map { $0.element ? koreanDays[$0.offset] : "" }
             .joined()
         
-        if days == "" { return "안 함" }
-        if days == "월화수목금토일" { return "매일" }
-        if days == "토일" { return "주말" }
-        if days == "월화수목금" { return "주중" }
-        
-        return Array(days).map {String($0)}.joined(separator: " ")
+        switch days {
+        case "":
+            return "안 함"
+        case "월화수목금토일":
+            return "매일"
+        case "토일":
+            return "주말"
+        case "월화수목금":
+            return "주중"
+        default:
+            return days.map { String($0) }.joined(separator: " ")
+        }
     }
     
     init(userNotificationService: UserNotificationService) {
