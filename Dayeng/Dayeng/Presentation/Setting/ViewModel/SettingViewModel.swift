@@ -23,7 +23,6 @@ final class SettingViewModel {
     var alarmCellDidTapped = PublishRelay<Void>()
     var openSourceCellDidTapped = PublishRelay<Void>()
     var aboutCellDidTapped = PublishRelay<Void>()
-    
     // MARK: - LifeCycle
     
     // MARK: - Helper

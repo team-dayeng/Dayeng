@@ -36,7 +36,7 @@ final class MainEditViewModel {
             .subscribe(onNext: { [weak self] answer in
                 guard let self else { return }
                 #warning("user로 변경")
-                self.useCase.uploadAnswer(userID: "newuser", index: 3, answer: answer)
+                self.useCase.uploadAnswer(answer: answer)
                     .subscribe(onNext: {
                         output.submitResult.onNext(nil)
                     }, onError: { error in

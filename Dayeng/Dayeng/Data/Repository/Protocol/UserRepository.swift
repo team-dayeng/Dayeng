@@ -10,6 +10,6 @@ import RxSwift
 
 protocol UserRepository {
     func fetchUser(userID: String) -> Observable<User>
-    func uploadUser(userID: String, user: User) -> Observable<Void>
-    func uploadAnswer(userID: String, index: Int, answer: String) -> Observable<Void>
+    func uploadUser(user: User) -> Observable<Void>
+    func uploadAnswer(answer: String) -> Observable<Void>
 }

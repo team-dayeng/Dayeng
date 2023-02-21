@@ -2,7 +2,7 @@
 //  SplashViewModel.swift
 //  Dayeng
 //
-//  Created by 배남석 on 2023/02/10.
+//  Created by  sangyeon on 2023/02/11.
 //
 
 import Foundation
@@ -12,7 +12,7 @@ import RxRelay
 final class SplashViewModel {
     // MARK: - Input
     struct Input {
-        var animationDidStarted: Observable<Void>
+        let animationDidStarted: Observable<Void>
     }
     
     // MARK: - Output
@@ -20,31 +20,43 @@ final class SplashViewModel {
         
     }
     
+    // MARK: - Properites
+    private var disposeBag = DisposeBag()
+    var dataDidLoaded = PublishRelay<Void>()
+    
     // MARK: - Dependency
-    var disposeBag = DisposeBag()
-    private weak var coordinator: AppCoordinator?
-    private let firestoreService = DefaultFirestoreDatabaseService()
-    let dataDidLoaded = PublishRelay<Void>()
+    private let useCase: SplashUseCase
+	private weak var coordinator: AppCoordinator?
     
     // MARK: - Lifecycles
+    init(useCase: SplashUseCase) {
+        self.useCase = useCase
+    }
     
     // MARK: - Helpers
-    func transform(input: Input) -> Output {
-        let output = Output()
-        
+    func transform(input: Input) -> Output {        
         input.animationDidStarted
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
-                self.firestoreService.fetch(collection: "questions")
-                    .subscribe(onNext: { (result: [[String: String]]) in
-                        print(result)
-                        // TODO: 캐시에 데이터 저장
-                        self.dataDidLoaded.accept(())
-                    })
-                    .disposed(by: self.disposeBag)
+                #warning("userID 변경")
+                Observable.zip(
+                    self.useCase.fetchQuestions(),
+                    self.useCase.fetchUser(userID: "ongeee")
+                )
+                .subscribe(onNext: { [weak self] (questions, user) in
+                    guard let self else { return }
+                    
+                    DayengDefaults.shared.questions = questions
+                    DayengDefaults.shared.user = user
+                    
+                    self.dataDidLoaded.accept(())
+                }, onError: {
+                    print($0)
+                })
+                .disposed(by: self.disposeBag)
             })
             .disposed(by: disposeBag)
         
-        return output
+        return Output()
     }
 }

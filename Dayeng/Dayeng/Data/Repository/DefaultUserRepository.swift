@@ -9,6 +9,11 @@ import Foundation
 import RxSwift
 
 final class DefaultUserRepository: UserRepository {
+    
+    enum UserRepositoryError: Error {
+        case noUserError
+    }
+    
     let firestoreService: FirestoreDatabaseService
     
     init(firestoreService: FirestoreDatabaseService) {
@@ -16,26 +21,53 @@ final class DefaultUserRepository: UserRepository {
     }
     
     func fetchUser(userID: String) -> Observable<User> {
-        firestoreService
-            .fetch(collection: "users", document: userID)
-            .map { (userDTO: UserDTO) in
-                return User(uid: "uid",
-                            currentIndex: userDTO.currentIndex,
-                            answers: userDTO.answers.map { $0.toDomain() },
-                            friends: userDTO.friends)
+        Observable.zip(
+            firestoreService.fetch(collection: "users", document: userID),
+            firestoreService.fetch(api: .answer(userID: userID))
+        ).map { (userDTO: UserDTO, answers: [AnswerDTO]) in
+            var user = userDTO.toDomain(uid: userID)
+            user.answers = answers.map { $0.toDomain() }
+            return user
+        }
+    }
+    
+    func uploadUser(user: User) -> Observable<Void> {
+        firestoreService.upload(
+            collection: "users",
+            document: user.name,
+            dto: UserDTO(name: user.name,
+                         answers: nil,
+                         currentIndex: user.currentIndex,
+                         friends: user.friends)
+        )
+    }
+    
+    func uploadAnswer(answer: String) -> Observable<Void> {
+        guard let user = DayengDefaults.shared.user else {
+            return Observable<Void>.create { observer in
+                observer.onError(UserRepositoryError.noUserError)
+                return Disposables.create()
             }
-    }
-    
-    func uploadUser(userID: String, user: User) -> Observable<Void> {
-        return firestoreService
-            .upload(collection: "user",
-                    document: userID,
-                    dto: UserDTO(answers: [],
-                                 currentIndex: user.currentIndex,
-                                 friends: user.friends))
-    }
-    
-    func uploadAnswer(userID: String, index: Int, answer: String) -> Observable<Void> {
-        firestoreService.upload(api: .answer(userID: userID), dto: AnswerDTO(date: Date().convertToString(format: "YYYY-mm-dd"), answer: ""))
+        }
+        
+        let answerDate = Date().convertToString(format: "yyyy.MM.dd.E")
+        DayengDefaults.shared.addAnswer(Answer(
+            date: answerDate,
+            answer: answer)
+        )
+        
+        return Observable.merge(
+            firestoreService.upload(
+                api: .answer(userID: user.uid, index: user.currentIndex),
+                dto: AnswerDTO(
+                    date: answerDate,
+                    answer: answer
+                )
+            ),
+            firestoreService.upload(
+                api: .currentIndex(userID: user.uid),
+                dto: ["currentIndex": user.currentIndex + 1]
+            )
+        )
     }
 }

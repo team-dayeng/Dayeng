@@ -29,7 +29,12 @@ final class AppCoordinator: AppCoordinatorProtocol {
     }
     
     func showSplashViewController() {
-        let viewModel = SplashViewModel()
+        let firestoreService = DefaultFirestoreDatabaseService()
+        let useCase = DefaultSplashUseCase(
+            userRepository: DefaultUserRepository(firestoreService: firestoreService),
+            questionRepository: DefaultQuestionRepository(firestoreService: firestoreService)
+        )
+        let viewModel = SplashViewModel(useCase: useCase)
         let viewController = SplashViewController(viewModel: viewModel)
         viewModel.dataDidLoaded
             .subscribe(onNext: { [weak self] in
