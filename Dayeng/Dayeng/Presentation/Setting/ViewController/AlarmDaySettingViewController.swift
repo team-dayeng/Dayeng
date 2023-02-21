@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import SnapKit
+import RxRelay
 
 final class AlarmDaySettingViewController: UIViewController {
     enum DayType: Int {
@@ -21,7 +22,6 @@ final class AlarmDaySettingViewController: UIViewController {
         
         var string: String {
             switch self {
-                
             case .mon:
                 return "월요일마다"
             case .tue:
@@ -41,20 +41,14 @@ final class AlarmDaySettingViewController: UIViewController {
     }
     
     // MARK: - UI properties
-    private lazy var backgroundImage: UIImageView = {
-        var imageView: UIImageView = UIImageView()
-        imageView.image = UIImage(named: "paperBackground")
-        
-        return imageView
-    }()
-    
     private var collectionView: UICollectionView!
     // MARK: - Properties
-    var isSelectedCells: [IndexPath: Bool]
+    var disposeBag = DisposeBag()
+    let isSelectedCells: BehaviorRelay<[Bool]>
     
     // MARK: - Lifecycles
-    init() {
-        isSelectedCells = [:]
+    init(isSelectedCells: BehaviorRelay<[Bool]>) {
+        self.isSelectedCells = isSelectedCells
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -64,10 +58,10 @@ final class AlarmDaySettingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        setupViews()
-        configureUI()
+        
+        addBackgroundImage()
         configureCollectionView()
+        bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -77,19 +71,6 @@ final class AlarmDaySettingViewController: UIViewController {
     }
     
     // MARK: - Helpers
-
-    private func setupViews() {
-        view.addSubview(backgroundImage)
-    }
-    
-    private func configureUI() {
-        backgroundImage.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(-50)
-            $0.top.bottom.equalToSuperview().inset(-100)
-        }
-    }
-    
     private func configureCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 1
@@ -121,6 +102,29 @@ final class AlarmDaySettingViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.topItem?.title = ""
     }
+    
+    private func bind() {
+        isSelectedCells
+            .subscribe(onNext: { [weak self] isSelectedCells in
+                guard let self else { return }
+                isSelectedCells
+                    .enumerated()
+                    .forEach { index, isSelected in
+                        let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0))
+                        guard let cell = cell as? AlarmDayCell else { return }
+                        cell.tappedCell(isSelected: isSelected)
+                    }
+                
+            }).disposed(by: disposeBag)
+        
+        collectionView.rx.itemSelected
+            .subscribe(onNext: { [weak self] indexPath in
+                guard let self else { return }
+                var isSelectedCellsValue = self.isSelectedCells.value
+                isSelectedCellsValue[indexPath.row].toggle()
+                self.isSelectedCells.accept(isSelectedCellsValue)
+            }).disposed(by: disposeBag)
+    }
 }
 
 extension AlarmDaySettingViewController: UICollectionViewDelegate, UICollectionViewDataSource,
@@ -147,14 +151,7 @@ extension AlarmDaySettingViewController: UICollectionViewDelegate, UICollectionV
         guard let dayType = DayType(rawValue: indexPath.row) else { return UICollectionViewCell() }
         
         cell.bind(text: dayType.string)
-        
+        cell.tappedCell(isSelected: isSelectedCells.value[indexPath.row])
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell  = collectionView.cellForItem(at: indexPath) as? AlarmDayCell else { return }
-        
-        isSelectedCells[indexPath] = !cell.isSelect
-        cell.tappedCell(isSelected: !cell.isSelect)
     }
 }

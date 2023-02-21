@@ -74,4 +74,3 @@ final class AlarmDayCell: UICollectionViewCell {
         isSelect = isSelected
     }
 }
-
