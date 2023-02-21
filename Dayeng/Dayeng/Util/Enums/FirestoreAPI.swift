@@ -10,30 +10,36 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 enum FirestoreAPI {
-    case answer(userID: String)
+    case answer(userID: String, index: Int? = nil)
+    case currentIndex(userID: String)
     
-    var reference: DocumentReference {
+    var documentReference: DocumentReference? {
         switch self {
-        case .answer(let userID):
+        case .answer(let userID, let index):
             return Firestore.firestore()
                 .collection("users")
                 .document(userID)
                 .collection("answers")
-                .document("answer")
+                .document(String(index!))
+        case .currentIndex(let userID):
+            return Firestore.firestore()
+                .collection("users")
+                .document(userID)
+        default:
+            return nil
         }
     }
-}
-
-struct AnswerDTO: Codable {
-    var answer: [Int: String]
     
-    func toDomain() -> Answer {
-        var answerArray = Array(repeating: "", count: answer.keys.max() ?? 0)
-        answer.forEach { answerArray[$0.key] = $0.value }
-        return Answer(answer: answerArray)
+    var collectionReference: CollectionReference? {
+        switch self {
+        case .answer(let userID, _):
+            return Firestore.firestore()
+                .collection("users")
+                .document(userID)
+                .collection("answers")
+        default:
+            return nil
+        }
     }
-}
-
-struct Answer {
-    var answer: [String]
+    
 }

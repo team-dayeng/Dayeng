@@ -35,18 +35,13 @@ final class FriendListViewModel {
         let output = Output()
         
         #warning("dummy")
-        let friends = [User(uid: "옹이"),
-                       User(uid: "멍이"),
-                       User(uid: "남석12!")]
+        let friends = [User(name: "옹이"),
+                       User(name: "멍이"),
+                       User(name: "남석12!")]
         output.friends.onNext(friends)
         
         input.plusButtonDidTapped
-            .subscribe(onNext: { [weak self] in
-                guard let self else { return }
-                print("plusButtonDidTapped")
-                // TODO: 화면 전환
-                self.plusButtonDidTapped.accept(())
-            })
+            .bind(to: plusButtonDidTapped)
             .disposed(by: disposeBag)
         
         input.friendIndexDidTapped

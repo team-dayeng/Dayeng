@@ -7,19 +7,23 @@
 
 import Foundation
 
+// CollectionView Diffable Datasource의 Item에 사용하기 위해 Hashable
 struct User: Hashable {
     let uid: String
+    var name: String
+    var answers: [Answer]
     var currentIndex: Int
-    var answers: [String?]
     var friends: [String]
     
     init(uid: String = UUID().uuidString,
+         name: String,
+         answers: [Answer] = [],
          currentIndex: Int = 0,
-         answers: [String?] = [],
          friends: [String] = []) {
         self.uid = uid
-        self.currentIndex = currentIndex
+        self.name = name
         self.answers = answers
+        self.currentIndex = currentIndex
         self.friends = friends
     }
 }

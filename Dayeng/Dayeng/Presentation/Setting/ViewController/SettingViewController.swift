@@ -73,8 +73,6 @@ final class SettingViewController: UIViewController {
     private var dataSource: DataSource?
     private var disposeBag = DisposeBag()
     
-    private var alarmCellTapped = PublishSubject<Void>()
-    
     // MARK: - Lifecycles
     init(viewModel: SettingViewModel) {
         self.viewModel = viewModel
@@ -102,8 +100,11 @@ final class SettingViewController: UIViewController {
     
     // MARK: - Helpers
     private func bind() {
-        let input = SettingViewModel.Input(alarmCellTapped: self.alarmCellTapped.asObservable())
-        _ = viewModel.transform(input: input)
+        let input = SettingViewModel.Input(
+            cellDidTapped: collectionView.rx.itemSelected.asObservable()
+        )
+        
+        let output = viewModel.transform(input: input)
     }
     
     private func setupViews() {
@@ -128,6 +129,8 @@ final class SettingViewController: UIViewController {
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
         collectionView.contentInsetAdjustmentBehavior = .never
+        collectionView.alwaysBounceHorizontal = false
+        collectionView.alwaysBounceVertical = false
         collectionView.backgroundColor = .clear
         
         collectionView.register(SettingCell.self, forCellWithReuseIdentifier: SettingCell.identifier)
@@ -173,16 +176,11 @@ final class SettingViewController: UIViewController {
     private func configureDataSource() {
         dataSource = DataSource(collectionView: collectionView,
                                 cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell in
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SettingCell.identifier,
-                                                                for: indexPath) as? SettingCell else {
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: SettingCell.identifier,
+                for: indexPath) as? SettingCell else {
                 return UICollectionViewCell()
             }
-            
-            cell.tappedView
-                .subscribe(onNext: { _ in
-                    self.alarmCellTapped.onNext(())
-                })
-                .disposed(by: self.disposeBag)
             cell.bind(text: item.title)
             
             return cell

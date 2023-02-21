@@ -31,10 +31,7 @@ final class CalendarViewModel {
         let output = Output()
         
         input.homeButtonDidTapped
-            .subscribe(onNext: { [weak self] in
-                guard let self else { return }
-                self.homeButtonDidTapped.accept(())
-            })
+            .bind(to: homeButtonDidTapped)
             .disposed(by: disposeBag)
         
         return output

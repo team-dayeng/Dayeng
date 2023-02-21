@@ -40,24 +40,15 @@ final class MainViewModel {
             }).disposed(by: disposeBag)
         
         input.friendButtonDidTapped
-            .subscribe(onNext: { [weak self] in
-                guard let self else { return }
-                self.friendButtonDidTapped.accept(())
-            })
+            .bind(to: friendButtonDidTapped)
             .disposed(by: disposeBag)
         
         input.settingButtonDidTapped
-            .subscribe(onNext: { [weak self] in
-                guard let self else { return }
-                self.settingButtonDidTapped.accept(())
-            })
+            .bind(to: settingButtonDidTapped)
             .disposed(by: disposeBag)
         
         input.calendarButtonDidTapped
-            .subscribe(onNext: { [weak self] in
-                guard let self else { return }
-                self.calendarButtonDidTapped.accept(())
-            })
+            .bind(to: calendarButtonDidTapped)
             .disposed(by: disposeBag)
         return output
     }

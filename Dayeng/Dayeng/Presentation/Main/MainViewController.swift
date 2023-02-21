@@ -62,7 +62,6 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
         
         setupNaviagationBar()
-        addBackgroundImage()
         configureCollectionView()
         setupViews()
         bind()
@@ -78,42 +77,19 @@ final class MainViewController: UIViewController {
     }
     
     private func setupViews() {
-        [friendButton, settingButton].forEach {
+        addBackgroundImage()
+        [collectionView, friendButton, settingButton].forEach {
             view.addSubview($0)
         }
         configureUI()
     }
     
-    private func configureCollectionView() {
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
-        view.addSubview(collectionView)
+    private func configureUI() {
         collectionView.snp.makeConstraints {
             $0.top.left.right.equalTo(view.safeAreaLayoutGuide)
             $0.bottom.equalToSuperview()
         }
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(MainCell.self, forCellWithReuseIdentifier: MainCell.identifier)
-        collectionView.isPagingEnabled = true
-        collectionView.bounces = false
-        collectionView.backgroundColor = .clear
-    }
-    
-    private func collectionViewLayout() -> UICollectionViewCompositionalLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                              heightDimension: .fractionalHeight(1))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                               heightDimension: .fractionalHeight(1))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .paging
-        return UICollectionViewCompositionalLayout(section: section)
-    }
-    
-    private func configureUI() {
+        
         friendButton.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             $0.right.equalToSuperview().offset(-55)
@@ -127,6 +103,47 @@ final class MainViewController: UIViewController {
         }
     }
     
+    private func configureCollectionView() {
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(MainCell.self, forCellWithReuseIdentifier: MainCell.identifier)
+        collectionView.isPagingEnabled = true
+        collectionView.bounces = false
+        collectionView.backgroundColor = .clear
+        
+        if let user = DayengDefaults.shared.user {
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                self.collectionView.scrollToItem(
+                    at: IndexPath(row: user.currentIndex, section: 0),
+                    at: .centeredHorizontally,
+                    animated: false)
+            }
+        }
+    }
+    
+    private func collectionViewLayout() -> UICollectionViewCompositionalLayout {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize,
+            subitems: [item]
+        )
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .paging
+        return UICollectionViewCompositionalLayout(section: section)
+    }
+    
     func bind() {
         let input = MainViewModel.Input(
             resetButtonDidTapped: resetButton.rx.tap.asObservable(),
@@ -134,23 +151,41 @@ final class MainViewController: UIViewController {
             settingButtonDidTapped: settingButton.rx.tap.asObservable(),
             calendarButtonDidTapped: calendarButton.rx.tap.asObservable()
         )
-        
-        let output = viewModel.transform(input: input)
+        _ = viewModel.transform(input: input)
     }
 }
 
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        3
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
+        if let user = DayengDefaults.shared.user {
+            return user.currentIndex + 1
+        }
+        return 0
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCell.identifier,
-                                                            for: indexPath) as? MainCell else {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: MainCell.identifier,
+            for: indexPath
+        ) as? MainCell else {
             return UICollectionViewCell()
         }
+        
+        if DayengDefaults.shared.questions.count > indexPath.row {
+            cell.bindQuestion(DayengDefaults.shared.questions[indexPath.row])
+        }
+        if let user = DayengDefaults.shared.user,
+           user.answers.count > indexPath.row {
+            cell.bindAnswer(user.answers[indexPath.row])
+        }
+        
         return cell
     }
 }

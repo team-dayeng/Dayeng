@@ -9,6 +9,10 @@ import Foundation
 
 final class DefaultDayengCacheService: DayengCacheService {
     
+    enum CacheError: Error {
+        case encodeError
+    }
+    
     static let shared = DefaultDayengCacheService(name: "cache")
     
     private let memoryCache: MemoryCache
@@ -29,9 +33,13 @@ final class DefaultDayengCacheService: DayengCacheService {
         return nil
     }
     
-    func write(_ key: String, data: Data?) {
-        memoryCache.write(key, data: data)
-        diskCache.write(key, data: data)
+    func write<T: Encodable>(_ key: String, data: T?) {
+        guard let data,
+              let encodedData = try? JSONEncoder().encode(data) else {
+            return
+        }
+        memoryCache.write(key, data: encodedData)
+        diskCache.write(key, data: encodedData)
     }
     
     func isExist(_ key: String) -> Bool {
