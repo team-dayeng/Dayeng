@@ -32,6 +32,12 @@
 		47E0A5E7299774C20093645B /* QuestionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5E6299774C20093645B /* QuestionRepository.swift */; };
 		47E0A5E9299775060093645B /* DefaultQuestionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5E8299775060093645B /* DefaultQuestionRepository.swift */; };
 		47E0A5EB2998ED8C0093645B /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5EA2998ED8C0093645B /* Data+.swift */; };
+		76003E092998DF4A00F15CAE /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76003E082998DF4A00F15CAE /* UserDefaults+.swift */; };
+		76003E0D29990ED200F15CAE /* UserNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76003E0C29990ED200F15CAE /* UserNotificationService.swift */; };
+		76003E0F29990EE200F15CAE /* DefaultUserNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76003E0E29990EE200F15CAE /* DefaultUserNotificationService.swift */; };
+		7603FA1E2996522200D2C9C8 /* AlarmSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7603FA1D2996522200D2C9C8 /* AlarmSettingViewModel.swift */; };
+		7603FA202996556200D2C9C8 /* DefaultAlarmSettingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7603FA1F2996556200D2C9C8 /* DefaultAlarmSettingUseCase.swift */; };
+		7603FA22299793B500D2C9C8 /* AlarmSettingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7603FA21299793B500D2C9C8 /* AlarmSettingUseCase.swift */; };
 		76280CE729878A3F0061206A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE629878A3F0061206A /* AppDelegate.swift */; };
 		76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE829878A3F0061206A /* SceneDelegate.swift */; };
 		76280CEB29878A3F0061206A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CEA29878A3F0061206A /* ViewController.swift */; };
@@ -107,6 +113,13 @@
 		47D18367298D16730058C0EC /* FriendListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewModel.swift; sourceTree = "<group>"; };
 		47D18369298D1A610058C0EC /* FriendListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListCell.swift; sourceTree = "<group>"; };
 		47D1836B298D40940058C0EC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		76003E082998DF4A00F15CAE /* UserDefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
+		76003E0C29990ED200F15CAE /* UserNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationService.swift; sourceTree = "<group>"; };
+		76003E0E29990EE200F15CAE /* DefaultUserNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserNotificationService.swift; sourceTree = "<group>"; };
+		76003E10299BC0C400F15CAE /* Dayeng.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dayeng.entitlements; sourceTree = "<group>"; };
+		7603FA1D2996522200D2C9C8 /* AlarmSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewModel.swift; sourceTree = "<group>"; };
+		7603FA1F2996556200D2C9C8 /* DefaultAlarmSettingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAlarmSettingUseCase.swift; sourceTree = "<group>"; };
+		7603FA21299793B500D2C9C8 /* AlarmSettingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingUseCase.swift; sourceTree = "<group>"; };
 		47E0A5DA299770890093645B /* Answer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
 		47E0A5DC299770EA0093645B /* AnswerDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerDTO.swift; sourceTree = "<group>"; };
 		47E0A5E2299773CB0093645B /* SplashUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashUseCase.swift; sourceTree = "<group>"; };
@@ -204,6 +217,7 @@
 		76280CE529878A3F0061206A /* Dayeng */ = {
 			isa = PBXGroup;
 			children = (
+				76003E10299BC0C400F15CAE /* Dayeng.entitlements */,
 				76280CEA29878A3F0061206A /* ViewController.swift */,
 				76280D1729878E4E0061206A /* App */,
 				76280D0E29878DF50061206A /* Data */,
@@ -297,6 +311,7 @@
 				47D18360298B8D750058C0EC /* UIImage+.swift */,
 				47549416298E4C16008B581D /* UIViewController+.swift */,
 				47E0A5EA2998ED8C0093645B /* Data+.swift */,
+				76003E082998DF4A00F15CAE /* UserDefaults+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -309,6 +324,8 @@
 				4754942729900414008B581D /* DefaultDayengCacheService.swift */,
 				476A626C2996646A0074231E /* DayengCacheService.swift */,
 				477800F4299B64FC008FFE79 /* DayengDefaults.swift */,
+				76003E0C29990ED200F15CAE /* UserNotificationService.swift */,
+				76003E0E29990EE200F15CAE /* DefaultUserNotificationService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -408,6 +425,7 @@
 		76280D1F2987922C0061206A /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				7603FA21299793B500D2C9C8 /* AlarmSettingUseCase.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -424,6 +442,7 @@
 		76280D22298792680061206A /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				7603FA1F2996556200D2C9C8 /* DefaultAlarmSettingUseCase.swift */,
 				76280D1F2987922C0061206A /* Protocol */,
 			);
 			path = Setting;
@@ -515,6 +534,7 @@
 			isa = PBXGroup;
 			children = (
 				E552C2252990BEBB00F51179 /* SettingViewModel.swift */,
+				7603FA1D2996522200D2C9C8 /* AlarmSettingViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -690,6 +710,7 @@
 				76F6C0A9298D97A700A124CD /* MainEditViewController.swift in Sources */,
 				7628E68C298E4E80002D86F2 /* DefaultFirestoreDatabaseService.swift in Sources */,
 				7628E684298E4DA7002D86F2 /* DefaultUserRepository.swift in Sources */,
+				7603FA202996556200D2C9C8 /* DefaultAlarmSettingUseCase.swift in Sources */,
 				7628E680298E4D9C002D86F2 /* UserDTO.swift in Sources */,
 				E56916302998D429006D7231 /* PageType.swift in Sources */,
 				E552C22A2990BED800F51179 /* SettingHeaderView.swift in Sources */,
@@ -714,17 +735,21 @@
 				76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */,
 				E552C25C299656F600F51179 /* FriendCoordinator.swift in Sources */,
 				E552C2522994BD3700F51179 /* OwnerType.swift in Sources */,
+				7603FA1E2996522200D2C9C8 /* AlarmSettingViewModel.swift in Sources */,
 				E552C22C2990BEF200F51179 /* AlarmDayCell.swift in Sources */,
 				476A62672993FE010074231E /* Question.swift in Sources */,
 				E552C25E2996570000F51179 /* SettingCoordinator.swift in Sources */,
 				E552C2222990BEA700F51179 /* AlarmSettingViewController.swift in Sources */,
+				76003E092998DF4A00F15CAE /* UserDefaults+.swift in Sources */,
 				E552C2262990BEBB00F51179 /* SettingViewModel.swift in Sources */,
 				47D18361298B8D760058C0EC /* UIImage+.swift in Sources */,
 				E552C2282990BECC00F51179 /* SettingCell.swift in Sources */,
+				7603FA22299793B500D2C9C8 /* AlarmSettingUseCase.swift in Sources */,
 				47D18359298A86F10058C0EC /* LoginViewController.swift in Sources */,
 				E552C262299658F100F51179 /* CalendarViewModel.swift in Sources */,
 				E552C25A299656EA00F51179 /* MainCoordinator.swift in Sources */,
 				47D18364298D0EDC0058C0EC /* LoginViewModel.swift in Sources */,
+				76003E0F29990EE200F15CAE /* DefaultUserNotificationService.swift in Sources */,
 				4754942829900414008B581D /* DefaultDayengCacheService.swift in Sources */,
 				E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */,
 				7628E67E298DA61D002D86F2 /* AcceptFriendViewController.swift in Sources */,
@@ -747,6 +772,7 @@
 				7628E690298E4E9B002D86F2 /* FirestoreAPI.swift in Sources */,
 				476A62692993FE460074231E /* QuestionDTO.swift in Sources */,
 				E552C2602996573A00F51179 /* SplashViewModel.swift in Sources */,
+				76003E0D29990ED200F15CAE /* UserNotificationService.swift in Sources */,
 				7628E682298E4DA4002D86F2 /* UserRepository.swift in Sources */,
 				7628E686298E4DB4002D86F2 /* DefaultMainEditUseCase.swift in Sources */,
 				E5D43437298A3905004EDFC7 /* CommonCalendarCell.swift in Sources */,
@@ -887,9 +913,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = Dayeng/Dayeng.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5R9YHBW9BJ;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 5R9YHBW9BJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Dayeng/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -902,8 +931,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "cho-seungki.Dayeng1";
+				PRODUCT_BUNDLE_IDENTIFIER = com.team.dayeng;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Dayeng;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -915,9 +946,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = Dayeng/Dayeng.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5R9YHBW9BJ;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 5R9YHBW9BJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Dayeng/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -930,8 +964,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "cho-seungki.Dayeng1";
+				PRODUCT_BUNDLE_IDENTIFIER = com.team.dayeng;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Dayeng;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

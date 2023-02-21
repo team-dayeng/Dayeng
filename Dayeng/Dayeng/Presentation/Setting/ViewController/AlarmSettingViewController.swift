@@ -7,23 +7,17 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 final class AlarmSettingViewController: UIViewController {
     // MARK: - UI properties
-    private lazy var backgroundImage: UIImageView = {
-        var imageView: UIImageView = UIImageView()
-        imageView.image = UIImage(named: "paperBackground")
-        
-        return imageView
-    }()
-    
     private lazy var contentView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 10
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.gray.cgColor
-        
         return view
     }()
     
@@ -37,7 +31,7 @@ final class AlarmSettingViewController: UIViewController {
     }()
     
     private lazy var discriptionLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "설정한 시간에 오늘의 질문을 알려드려요."
         label.textColor = .gray
         label.font = .systemFont(ofSize: 16, weight: .regular)
@@ -47,7 +41,6 @@ final class AlarmSettingViewController: UIViewController {
     
     private lazy var switchButton: UISwitch = {
         let switchButton = UISwitch()
-        switchButton.addTarget(self, action: #selector(onClickSwitch(sender: )), for: .valueChanged)
         
         return switchButton
     }()
@@ -73,12 +66,9 @@ final class AlarmSettingViewController: UIViewController {
         let view = UIView()
         view.layer.cornerRadius = 10
         view.layer.backgroundColor = CGColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1.0)
-        let tapGestureRecognizer = UITapGestureRecognizer(
-            target: self,
-            action: #selector(touchUpDayOfWeek)
-        )
+        let tapGestureRecognizer = UITapGestureRecognizer()
         view.addGestureRecognizer(tapGestureRecognizer)
-        
+        daysOfWeekDidTapped = tapGestureRecognizer.rx.event.map { _ in }.asObservable()
         return view
     }()
     
@@ -107,15 +97,18 @@ final class AlarmSettingViewController: UIViewController {
         button.layer.cornerRadius = 10
         button.layer.backgroundColor = CGColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1.0)
         button.setTitleColor(UIColor(red: 102/255, green: 103/255, blue: 171/255, alpha: 1.0), for: .normal)
-        button.addTarget(self, action: #selector(touchUpRegistButton), for: .touchUpInside)
         
         return button
     }()
     
     // MARK: - Properties
+    var disposeBag = DisposeBag()
+    let viewModel: AlarmSettingViewModel
+    var daysOfWeekDidTapped: Observable<Void>!
     
     // MARK: - Lifecycles
-    init() {
+    init(alarmSettingViewModel: AlarmSettingViewModel) {
+        self.viewModel = alarmSettingViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -125,21 +118,21 @@ final class AlarmSettingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupViews()
         configureUI()
+        bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         configureNavigationBar()
     }
     
     // MARK: - Helpers
-
+    
     private func setupViews() {
-        view.addSubview(backgroundImage)
+        addBackgroundImage()
         view.addSubview(contentView)
         contentView.addSubview(titleLable)
         contentView.addSubview(discriptionLabel)
@@ -153,12 +146,6 @@ final class AlarmSettingViewController: UIViewController {
     }
     
     private func configureUI() {
-        backgroundImage.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(-50)
-            $0.top.bottom.equalToSuperview().inset(-100)
-        }
-        
         contentView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(15)
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(20)
@@ -212,6 +199,12 @@ final class AlarmSettingViewController: UIViewController {
             $0.top.equalTo(daysOfWeek.snp.bottom).offset(50)
             $0.height.equalTo(50)
         }
+        
+        switchButton.rx.isOn
+            .subscribe(onNext: { [weak self] isOn in
+                guard let self else { return }
+                    self.showSwitchAnimation(isOn)
+            }).disposed(by: disposeBag)
     }
     
     private func configureNavigationBar() {
@@ -220,10 +213,71 @@ final class AlarmSettingViewController: UIViewController {
         navigationController?.navigationBar.topItem?.title = ""
     }
     
-    @objc func onClickSwitch(sender: UISwitch) {
-        if sender.isOn {
-            print("switch on")
-            UIView.animate(withDuration: 0.5) { [weak self] in
+    private func bind() {
+        let input = AlarmSettingViewModel.Input(
+            viewWillAppear:
+                rx.methodInvoked(#selector(viewWillAppear(_:))).map { _ in }.asObservable(),
+            viewDidLoad:
+                rx.viewDidLoad.map { _ in }.asObservable(),
+            registButtonDidTapped:
+                registButton.rx.tap.map { self.timePicker.date },
+            daysOfWeekDidTapped:
+                daysOfWeekDidTapped,
+            isAlarmSwitchOn:
+                switchButton.rx.isOn.changed.asObservable()
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.initialyIsAlarmOn
+            .asDriver(onErrorJustReturn: false)
+            .drive(onNext: { [weak self] isOn in
+                guard let self else { return }
+                self.switchButton.isOn = isOn
+                self.showSwitchAnimation(isOn)
+            }).disposed(by: disposeBag)
+        
+        output.dayList
+            .asDriver(onErrorJustReturn: "안 함")
+            .drive(onNext: { [weak self] dayList in
+                guard let self else { return }
+                self.dayListLabel.text = dayList
+            }).disposed(by: disposeBag)
+        
+        output.setDate
+            .asDriver(onErrorJustReturn: Date())
+            .drive(onNext: { [weak self] date in
+                guard let self else { return }
+                self.timePicker.date = date
+            }).disposed(by: disposeBag)
+        
+        output.registResult
+            .asDriver(onErrorJustReturn: .notAuthorized)
+            .drive(onNext: { [weak self] result in
+                guard let self else { return }
+                switch result {
+                case .notAuthorized:
+                    self.showAlert(title: "알림 서비스를 사용할 수 없습니다.",
+                                   message: "기기의 '설정 > Dayeng'에서\n 알림 접근을 허용해주세요.",
+                                   type: .twoButton,
+                                   rightActionTitle: "설정으로 이동",
+                                   rightActionHandler: {
+                        guard let settingURL = URL(string: UIApplication.openSettingsURLString) else { return }
+                        UIApplication.shared.open(settingURL)
+                    })
+                    self.switchButton.isOn = false
+                    self.showSwitchAnimation(false)
+                case .notInputDays:
+                        self.showAlert(title: "요일을 선택해 주세요.", type: .oneButton)
+                case .success:
+                    self.showAlert(title: "알림 설정이 완료되었습니다.", type: .oneButton)
+                }
+            }).disposed(by: disposeBag)
+    }
+    
+    private func showSwitchAnimation(_ isOn: Bool) {
+        if isOn {
+            UIView.animate(withDuration: 0.51) { [weak self] in
                 guard let self else { return }
                 self.contentView.snp.updateConstraints {
                     $0.height.equalTo(450)
@@ -233,7 +287,6 @@ final class AlarmSettingViewController: UIViewController {
                 self.hiddenContentView.isHidden = false
             }
         } else {
-            print("switch off")
             self.hiddenContentView.isHidden = true
             UIView.animate(withDuration: 0.5) { [weak self] in
                 guard let self else { return }
@@ -241,19 +294,9 @@ final class AlarmSettingViewController: UIViewController {
                     $0.height.equalTo(100)
                 }
                 self.view.layoutIfNeeded()
+            } completion: { _ in
+                self.hiddenContentView.isHidden = true
             }
         }
-    }
-    
-    @objc func touchUpRegistButton() {
-        let formatter = DateFormatter() // DateFormatter 클래스 상수 선언
-        formatter.dateFormat = "HH:mm"
-        
-        print("설정한 시간 : \(formatter.string(from: timePicker.date))")
-    }
-    
-    @objc func touchUpDayOfWeek() {
-        let viewController = AlarmDaySettingViewController()
-        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
