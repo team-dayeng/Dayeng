@@ -28,7 +28,7 @@ final class DefaultLoginUseCase: LoginUseCase {
     
     // MARK: - Helpers
     
-    func signIn(credential: OAuthCredential, userName: String) -> Observable<String> {
+    func signIn(credential: OAuthCredential, userName: String) -> Observable<User> {
         Observable.create { observer in
             Auth.auth().signIn(with: credential) { [weak self] (_, error) in
                 guard let self else { return }
@@ -44,9 +44,10 @@ final class DefaultLoginUseCase: LoginUseCase {
                     return
                 }
                 
-                self.userRepository.uploadUser(user: User(uid: uid, name: userName))
+                let newUser = User(uid: uid, name: userName)
+                self.userRepository.uploadUser(user: newUser)
                     .subscribe(onNext: {
-                        observer.onNext(uid)
+                        observer.onNext(newUser)
                     }, onError: {
                         self.signOut()
                         observer.onError($0)
