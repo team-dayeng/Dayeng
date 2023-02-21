@@ -30,12 +30,6 @@ final class SettingCoordinator: SettingCoordinatorProtocol {
     
     func showSettingViewController() {
         let viewModel = SettingViewModel()
-        viewModel.alarmCellDidTapped
-            .subscribe(onNext: { [weak self] in
-                guard let self else { return }
-                self.showAlarmSettingViewController()
-            }).disposed(by: disposeBag)
-        
         let viewController = SettingViewController(viewModel: viewModel)
         viewModel.alarmCellDidTapped
             .subscribe(onNext: { [weak self] in
@@ -55,11 +49,6 @@ final class SettingCoordinator: SettingCoordinatorProtocol {
                 self.showWebViewController(url: PageType.about.url)
             })
             .disposed(by: disposeBag)
-        navigationController.pushViewController(viewController, animated: true)
-    }
-    
-    func showAlarmSettingViewController() {
-        let viewController = AlarmSettingViewController()
         navigationController.pushViewController(viewController, animated: true)
     }
     
