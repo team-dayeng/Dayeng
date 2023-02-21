@@ -13,7 +13,6 @@ extension Reactive where Base: ASAuthorizationAppleIDProvider {
     
     func login(
         scope: [ASAuthorization.Scope]? = nil,
-        on window: UIWindow,
         nonce: String?
     ) -> Observable<ASAuthorization> {
 
@@ -24,7 +23,6 @@ extension Reactive where Base: ASAuthorizationAppleIDProvider {
         let controller = ASAuthorizationController(authorizationRequests: [request])
         
         let proxy = ASAuthorizationControllerProxy.proxy(for: controller)
-        proxy.presentationWindow = window
         
         controller.presentationContextProvider = proxy
         controller.performRequests()
