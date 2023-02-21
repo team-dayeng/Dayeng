@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		474575EE29A4DEBD0031F1E5 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474575ED29A4DEBD0031F1E5 /* LoginUseCase.swift */; };
+		474575F029A4E1FA0031F1E5 /* DefaultLoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474575EF29A4E1FA0031F1E5 /* DefaultLoginUseCase.swift */; };
 		474A62B629A22E42002176AB /* ASAuthorizationControllerProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474A62B529A22E42002176AB /* ASAuthorizationControllerProxy.swift */; };
 		474A62B829A2346A002176AB /* AuthenticationServices+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474A62B729A2346A002176AB /* AuthenticationServices+Rx.swift */; };
 		47549417298E4C16008B581D /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47549416298E4C16008B581D /* UIViewController+.swift */; };
@@ -91,6 +93,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		474575ED29A4DEBD0031F1E5 /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
+		474575EF29A4E1FA0031F1E5 /* DefaultLoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoginUseCase.swift; sourceTree = "<group>"; };
 		474A62B529A22E42002176AB /* ASAuthorizationControllerProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASAuthorizationControllerProxy.swift; sourceTree = "<group>"; };
 		474A62B729A2346A002176AB /* AuthenticationServices+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationServices+Rx.swift"; sourceTree = "<group>"; };
 		47549416298E4C16008B581D /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
@@ -488,6 +492,7 @@
 			isa = PBXGroup;
 			children = (
 				76280D2A298792A20061206A /* Protocol */,
+				474575EF29A4E1FA0031F1E5 /* DefaultLoginUseCase.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -495,6 +500,7 @@
 		76280D2A298792A20061206A /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				474575ED29A4DEBD0031F1E5 /* LoginUseCase.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -714,6 +720,7 @@
 				47E0A5E52997743F0093645B /* DefaultSplashUseCase.swift in Sources */,
 				47E0A5E9299775060093645B /* DefaultQuestionRepository.swift in Sources */,
 				47D1835D298A92C10058C0EC /* AuthType.swift in Sources */,
+				474575F029A4E1FA0031F1E5 /* DefaultLoginUseCase.swift in Sources */,
 				E552C2242990BEB300F51179 /* AlarmDaySettingViewController.swift in Sources */,
 				47D18366298D16640058C0EC /* FriendListViewController.swift in Sources */,
 				47D1836C298D40940058C0EC /* User.swift in Sources */,
@@ -733,6 +740,7 @@
 				E552C2282990BECC00F51179 /* SettingCell.swift in Sources */,
 				47D18359298A86F10058C0EC /* LoginViewController.swift in Sources */,
 				E552C262299658F100F51179 /* CalendarViewModel.swift in Sources */,
+				474575EE29A4DEBD0031F1E5 /* LoginUseCase.swift in Sources */,
 				E552C25A299656EA00F51179 /* MainCoordinator.swift in Sources */,
 				47D18364298D0EDC0058C0EC /* LoginViewModel.swift in Sources */,
 				4754942829900414008B581D /* DefaultDayengCacheService.swift in Sources */,
