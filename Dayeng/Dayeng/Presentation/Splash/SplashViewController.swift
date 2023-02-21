@@ -94,6 +94,7 @@ final class SplashViewController: UIViewController {
     
     private func bind() {
         let input = SplashViewModel.Input(
+            viewWillAppear: rx.methodInvoked(#selector(viewWillAppear(_:))).map { _ in }.asObservable(),
             animationDidStarted: animationDidStarted.asObservable()
         )
         _ = viewModel.transform(input: input)

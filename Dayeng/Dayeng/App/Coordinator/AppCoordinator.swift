@@ -36,19 +36,40 @@ final class AppCoordinator: AppCoordinatorProtocol {
         )
         let viewModel = SplashViewModel(useCase: useCase)
         let viewController = SplashViewController(viewModel: viewModel)
-        viewModel.dataDidLoaded
+        
+        viewModel.loginStatus
+            .subscribe(onNext: { [weak self] result in
+                guard let self else { return }
+                if result {
+                    DispatchQueue.main.async {
+                        self.showMainViewController()
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.showLoginViewController()
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
+
+        navigationController.viewControllers = [viewController]
+    }
+    
+    func showLoginViewController() {
+        let firestoreService = DefaultFirestoreDatabaseService()
+        let userRepository = DefaultUserRepository(firestoreService: firestoreService)
+        let useCase = DefaultLoginUseCase(userRepository: userRepository)
+        let viewModel = LoginViewModel(useCase: useCase)
+        let viewController = LoginViewController(viewModel: viewModel)
+        
+        viewModel.loginSuccess
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
                 self.showMainViewController()
             })
             .disposed(by: disposeBag)
+        
         navigationController.viewControllers = [viewController]
-    }
-    
-    func showLoginViewController() {
-        let viewModel = LoginViewModel()
-        let viewController = LoginViewController()
-        navigationController.pushViewController(viewController, animated: false)
     }
     
     func showMainViewController() {
