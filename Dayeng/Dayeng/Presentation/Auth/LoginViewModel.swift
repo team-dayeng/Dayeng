@@ -103,17 +103,22 @@ extension LoginViewModel {
                 
                 // TODO: 로그인할동안 인디케이터 뷰
                 self.useCase.signIn(credential: credential, userName: fullName)
-                    .subscribe(onNext: { uid in
+                    .subscribe(onNext: { user in
                         print("login success")
+                        
                         UserDefaults.standard.set(appleIDCredential.user, forKey: "appleID")
-                        UserDefaults.standard.set(uid, forKey: "uid")
+                        UserDefaults.standard.set(user.uid, forKey: "uid")
+                        
+                        DayengDefaults.shared.questions = []
+                        DayengDefaults.shared.user = user
+                        
                         self.loginSuccess.accept(())
                     }, onError: { _ in
                         self.loginFailure.accept(())
                     })
                     .disposed(by: self.disposeBag)
             }
-        }, onError: { [weak self] error in
+        }, onError: { [weak self] _ in
             guard let self else { return }
             print(LoginError.appleLoginFailure.localizedDescription)
             self.loginFailure.accept(())
