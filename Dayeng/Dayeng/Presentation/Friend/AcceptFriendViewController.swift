@@ -65,7 +65,6 @@ final class AcceptFriendViewController: UIViewController {
     }
     private func configureUI() {
         let heightRatio = view.frame.height / 852
-        let widthRatio = view.frame.width / 393
         
         backgroundImage.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -99,4 +98,3 @@ final class AcceptFriendViewController: UIViewController {
         }
     }
 }
-

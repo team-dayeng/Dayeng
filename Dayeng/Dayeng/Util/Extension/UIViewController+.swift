@@ -6,8 +6,32 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 extension UIViewController {
+    
+    func showIndicator() {
+        let indicator = IndicatorView(frame: CGRect(x: 0,
+                                                    y: 0,
+                                                    width: view.frame.width,
+                                                    height: view.frame.height))
+        
+        navigationController?.view.addSubview(indicator)
+        indicator.start()
+    }
+    
+    func hideIndicator() {
+        if let navigationController = navigationController {
+            let indicators = navigationController.view.subviews
+                .filter { $0 is IndicatorView }
+                .map {$0 as? IndicatorView }
+            indicators.forEach {
+                $0?.stop()
+                $0?.removeFromSuperview()
+            }
+        }
+    }
     
     func addBackgroundImage() {
         let backgroundImage = UIImageView(image: UIImage.dayengBackground)
@@ -59,5 +83,12 @@ extension UIViewController {
             )
         }
         present(alertViewController, animated: false)
+    }
+}
+
+public extension Reactive where Base: UIViewController {
+    var viewDidLoad: ControlEvent<Void> {
+        let source = self.methodInvoked(#selector(Base.viewDidLoad)).map { _ in }
+        return ControlEvent(events: source)
     }
 }

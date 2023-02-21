@@ -115,7 +115,7 @@ extension FriendListViewController {
                     return FriendListCell()
                 }
                 cell.bind(
-                    name: item.uid,
+                    name: item.name,
                     day: item.currentIndex + 1
                 )
                 return cell

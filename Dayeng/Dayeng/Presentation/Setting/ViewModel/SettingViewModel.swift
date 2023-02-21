@@ -23,8 +23,6 @@ final class SettingViewModel {
     var alarmCellDidTapped = PublishRelay<Void>()
     var openSourceCellDidTapped = PublishRelay<Void>()
     var aboutCellDidTapped = PublishRelay<Void>()
-    var messageUICellDidTapped = PublishRelay<MessageUIType>()
-    var messageUIError = PublishRelay<Void>()
     
     // MARK: - LifeCycle
     
@@ -33,7 +31,6 @@ final class SettingViewModel {
         let output = Output()
         
         input.cellDidTapped
-            .debug("VM")
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
                 let section = $0.section

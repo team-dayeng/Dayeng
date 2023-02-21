@@ -11,6 +11,7 @@ import RxRelay
 
 protocol SettingCoordinatorProtocol: Coordinator {
     func showSettingViewController()
+    func showAlarmSettingViewController()
 }
 
 final class SettingCoordinator: NSObject, SettingCoordinatorProtocol {
@@ -51,13 +52,25 @@ final class SettingCoordinator: NSObject, SettingCoordinatorProtocol {
         navigationController.pushViewController(viewController, animated: true)
     }
     
-    func showAlarmSettingViewController() {
-        let viewController = AlarmSettingViewController()
+    func showWebViewController(url: String) {
+        let viewController = WebViewController(url: url)
         navigationController.pushViewController(viewController, animated: true)
     }
     
-    func showWebViewController(url: String) {
-        let viewController = WebViewController(url: url)
+    func showAlarmSettingViewController() {
+        let useCase = DefaultAlarmSettingUseCase(userNotificationService: DefaultUserNotificationService())
+        let viewModel = AlarmSettingViewModel(useCase: useCase)
+        viewModel.daysOfWeekDidTapped
+            .subscribe(onNext: { [weak self] selectedDays in
+                guard let self else { return }
+                self.showAlarmDaySettingViewController(selectedDays: selectedDays)
+            }).disposed(by: disposeBag)
+        let viewController = AlarmSettingViewController(alarmSettingViewModel: viewModel)
+        navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showAlarmDaySettingViewController(selectedDays: BehaviorRelay<[Bool]>) {
+        let viewController = AlarmDaySettingViewController(isSelectedCells: selectedDays)
         navigationController.pushViewController(viewController, animated: true)
     }
 }

@@ -25,14 +25,13 @@ final class DefaultMainEditUseCase {
         self.userRepository = userRepository
     }
 
-    func uploadAnswer(userID: String, index: Int, answer: String) -> Observable<Void> {
+    func uploadAnswer(answer: String) -> Observable<Void> {
         guard answer != "", answer != "enter your answer." else {
             return Observable.create {
                 $0.onError(EditError.notEnterInput)
                 return Disposables.create()
             }
         }
-        return userRepository
-                .uploadAnswer(userID: userID, index: index, answer: answer)
+        return userRepository.uploadAnswer(answer: answer)
     }
 }

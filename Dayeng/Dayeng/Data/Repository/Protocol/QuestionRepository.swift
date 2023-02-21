@@ -9,6 +9,6 @@ import Foundation
 import RxSwift
 
 protocol QuestionRepository {
-    func fetchAll() -> Observable<[Question]?>
+    func fetchAll() -> Observable<[Question]>
     func fetch(index: Int) -> Observable<Question>
 }

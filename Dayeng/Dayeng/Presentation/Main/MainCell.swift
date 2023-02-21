@@ -43,15 +43,13 @@ final class MainCell: UICollectionViewCell {
         }
     }
     
-    func bind(
-        date: String,
-        question: String,
-        koreanQuestion: String,
-        answer: String
-    ) {
-        mainView.dateLabel.text = date
-        mainView.questionLabel.text = question
-        mainView.koreanQuestionLabel.text = koreanQuestion
-        mainView.answerLabel.text = answer
+    func bindQuestion(_ question: Question) {
+        mainView.questionLabel.text = question.english
+        mainView.koreanQuestionLabel.text = question.korean
+    }
+    
+    func bindAnswer(_ answer: Answer) {
+        mainView.dateLabel.text = answer.date
+        mainView.answerLabel.text = answer.answer
     }
 }
