@@ -17,46 +17,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: scene)
         
+        let navigationController = UINavigationController()
+        self.coodinator = AppCoordinator(navigationController: navigationController)
+        self.window?.rootViewController = navigationController
+        self.window?.makeKeyAndVisible()
+        
         // 앱 실행 중 'Apple ID 사용 중단' 할 경우
         NotificationCenter.default.addObserver(
             forName: ASAuthorizationAppleIDProvider.credentialRevokedNotification,
             object: nil,
             queue: nil,
             using: { (Notification) in
+                // TODO: alert 같은거 띄워주기
                 print("Apple ID 사용 중단")
-                // 로그인 페이지로 이동
                 DispatchQueue.main.async {
-                    self.window?.rootViewController = LoginViewController()
-                    self.window?.makeKeyAndVisible()
+                    self.coodinator?.showLoginViewController()
                 }
             })
         
-        // 앱 실행시 로그인 상태 확인 (Apple)
-        let appleIDProvider = ASAuthorizationAppleIDProvider()
-        // TODO: UserDefaults?로부터 userID 얻어 forUserID에 입력
-        appleIDProvider.getCredentialState(forUserID: ""/* 로그인 할 userID */) { (credentialState, error) in
-            switch credentialState {
-            case .authorized:
-                // apple ID credential 유효
-                print("ID 연동 O")
-                DispatchQueue.main.async {
-                    self.window?.rootViewController = ViewController()
-                    self.window?.makeKeyAndVisible()
-                }
-            case .revoked, .notFound:
-                // 해당 userID 값이 앱과 연결 취소되어 있거나 연결되어 있지 않으므로 로그인 UI를 표시
-                print("ID가 연동되어 있지 않거나 ID를 찾을 수 없음")
-                DispatchQueue.main.async {
-                    let navigationController = UINavigationController()
-                    self.coodinator = AppCoordinator(navigationController: navigationController)
-                    self.window?.rootViewController = navigationController
-                    self.window?.makeKeyAndVisible()
-                    self.coodinator?.start()
-                }
-            default:
-                break
-            }
-        }
+        self.coodinator?.start()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
