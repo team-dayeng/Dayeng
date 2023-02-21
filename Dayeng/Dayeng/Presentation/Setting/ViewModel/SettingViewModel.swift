@@ -16,7 +16,7 @@ final class SettingViewModel {
     }
     // MARK: - Output
     struct Output {
-        
+        var messageUIError = PublishRelay<Void>()
     }
     // MARK: - Dependency
     var disposeBag = DisposeBag()
@@ -24,6 +24,7 @@ final class SettingViewModel {
     var openSourceCellDidTapped = PublishRelay<Void>()
     var aboutCellDidTapped = PublishRelay<Void>()
     var messageUICellDidTapped = PublishRelay<MessageUIType>()
+    var messageUIError = PublishRelay<Void>()
     
     // MARK: - LifeCycle
     
@@ -57,6 +58,11 @@ final class SettingViewModel {
                 }
             })
             .disposed(by: disposeBag)
+        
+        messageUIError
+            .subscribe(onNext: { _ in
+            output.messageUIError.accept(())
+        }).disposed(by: disposeBag)
         
         return output
     }

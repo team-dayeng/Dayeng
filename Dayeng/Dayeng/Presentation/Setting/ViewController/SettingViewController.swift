@@ -105,6 +105,12 @@ final class SettingViewController: UIViewController {
         )
         
         let output = viewModel.transform(input: input)
+        output.messageUIError
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                
+                self.showAlert(title: "에러가 발생했어요.", message: "다시 전송해주세요!", type: .oneButton)
+            }).disposed(by: disposeBag)
     }
     
     private func setupViews() {
