@@ -20,15 +20,15 @@ extension UIViewController {
     }
     
     func hideIndicator() {
-        if let navigationController = navigationController,
-           let indicator = navigationController.view.subviews.last as? IndicatorView {
-            indicator.stop()
-            indicator.removeFromSuperview()
-            return
+        if let navigationController = navigationController {
+            let indicators = navigationController.view.subviews
+                .filter { $0 is IndicatorView }
+                .map {$0 as? IndicatorView }
+            indicators.forEach {
+                $0?.stop()
+                $0?.removeFromSuperview()
+            }
         }
-        guard let indicator = view.subviews.last as? IndicatorView else { return }
-        indicator.stop()
-        indicator.removeFromSuperview()
     }
     
     func addBackgroundImage() {
