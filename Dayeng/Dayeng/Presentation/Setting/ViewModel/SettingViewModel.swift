@@ -16,7 +16,7 @@ final class SettingViewModel {
     }
     // MARK: - Output
     struct Output {
-        var messageUIError = PublishRelay<Void>()
+        var showMailComposeViewController = PublishRelay<MessageUIType>()
     }
     // MARK: - Dependency
     var disposeBag = DisposeBag()
@@ -33,6 +33,7 @@ final class SettingViewModel {
         let output = Output()
         
         input.cellDidTapped
+            .debug("VM")
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
                 let section = $0.section
@@ -46,9 +47,9 @@ final class SettingViewModel {
                 case (1, 1):
                     break
                 case (2, 0): // 추천
-                    self.messageUICellDidTapped.accept(.recommendQuestion)
+                    output.showMailComposeViewController.accept(.recommendQuestion)
                 case (2, 1): // 문의
-                    self.messageUICellDidTapped.accept(.inquiry)
+                    output.showMailComposeViewController.accept(.inquiry)
                 case (2, 2):
                     self.openSourceCellDidTapped.accept(())
                 case (2, 3):
@@ -58,11 +59,6 @@ final class SettingViewModel {
                 }
             })
             .disposed(by: disposeBag)
-        
-        messageUIError
-            .subscribe(onNext: { _ in
-            output.messageUIError.accept(())
-        }).disposed(by: disposeBag)
         
         return output
     }

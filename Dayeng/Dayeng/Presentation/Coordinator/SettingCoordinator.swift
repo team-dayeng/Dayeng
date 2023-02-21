@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import MessageUI
 import RxSwift
 import RxRelay
 
@@ -49,15 +48,6 @@ final class SettingCoordinator: NSObject, SettingCoordinatorProtocol {
                 self.showWebViewController(url: PageType.about.url)
             })
             .disposed(by: disposeBag)
-        viewModel.messageUICellDidTapped
-            .subscribe(onNext: { [weak self] type in
-                guard let self else { return }
-                let error = self.showMailComposeViewController(type: type)
-                error
-                    .bind(to: viewModel.messageUIError)
-                    .disposed(by: self.disposeBag)
-            })
-            .disposed(by: disposeBag)
         navigationController.pushViewController(viewController, animated: true)
     }
     
@@ -70,44 +60,4 @@ final class SettingCoordinator: NSObject, SettingCoordinatorProtocol {
         let viewController = WebViewController(url: url)
         navigationController.pushViewController(viewController, animated: true)
     }
-    
-    func showMailComposeViewController(type: MessageUIType) -> Observable<Void> {
-        if !MFMailComposeViewController.canSendMail() {
-            return Observable.just(())
-        }
-        
-        DispatchQueue.main.async {
-            let viewController = MFMailComposeViewController()
-            viewController.mailComposeDelegate = self
-            viewController.setToRecipients([type.recipient])
-            viewController.setSubject(type.subject)
-            viewController.setMessageBody(type.messageBody, isHTML: false)
-            
-            self.navigationController.present(viewController, animated: true)
-        }
-        return Observable.create { observer in
-            self.rx.methodInvoked(#selector(MFMailComposeViewControllerDelegate
-                .mailComposeController(_:didFinishWith:error:)))
-                .subscribe(onNext: { parameters in
-                    guard let controller = parameters[0] as? MFMailComposeViewController,
-                          let error = parameters[2] as? Error? else {
-                        return
-                    }
-                    
-                    if error != nil {
-                        observer.onNext(())
-                    }
-                    controller.dismiss(animated: true)
-                }).disposed(by: self.disposeBag)
-            
-            return Disposables.create()
-        }
-    }
-}
-
-extension SettingCoordinator: MFMailComposeViewControllerDelegate {
-    func mailComposeController(
-        _ controller: MFMailComposeViewController,
-        didFinishWith result: MFMailComposeResult,
-        error: Error?) {}
 }
