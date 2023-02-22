@@ -113,7 +113,6 @@ extension LoginViewModel {
                         DayengDefaults.shared.user = user
                         
                         // TODO: 만약 애플 로그인 - 로그아웃 후 재로그인 한다면 ?? 즉, 퀘스쳔 데이터가 있는 상태라면 ?? 
-                        
                         self.loginSuccess.accept(())
                     }, onError: { _ in
                         self.loginFailure.accept(())

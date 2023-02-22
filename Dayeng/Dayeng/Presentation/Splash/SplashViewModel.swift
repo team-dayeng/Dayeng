@@ -13,7 +13,6 @@ import AuthenticationServices
 final class SplashViewModel {
     // MARK: - Input
     struct Input {
-        let viewWillAppear: Observable<Void>
         let animationDidStarted: Observable<Void>
     }
     
@@ -37,14 +36,6 @@ final class SplashViewModel {
     
     // MARK: - Helpers
     func transform(input: Input) -> Output {
-        
-        input.viewWillAppear
-            .subscribe(onNext: {
-                // 로그인 여부 확인
-                // 딥링크 확인
-            })
-            .disposed(by: disposeBag)
-        
         input.animationDidStarted
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
@@ -97,11 +88,8 @@ final class SplashViewModel {
                     self.loginStatus.accept(false)
                 }
                 
-                
                 // TODO: 딥링크 확인
-                
-                
-
+            
             })
             .disposed(by: disposeBag)
         
