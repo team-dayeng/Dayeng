@@ -65,7 +65,10 @@ extension LoginViewModel {
     }
     
     func startSignInWithAppleFlow() {
-        let nonce = randomNonceString()
+        guard let nonce = randomNonceString() else {
+            loginFailure.accept(())
+            return
+        }
         currentNonce = nonce
 
         ASAuthorizationAppleIDProvider().rx.login(
@@ -132,22 +135,17 @@ extension LoginViewModel {
 extension LoginViewModel {
     
     // Adapted from https://auth0.com/docs/api-auth/tutorials/nonce#generate-a-cryptographically-random-nonce
-    private func randomNonceString(length: Int = 32) -> String {
+    private func randomNonceString(length: Int = 32) -> String? {
         precondition(length > 0)
         let charset: [Character] = Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
         var result = ""
         var remainingLength = length
         
         while remainingLength > 0 {
-            let randoms: [UInt8] = (0 ..< 16).map { _ in
-                var random: UInt8 = 0
-                let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
-                if errorCode != errSecSuccess {
-                    fatalError(
-                        "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
-                    )
-                }
-                return random
+            var randoms = [UInt8](repeating: 0, count: 16)
+            let errorCode = SecRandomCopyBytes(kSecRandomDefault, randoms.count, &randoms)
+            if errorCode != errSecSuccess {
+                return nil
             }
             
             randoms.forEach { random in
