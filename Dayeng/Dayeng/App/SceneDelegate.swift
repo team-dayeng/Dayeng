@@ -27,11 +27,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             forName: ASAuthorizationAppleIDProvider.credentialRevokedNotification,
             object: nil,
             queue: nil,
-            using: { (Notification) in
-                // TODO: alert 같은거 띄워주기
-                print("Apple ID 사용 중단")
+            using: { [weak self] (Notification) in
+                print("Apple ID 사용중단")
+                guard let self, let window = self.window else { return }
                 DispatchQueue.main.async {
-                    self.coodinator?.showLoginViewController()
+                    guard let viewController = (window.rootViewController as? UINavigationController)?.viewControllers.last ?? window.rootViewController else {
+                        return
+                    }
+                    viewController.showAlert(
+                        title: "Apple ID가 사용 중단되어 로그아웃 되었습니다.",
+                        message: "로그인 화면으로 이동합니다.",
+                        type: .oneButton,
+                        rightActionHandler: { [weak self] in
+                            guard let self,
+                                  let coordinator = self.coodinator else { return }
+                            DispatchQueue.main.async {
+                                coordinator.showLoginViewController()
+                            }
+                    })
                 }
             })
         

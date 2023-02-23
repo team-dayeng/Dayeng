@@ -38,11 +38,16 @@ final class AppCoordinator: AppCoordinatorProtocol {
         let viewController = SplashViewController(viewModel: viewModel)
         
         viewModel.loginStatus
-            .asDriver(onErrorJustReturn: false)
-            .drive(onNext: { [weak self] result in
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] result in
                 guard let self else { return }
                 if result {
-                    self.showMainViewController()
+                    viewModel.dataDidLoaded
+                        .subscribe(onNext: { [weak self] in
+                            guard let self else { return }
+                            self.showMainViewController()
+                        })
+                        .disposed(by: self.disposeBag)
                 } else {
                     self.showLoginViewController()
                 }
@@ -53,6 +58,12 @@ final class AppCoordinator: AppCoordinatorProtocol {
     }
     
     func showLoginViewController() {
+        
+        if !childCoordinators.isEmpty {
+            childCoordinators.removeAll()
+            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController = navigationController
+        }
+        
         let firestoreService = DefaultFirestoreDatabaseService()
         let userRepository = DefaultUserRepository(firestoreService: firestoreService)
         let useCase = DefaultLoginUseCase(userRepository: userRepository)
