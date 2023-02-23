@@ -54,11 +54,12 @@ extension LoginViewModel {
     
     // MARK: - Helpers
     func transform(input: Input) -> Output {
-        input.appleLoginButtonDidTap.subscribe(onNext: { [weak self] in
-            guard let self else { return }
-            self.startSignInWithAppleFlow()
-        })
-        .disposed(by: disposeBag)
+        input.appleLoginButtonDidTap
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.startSignInWithAppleFlow()
+            })
+            .disposed(by: disposeBag)
         
         return Output(loginFailure: loginFailure)
     }
