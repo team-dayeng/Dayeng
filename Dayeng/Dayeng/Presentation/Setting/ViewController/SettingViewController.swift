@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import SnapKit
 import RxCocoa
+import MessageUI
 
 final class SettingViewController: UIViewController {
     enum Sections: Int {
@@ -105,6 +106,25 @@ final class SettingViewController: UIViewController {
         )
         
         let output = viewModel.transform(input: input)
+        
+        output.showMailComposeViewController
+            .asDriver(onErrorJustReturn: .inquiry)
+            .drive(onNext: { [weak self] type in
+                guard let self else { return }
+                if !MFMailComposeViewController.canSendMail() {
+                    self.showAlert(title: "에러가 발생했어요.", message: "다시 전송해주세요!", type: .oneButton)
+                    return
+                }
+                
+                let viewController = MFMailComposeViewController()
+                viewController.mailComposeDelegate = self
+                viewController.setToRecipients([type.recipient])
+                viewController.setSubject(type.subject)
+                viewController.setMessageBody(type.messageBody, isHTML: false)
+                
+                self.navigationController?.present(viewController, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setupViews() {
@@ -200,7 +220,7 @@ final class SettingViewController: UIViewController {
             return header
         }
     }
-
+    
     private func makeSnapshot() {
         guard let dataSource else { return }
         var snapshot = dataSource.snapshot()
@@ -210,5 +230,18 @@ final class SettingViewController: UIViewController {
         snapshot.appendItems([.recommend, .inquiry, .openSource, .aboutMe], toSection: .etc)
         
         dataSource.apply(snapshot)
+    }
+}
+
+extension SettingViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(
+        _ controller: MFMailComposeViewController,
+        didFinishWith result: MFMailComposeResult,
+        error: Error?
+    ) {
+        if error != nil {
+            self.showAlert(title: "에러가 발생했어요.", message: "다시 전송해주세요!", type: .oneButton)
+        }
+        controller.dismiss(animated: true)
     }
 }

@@ -14,7 +14,7 @@ protocol SettingCoordinatorProtocol: Coordinator {
     func showAlarmSettingViewController()
 }
 
-final class SettingCoordinator: SettingCoordinatorProtocol {
+final class SettingCoordinator: NSObject, SettingCoordinatorProtocol {
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []
     var delegate: CoordinatorDelegate?
