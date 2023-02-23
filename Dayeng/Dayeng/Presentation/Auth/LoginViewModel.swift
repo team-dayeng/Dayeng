@@ -115,8 +115,7 @@ extension LoginViewModel {
                         
                         DayengDefaults.shared.questions = []
                         DayengDefaults.shared.user = user
-                        
-                        // TODO: 만약 애플 로그인 - 로그아웃 후 재로그인 한다면 ?? 즉, 퀘스쳔 데이터가 있는 상태라면 ?? 
+                         
                         self.loginSuccess.accept(())
                     }, onError: { _ in
                         self.loginFailure.accept(())
@@ -134,32 +133,19 @@ extension LoginViewModel {
 
 extension LoginViewModel {
     
-    // Adapted from https://auth0.com/docs/api-auth/tutorials/nonce#generate-a-cryptographically-random-nonce
     private func randomNonceString(length: Int = 32) -> String? {
         precondition(length > 0)
         let charset: [Character] = Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
-        var result = ""
-        var remainingLength = length
         
-        while remainingLength > 0 {
-            var randoms = [UInt8](repeating: 0, count: 16)
-            let errorCode = SecRandomCopyBytes(kSecRandomDefault, randoms.count, &randoms)
-            if errorCode != errSecSuccess {
-                return nil
-            }
-            
-            randoms.forEach { random in
-                if remainingLength == 0 {
-                    return
-                }
-                
-                if random < charset.count {
-                    result.append(charset[Int(random)])
-                    remainingLength -= 1
-                }
-            }
+        var randoms = [UInt8](repeating: 0, count: length)
+        let errorCode = SecRandomCopyBytes(kSecRandomDefault, randoms.count, &randoms)
+        if errorCode != errSecSuccess {
+            return nil
         }
-        return result
+            
+        return String(randoms.map { random in
+            charset[Int(random)%charset.count]
+        })
     }
     
     @available(iOS 13, *)
