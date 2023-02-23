@@ -38,16 +38,13 @@ final class AppCoordinator: AppCoordinatorProtocol {
         let viewController = SplashViewController(viewModel: viewModel)
         
         viewModel.loginStatus
-            .subscribe(onNext: { [weak self] result in
+            .asDriver(onErrorJustReturn: false)
+            .drive(onNext: { [weak self] result in
                 guard let self else { return }
                 if result {
-                    DispatchQueue.main.async {
-                        self.showMainViewController()
-                    }
+                    self.showMainViewController()
                 } else {
-                    DispatchQueue.main.async {
-                        self.showLoginViewController()
-                    }
+                    self.showLoginViewController()
                 }
             })
             .disposed(by: disposeBag)
