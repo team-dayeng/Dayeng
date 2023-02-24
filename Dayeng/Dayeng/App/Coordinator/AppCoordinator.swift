@@ -37,20 +37,26 @@ final class AppCoordinator: AppCoordinatorProtocol {
         let viewModel = SplashViewModel(useCase: useCase)
         let viewController = SplashViewController(viewModel: viewModel)
         
-        viewModel.loginStatus
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] result in
+        Observable.zip(viewModel.loginStatus, viewModel.dataDidLoad)
+            .subscribe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] (loginResult, _) in
                 guard let self else { return }
-                if result {
-                    viewModel.dataDidLoaded
-                        .subscribe(onNext: { [weak self] in
-                            guard let self else { return }
-                            self.showMainViewController()
-                        })
-                        .disposed(by: self.disposeBag)
-                } else {
-                    self.showLoginViewController()
-                }
+                    if loginResult {
+                        self.showMainViewController()
+                    } else {
+                        self.showLoginViewController()
+                    }
+            }, onError: { [weak self] error in
+                guard let self else { return }
+                print(error.localizedDescription)
+                self.navigationController.showAlert(
+                    title: "네트워크에 연결되지 않았습니다.",
+                    message: "다시 시도해주세요.",
+                    type: .oneButton,
+                    rightActionHandler: { [weak self] in
+                        guard let self else { return }
+                        self.showSplashViewController()
+                })
             })
             .disposed(by: disposeBag)
 

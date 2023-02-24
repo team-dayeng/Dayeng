@@ -68,5 +68,4 @@ final class ASAuthorizationControllerProxy:
     deinit {
         didComplete.onCompleted()
     }
-    
 }
