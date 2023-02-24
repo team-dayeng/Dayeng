@@ -13,6 +13,6 @@ extension Data {
     }
     
     func toInt() -> Int? {
-        Int(String(data: self, encoding: .utf8) ?? "")
+        try? JSONDecoder().decode(Int.self, from: self)
     }
 }

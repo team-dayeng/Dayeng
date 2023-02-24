@@ -16,17 +16,16 @@ enum FirestoreAPI {
     var documentReference: DocumentReference? {
         switch self {
         case .answer(let userID, let index):
+            guard let index else { return nil }
             return Firestore.firestore()
                 .collection("users")
                 .document(userID)
                 .collection("answers")
-                .document(String(index!))
+                .document(String(index))
         case .currentIndex(let userID):
             return Firestore.firestore()
                 .collection("users")
                 .document(userID)
-        default:
-            return nil
         }
     }
     

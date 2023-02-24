@@ -16,7 +16,7 @@ final class SettingViewModel {
     }
     // MARK: - Output
     struct Output {
-        
+        var showMailComposeViewController = PublishRelay<MessageUIType>()
     }
     // MARK: - Dependency
     var disposeBag = DisposeBag()
@@ -43,10 +43,10 @@ final class SettingViewModel {
                     break
                 case (1, 1):
                     break
-                case (2, 0):
-                    break
-                case (2, 1):
-                    break
+                case (2, 0): // 추천
+                    output.showMailComposeViewController.accept(.recommendQuestion)
+                case (2, 1): // 문의
+                    output.showMailComposeViewController.accept(.inquiry)
                 case (2, 2):
                     self.openSourceCellDidTapped.accept(())
                 case (2, 3):

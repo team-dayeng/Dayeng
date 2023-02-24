@@ -142,7 +142,7 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //싱글톤에서 알맞은 질문과 대답을 찾은 후, 뷰전환
+        // 싱글톤에서 알맞은 질문과 대답을 찾은 후, 뷰전환
         print(indexPath.row + 1)
     }
 }
