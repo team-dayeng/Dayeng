@@ -49,28 +49,33 @@ extension LoginViewModel {
         input.appleLoginButtonDidTap
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
-                
-                AppleLoginService.shared.signIn()
-                    .subscribe(onNext: { [weak self] (credential, userName) in
-                        guard let self else { return }
-                        self.firebaseAuthSignIn(credential: credential, userName: userName)
-                    }, onError: { [weak self] error in
-                        print(error.localizedDescription)
-                        UserDefaults.standard.removeObject(forKey: "appleID")
-                        
-                        guard let self else { return }
-                        self.loginFailure.accept(())
-                    })
-                    .disposed(by: self.disposeBag)
+                self.appleSignIn()
             })
             .disposed(by: disposeBag)
         
         return Output(loginFailure: loginFailure)
     }
     
+    private func appleSignIn() {
+        AppleLoginService.shared.signIn()
+            .subscribe(onNext: { [weak self] (credential, userName) in
+                guard let self else { return }
+                self.firebaseAuthSignIn(credential: credential, userName: userName)
+            }, onError: { [weak self] error in
+                print(error.localizedDescription)
+                UserDefaults.standard.removeObject(forKey: "appleID")
+                
+                guard let self else { return }
+                self.loginFailure.accept(())
+            })
+            .disposed(by: disposeBag)
+    }
+    
     private func firebaseAuthSignIn(credential: OAuthCredential, userName: String) {
         useCase.signIn(credential: credential, userName: userName)
-            .subscribe(onNext: { user in
+            .subscribe(onNext: { [weak self] user in
+                guard let self else { return }
+                
                 print("login success")
                 
                 UserDefaults.standard.set(user.uid, forKey: "uid")
@@ -79,7 +84,8 @@ extension LoginViewModel {
                 DayengDefaults.shared.user = user
                 
                 self.loginSuccess.accept(())
-            }, onError: { _ in
+            }, onError: { [weak self] _ in
+                guard let self else { return }
                 self.loginFailure.accept(())
             })
             .disposed(by: disposeBag)
