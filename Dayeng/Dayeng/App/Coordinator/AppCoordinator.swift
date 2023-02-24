@@ -67,7 +67,9 @@ final class AppCoordinator: AppCoordinatorProtocol {
         
         if !childCoordinators.isEmpty {
             childCoordinators.removeAll()
-            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController = navigationController
+            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                sceneDelegate.window?.rootViewController = navigationController
+            }
         }
         
         let firestoreService = DefaultFirestoreDatabaseService()
