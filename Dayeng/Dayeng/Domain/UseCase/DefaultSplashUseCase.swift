@@ -24,7 +24,7 @@ final class DefaultSplashUseCase: SplashUseCase {
     // MARK: - Helpers
     func isAvailableAppleLogin() -> Observable<Bool> {
         Observable.create { observer in
-            guard let userID = UserDefaults.standard.string(forKey: "appleID") else {
+            guard let userID = UserDefaults.appleID else {
                 observer.onNext(false)
                 return Disposables.create()
             }

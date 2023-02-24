@@ -44,7 +44,7 @@ final class SplashViewModel {
                     .do(onNext: { [weak self] isAvailable in
                         guard let self else { return }
                         if isAvailable,
-                           let firebaseUserID = UserDefaults.standard.string(forKey: "uid") {
+                           let firebaseUserID = UserDefaults.userID {
                             print("ID 연동 O")
                             
                             Observable.zip(

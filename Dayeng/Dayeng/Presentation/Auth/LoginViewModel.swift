@@ -63,7 +63,8 @@ extension LoginViewModel {
                 self.firebaseAuthSignIn(credential: credential, userName: userName)
             }, onError: { [weak self] error in
                 print(error.localizedDescription)
-                UserDefaults.standard.removeObject(forKey: "appleID")
+            
+                UserDefaults.appleID = nil
                 
                 guard let self else { return }
                 self.loginFailure.accept(())
@@ -78,7 +79,7 @@ extension LoginViewModel {
                 
                 print("login success")
                 
-                UserDefaults.standard.set(user.uid, forKey: "uid")
+                UserDefaults.userID = user.uid
                 
                 DayengDefaults.shared.questions = []
                 DayengDefaults.shared.user = user

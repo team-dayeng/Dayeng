@@ -59,7 +59,7 @@ final class AppleLoginService {
                     throw AppleLoginError.cannotFetchUserName
                 }
                 
-                UserDefaults.standard.set(appleIDCredential.user, forKey: "appleID")
+                UserDefaults.appleID = appleIDCredential.user
                 
                 let credential = OAuthProvider.credential(withProviderID: "apple.com",
                                                           idToken: idTokenString,

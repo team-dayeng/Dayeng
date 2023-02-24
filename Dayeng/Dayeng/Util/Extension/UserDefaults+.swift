@@ -12,6 +12,8 @@ extension UserDefaults {
         static let selectedAlarmDays = "selectedAlarmDays"
         static let alarmDate = "alarmDate"
         static let isAlarmOn = "isAlarmOn"
+        static let appleID = "appleID"
+        static let userID = "userID"
     }
     
     class var selectedAlarmDays: [Bool] {
@@ -28,5 +30,21 @@ extension UserDefaults {
     class var isAlarmOn: Bool {
         get { standard.bool(forKey: DayengKeys.isAlarmOn) }
         set { standard.set(newValue, forKey: DayengKeys.isAlarmOn)}
+    }
+    
+    class var appleID: String? {
+        get { standard.string(forKey: DayengKeys.appleID) }
+        set {
+            if let newValue {
+                standard.set(newValue, forKey: DayengKeys.appleID)
+            } else {
+                standard.removeObject(forKey: DayengKeys.appleID)
+            }
+        }
+    }
+    
+    class var userID: String? {
+        get { standard.string(forKey: DayengKeys.userID) }
+        set { standard.set(newValue, forKey: DayengKeys.userID) }
     }
 }
