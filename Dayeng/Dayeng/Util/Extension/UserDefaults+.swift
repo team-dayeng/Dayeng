@@ -46,11 +46,23 @@ extension UserDefaults {
     
     class var userID: String? {
         get { standard.string(forKey: DayengKeys.userID) }
-        set { standard.set(newValue, forKey: DayengKeys.userID) }
+        set {
+            if let newValue {
+                standard.set(newValue, forKey: DayengKeys.userID)
+            } else {
+                standard.removeObject(forKey: DayengKeys.userID)
+            }
+        }
     }
     
     class var userName: String? {
         get { standard.string(forKey: DayengKeys.userName) }
-        set { standard.set(newValue, forKey: DayengKeys.userName) }
+        set {
+            if let newValue {
+                standard.set(newValue, forKey: DayengKeys.userName)
+            } else {
+                standard.removeObject(forKey: DayengKeys.userName)
+            }
+        }
     }
 }
