@@ -13,7 +13,6 @@ extension ASAuthorizationController: HasDelegate {
     public typealias Delegate = ASAuthorizationControllerDelegate
 }
 
-@available(iOS 13.0, *)
 final class ASAuthorizationControllerProxy:
     DelegateProxy<ASAuthorizationController, ASAuthorizationControllerDelegate>,
     DelegateProxyType,

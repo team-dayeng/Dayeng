@@ -9,7 +9,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-@available(iOS 13.0, *)     // Apple 로그인은 iOS 13.0 버전 이후부터 지원
 final class LoginViewController: UIViewController {
     
     // MARK: - UI properties

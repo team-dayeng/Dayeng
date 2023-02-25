@@ -8,7 +8,6 @@
 import AuthenticationServices
 import RxSwift
 
-@available(iOS 13.0, *)
 extension Reactive where Base: ASAuthorizationAppleIDProvider {
     
     func login(
