@@ -25,13 +25,12 @@ final class LoginViewModel {
     
     // MARK: - Output
     struct Output {
-        var loginFailure = PublishRelay<Void>()
+        var loginResult = PublishRelay<Void>()
     }
     
     // MARK: - Properties
     var currentNonce: String?
-    var loginSuccess = PublishRelay<Void>()
-    var loginFailure = PublishRelay<Void>()
+    var loginResult = PublishRelay<Void>()
     
     // MARK: - Dependency
     private let useCase: LoginUseCase
@@ -47,48 +46,13 @@ extension LoginViewModel {
     // MARK: - Helpers
     func transform(input: Input) -> Output {
         input.appleLoginButtonDidTap
-            .subscribe(onNext: { [weak self] in
-                guard let self else { return }
-                self.appleSignIn()
-            })
+            .withUnretained(self)
+            .flatMap { (owner, _) in
+                owner.useCase.appleSignIn()
+            }
+            .bind(to: loginResult)
             .disposed(by: disposeBag)
         
-        return Output(loginFailure: loginFailure)
-    }
-    
-    private func appleSignIn() {
-        AppleLoginService.shared.signIn()
-            .subscribe(onNext: { [weak self] (credential, userName) in
-                guard let self else { return }
-                self.firebaseAuthSignIn(credential: credential, userName: userName)
-            }, onError: { [weak self] error in
-                print(error.localizedDescription)
-            
-                UserDefaults.appleID = nil
-                
-                guard let self else { return }
-                self.loginFailure.accept(())
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    private func firebaseAuthSignIn(credential: OAuthCredential, userName: String) {
-        useCase.signIn(credential: credential, userName: userName)
-            .subscribe(onNext: { [weak self] user in
-                guard let self else { return }
-                
-                print("login success")
-                
-                UserDefaults.userID = user.uid
-                
-                DayengDefaults.shared.questions = []
-                DayengDefaults.shared.user = user
-                
-                self.loginSuccess.accept(())
-            }, onError: { [weak self] _ in
-                guard let self else { return }
-                self.loginFailure.accept(())
-            })
-            .disposed(by: disposeBag)
+        return Output(loginResult: loginResult)
     }
 }

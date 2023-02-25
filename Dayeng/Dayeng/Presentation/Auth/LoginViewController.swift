@@ -81,8 +81,8 @@ final class LoginViewController: UIViewController {
         )
         let output = viewModel.transform(input: input)
         
-        output.loginFailure
-            .subscribe(onNext: { [weak self] in
+        output.loginResult
+            .subscribe(onError: { [weak self] _ in
                 guard let self else { return }
                 self.showAlert(title: "로그인에 실패했습니다", message: "다시 시도해주세요", type: .oneButton)
             })

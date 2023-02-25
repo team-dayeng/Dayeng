@@ -74,11 +74,12 @@ final class AppCoordinator: AppCoordinatorProtocol {
         
         let firestoreService = DefaultFirestoreDatabaseService()
         let userRepository = DefaultUserRepository(firestoreService: firestoreService)
-        let useCase = DefaultLoginUseCase(userRepository: userRepository)
+        let appleLoginService = DefaultAppleLoginService()
+        let useCase = DefaultLoginUseCase(userRepository: userRepository, appleLoginService: appleLoginService)
         let viewModel = LoginViewModel(useCase: useCase)
         let viewController = LoginViewController(viewModel: viewModel)
         
-        viewModel.loginSuccess
+        viewModel.loginResult
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
                 self.showMainViewController()
