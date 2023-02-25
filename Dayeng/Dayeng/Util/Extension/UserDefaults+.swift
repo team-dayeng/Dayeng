@@ -14,6 +14,7 @@ extension UserDefaults {
         static let isAlarmOn = "isAlarmOn"
         static let appleID = "appleID"
         static let userID = "userID"
+        static let userName = "userName"
     }
     
     class var selectedAlarmDays: [Bool] {
@@ -46,5 +47,10 @@ extension UserDefaults {
     class var userID: String? {
         get { standard.string(forKey: DayengKeys.userID) }
         set { standard.set(newValue, forKey: DayengKeys.userID) }
+    }
+    
+    class var userName: String? {
+        get { standard.string(forKey: DayengKeys.userName) }
+        set { standard.set(newValue, forKey: DayengKeys.userName) }
     }
 }
