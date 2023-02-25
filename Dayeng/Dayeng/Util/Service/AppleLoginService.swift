@@ -54,22 +54,20 @@ final class AppleLoginService {
                     throw AppleLoginError.tokenSerializationFail
                 }
                 
-                let familyName = appleIDCredential.fullName?.familyName
-                let givenName = appleIDCredential.fullName?.givenName
-                
-                guard let fullName = (familyName != nil && givenName != nil) ?
-                        (familyName! + givenName!) : UserDefaults.userName else {
+                let fullName = (appleIDCredential.fullName?.familyName ?? "")
+                                + (appleIDCredential.fullName?.givenName ?? "")
+                guard let userName = fullName != "" ? fullName : UserDefaults.userName else {
                     throw AppleLoginError.cannotFetchUserName
                 }
                 
                 UserDefaults.appleID = appleIDCredential.user
-                UserDefaults.userName = fullName
+                UserDefaults.userName = userName
                 
                 let credential = OAuthProvider.credential(withProviderID: "apple.com",
                                                           idToken: idTokenString,
                                                           rawNonce: nonce)
                 
-                return (credential, fullName)
+                return (credential, userName)
             }
             throw AppleLoginError.credentialTypeCastingError
         }
