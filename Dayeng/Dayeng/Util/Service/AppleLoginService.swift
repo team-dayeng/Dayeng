@@ -35,7 +35,7 @@ final class AppleLoginService {
         currentNonce = nonce
         
         return ASAuthorizationAppleIDProvider().rx.login(
-            scope: [.fullName, .email],
+            scope: [.fullName],
             nonce: sha256(nonce)
         )
         .map { [weak self] authorization in
