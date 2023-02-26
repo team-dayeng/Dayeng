@@ -22,12 +22,12 @@ final class LoginViewModel {
     
     // MARK: - Output
     struct Output {
-        var loginResult = PublishRelay<Void>()
+        var loginResult = PublishSubject<Void>()
     }
     
     // MARK: - Properties
     var currentNonce: String?
-    var loginResult = PublishRelay<Void>()
+    var loginResult = PublishSubject<Void>()
     
     // MARK: - Dependency
     private let useCase: LoginUseCase
