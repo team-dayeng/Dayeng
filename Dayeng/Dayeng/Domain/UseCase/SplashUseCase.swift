@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 
 protocol SplashUseCase {
-    func isAvailableAppleLogin() -> Observable<Bool>
+    func isAvailableAutoLogin() -> Bool
     func fetchQuestions() -> Observable<Void>
     func fetchUser(userID: String) -> Observable<Void>
 }

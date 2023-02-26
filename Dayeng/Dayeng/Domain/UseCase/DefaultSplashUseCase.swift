@@ -7,7 +7,7 @@
 
 import Foundation
 import RxSwift
-import AuthenticationServices
+import FirebaseAuth
 
 final class DefaultSplashUseCase: SplashUseCase {
     
@@ -22,23 +22,8 @@ final class DefaultSplashUseCase: SplashUseCase {
     }
     
     // MARK: - Helpers
-    func isAvailableAppleLogin() -> Observable<Bool> {
-        Observable.create { observer in
-            guard let userID = UserDefaults.appleID else {
-                observer.onNext(false)
-                return Disposables.create()
-            }
-
-            ASAuthorizationAppleIDProvider()
-                .getCredentialState(forUserID: userID) { (credentialState, _) in
-                    if credentialState != .authorized {
-                        observer.onNext(false)
-                        return
-                    }
-                    observer.onNext(true)
-                }
-            return Disposables.create()
-        }
+    func isAvailableAutoLogin() -> Bool {
+        Auth.auth().currentUser != nil
     }
     
     func fetchQuestions() -> Observable<Void> {
