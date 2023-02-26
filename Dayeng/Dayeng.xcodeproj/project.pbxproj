@@ -22,7 +22,9 @@
 		47B5083F29A9E4490046A982 /* RxKakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 47B5083E29A9E4490046A982 /* RxKakaoSDKAuth */; };
 		47B5084129A9E4490046A982 /* RxKakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 47B5084029A9E4490046A982 /* RxKakaoSDKCommon */; };
 		47B5084329A9E4490046A982 /* RxKakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 47B5084229A9E4490046A982 /* RxKakaoSDKUser */; };
+		47B5084529AA02AF0046A982 /* KakaoLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B5084429AA02AF0046A982 /* KakaoLoginService.swift */; };
 		47B5084729AA53A10046A982 /* AppleLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B5084629AA53A10046A982 /* AppleLoginService.swift */; };
+		47B5084929AA7CB00046A982 /* DefaultKakaoLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B5084829AA7CB00046A982 /* DefaultKakaoLoginService.swift */; };
 		47C38781298E390D0030833F /* DayengAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C38780298E390D0030833F /* DayengAlertViewController.swift */; };
 		47D18359298A86F10058C0EC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18358298A86F10058C0EC /* LoginViewController.swift */; };
 		47D1835B298A8DDD0058C0EC /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D1835A298A8DDD0058C0EC /* AuthButton.swift */; };
@@ -120,7 +122,9 @@
 		477800F4299B64FC008FFE79 /* DayengDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayengDefaults.swift; sourceTree = "<group>"; };
 		4799A65729A7E2380071F8F9 /* DefaultAppleLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAppleLoginService.swift; sourceTree = "<group>"; };
 		47B04031299DE62A0018429C /* Dayeng.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dayeng.entitlements; sourceTree = "<group>"; };
+		47B5084429AA02AF0046A982 /* KakaoLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginService.swift; sourceTree = "<group>"; };
 		47B5084629AA53A10046A982 /* AppleLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginService.swift; sourceTree = "<group>"; };
+		47B5084829AA7CB00046A982 /* DefaultKakaoLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultKakaoLoginService.swift; sourceTree = "<group>"; };
 		47C38780298E390D0030833F /* DayengAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayengAlertViewController.swift; sourceTree = "<group>"; };
 		47D18358298A86F10058C0EC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		47D1835A298A8DDD0058C0EC /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
@@ -354,6 +358,8 @@
 				76003E0E29990EE200F15CAE /* DefaultUserNotificationService.swift */,
 				47B5084629AA53A10046A982 /* AppleLoginService.swift */,
 				4799A65729A7E2380071F8F9 /* DefaultAppleLoginService.swift */,
+				47B5084429AA02AF0046A982 /* KakaoLoginService.swift */,
+				47B5084829AA7CB00046A982 /* DefaultKakaoLoginService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -744,10 +750,12 @@
 				7628E68E298E4E83002D86F2 /* FirestoreDatabaseService.swift in Sources */,
 				76280CEB29878A3F0061206A /* ViewController.swift in Sources */,
 				E552C2552994C92700F51179 /* Coordinator.swift in Sources */,
+				47B5084929AA7CB00046A982 /* DefaultKakaoLoginService.swift in Sources */,
 				76F6C0A9298D97A700A124CD /* MainEditViewController.swift in Sources */,
 				7628E68C298E4E80002D86F2 /* DefaultFirestoreDatabaseService.swift in Sources */,
 				7628E684298E4DA7002D86F2 /* DefaultUserRepository.swift in Sources */,
 				7603FA202996556200D2C9C8 /* DefaultAlarmSettingUseCase.swift in Sources */,
+				47B5084529AA02AF0046A982 /* KakaoLoginService.swift in Sources */,
 				7628E680298E4D9C002D86F2 /* UserDTO.swift in Sources */,
 				E56916302998D429006D7231 /* PageType.swift in Sources */,
 				E552C22A2990BED800F51179 /* SettingHeaderView.swift in Sources */,
