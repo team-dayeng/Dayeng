@@ -22,7 +22,6 @@ final class LoginViewModel {
     
     // MARK: - Output
     struct Output {
-        var loginResult = PublishSubject<Void>()
     }
     
     // MARK: - Properties
@@ -58,6 +57,6 @@ extension LoginViewModel {
             .bind(to: loginResult)
             .disposed(by: disposeBag)
         
-        return Output(loginResult: loginResult)
+        return Output()
     }
 }

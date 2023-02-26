@@ -87,7 +87,20 @@ final class AppCoordinator: AppCoordinatorProtocol {
         viewModel.loginResult
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
+                self.navigationController.viewControllers.last?.hideIndicator()
                 self.showMainViewController()
+            }, onError: { [weak self] _ in
+                guard let self else { return }
+                self.navigationController.showAlert(
+                    title: "로그인에 실패했습니다",
+                    message: "다시 시도해주세요",
+                    type: .oneButton,
+                    rightActionHandler: { [weak self] in
+                        guard let self else { return }
+                        self.navigationController.viewControllers.last?.hideIndicator()
+                        self.showLoginViewController()
+                    }
+                )
             })
             .disposed(by: disposeBag)
         
