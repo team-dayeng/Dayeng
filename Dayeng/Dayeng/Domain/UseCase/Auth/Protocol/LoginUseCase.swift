@@ -10,5 +10,5 @@ import RxSwift
 
 protocol LoginUseCase {
     func appleSignIn() -> Observable<Void>
-    func signOut()
+    func kakaoSignIn() -> Observable<Void>
 }

@@ -50,6 +50,14 @@ extension LoginViewModel {
             .bind(to: loginResult)
             .disposed(by: disposeBag)
         
+        input.kakaoLoginButtonDidTap
+            .withUnretained(self)
+            .flatMap { (owner, _) in
+                owner.useCase.kakaoSignIn()
+            }
+            .bind(to: loginResult)
+            .disposed(by: disposeBag)
+        
         return Output(loginResult: loginResult)
     }
 }

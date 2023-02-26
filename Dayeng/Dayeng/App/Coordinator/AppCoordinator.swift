@@ -75,7 +75,12 @@ final class AppCoordinator: AppCoordinatorProtocol {
         let firestoreService = DefaultFirestoreDatabaseService()
         let userRepository = DefaultUserRepository(firestoreService: firestoreService)
         let appleLoginService = DefaultAppleLoginService()
-        let useCase = DefaultLoginUseCase(userRepository: userRepository, appleLoginService: appleLoginService)
+        let kakaoLoginService = DefaultKakaoLoginService()
+        let useCase = DefaultLoginUseCase(
+            userRepository: userRepository,
+            appleLoginService: appleLoginService,
+            kakaoLoginService: kakaoLoginService
+        )
         let viewModel = LoginViewModel(useCase: useCase)
         let viewController = LoginViewController(viewModel: viewModel)
         
