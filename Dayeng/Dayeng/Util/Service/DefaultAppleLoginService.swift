@@ -13,8 +13,6 @@ import FirebaseAuth
 
 final class DefaultAppleLoginService: AppleLoginService {
     
-    static let shared = DefaultAppleLoginService()
-    
     var currentNonce: String?
     
     enum AppleLoginError: Error {
