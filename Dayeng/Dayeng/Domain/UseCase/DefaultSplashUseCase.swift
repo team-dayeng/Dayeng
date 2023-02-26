@@ -7,6 +7,7 @@
 
 import Foundation
 import RxSwift
+import AuthenticationServices
 
 final class DefaultSplashUseCase: SplashUseCase {
     
@@ -21,12 +22,36 @@ final class DefaultSplashUseCase: SplashUseCase {
     }
     
     // MARK: - Helpers
-    func fetchQuestions() -> Observable<[Question]> {
+    func isAvailableAppleLogin() -> Observable<Bool> {
+        Observable.create { observer in
+            guard let userID = UserDefaults.appleID else {
+                observer.onNext(false)
+                return Disposables.create()
+            }
+
+            ASAuthorizationAppleIDProvider()
+                .getCredentialState(forUserID: userID) { (credentialState, _) in
+                    if credentialState != .authorized {
+                        observer.onNext(false)
+                        return
+                    }
+                    observer.onNext(true)
+                }
+            return Disposables.create()
+        }
+    }
+    
+    func fetchQuestions() -> Observable<Void> {
         questionRepository.fetchAll()
+            .map { questions in
+                DayengDefaults.shared.questions = questions
+            }
     }
     
-    func fetchUser(userID: String) -> Observable<User> {
+    func fetchUser(userID: String) -> Observable<Void> {
         userRepository.fetchUser(userID: userID)
+            .map { user in
+                DayengDefaults.shared.user = user
+            }
     }
-    
 }

@@ -36,19 +36,57 @@ final class AppCoordinator: AppCoordinatorProtocol {
         )
         let viewModel = SplashViewModel(useCase: useCase)
         let viewController = SplashViewController(viewModel: viewModel)
-        viewModel.dataDidLoaded
+        
+        Observable.zip(viewModel.loginStatus, viewModel.dataDidLoad)
+            .subscribe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] (loginResult, _) in
+                guard let self else { return }
+                    if loginResult {
+                        self.showMainViewController()
+                    } else {
+                        self.showLoginViewController()
+                    }
+            }, onError: { [weak self] error in
+                guard let self else { return }
+                print(error.localizedDescription)
+                self.navigationController.showAlert(
+                    title: "네트워크에 연결되지 않았습니다.",
+                    message: "다시 시도해주세요.",
+                    type: .oneButton,
+                    rightActionHandler: { [weak self] in
+                        guard let self else { return }
+                        self.showSplashViewController()
+                })
+            })
+            .disposed(by: disposeBag)
+
+        navigationController.viewControllers = [viewController]
+    }
+    
+    func showLoginViewController() {
+        
+        if !childCoordinators.isEmpty {
+            childCoordinators.removeAll()
+            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                sceneDelegate.window?.rootViewController = navigationController
+            }
+        }
+        
+        let firestoreService = DefaultFirestoreDatabaseService()
+        let userRepository = DefaultUserRepository(firestoreService: firestoreService)
+        let appleLoginService = DefaultAppleLoginService()
+        let useCase = DefaultLoginUseCase(userRepository: userRepository, appleLoginService: appleLoginService)
+        let viewModel = LoginViewModel(useCase: useCase)
+        let viewController = LoginViewController(viewModel: viewModel)
+        
+        viewModel.loginResult
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
                 self.showMainViewController()
             })
             .disposed(by: disposeBag)
+        
         navigationController.viewControllers = [viewController]
-    }
-    
-    func showLoginViewController() {
-        let viewModel = LoginViewModel()
-        let viewController = LoginViewController()
-        navigationController.pushViewController(viewController, animated: false)
     }
     
     func showMainViewController() {

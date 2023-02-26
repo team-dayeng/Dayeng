@@ -6,14 +6,13 @@
 //
 
 import UIKit
-import AuthenticationServices
 import RxSwift
 import RxCocoa
 
-@available(iOS 13.0, *)     // Apple 로그인은 iOS 13.0 버전 이후부터 지원
 final class LoginViewController: UIViewController {
     
     // MARK: - UI properties
+    
     private lazy var logoImage: UIImageView = {
         var imageView: UIImageView = UIImageView()
         imageView.image = .dayengLogo
@@ -24,24 +23,26 @@ final class LoginViewController: UIViewController {
     private var kakaoLoginButton = AuthButton(type: .kakao)
     
     // MARK: - Properties
-//    private let viewModel: LoginViewModel
+    
+    private let viewModel: LoginViewModel
+    private var disposeBag = DisposeBag()
     
     // MARK: - Lifecycles
-//    init(viewModel: LoginViewModel) {
-//        self.viewModel = viewModel
-//        super.init()
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    
+    init(viewModel: LoginViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
         configureUI()
-        setup()
         bind()
     }
     
@@ -72,59 +73,19 @@ final class LoginViewController: UIViewController {
             $0.centerX.height.leading.trailing.equalTo(appleLoginButton)
         }
     }
-    
-    private func setup() {
-        setupAppleLogin()
-    }
-    private func bind() {
-        // TODO: rx delegate proxy
-    }
-}
 
-extension LoginViewController: ASAuthorizationControllerDelegate,
-                               ASAuthorizationControllerPresentationContextProviding {
-    
-    private func setupAppleLogin() {
-        let appleIDProvider = ASAuthorizationAppleIDProvider()
-        let request = appleIDProvider.createRequest()
-        request.requestedScopes = [.fullName, .email]
+    private func bind() {
+        let input = LoginViewModel.Input(
+            appleLoginButtonDidTap: appleLoginButton.rx.tap.asObservable(),
+            kakaoLoginButtonDidTap: kakaoLoginButton.rx.tap.asObservable()
+        )
+        let output = viewModel.transform(input: input)
         
-        let authorizationController = ASAuthorizationController(
-            authorizationRequests: [request])
-        authorizationController.delegate = self
-        authorizationController.presentationContextProvider = self
-        authorizationController.performRequests()
-    }
-    
-    /// Apple 로그인 텍스트 프로바이딩
-    /// 애플 로그인 버튼을 눌렀을 때 애플 로그인을 modal sheet로 표시해주는 함수
-    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        return self.view.window!
-    }
-    
-    /// apple ID 연동 성공시
-    func authorizationController(controller: ASAuthorizationController,
-                                 didCompleteWithAuthorization authorization: ASAuthorization
-    ) {
-        switch authorization.credential {
-        case let appleIDCredential as ASAuthorizationAppleIDCredential:
-            // get user info
-            let userIdentifier = appleIDCredential.user
-            let fullName = appleIDCredential.fullName
-            let email = appleIDCredential.email
-            
-            print("user ID: \(userIdentifier)")
-            print("user Name: \(fullName)")
-            print("user email: \(email)")
-        default:
-            break
-        }
-    }
-    
-    /// apple ID 연동 실패시
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        // TODO: 개발자 계정 승인 후 signing에서 sign in with apple 추가
-        // TODO: error handling
-        print("AppleID Credential failed with error: \(error.localizedDescription)")
+        output.loginResult
+            .subscribe(onError: { [weak self] _ in
+                guard let self else { return }
+                self.showAlert(title: "로그인에 실패했습니다", message: "다시 시도해주세요", type: .oneButton)
+            })
+            .disposed(by: disposeBag)
     }
 }

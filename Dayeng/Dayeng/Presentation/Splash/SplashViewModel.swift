@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxRelay
+import AuthenticationServices
 
 final class SplashViewModel {
     // MARK: - Input
@@ -17,16 +18,15 @@ final class SplashViewModel {
     
     // MARK: - Output
     struct Output {
-        
     }
     
     // MARK: - Properites
     private var disposeBag = DisposeBag()
-    var dataDidLoaded = PublishRelay<Void>()
+    var loginStatus = PublishSubject<Bool>()
+    var dataDidLoad = PublishSubject<Void>()
     
     // MARK: - Dependency
     private let useCase: SplashUseCase
-	private weak var coordinator: AppCoordinator?
     
     // MARK: - Lifecycles
     init(useCase: SplashUseCase) {
@@ -34,29 +34,45 @@ final class SplashViewModel {
     }
     
     // MARK: - Helpers
-    func transform(input: Input) -> Output {        
+    func transform(input: Input) -> Output {
         input.animationDidStarted
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
-                #warning("userID 변경")
-                Observable.zip(
-                    self.useCase.fetchQuestions(),
-                    self.useCase.fetchUser(userID: "ongeee")
-                )
-                .subscribe(onNext: { [weak self] (questions, user) in
-                    guard let self else { return }
-                    
-                    DayengDefaults.shared.questions = questions
-                    DayengDefaults.shared.user = user
-                    
-                    self.dataDidLoaded.accept(())
-                }, onError: {
-                    print($0)
-                })
-                .disposed(by: self.disposeBag)
+
+                // 애플 로그인 여부 확인
+                self.useCase.isAvailableAppleLogin()
+                    .do(onNext: { [weak self] isAvailable in
+                        guard let self else { return }
+                        if isAvailable,
+                           let firebaseUserID = UserDefaults.userID {
+                            print("ID 연동 O")
+                            
+                            Observable.zip(
+                                self.useCase.fetchQuestions(),
+                                self.useCase.fetchUser(userID: firebaseUserID)
+                            )
+                            .map { _ in }
+                            .bind(to: self.dataDidLoad)
+                            .disposed(by: self.disposeBag)
+                        } else {
+                            print("ID가 연동되어 있지 않거나 ID를 찾을 수 없음")
+                            self.fetchQuestions()
+                        }
+                    })
+                    .bind(to: self.loginStatus)
+                    .disposed(by: self.disposeBag)
+                
+                // TODO: 딥링크 확인
+                
             })
             .disposed(by: disposeBag)
         
         return Output()
+    }
+    
+    private func fetchQuestions() {
+        useCase.fetchQuestions()
+            .bind(to: self.dataDidLoad)
+            .disposed(by: disposeBag)
     }
 }

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		474575EE29A4DEBD0031F1E5 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474575ED29A4DEBD0031F1E5 /* LoginUseCase.swift */; };
+		474575F029A4E1FA0031F1E5 /* DefaultLoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474575EF29A4E1FA0031F1E5 /* DefaultLoginUseCase.swift */; };
+		474A62B629A22E42002176AB /* ASAuthorizationControllerProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474A62B529A22E42002176AB /* ASAuthorizationControllerProxy.swift */; };
+		474A62B829A2346A002176AB /* AuthenticationServices+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474A62B729A2346A002176AB /* AuthenticationServices+Rx.swift */; };
 		47549417298E4C16008B581D /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47549416298E4C16008B581D /* UIViewController+.swift */; };
 		47549424298F966B008B581D /* AlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47549423298F966B008B581D /* AlertType.swift */; };
 		4754942829900414008B581D /* DefaultDayengCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4754942729900414008B581D /* DefaultDayengCacheService.swift */; };
@@ -14,6 +18,8 @@
 		476A62692993FE460074231E /* QuestionDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476A62682993FE460074231E /* QuestionDTO.swift */; };
 		476A626D2996646A0074231E /* DayengCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476A626C2996646A0074231E /* DayengCacheService.swift */; };
 		477800F5299B64FC008FFE79 /* DayengDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477800F4299B64FC008FFE79 /* DayengDefaults.swift */; };
+		4799A65829A7E2380071F8F9 /* DefaultAppleLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4799A65729A7E2380071F8F9 /* DefaultAppleLoginService.swift */; };
+		47B5084729AA53A10046A982 /* AppleLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B5084629AA53A10046A982 /* AppleLoginService.swift */; };
 		47C38781298E390D0030833F /* DayengAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C38780298E390D0030833F /* DayengAlertViewController.swift */; };
 		47D18359298A86F10058C0EC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18358298A86F10058C0EC /* LoginViewController.swift */; };
 		47D1835B298A8DDD0058C0EC /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D1835A298A8DDD0058C0EC /* AuthButton.swift */; };
@@ -97,13 +103,21 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		474575ED29A4DEBD0031F1E5 /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
+		474575EF29A4E1FA0031F1E5 /* DefaultLoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoginUseCase.swift; sourceTree = "<group>"; };
+		474A62B529A22E42002176AB /* ASAuthorizationControllerProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASAuthorizationControllerProxy.swift; sourceTree = "<group>"; };
+		474A62B729A2346A002176AB /* AuthenticationServices+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationServices+Rx.swift"; sourceTree = "<group>"; };
 		47549416298E4C16008B581D /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		47549423298F966B008B581D /* AlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertType.swift; sourceTree = "<group>"; };
 		4754942729900414008B581D /* DefaultDayengCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDayengCacheService.swift; sourceTree = "<group>"; };
+		4754946C2993704F008B581D /* Dayeng.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dayeng.entitlements; sourceTree = "<group>"; };
 		476A62662993FE010074231E /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		476A62682993FE460074231E /* QuestionDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionDTO.swift; sourceTree = "<group>"; };
 		476A626C2996646A0074231E /* DayengCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayengCacheService.swift; sourceTree = "<group>"; };
 		477800F4299B64FC008FFE79 /* DayengDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayengDefaults.swift; sourceTree = "<group>"; };
+		4799A65729A7E2380071F8F9 /* DefaultAppleLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAppleLoginService.swift; sourceTree = "<group>"; };
+		47B04031299DE62A0018429C /* Dayeng.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dayeng.entitlements; sourceTree = "<group>"; };
+		47B5084629AA53A10046A982 /* AppleLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginService.swift; sourceTree = "<group>"; };
 		47C38780298E390D0030833F /* DayengAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayengAlertViewController.swift; sourceTree = "<group>"; };
 		47D18358298A86F10058C0EC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		47D1835A298A8DDD0058C0EC /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
@@ -221,13 +235,15 @@
 		76280CE529878A3F0061206A /* Dayeng */ = {
 			isa = PBXGroup;
 			children = (
-				76003E10299BC0C400F15CAE /* Dayeng.entitlements */,
+				47B04031299DE62A0018429C /* Dayeng.entitlements */,
 				76280CEA29878A3F0061206A /* ViewController.swift */,
 				76280D1729878E4E0061206A /* App */,
 				76280D0E29878DF50061206A /* Data */,
 				76280D1129878E280061206A /* Domain */,
 				76280D182987918E0061206A /* Presentation */,
 				76280D1429878E380061206A /* Util */,
+				474A62B529A22E42002176AB /* ASAuthorizationControllerProxy.swift */,
+				474A62B729A2346A002176AB /* AuthenticationServices+Rx.swift */,
 			);
 			path = Dayeng;
 			sourceTree = "<group>";
@@ -330,6 +346,8 @@
 				477800F4299B64FC008FFE79 /* DayengDefaults.swift */,
 				76003E0C29990ED200F15CAE /* UserNotificationService.swift */,
 				76003E0E29990EE200F15CAE /* DefaultUserNotificationService.swift */,
+				47B5084629AA53A10046A982 /* AppleLoginService.swift */,
+				4799A65729A7E2380071F8F9 /* DefaultAppleLoginService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -343,6 +361,7 @@
 				76280CE829878A3F0061206A /* SceneDelegate.swift */,
 				76280CEF29878A410061206A /* Assets.xcassets */,
 				76280CF429878A410061206A /* Info.plist */,
+				4754946C2993704F008B581D /* Dayeng.entitlements */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -502,6 +521,7 @@
 			isa = PBXGroup;
 			children = (
 				76280D2A298792A20061206A /* Protocol */,
+				474575EF29A4E1FA0031F1E5 /* DefaultLoginUseCase.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -509,6 +529,7 @@
 		76280D2A298792A20061206A /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				474575ED29A4DEBD0031F1E5 /* LoginUseCase.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -721,6 +742,7 @@
 				E56916302998D429006D7231 /* PageType.swift in Sources */,
 				E552C22A2990BED800F51179 /* SettingHeaderView.swift in Sources */,
 				47E0A5DB299770890093645B /* Answer.swift in Sources */,
+				47B5084729AA53A10046A982 /* AppleLoginService.swift in Sources */,
 				47C38781298E390D0030833F /* DayengAlertViewController.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
 				7628E67C298D9D31002D86F2 /* AddFriendViewController.swift in Sources */,
@@ -731,11 +753,13 @@
 				47E0A5E52997743F0093645B /* DefaultSplashUseCase.swift in Sources */,
 				47E0A5E9299775060093645B /* DefaultQuestionRepository.swift in Sources */,
 				47D1835D298A92C10058C0EC /* AuthType.swift in Sources */,
+				474575F029A4E1FA0031F1E5 /* DefaultLoginUseCase.swift in Sources */,
 				E552C2242990BEB300F51179 /* AlarmDaySettingViewController.swift in Sources */,
 				47D18366298D16640058C0EC /* FriendListViewController.swift in Sources */,
 				47D1836C298D40940058C0EC /* User.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
 				E552C2202990BE9300F51179 /* SettingViewController.swift in Sources */,
+				4799A65829A7E2380071F8F9 /* DefaultAppleLoginService.swift in Sources */,
 				47E0A5DD299770EA0093645B /* AnswerDTO.swift in Sources */,
 				47D18368298D16730058C0EC /* FriendListViewModel.swift in Sources */,
 				76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */,
@@ -753,6 +777,7 @@
 				7603FA22299793B500D2C9C8 /* AlarmSettingUseCase.swift in Sources */,
 				47D18359298A86F10058C0EC /* LoginViewController.swift in Sources */,
 				E552C262299658F100F51179 /* CalendarViewModel.swift in Sources */,
+				474575EE29A4DEBD0031F1E5 /* LoginUseCase.swift in Sources */,
 				E552C25A299656EA00F51179 /* MainCoordinator.swift in Sources */,
 				76003E12299E361D00F15CAE /* IndicatorView.swift in Sources */,
 				47D18364298D0EDC0058C0EC /* LoginViewModel.swift in Sources */,
@@ -762,6 +787,8 @@
 				7628E67E298DA61D002D86F2 /* AcceptFriendViewController.swift in Sources */,
 				76F6C0A5298D969700A124CD /* MainViewModel.swift in Sources */,
 				76F6C0AD298D985F00A124CD /* Date+.swift in Sources */,
+				474A62B829A2346A002176AB /* AuthenticationServices+Rx.swift in Sources */,
+				474A62B629A22E42002176AB /* ASAuthorizationControllerProxy.swift in Sources */,
 				47E0A5E7299774C20093645B /* QuestionRepository.swift in Sources */,
 				E569162B2998D1D9006D7231 /* WebViewController.swift in Sources */,
 				E5D43435298A3291004EDFC7 /* CalendarViewController.swift in Sources */,
@@ -922,6 +949,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Dayeng/Dayeng.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -942,7 +970,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.team.dayeng;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Dayeng;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Apple Sign";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -955,6 +983,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Dayeng/Dayeng.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -975,7 +1004,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.team.dayeng;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Dayeng;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Apple Sign";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
