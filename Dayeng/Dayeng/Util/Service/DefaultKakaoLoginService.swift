@@ -11,7 +11,6 @@ import KakaoSDKUser
 import RxKakaoSDKAuth
 import RxKakaoSDKUser
 import RxSwift
-import FirebaseAuth
 
 final class DefaultKakaoLoginService: KakaoLoginService {
     
@@ -50,6 +49,10 @@ final class DefaultKakaoLoginService: KakaoLoginService {
     
     func signOut() -> Completable {
         UserApi.shared.rx.logout()
+    }
+    
+    func unlink() -> Completable {
+        UserApi.shared.rx.unlink()
     }
     
     private func loginWithKakaoTalk() -> Observable<OAuthToken> {
