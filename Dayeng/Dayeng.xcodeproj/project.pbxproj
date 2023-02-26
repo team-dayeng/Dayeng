@@ -19,6 +19,9 @@
 		476A626D2996646A0074231E /* DayengCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476A626C2996646A0074231E /* DayengCacheService.swift */; };
 		477800F5299B64FC008FFE79 /* DayengDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477800F4299B64FC008FFE79 /* DayengDefaults.swift */; };
 		4799A65829A7E2380071F8F9 /* DefaultAppleLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4799A65729A7E2380071F8F9 /* DefaultAppleLoginService.swift */; };
+		47B5083F29A9E4490046A982 /* RxKakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 47B5083E29A9E4490046A982 /* RxKakaoSDKAuth */; };
+		47B5084129A9E4490046A982 /* RxKakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 47B5084029A9E4490046A982 /* RxKakaoSDKCommon */; };
+		47B5084329A9E4490046A982 /* RxKakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 47B5084229A9E4490046A982 /* RxKakaoSDKUser */; };
 		47B5084729AA53A10046A982 /* AppleLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B5084629AA53A10046A982 /* AppleLoginService.swift */; };
 		47C38781298E390D0030833F /* DayengAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C38780298E390D0030833F /* DayengAlertViewController.swift */; };
 		47D18359298A86F10058C0EC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18358298A86F10058C0EC /* LoginViewController.swift */; };
@@ -199,6 +202,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47B5084329A9E4490046A982 /* RxKakaoSDKUser in Frameworks */,
+				47B5084129A9E4490046A982 /* RxKakaoSDKCommon in Frameworks */,
 				E569162E2998D1EB006D7231 /* WebKit.framework in Frameworks */,
 				76280D0C29878C870061206A /* FirebaseMessaging in Frameworks */,
 				76280D0129878BAE0061206A /* RxRelay in Frameworks */,
@@ -206,6 +211,7 @@
 				76280D0629878C870061206A /* FirebaseAuth in Frameworks */,
 				76280CFF29878BAE0061206A /* RxCocoa in Frameworks */,
 				76280D0A29878C870061206A /* FirebaseFirestoreSwift in Frameworks */,
+				47B5083F29A9E4490046A982 /* RxKakaoSDKAuth in Frameworks */,
 				76280D0329878BAE0061206A /* RxSwift in Frameworks */,
 				76280CFC29878B8C0061206A /* SnapKit in Frameworks */,
 				76280D0829878C870061206A /* FirebaseFirestore in Frameworks */,
@@ -648,6 +654,9 @@
 				76280D0929878C870061206A /* FirebaseFirestoreSwift */,
 				76280D0B29878C870061206A /* FirebaseMessaging */,
 				76280D2C29879F770061206A /* Lottie */,
+				47B5083E29A9E4490046A982 /* RxKakaoSDKAuth */,
+				47B5084029A9E4490046A982 /* RxKakaoSDKCommon */,
+				47B5084229A9E4490046A982 /* RxKakaoSDKUser */,
 			);
 			productName = Dayeng;
 			productReference = 76280CE329878A3F0061206A /* Dayeng.app */;
@@ -682,6 +691,7 @@
 				76280CFD29878BAE0061206A /* XCRemoteSwiftPackageReference "RxSwift" */,
 				76280D0429878C870061206A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				76280D2B29879F770061206A /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				47B5083D29A9E4490046A982 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
 			);
 			productRefGroup = 76280CE429878A3F0061206A /* Products */;
 			projectDirPath = "";
@@ -1035,6 +1045,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		47B5083D29A9E4490046A982 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk-rx";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		76280CFA29878B8C0061206A /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -1070,6 +1088,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		47B5083E29A9E4490046A982 /* RxKakaoSDKAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 47B5083D29A9E4490046A982 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
+			productName = RxKakaoSDKAuth;
+		};
+		47B5084029A9E4490046A982 /* RxKakaoSDKCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 47B5083D29A9E4490046A982 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
+			productName = RxKakaoSDKCommon;
+		};
+		47B5084229A9E4490046A982 /* RxKakaoSDKUser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 47B5083D29A9E4490046A982 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
+			productName = RxKakaoSDKUser;
+		};
 		76280CFB29878B8C0061206A /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 76280CFA29878B8C0061206A /* XCRemoteSwiftPackageReference "SnapKit" */;

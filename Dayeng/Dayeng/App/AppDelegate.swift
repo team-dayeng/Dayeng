@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseCore
+import RxKakaoSDKCommon
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,6 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
+        
+        RxKakaoSDK.initSDK(appKey: "983c5ee200890b63e1e68e303ffd0114")
         
         DefaultUserNotificationService().requestAuthorization()
             .subscribe(onError: { _ in
