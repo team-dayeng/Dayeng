@@ -12,7 +12,7 @@ import FirebaseDynamicLinks
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    var coodinator: AppCoordinator?
+    var coordinator: AppCoordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         scene.userActivity = connectionOptions.userActivities.first
         
         let navigationController = UINavigationController()
-        self.coodinator = AppCoordinator(navigationController: navigationController)
+        self.coordinator = AppCoordinator(navigationController: navigationController)
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
         
@@ -42,7 +42,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         type: .oneButton,
                         rightActionHandler: { [weak self] in
                             guard let self,
-                                  let coordinator = self.coodinator else { return }
+                                  let coordinator = self.coordinator else { return }
                             DispatchQueue.main.async {
                                 coordinator.showLoginViewController()
                             }
@@ -50,7 +50,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
             })
         
-        self.coodinator?.start()
+        self.coordinator?.start()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
