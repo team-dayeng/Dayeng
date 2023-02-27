@@ -74,7 +74,7 @@ final class AcceptFriendViewController: UIViewController {
     
     // MARK: - Helpers
     private func bind() {
-        let input = AcceptFriendViewModel.Input(addButtonDidTapped: addButton.rx.tap.asObservable())
+        let input = AcceptFriendViewModel.Input(addButtonDidTapped: addButton.rx.tap.map { self.dismiss(animated: true) }.asObservable())
         
         let output = viewModel.transform(input: input)
     }
