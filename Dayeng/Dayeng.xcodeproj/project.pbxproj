@@ -78,6 +78,8 @@
 		76F6C0A9298D97A700A124CD /* MainEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0A8298D97A700A124CD /* MainEditViewController.swift */; };
 		76F6C0AD298D985F00A124CD /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0AC298D985F00A124CD /* Date+.swift */; };
 		E52F65EE29AC7E89007C36AE /* AddFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52F65ED29AC7E89007C36AE /* AddFriendViewModel.swift */; };
+		E52F65F129AC7F20007C36AE /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = E52F65F029AC7F20007C36AE /* RxKeyboard */; };
+		E52F65F329AC7F79007C36AE /* FirebaseDynamicLinks in Frameworks */ = {isa = PBXBuildFile; productRef = E52F65F229AC7F79007C36AE /* FirebaseDynamicLinks */; };
 		E552C2202990BE9300F51179 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C21F2990BE9300F51179 /* SettingViewController.swift */; };
 		E552C2222990BEA700F51179 /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2212990BEA700F51179 /* AlarmSettingViewController.swift */; };
 		E552C2242990BEB300F51179 /* AlarmDaySettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2232990BEB300F51179 /* AlarmDaySettingViewController.swift */; };
@@ -201,6 +203,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E569162E2998D1EB006D7231 /* WebKit.framework in Frameworks */,
+				E52F65F129AC7F20007C36AE /* RxKeyboard in Frameworks */,
 				76280D0C29878C870061206A /* FirebaseMessaging in Frameworks */,
 				76280D0129878BAE0061206A /* RxRelay in Frameworks */,
 				76280D2D29879F770061206A /* Lottie in Frameworks */,
@@ -210,6 +213,7 @@
 				76280D0329878BAE0061206A /* RxSwift in Frameworks */,
 				76280CFC29878B8C0061206A /* SnapKit in Frameworks */,
 				76280D0829878C870061206A /* FirebaseFirestore in Frameworks */,
+				E52F65F329AC7F79007C36AE /* FirebaseDynamicLinks in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -650,6 +654,8 @@
 				76280D0929878C870061206A /* FirebaseFirestoreSwift */,
 				76280D0B29878C870061206A /* FirebaseMessaging */,
 				76280D2C29879F770061206A /* Lottie */,
+				E52F65F029AC7F20007C36AE /* RxKeyboard */,
+				E52F65F229AC7F79007C36AE /* FirebaseDynamicLinks */,
 			);
 			productName = Dayeng;
 			productReference = 76280CE329878A3F0061206A /* Dayeng.app */;
@@ -684,6 +690,7 @@
 				76280CFD29878BAE0061206A /* XCRemoteSwiftPackageReference "RxSwift" */,
 				76280D0429878C870061206A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				76280D2B29879F770061206A /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				E52F65EF29AC7F1F007C36AE /* XCRemoteSwiftPackageReference "RxKeyboard" */,
 			);
 			productRefGroup = 76280CE429878A3F0061206A /* Products */;
 			projectDirPath = "";
@@ -1070,6 +1077,14 @@
 				minimumVersion = 4.0.0;
 			};
 		};
+		E52F65EF29AC7F1F007C36AE /* XCRemoteSwiftPackageReference "RxKeyboard" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxKeyboard";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1117,6 +1132,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 76280D2B29879F770061206A /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		E52F65F029AC7F20007C36AE /* RxKeyboard */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E52F65EF29AC7F1F007C36AE /* XCRemoteSwiftPackageReference "RxKeyboard" */;
+			productName = RxKeyboard;
+		};
+		E52F65F229AC7F79007C36AE /* FirebaseDynamicLinks */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 76280D0429878C870061206A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDynamicLinks;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

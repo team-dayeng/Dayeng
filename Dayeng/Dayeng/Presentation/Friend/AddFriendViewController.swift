@@ -6,6 +6,11 @@
 //
 
 import UIKit
+import SnapKit
+import FirebaseDynamicLinks
+import RxSwift
+import RxRelay
+import RxKeyboard
 
 final class AddFriendViewController: UIViewController {
     // MARK: - UI properties
@@ -89,8 +94,19 @@ final class AddFriendViewController: UIViewController {
         return button
     }()
     // MARK: - Properties
+    private let disposeBag = DisposeBag()
+    private let viewModel: AddFriendViewModel
     
     // MARK: - Lifecycles
+    init(viewModel: AddFriendViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
