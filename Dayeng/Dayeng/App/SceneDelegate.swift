@@ -91,7 +91,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 let code = queryItems?.filter({$0.name == "code"}).first?.value
 
                 print("friendCode", code)
-                self.coordinator?.showAcceptViewController()
+                self.coordinator?.showAcceptFriendViewController()
             }
         } else {
             print("incomingURL is nil")
