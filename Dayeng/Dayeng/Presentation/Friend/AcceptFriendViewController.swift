@@ -50,14 +50,32 @@ final class AcceptFriendViewController: UIViewController {
         return button
     }()
     // MARK: - Properties
+    private let viewModel: AcceptFriendViewModel
     
     // MARK: - Lifecycles
+    init(viewModel: AcceptFriendViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        bind()
         setupViews()
         configureUI()
     }
+    
     // MARK: - Helpers
+    private func bind() {
+        let input = AcceptFriendViewModel.Input(addButtonDidTapped: addButton.rx.tap.asObservable())
+        
+        let output = viewModel.transform(input: input)
+    }
+    
     private func setupViews() {
         [backgroundImage, introductionLabel, logoImageView, shareLabel, addButton].forEach {
             view.addSubview($0)

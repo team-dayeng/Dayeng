@@ -63,15 +63,22 @@ final class AppCoordinator: AppCoordinatorProtocol {
         navigationController.viewControllers = [viewController]
     }
     
+    func showAcceptFriendViewController() {
+        let viewModel = AcceptFriendViewModel()
+        let viewController = AcceptFriendViewController(viewModel: viewModel)
+        let navigationController = UINavigationController(rootViewController: viewController)
+        viewModel.addButtonDidTapped
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.showMainViewController()
+            })
+            .disposed(by: disposeBag)
+        
+        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?
+            .changeRootViewController(navigationController, viewController)
+    }
+    
     func showLoginViewController() {
-        
-        if !childCoordinators.isEmpty {
-            childCoordinators.removeAll()
-            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-                sceneDelegate.window?.rootViewController = navigationController
-            }
-        }
-        
         let firestoreService = DefaultFirestoreDatabaseService()
         let userRepository = DefaultUserRepository(firestoreService: firestoreService)
         let appleLoginService = DefaultAppleLoginService()
@@ -86,7 +93,8 @@ final class AppCoordinator: AppCoordinatorProtocol {
             })
             .disposed(by: disposeBag)
         
-        navigationController.viewControllers = [viewController]
+        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?
+            .changeRootViewController(navigationController, viewController)
     }
     
     func showMainViewController() {
