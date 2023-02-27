@@ -118,7 +118,6 @@ final class AddFriendViewController: UIViewController {
     private func bind() {
         let input = AddFriendViewModel.Input(addButtonDidTapped: addButton.rx.tap.asObservable())
         let output = viewModel.transform(input: input)
-        
     }
     
     private func setupViews() {
@@ -140,6 +139,9 @@ final class AddFriendViewController: UIViewController {
         let heightRatio = view.frame.height / 852
         let widthRatio = view.frame.width / 393
         
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
         introductionLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(180*heightRatio)
             $0.centerX.equalToSuperview()

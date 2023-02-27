@@ -45,7 +45,10 @@ final class AcceptFriendViewController: UIViewController {
     
     private lazy var dismissButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: ""), for: <#T##UIControl.State#>)
+        button.setImage(UIImage(systemName: "multiply"), for: .normal)
+        button.tintColor = .dayengMain
+        button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 25), forImageIn: .normal)
+        button.addTarget(self, action: #selector(tappedDismissButton), for: .touchUpInside)
         return button
     }()
     
@@ -78,15 +81,20 @@ final class AcceptFriendViewController: UIViewController {
     
     private func setupViews() {
         view.addBackgroundImage()
-        [introductionLabel, logoImageView, shareLabel, addButton].forEach {
+        [introductionLabel, logoImageView, shareLabel, addButton, dismissButton].forEach {
             view.addSubview($0)
         }
     }
     private func configureUI() {
         let heightRatio = view.frame.height / 852
         
+        dismissButton.snp.makeConstraints {
+            $0.top.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.height.width.equalTo(25)
+        }
+        
         introductionLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(200*heightRatio)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(150*heightRatio)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
         }
@@ -109,6 +117,9 @@ final class AcceptFriendViewController: UIViewController {
             $0.leading.equalToSuperview().offset(66)
             $0.trailing.equalToSuperview().offset(-66)
         }
-        
+    }
+    
+    @objc private func tappedDismissButton() {
+        dismiss(animated: true)
     }
 }
