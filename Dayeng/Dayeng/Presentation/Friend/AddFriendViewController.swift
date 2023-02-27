@@ -66,6 +66,7 @@ final class AddFriendViewController: UIViewController {
         button.backgroundColor = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1)
         button.semanticContentAttribute = .forceRightToLeft
         button.layer.cornerRadius = 8
+        button.addTarget(self, action: #selector(tappedShareButton), for: .touchUpInside)
         return button
     }()
     
@@ -109,10 +110,18 @@ final class AddFriendViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        bind()
         setupViews()
         configureUI()
     }
     // MARK: - Helpers
+    private func bind() {
+        let input = AddFriendViewModel.Input(addButtonDidTapped: addButton.rx.tap.asObservable())
+        let output = viewModel.transform(input: input)
+        
+        
+    }
+    
     private func setupViews() {
         [backgroundImage,
          introductionLabel,
@@ -178,6 +187,61 @@ final class AddFriendViewController: UIViewController {
             $0.height.equalTo(50*heightRatio)
             $0.width.equalTo(shareButton)
             $0.centerX.equalToSuperview()
+        }
+    }
+    
+    private func setuplinkBuilder() -> DynamicLinkComponents {
+        let dynamicLinksDomainURIPrefix = "https://dayeng.page.link"
+        guard let link = URL(string: "https://dayeng.page.link/inviteFriend?code=\(UIDevice.current.identifierForVendor!.uuidString)"),
+              let linkBuilder = DynamicLinkComponents(
+                link: link,
+                domainURIPrefix: dynamicLinksDomainURIPrefix
+              ) else { return DynamicLinkComponents()}
+       
+        linkBuilder.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.dayeng.dayeng")
+        linkBuilder.iOSParameters?.appStoreID = "123456789"
+        linkBuilder.navigationInfoParameters = DynamicLinkNavigationInfoParameters()
+        linkBuilder.navigationInfoParameters?.isForcedRedirectEnabled = true
+        
+        return linkBuilder
+    }
+    
+    private func showActivityViewController(url: URL) {
+        let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        activityVC.popoverPresentationController?.sourceView = self.view
+        activityVC.completionWithItemsHandler = { (_, success, _, _) in
+            if success {
+                print("success")
+            } else {
+                print("cancel")
+            }
+        }
+        
+        present(activityVC, animated: true)
+    }
+    
+    // MARK: - Object C
+    @objc private func tappedShareButton() {
+        let linkBuilder = setuplinkBuilder()
+        
+        guard let longDynamicLink = linkBuilder.url else { return }
+        print("The long URL is: \(longDynamicLink)")
+        
+        linkBuilder.shorten { url, warnings, error in
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            if let warnings = warnings {
+                for warning in warnings {
+                    print(warning)
+                }
+            }
+            
+            guard let url = url else { return }
+            print(url)
+            self.showActivityViewController(url: url)
         }
     }
 }
