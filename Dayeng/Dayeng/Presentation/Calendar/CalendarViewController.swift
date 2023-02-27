@@ -52,12 +52,11 @@ final class CalendarViewController: UIViewController {
     }
     
     private func setupViews() {
-        
+        view.addBackgroundImage()
     }
     
     private func configureUI() {
         view.backgroundColor = .white
-        addBackgroundImage()
         configureNavigationBar()
         configureCollectionView()
     }

@@ -9,13 +9,6 @@ import UIKit
 
 final class AcceptFriendViewController: UIViewController {
     // MARK: - UI properties
-    private lazy var backgroundImage: UIImageView = {
-        var imageView: UIImageView = UIImageView()
-        imageView.image = UIImage(named: "paperBackground")
-        
-        return imageView
-    }()
-    
     private lazy var introductionLabel: UILabel = {
         var label = UILabel()
         label.font = .systemFont(ofSize: 20)
@@ -49,6 +42,13 @@ final class AcceptFriendViewController: UIViewController {
         button.layer.cornerRadius = 8
         return button
     }()
+    
+    private lazy var dismissButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: ""), for: <#T##UIControl.State#>)
+        return button
+    }()
+    
     // MARK: - Properties
     private let viewModel: AcceptFriendViewModel
     
@@ -77,18 +77,13 @@ final class AcceptFriendViewController: UIViewController {
     }
     
     private func setupViews() {
-        [backgroundImage, introductionLabel, logoImageView, shareLabel, addButton].forEach {
+        view.addBackgroundImage()
+        [introductionLabel, logoImageView, shareLabel, addButton].forEach {
             view.addSubview($0)
         }
     }
     private func configureUI() {
         let heightRatio = view.frame.height / 852
-        
-        backgroundImage.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(-50)
-            $0.top.bottom.equalToSuperview().inset(-100)
-        }
         
         introductionLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(200*heightRatio)
@@ -114,5 +109,6 @@ final class AcceptFriendViewController: UIViewController {
             $0.leading.equalToSuperview().offset(66)
             $0.trailing.equalToSuperview().offset(-66)
         }
+        
     }
 }

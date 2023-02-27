@@ -66,7 +66,6 @@ final class AppCoordinator: AppCoordinatorProtocol {
     func showAcceptFriendViewController() {
         let viewModel = AcceptFriendViewModel()
         let viewController = AcceptFriendViewController(viewModel: viewModel)
-        let navigationController = UINavigationController(rootViewController: viewController)
         viewModel.addButtonDidTapped
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
@@ -74,8 +73,8 @@ final class AppCoordinator: AppCoordinatorProtocol {
             })
             .disposed(by: disposeBag)
         
-        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?
-            .changeRootViewController(navigationController, viewController)
+        viewController.modalPresentationStyle = .fullScreen
+        navigationController.present(viewController, animated: true)
     }
     
     func showLoginViewController() {

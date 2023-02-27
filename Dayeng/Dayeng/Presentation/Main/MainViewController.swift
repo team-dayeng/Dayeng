@@ -77,7 +77,7 @@ final class MainViewController: UIViewController {
     }
     
     private func setupViews() {
-        addBackgroundImage()
+        view.addBackgroundImage()
         [collectionView, friendButton, settingButton].forEach {
             view.addSubview($0)
         }

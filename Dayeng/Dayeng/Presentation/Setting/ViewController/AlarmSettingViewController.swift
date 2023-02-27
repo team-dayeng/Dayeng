@@ -132,7 +132,7 @@ final class AlarmSettingViewController: UIViewController {
     // MARK: - Helpers
     
     private func setupViews() {
-        addBackgroundImage()
+        view.addBackgroundImage()
         view.addSubview(contentView)
         contentView.addSubview(titleLable)
         contentView.addSubview(discriptionLabel)

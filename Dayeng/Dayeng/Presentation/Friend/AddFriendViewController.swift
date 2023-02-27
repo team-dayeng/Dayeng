@@ -14,11 +14,11 @@ import RxKeyboard
 
 final class AddFriendViewController: UIViewController {
     // MARK: - UI properties
-    private lazy var backgroundImage: UIImageView = {
-        var imageView: UIImageView = UIImageView()
-        imageView.image = UIImage(named: "paperBackground")
+    private lazy var contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
         
-        return imageView
+        return view
     }()
     
     private lazy var introductionLabel: UILabel = {
@@ -119,12 +119,12 @@ final class AddFriendViewController: UIViewController {
         let input = AddFriendViewModel.Input(addButtonDidTapped: addButton.rx.tap.asObservable())
         let output = viewModel.transform(input: input)
         
-        
     }
     
     private func setupViews() {
-        [backgroundImage,
-         introductionLabel,
+        view.addSubview(contentView)
+        contentView.addBackgroundImage()
+        [introductionLabel,
          logoImageView,
          codeButton,
          copyButton,
@@ -132,7 +132,7 @@ final class AddFriendViewController: UIViewController {
          separatorView,
          codeTextField,
          addButton].forEach {
-            view.addSubview($0)
+            contentView.addSubview($0)
         }
     }
     private func configureUI() {
@@ -140,11 +140,6 @@ final class AddFriendViewController: UIViewController {
         let heightRatio = view.frame.height / 852
         let widthRatio = view.frame.width / 393
         
-        backgroundImage.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(-50)
-            $0.top.bottom.equalToSuperview().inset(-100)
-        }
         introductionLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(180*heightRatio)
             $0.centerX.equalToSuperview()

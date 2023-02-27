@@ -123,7 +123,7 @@ extension FriendListViewController {
     }
     
     private func setupViews() {
-        addBackgroundImage()
+        view.addBackgroundImage()
         view.addSubview(collectionView)
         view.addSubview(emptyLabel)
     }
