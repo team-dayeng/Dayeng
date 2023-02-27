@@ -7,6 +7,7 @@
 
 import UIKit
 import AuthenticationServices
+import FirebaseDynamicLinks
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -16,6 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: scene)
+        scene.userActivity = connectionOptions.userActivities.first
         
         let navigationController = UINavigationController()
         self.coodinator = AppCoordinator(navigationController: navigationController)
@@ -77,6 +79,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+    }
+    
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        guard let scene = (scene as? UIWindowScene) else { return }
+        scene.userActivity = userActivity
+        if let incomingURL = userActivity.webpageURL {
+            let linkHandled = DynamicLinks.dynamicLinks().handleUniversalLink(incomingURL) { dynamicLinks, error in
+                guard let dynamiclink = dynamicLinks, let deepLink = dynamiclink.url else { return }
+                let queryItems = URLComponents(url: deepLink, resolvingAgainstBaseURL: true)?.queryItems
+                let code = queryItems?.filter({$0.name == "code"}).first?.value
+
+                print("friendCode", code)
+                self.coordinator?.showAcceptViewController()
+            }
+        } else {
+            print("incomingURL is nil")
+        }
     }
 
     func changeRootViewController(_ navigationController: UINavigationController,
