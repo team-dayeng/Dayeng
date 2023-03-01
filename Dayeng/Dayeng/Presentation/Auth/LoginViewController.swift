@@ -49,7 +49,7 @@ final class LoginViewController: UIViewController {
     // MARK: - Helpers
     
     private func setupViews() {
-        addBackgroundImage()
+        view.addBackgroundImage()
         view.addSubview(logoImage)
         view.addSubview(appleLoginButton)
         view.addSubview(kakaoLoginButton)

@@ -59,7 +59,7 @@ final class AlarmDaySettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addBackgroundImage()
+        view.addBackgroundImage()
         configureCollectionView()
         bind()
     }
