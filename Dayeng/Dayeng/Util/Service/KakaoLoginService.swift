@@ -9,8 +9,8 @@ import Foundation
 import RxSwift
 
 protocol KakaoLoginService {
-    func isAvailable() -> Bool
-    func autoSignIn() -> Observable<Void>
+    func isAvailableAutoSignIn() -> Bool
+    func autoSignIn() -> Observable<Bool>
     func signIn() -> Observable<(email: String, password: String, userName: String)>
     func signOut() -> Completable
     func unlink() -> Completable

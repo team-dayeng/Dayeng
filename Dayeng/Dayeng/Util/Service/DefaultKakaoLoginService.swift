@@ -20,14 +20,25 @@ final class DefaultKakaoLoginService: KakaoLoginService {
     
     private let disposeBag = DisposeBag()
     
-    func isAvailable() -> Bool {
+    func isAvailableAutoSignIn() -> Bool {
         AuthApi.hasToken()
     }
     
-    func autoSignIn() -> Observable<Void> {
-        UserApi.shared.rx.accessTokenInfo()
-            .map { _ in }
-            .asObservable()
+    func autoSignIn() -> Observable<Bool> {
+        Observable.create { [weak self] observer in
+            guard let self else {
+                observer.onNext(false)
+                return Disposables.create()
+            }
+            UserApi.shared.rx.accessTokenInfo()
+                .subscribe(onSuccess: { _ in
+                    observer.onNext(true)
+                }, onFailure: { _ in
+                    observer.onNext(false)
+                })
+                .disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
     }
     
     func signIn() -> Observable<(email: String, password: String, userName: String)> {
