@@ -53,7 +53,6 @@
 		7603FA22299793B500D2C9C8 /* AlarmSettingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7603FA21299793B500D2C9C8 /* AlarmSettingUseCase.swift */; };
 		76280CE729878A3F0061206A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE629878A3F0061206A /* AppDelegate.swift */; };
 		76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE829878A3F0061206A /* SceneDelegate.swift */; };
-		76280CEB29878A3F0061206A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CEA29878A3F0061206A /* ViewController.swift */; };
 		76280CF029878A410061206A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76280CEF29878A410061206A /* Assets.xcassets */; };
 		76280CF329878A410061206A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76280CF129878A410061206A /* LaunchScreen.storyboard */; };
 		76280CFC29878B8C0061206A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 76280CFB29878B8C0061206A /* SnapKit */; };
@@ -154,7 +153,6 @@
 		76280CE329878A3F0061206A /* Dayeng.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dayeng.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76280CE629878A3F0061206A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		76280CE829878A3F0061206A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		76280CEA29878A3F0061206A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		76280CEF29878A410061206A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		76280CF229878A410061206A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		76280CF429878A410061206A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -245,7 +243,6 @@
 			isa = PBXGroup;
 			children = (
 				47B04031299DE62A0018429C /* Dayeng.entitlements */,
-				76280CEA29878A3F0061206A /* ViewController.swift */,
 				76280D1729878E4E0061206A /* App */,
 				76280D0E29878DF50061206A /* Data */,
 				76280D1129878E280061206A /* Domain */,
@@ -747,7 +744,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7628E68E298E4E83002D86F2 /* FirestoreDatabaseService.swift in Sources */,
-				76280CEB29878A3F0061206A /* ViewController.swift in Sources */,
 				E552C2552994C92700F51179 /* Coordinator.swift in Sources */,
 				47B5084929AA7CB00046A982 /* DefaultKakaoLoginService.swift in Sources */,
 				76F6C0A9298D97A700A124CD /* MainEditViewController.swift in Sources */,
