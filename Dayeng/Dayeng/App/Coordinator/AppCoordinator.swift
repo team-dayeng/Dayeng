@@ -32,7 +32,9 @@ final class AppCoordinator: AppCoordinatorProtocol {
         let firestoreService = DefaultFirestoreDatabaseService()
         let useCase = DefaultSplashUseCase(
             userRepository: DefaultUserRepository(firestoreService: firestoreService),
-            questionRepository: DefaultQuestionRepository(firestoreService: firestoreService)
+            questionRepository: DefaultQuestionRepository(firestoreService: firestoreService),
+            appleLoginService: DefaultAppleLoginService(),
+            kakaoLoginService: DefaultKakaoLoginService()
         )
         let viewModel = SplashViewModel(useCase: useCase)
         let viewController = SplashViewController(viewModel: viewModel)

@@ -79,7 +79,7 @@ final class LoginViewController: UIViewController {
             appleLoginButtonDidTap: appleLoginButton.rx.tap.asObservable(),
             kakaoLoginButtonDidTap: kakaoLoginButton.rx.tap.asObservable()
         )
-        let output = viewModel.transform(input: input)
+        _ = viewModel.transform(input: input)
         
         Observable.merge(appleLoginButton.rx.tap.asObservable(), kakaoLoginButton.rx.tap.asObservable())
             .subscribe(onNext: { [weak self] in
