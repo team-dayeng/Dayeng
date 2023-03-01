@@ -69,6 +69,24 @@ final class DefaultAppleLoginService: AppleLoginService {
         }
     }
     
+    func autoSignIn() -> Observable<Bool> {
+        Observable.create { observer in
+            guard let userID = UserDefaults.appleID else {
+                observer.onNext(false)
+                return Disposables.create()
+            }
+
+            ASAuthorizationAppleIDProvider()
+                .getCredentialState(forUserID: userID) { (credentialState, _) in
+                    if credentialState != .authorized {
+                        observer.onNext(false)
+                        return
+                    }
+                    observer.onNext(true)
+                }
+            return Disposables.create()
+        }
+    }
 }
 
 extension DefaultAppleLoginService {
