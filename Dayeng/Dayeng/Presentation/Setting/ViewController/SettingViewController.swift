@@ -68,6 +68,7 @@ final class SettingViewController: UIViewController {
     private var disposeBag = DisposeBag()
     
     private var logoutDidTapped = PublishSubject<Void>()
+    private var withdrawalDidTapped = PublishSubject<Void>()
     
     // MARK: - Lifecycles
     init(viewModel: SettingViewModel) {
@@ -98,13 +99,14 @@ final class SettingViewController: UIViewController {
     private func bind() {
         let input = SettingViewModel.Input(
             cellDidTapped: collectionView.rx.itemSelected.asObservable(),
-            logoutDidTapped: logoutDidTapped.asObservable()
+            logoutDidTapped: logoutDidTapped.asObservable(),
+            withdrawalDidTapped: withdrawalDidTapped.asObservable()
         )
         
         let output = viewModel.transform(input: input)
         
         collectionView.rx.itemSelected
-            .filter { $0 == IndexPath(row: 0, section: 1) }
+            .filter { $0 == IndexPath(row: 0, section: 1) }     // 로그아웃
             .subscribe(onNext: { [weak self] _ in
                 guard let self else { return }
                 
@@ -114,6 +116,21 @@ final class SettingViewController: UIViewController {
                     rightActionHandler: { [weak self] in
                         guard let self else { return }
                         self.logoutDidTapped.onNext(())
+                })
+            })
+            .disposed(by: disposeBag)
+        
+        collectionView.rx.itemSelected
+            .filter { $0 == IndexPath(row: 1, section: 1) }     // 회원 탈퇴
+            .subscribe(onNext: { [weak self] _ in
+                guard let self else { return }
+                
+                self.showAlert(
+                    title: "정말 탈퇴하시겠습니까?",
+                    type: .twoButton,
+                    rightActionHandler: { [weak self] in
+                        guard let self else { return }
+                        self.withdrawalDidTapped.onNext(())
                 })
             })
             .disposed(by: disposeBag)
@@ -142,6 +159,17 @@ final class SettingViewController: UIViewController {
                 guard let self else { return }
                 self.showAlert(
                     title: "로그아웃에 실패했습니다",
+                    message: "다시 시도해주세요",
+                    type: .oneButton
+                )
+            })
+            .disposed(by: disposeBag)
+        
+        output.withdrawalFailed
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.showAlert(
+                    title: "회원 탈퇴에 실패했습니다",
                     message: "다시 시도해주세요",
                     type: .oneButton
                 )

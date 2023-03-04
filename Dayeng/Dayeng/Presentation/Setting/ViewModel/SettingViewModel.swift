@@ -14,12 +14,14 @@ final class SettingViewModel {
     struct Input {
         var cellDidTapped: Observable<IndexPath>
         var logoutDidTapped: Observable<Void>
+        var withdrawalDidTapped: Observable<Void>
     }
     
     // MARK: - Output
     struct Output {
         var showMailComposeViewController = PublishRelay<MessageUIType>()
         var logoutFailed = PublishRelay<Void>()
+        var withdrawalFailed = PublishRelay<Void>()
     }
     
     // MARK: - Properties
@@ -28,7 +30,8 @@ final class SettingViewModel {
     var openSourceCellDidTapped = PublishRelay<Void>()
     var aboutCellDidTapped = PublishRelay<Void>()
     var logoutSuccess = PublishRelay<Void>()
-    var logoutFailed = PublishRelay<Void>()
+    var withdrawalSuccess = PublishRelay<Void>()
+    
     
     // MARK: - Dependency
     private let useCase: SettingUseCase
@@ -76,7 +79,23 @@ final class SettingViewModel {
                         if result {
                             self.logoutSuccess.accept(())
                         } else {
-                            self.logoutFailed.accept(())
+                            output.logoutFailed.accept(())
+                        }
+                    })
+                    .disposed(by: self.disposeBag)
+            })
+            .disposed(by: disposeBag)
+        
+        input.withdrawalDidTapped
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.useCase.withdrawal()
+                    .subscribe(onNext: { [weak self] result in
+                        guard let self else { return }
+                        if result {
+                            self.withdrawalSuccess.accept(())
+                        } else {
+                            output.withdrawalFailed.accept(())
                         }
                     })
                     .disposed(by: self.disposeBag)

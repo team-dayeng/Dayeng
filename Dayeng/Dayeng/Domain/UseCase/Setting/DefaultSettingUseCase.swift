@@ -54,4 +54,31 @@ final class DefaultSettingUseCase: SettingUseCase {
         }
     }
     
+    func withdrawal() -> Observable<Bool> {
+        Observable.create { [weak self] observer in
+            guard let self else { return Disposables.create() }
+            if let user = Auth.auth().currentUser {
+                user.delete { error in
+                    if error != nil {
+                        observer.onNext(false)
+                        observer.onCompleted()
+                    }
+                }
+            }
+            
+            if self.kakaoLoginService.isAvailableAutoSignIn() {
+                self.kakaoLoginService.unlink()
+                    .subscribe(onCompleted: {
+                        observer.onNext(true)
+                    }, onError: { _ in
+                        observer.onNext(false)
+                    })
+                    .disposed(by: self.disposeBag)
+            } else {    // case: apple login
+//                appleLoginService.withdrawal()
+            }
+            return Disposables.create()
+        }
+    }
+    
 }

@@ -59,6 +59,12 @@ final class SettingCoordinator: NSObject, SettingCoordinatorProtocol {
                 self.delegate?.didFinished(childCoordinator: self)
             })
             .disposed(by: disposeBag)
+        viewModel.withdrawalSuccess
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.delegate?.didFinished(childCoordinator: self)
+            })
+            .disposed(by: disposeBag)
         navigationController.pushViewController(viewController, animated: true)
     }
     

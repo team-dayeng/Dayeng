@@ -10,4 +10,5 @@ import RxSwift
 
 protocol SettingUseCase {
     func logout() -> Observable<Bool>
+    func withdrawal() -> Observable<Bool>
 }
