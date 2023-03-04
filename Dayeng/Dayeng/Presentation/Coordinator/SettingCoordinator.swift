@@ -29,7 +29,11 @@ final class SettingCoordinator: NSObject, SettingCoordinatorProtocol {
     }
     
     func showSettingViewController() {
-        let viewModel = SettingViewModel()
+        let useCase = DefaultSettingUseCase(
+            appleLoginService: DefaultAppleLoginService(),
+            kakaoLoginService: DefaultKakaoLoginService()
+        )
+        let viewModel = SettingViewModel(useCase: useCase)
         let viewController = SettingViewController(viewModel: viewModel)
         viewModel.alarmCellDidTapped
             .subscribe(onNext: { [weak self] in
@@ -47,6 +51,12 @@ final class SettingCoordinator: NSObject, SettingCoordinatorProtocol {
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
                 self.showWebViewController(url: PageType.about.url)
+            })
+            .disposed(by: disposeBag)
+        viewModel.logoutSuccess
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.delegate?.didFinished(childCoordinator: self)
             })
             .disposed(by: disposeBag)
         navigationController.pushViewController(viewController, animated: true)
