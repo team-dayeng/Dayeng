@@ -59,13 +59,6 @@ final class SettingViewController: UIViewController {
     }
     
     // MARK: - UI properties
-    private lazy var backgroundImage: UIImageView = {
-        var imageView: UIImageView = UIImageView()
-        imageView.image = UIImage(named: "paperBackground")
-        
-        return imageView
-    }()
-    
     private var collectionView: UICollectionView!
     
     // MARK: - Properties
@@ -128,16 +121,10 @@ final class SettingViewController: UIViewController {
     }
     
     private func setupViews() {
-        view.addSubview(backgroundImage)
+        view.addBackgroundImage()
     }
     
     private func configureUI() {
-        backgroundImage.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(-50)
-            $0.top.bottom.equalToSuperview().inset(-100)
-        }
-        
         configureCollectionView()
     }
     
