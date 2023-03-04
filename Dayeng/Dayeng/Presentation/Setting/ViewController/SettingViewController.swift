@@ -67,6 +67,8 @@ final class SettingViewController: UIViewController {
     private var dataSource: DataSource?
     private var disposeBag = DisposeBag()
     
+    private var logoutDidTapped = PublishSubject<Void>()
+    
     // MARK: - Lifecycles
     init(viewModel: SettingViewModel) {
         self.viewModel = viewModel
@@ -95,10 +97,26 @@ final class SettingViewController: UIViewController {
     // MARK: - Helpers
     private func bind() {
         let input = SettingViewModel.Input(
-            cellDidTapped: collectionView.rx.itemSelected.asObservable()
+            cellDidTapped: collectionView.rx.itemSelected.asObservable(),
+            logoutDidTapped: logoutDidTapped.asObservable()
         )
         
         let output = viewModel.transform(input: input)
+        
+        collectionView.rx.itemSelected
+            .filter { $0 == IndexPath(row: 0, section: 1) }
+            .subscribe(onNext: { [weak self] _ in
+                guard let self else { return }
+                
+                self.showAlert(
+                    title: "로그아웃 하시겠습니까?",
+                    type: .twoButton,
+                    rightActionHandler: { [weak self] in
+                        guard let self else { return }
+                        self.logoutDidTapped.onNext(())
+                })
+            })
+            .disposed(by: disposeBag)
         
         output.showMailComposeViewController
             .asDriver(onErrorJustReturn: .inquiry)
@@ -116,6 +134,17 @@ final class SettingViewController: UIViewController {
                 viewController.setMessageBody(type.messageBody, isHTML: false)
                 
                 self.navigationController?.present(viewController, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        output.logoutFailed
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.showAlert(
+                    title: "로그아웃에 실패했습니다",
+                    message: "다시 시도해주세요",
+                    type: .oneButton
+                )
             })
             .disposed(by: disposeBag)
     }

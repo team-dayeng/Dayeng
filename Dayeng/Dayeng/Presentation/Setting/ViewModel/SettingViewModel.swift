@@ -13,18 +13,30 @@ final class SettingViewModel {
     // MARK: - Input
     struct Input {
         var cellDidTapped: Observable<IndexPath>
+        var logoutDidTapped: Observable<Void>
     }
+    
     // MARK: - Output
     struct Output {
         var showMailComposeViewController = PublishRelay<MessageUIType>()
+        var logoutFailed = PublishRelay<Void>()
     }
-    // MARK: - Dependency
-    var disposeBag = DisposeBag()
+    
+    // MARK: - Properties
+    private var disposeBag = DisposeBag()
     var alarmCellDidTapped = PublishRelay<Void>()
     var openSourceCellDidTapped = PublishRelay<Void>()
     var aboutCellDidTapped = PublishRelay<Void>()
+    var logoutSuccess = PublishRelay<Void>()
+    var logoutFailed = PublishRelay<Void>()
+    
+    // MARK: - Dependency
+    private let useCase: SettingUseCase
     
     // MARK: - LifeCycle
+    init(useCase: SettingUseCase) {
+        self.useCase = useCase
+    }
     
     // MARK: - Helper
     func transform(input: Input) -> Output {
@@ -39,9 +51,7 @@ final class SettingViewModel {
                 switch (section, row) {
                 case (0, 0):
                     self.alarmCellDidTapped.accept(())
-                case (1, 0):
-                    break
-                case (1, 1):
+                case (1, 1): // 회원 탈퇴
                     break
                 case (2, 0): // 추천
                     output.showMailComposeViewController.accept(.recommendQuestion)
@@ -54,6 +64,22 @@ final class SettingViewModel {
                 default:
                     break
                 }
+            })
+            .disposed(by: disposeBag)
+        
+        input.logoutDidTapped
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.useCase.logout()
+                    .subscribe(onNext: { [weak self] result in
+                        guard let self else { return }
+                        if result {
+                            self.logoutSuccess.accept(())
+                        } else {
+                            self.logoutFailed.accept(())
+                        }
+                    })
+                    .disposed(by: self.disposeBag)
             })
             .disposed(by: disposeBag)
         
