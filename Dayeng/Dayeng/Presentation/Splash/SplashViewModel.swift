@@ -8,7 +8,6 @@
 import Foundation
 import RxSwift
 import RxRelay
-import AuthenticationServices
 
 final class SplashViewModel {
     // MARK: - Input
@@ -39,13 +38,13 @@ final class SplashViewModel {
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
 
-                // 애플 로그인 여부 확인
-                self.useCase.isAvailableAppleLogin()
-                    .do(onNext: { [weak self] isAvailable in
+                self.useCase.tryAutoLogin()
+                    .subscribe(onNext: { [weak self] result in
                         guard let self else { return }
-                        if isAvailable,
-                           let firebaseUserID = UserDefaults.userID {
+                        if result,
+                            let firebaseUserID = UserDefaults.userID {
                             print("ID 연동 O")
+                            self.loginStatus.onNext(true)
                             
                             Observable.zip(
                                 self.useCase.fetchQuestions(),
@@ -54,16 +53,14 @@ final class SplashViewModel {
                             .map { _ in }
                             .bind(to: self.dataDidLoad)
                             .disposed(by: self.disposeBag)
+                            
                         } else {
                             print("ID가 연동되어 있지 않거나 ID를 찾을 수 없음")
+                            self.loginStatus.onNext(false)
                             self.fetchQuestions()
                         }
                     })
-                    .bind(to: self.loginStatus)
                     .disposed(by: self.disposeBag)
-                
-                // TODO: 딥링크 확인
-                
             })
             .disposed(by: disposeBag)
         

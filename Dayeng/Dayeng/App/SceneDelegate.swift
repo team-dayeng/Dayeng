@@ -8,6 +8,9 @@
 import UIKit
 import AuthenticationServices
 import FirebaseDynamicLinks
+import KakaoSDKAuth
+import RxKakaoSDKAuth
+import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -31,6 +34,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             queue: nil,
             using: { [weak self] (Notification) in
                 print("Apple ID 사용중단")
+                
+                // firebase auth logout
+                do {
+                    try Auth.auth().signOut()
+                } catch {
+                    print(error)
+                    return
+                }
+                
+                // view translation
                 guard let self, let window = self.window else { return }
                 DispatchQueue.main.async {
                     guard let viewController = (window.rootViewController as? UINavigationController)?.viewControllers.last ?? window.rootViewController else {
@@ -51,6 +64,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             })
         
         self.coordinator?.start()
+    }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        if let url = URLContexts.first?.url,
+           AuthApi.isKakaoTalkLoginUrl(url) {
+            _ = AuthController.rx.handleOpenUrl(url: url)
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

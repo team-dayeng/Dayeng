@@ -7,36 +7,55 @@
 
 import Foundation
 import RxSwift
-import AuthenticationServices
+import FirebaseAuth
 
 final class DefaultSplashUseCase: SplashUseCase {
     
     // MARK: - Dependencies
     private let userRepository: UserRepository
     private let questionRepository: QuestionRepository
+    private let appleLoginService: AppleLoginService
+    private let kakaoLoginService: KakaoLoginService
+    private let disposeBag = DisposeBag()
     
     // MARK: - LifeCycles
-    init(userRepository: UserRepository, questionRepository: QuestionRepository) {
+    init(
+        userRepository: UserRepository,
+        questionRepository: QuestionRepository,
+        appleLoginService: AppleLoginService,
+        kakaoLoginService: KakaoLoginService
+    ) {
         self.userRepository = userRepository
         self.questionRepository = questionRepository
+        self.appleLoginService = appleLoginService
+        self.kakaoLoginService = kakaoLoginService
     }
     
     // MARK: - Helpers
-    func isAvailableAppleLogin() -> Observable<Bool> {
-        Observable.create { observer in
-            guard let userID = UserDefaults.appleID else {
+    func tryAutoLogin() -> Observable<Bool> {
+        Observable.create { [weak self] observer in
+            guard let self,
+                  Auth.auth().currentUser != nil else {
                 observer.onNext(false)
                 return Disposables.create()
             }
-
-            ASAuthorizationAppleIDProvider()
-                .getCredentialState(forUserID: userID) { (credentialState, _) in
-                    if credentialState != .authorized {
-                        observer.onNext(false)
-                        return
-                    }
-                    observer.onNext(true)
-                }
+            
+            if self.kakaoLoginService.isAvailableAutoSignIn() {
+                self.kakaoLoginService.autoSignIn()
+                    .do(onNext: { result in
+                        if !result { try? Auth.auth().signOut() }
+                    })
+                    .bind(to: observer)
+                    .disposed(by: self.disposeBag)
+            } else {
+                self.appleLoginService.autoSignIn()
+                    .do(onNext: { result in
+                        if !result { try? Auth.auth().signOut() }
+                    })
+                    .bind(to: observer)
+                    .disposed(by: self.disposeBag)
+            }
+            
             return Disposables.create()
         }
     }
