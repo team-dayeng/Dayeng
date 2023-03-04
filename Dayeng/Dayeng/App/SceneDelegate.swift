@@ -7,6 +7,7 @@
 
 import UIKit
 import AuthenticationServices
+import FirebaseDynamicLinks
 import KakaoSDKAuth
 import RxKakaoSDKAuth
 import FirebaseAuth
@@ -14,14 +15,15 @@ import FirebaseAuth
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    var coodinator: AppCoordinator?
+    var coordinator: AppCoordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: scene)
+        scene.userActivity = connectionOptions.userActivities.first
         
         let navigationController = UINavigationController()
-        self.coodinator = AppCoordinator(navigationController: navigationController)
+        self.coordinator = AppCoordinator(navigationController: navigationController)
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
         
@@ -53,7 +55,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         type: .oneButton,
                         rightActionHandler: { [weak self] in
                             guard let self,
-                                  let coordinator = self.coodinator else { return }
+                                  let coordinator = self.coordinator else { return }
                             DispatchQueue.main.async {
                                 coordinator.showLoginViewController()
                             }
@@ -61,7 +63,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
             })
         
-        self.coodinator?.start()
+        self.coordinator?.start()
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -98,17 +100,36 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
+    
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        guard let scene = (scene as? UIWindowScene) else { return }
+        scene.userActivity = userActivity
+        if let incomingURL = userActivity.webpageURL {
+            let linkHandled = DynamicLinks.dynamicLinks().handleUniversalLink(incomingURL) { dynamicLinks, error in
+                guard let dynamiclink = dynamicLinks, let deepLink = dynamiclink.url else { return }
+                let queryItems = URLComponents(url: deepLink, resolvingAgainstBaseURL: true)?.queryItems
+                let code = queryItems?.filter({$0.name == "code"}).first?.value
 
-    func changeRootViewController(_ viewController: UIViewController) {
+                print("friendCode", code)
+                self.coordinator?.showAcceptFriendViewController()
+            }
+        } else {
+            print("incomingURL is nil")
+        }
+    }
+
+    func changeRootViewController(_ navigationController: UINavigationController,
+                                  _ viewController: UIViewController) {
         guard let window = self.window else { return }
-        window.rootViewController = viewController
+        window.rootViewController = navigationController
         
+        navigationController.viewControllers = [viewController]
         UIView.transition(with: window, duration: 1.0, options: [.transitionCurlUp], animations: nil, completion: nil)
     }
     
     func transitionViewController(_ viewController: UIViewController, option: UIView.AnimationOptions) {
-        guard let window = self.window else { return }
-        guard let navigationController = window.rootViewController as? UINavigationController else { return }
+        guard let window = self.window,
+              let navigationController = window.rootViewController as? UINavigationController else { return }
         UIView.transition(with: window, duration: 1.0, options: option) {
             navigationController.viewControllers.append(viewController)
         }

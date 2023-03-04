@@ -9,13 +9,6 @@ import UIKit
 
 final class AcceptFriendViewController: UIViewController {
     // MARK: - UI properties
-    private lazy var backgroundImage: UIImageView = {
-        var imageView: UIImageView = UIImageView()
-        imageView.image = UIImage(named: "paperBackground")
-        
-        return imageView
-    }()
-    
     private lazy var introductionLabel: UILabel = {
         var label = UILabel()
         label.font = .systemFont(ofSize: 20)
@@ -49,31 +42,59 @@ final class AcceptFriendViewController: UIViewController {
         button.layer.cornerRadius = 8
         return button
     }()
+    
+    private lazy var dismissButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "multiply"), for: .normal)
+        button.tintColor = .dayengMain
+        button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 25), forImageIn: .normal)
+        button.addTarget(self, action: #selector(tappedDismissButton), for: .touchUpInside)
+        return button
+    }()
+    
     // MARK: - Properties
+    private let viewModel: AcceptFriendViewModel
     
     // MARK: - Lifecycles
+    init(viewModel: AcceptFriendViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        bind()
         setupViews()
         configureUI()
     }
+    
     // MARK: - Helpers
+    private func bind() {
+        let input = AcceptFriendViewModel.Input(addButtonDidTapped: addButton.rx.tap.map { self.dismiss(animated: true) }.asObservable())
+        
+        let output = viewModel.transform(input: input)
+    }
+    
     private func setupViews() {
-        [backgroundImage, introductionLabel, logoImageView, shareLabel, addButton].forEach {
+        view.addBackgroundImage()
+        [introductionLabel, logoImageView, shareLabel, addButton, dismissButton].forEach {
             view.addSubview($0)
         }
     }
     private func configureUI() {
         let heightRatio = view.frame.height / 852
         
-        backgroundImage.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(-50)
-            $0.top.bottom.equalToSuperview().inset(-100)
+        dismissButton.snp.makeConstraints {
+            $0.top.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.height.width.equalTo(25)
         }
         
         introductionLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(200*heightRatio)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(150*heightRatio)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
         }
@@ -96,5 +117,9 @@ final class AcceptFriendViewController: UIViewController {
             $0.leading.equalToSuperview().offset(66)
             $0.trailing.equalToSuperview().offset(-66)
         }
+    }
+    
+    @objc private func tappedDismissButton() {
+        dismiss(animated: true)
     }
 }

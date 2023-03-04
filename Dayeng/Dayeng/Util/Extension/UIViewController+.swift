@@ -33,14 +33,6 @@ extension UIViewController {
         }
     }
     
-    func addBackgroundImage() {
-        let backgroundImage = UIImageView(image: UIImage.dayengBackground)
-        view.addSubview(backgroundImage)
-        backgroundImage.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-    }
-    
     func showAlert(
         title: String,
         message: String? = nil,

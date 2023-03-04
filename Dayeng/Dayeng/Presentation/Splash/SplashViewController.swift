@@ -60,7 +60,7 @@ final class SplashViewController: UIViewController {
     
     // MARK: - Helpers
     private func setupViews() {
-        addBackgroundImage()
+        view.addBackgroundImage()
         view.addSubview(bookAnimationView)
         view.addSubview(logoImage)
     }

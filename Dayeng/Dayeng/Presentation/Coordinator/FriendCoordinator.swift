@@ -46,7 +46,8 @@ final class FriendCoordinator: FriendCoordinatorProtocol {
     }
     
     func showAddFriendViewController() {
-        let viewController = AddFriendViewController()
+        let viewModel = AddFriendViewModel()
+        let viewController = AddFriendViewController(viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
     }
     
