@@ -8,6 +8,6 @@
 import Foundation
 
 enum OwnerType {
-    case me
-    case friend
+    case mine
+    case friend(user: User)
 }
