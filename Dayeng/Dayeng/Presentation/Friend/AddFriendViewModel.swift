@@ -12,26 +12,39 @@ import RxRelay
 final class AddFriendViewModel {
     // MARK: - Input
     struct Input {
-        var addButtonDidTapped: Observable<Void>
+        var addButtonDidTapped: Observable<String>
     }
     
     // MARK: - Output
     struct Output {
-        
+        var addButtonSuccess = PublishSubject<Void>()
+        var addButtonError = PublishSubject<String>()
     }
     
     // MARK: - Dependency
     private let disposeBag = DisposeBag()
+    private let useCase: AddFriendUseCase
     
     // MARK: - LifeCycle
+    init(useCase: AddFriendUseCase) {
+        self.useCase = useCase
+    }
     
     // MARK: - Helper
     func transform(input: Input) -> Output {
         let output = Output()
         
         input.addButtonDidTapped
-            .subscribe(onNext: {
-                // Firestore -> User 있는지 확인 -> User -> Friends에 삽입
+            .subscribe(onNext: { [weak self] text in
+                guard let self else { return }
+                print(text)
+                self.useCase.addFriend(userID: text)
+                    .subscribe(onNext: {
+                        output.addButtonSuccess.onNext(())
+                    }, onError: { error in
+                        output.addButtonError.onNext("\(error)")
+                    })
+                    .disposed(by: self.disposeBag)
             })
             .disposed(by: disposeBag)
         
