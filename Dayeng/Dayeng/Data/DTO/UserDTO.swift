@@ -20,4 +20,12 @@ struct UserDTO: Codable {
              currentIndex: currentIndex,
              friends: friends)
     }
+    
+    func toDomain() -> User {
+        User(uid: UUID().uuidString,
+             name: name,
+             answers: answers != nil ? answers!.map { $0.toDomain() } : [],
+             currentIndex: currentIndex,
+             friends: friends)
+    }
 }
