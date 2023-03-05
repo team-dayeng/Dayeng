@@ -61,9 +61,6 @@ final class SplashViewModel {
                     })
                     .bind(to: self.loginStatus)
                     .disposed(by: self.disposeBag)
-                
-                // TODO: 딥링크 확인
-                
             })
             .disposed(by: disposeBag)
         
