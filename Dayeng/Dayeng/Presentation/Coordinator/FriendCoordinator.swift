@@ -28,7 +28,11 @@ final class FriendCoordinator: FriendCoordinatorProtocol {
     }
     
     func showFriendViewController() {
-        let viewModel = FriendListViewModel()
+        let firestoreService = DefaultFirestoreDatabaseService()
+        let useCase = DefaultFriendListUseCase(
+            userRepository: DefaultUserRepository(firestoreService: firestoreService)
+        )
+        let viewModel = FriendListViewModel(useCase: useCase)
         let viewController = FriendListViewController(viewModel: viewModel)
         viewModel.plusButtonDidTapped
             .subscribe(onNext: { [weak self] in
@@ -37,23 +41,31 @@ final class FriendCoordinator: FriendCoordinatorProtocol {
             })
             .disposed(by: disposeBag)
         viewModel.friendIndexDidTapped
-            .subscribe(onNext: { [weak self] in
+            .subscribe(onNext: { [weak self] user in
                 guard let self else { return }
-                self.showFriendCalendarViewController()
+                self.showFriendCalendarViewController(user: user)
             })
             .disposed(by: disposeBag)
         navigationController.pushViewController(viewController, animated: true)
     }
     
     func showAddFriendViewController() {
-        let viewModel = AddFriendViewModel()
+        let firestoreService = DefaultFirestoreDatabaseService()
+        let useCase = DefaultAddFriendUseCase(
+            userRepository: DefaultUserRepository(firestoreService: firestoreService)
+        )
+        let viewModel = AddFriendViewModel(useCase: useCase)
         let viewController = AddFriendViewController(viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
     }
     
-    func showFriendCalendarViewController() {
-        let viewModel = CalendarViewModel()
-        let viewController = CalendarViewController(ownerType: .friend,
+    func showFriendCalendarViewController(user: User) {
+        let firestoreService = DefaultFirestoreDatabaseService()
+        let useCase = DefaultCalendarUseCase(
+            userRepository:DefaultUserRepository(firestoreService: firestoreService)
+        )
+        let viewModel = CalendarViewModel(useCase: useCase)
+        let viewController = CalendarViewController(ownerType: .friend(user: user),
                                                     viewModel: viewModel)
         viewModel.homeButtonDidTapped
             .subscribe(onNext: { [weak self] in
