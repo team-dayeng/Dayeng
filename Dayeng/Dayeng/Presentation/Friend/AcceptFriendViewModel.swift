@@ -17,21 +17,33 @@ final class AcceptFriendViewModel {
     
     // MARK: - Output
     struct Output {
-        
+        var addFriendResult = PublishSubject<Void>()
     }
+    
+    // MARK: - Properties
+    var useCase: AcceptFriendUseCase
+    var acceptFriendCode: String
     
     // MARK: - Dependency
     private var disposeBag = DisposeBag()
-    var addButtonDidTapped = PublishRelay<Void>()
     
     // MARK: - LifeCycle
+    init(useCase: AcceptFriendUseCase, acceptFriendCode: String) {
+        self.useCase = useCase
+        self.acceptFriendCode = acceptFriendCode
+    }
     
     // MARK: - Helper
     func transform(input: Input) -> Output {
         let output = Output()
         
         input.addButtonDidTapped
-            .bind(to: addButtonDidTapped)
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.useCase.addFriend(userID: self.acceptFriendCode)
+                    .bind(to: output.addFriendResult)
+                    .disposed(by: self.disposeBag)
+            })
             .disposed(by: disposeBag)
         
         return output
