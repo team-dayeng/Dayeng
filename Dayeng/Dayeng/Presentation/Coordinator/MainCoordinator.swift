@@ -28,7 +28,8 @@ final class MainCoordinator: MainCoordinatorProtocol {
     }
     
     func showMainViewController() {
-        let viewModel = MainViewModel()
+        let useCase = DefaultMainUseCase()
+        let viewModel = MainViewModel(useCase: useCase)
         let viewController = MainViewController(viewModel: viewModel)
         viewModel.friendButtonDidTapped
             .subscribe(onNext: { [weak self] in
@@ -70,5 +71,14 @@ final class MainCoordinator: MainCoordinatorProtocol {
         let coordinator = SettingCoordinator(navigationController: navigationController)
         childCoordinators.append(coordinator)
         coordinator.start()
+    }
+    
+    func showEditViewController(index: Int) {
+        let firestoreService = DefaultFirestoreDatabaseService()
+        let userRepository = DefaultUserRepository(firestoreService: firestoreService)
+        let useCase = DefaultMainEditUseCase(userRepository: userRepository, index: index)
+        let viewModel = MainEditViewModel(useCase: useCase)
+        let viewController = MainEditViewController(viewModel: viewModel)
+        navigationController.pushViewController(viewController, animated: true)
     }
 }

@@ -16,6 +16,7 @@ final class MainViewModel {
         var friendButtonDidTapped: Observable<Void>
         var settingButtonDidTapped: Observable<Void>
         var calendarButtonDidTapped: Observable<Void>
+        var edidButtonDidTapped: Observable<Int>
         
     }
     // MARK: - Output
@@ -24,11 +25,16 @@ final class MainViewModel {
     }
     // MARK: - Dependency
     var disposeBag = DisposeBag()
+    let useCase: MainUseCase
     var friendButtonDidTapped = PublishRelay<Void>()
     var settingButtonDidTapped = PublishRelay<Void>()
     var calendarButtonDidTapped = PublishRelay<Void>()
+    var editButtonDidTapped = PublishRelay<Int>()
     
     // MARK: - LifeCycle
+    init(useCase: MainUseCase) {
+        self.useCase = useCase
+    }
     
     // MARK: - Helper
     func transform(input: Input) -> Output {
@@ -50,6 +56,11 @@ final class MainViewModel {
         input.calendarButtonDidTapped
             .bind(to: calendarButtonDidTapped)
             .disposed(by: disposeBag)
+        
+        input.edidButtonDidTapped
+            .bind(to: editButtonDidTapped)
+            .disposed(by: disposeBag)
+            
         return output
     }
 }
