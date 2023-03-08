@@ -107,7 +107,6 @@ final class MainViewController: UIViewController {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(MainCell.self, forCellWithReuseIdentifier: MainCell.identifier)
         collectionView.isPagingEnabled = true
@@ -149,43 +148,39 @@ final class MainViewController: UIViewController {
             resetButtonDidTapped: resetButton.rx.tap.asObservable(),
             friendButtonDidTapped: friendButton.rx.tap.asObservable(),
             settingButtonDidTapped: settingButton.rx.tap.asObservable(),
-            calendarButtonDidTapped: calendarButton.rx.tap.asObservable()
+            calendarButtonDidTapped: calendarButton.rx.tap.asObservable(),
         )
         _ = viewModel.transform(input: input)
+        output.questionsAnswers
+            .bind(to: collectionView.rx.items(cellIdentifier: MainCell.identifier, cellType: MainCell.self)
+            ) { [weak self] (index, questionAnswer, cell) in
+                let (question, answer) = questionAnswer
+                guard let self else { return }
+                
+                cell.mainView.bindQuestion(question)
+                let disposable = cell.mainView.editButtonDidTapped
+                    .map { index }
+                    .debug("왜안돼?")
+                    .bind(to: self.editButtonDidTapped)
+                
+                self.editButtonDisposables[index] = disposable
+                
+                if let answer {
+                    cell.mainView.bindAnswer(answer)
+                }
+            }
+            .disposed(by: disposeBag)
+        
     }
 }
 
-extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    
+extension MainViewController: UICollectionViewDelegate {
     func collectionView(
         _ collectionView: UICollectionView,
-        numberOfItemsInSection section: Int
-    ) -> Int {
-        if let user = DayengDefaults.shared.user {
-            return user.currentIndex + 1
-        }
-        return 0
-    }
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: MainCell.identifier,
-            for: indexPath
-        ) as? MainCell else {
-            return UICollectionViewCell()
-        }
-        
-        if DayengDefaults.shared.questions.count > indexPath.row {
-            cell.bindQuestion(DayengDefaults.shared.questions[indexPath.row])
-        }
-        if let user = DayengDefaults.shared.user,
-           user.answers.count > indexPath.row {
-            cell.bindAnswer(user.answers[indexPath.row])
-        }
-        
-        return cell
+        didEndDisplaying cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath
+    ) {
+        editButtonDisposables[indexPath.row]?.dispose()
+        editButtonDisposables.removeValue(forKey: indexPath.row)
     }
 }
