@@ -47,6 +47,8 @@ final class MainViewController: UIViewController {
     // MARK: - Properties
     var disposeBag = DisposeBag()
     let viewModel: MainViewModel
+    private let editButtonDidTapped = PublishSubject<Int>()
+    var editButtonDisposables = [Int: Disposable]()
     
     // MARK: - Lifecycles
     init(viewModel: MainViewModel) {
@@ -61,6 +63,7 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        hideIndicator()
         setupNaviagationBar()
         configureCollectionView()
         setupViews()
@@ -112,16 +115,6 @@ final class MainViewController: UIViewController {
         collectionView.isPagingEnabled = true
         collectionView.bounces = false
         collectionView.backgroundColor = .clear
-        
-        if let user = DayengDefaults.shared.user {
-            DispatchQueue.main.async { [weak self] in
-                guard let self else { return }
-                self.collectionView.scrollToItem(
-                    at: IndexPath(row: user.currentIndex, section: 0),
-                    at: .centeredHorizontally,
-                    animated: false)
-            }
-        }
     }
     
     private func collectionViewLayout() -> UICollectionViewCompositionalLayout {
@@ -145,12 +138,22 @@ final class MainViewController: UIViewController {
     
     func bind() {
         let input = MainViewModel.Input(
+            viewWillAppear: rx.viewWillAppear.map { _ in }.asObservable(),
             resetButtonDidTapped: resetButton.rx.tap.asObservable(),
             friendButtonDidTapped: friendButton.rx.tap.asObservable(),
             settingButtonDidTapped: settingButton.rx.tap.asObservable(),
             calendarButtonDidTapped: calendarButton.rx.tap.asObservable(),
+            edidButtonDidTapped: editButtonDidTapped.asObservable()
         )
-        _ = viewModel.transform(input: input)
+        
+        editButtonDidTapped
+            .subscribe(onNext: { [weak self] _ in
+                guard let self else { return }
+                self.showIndicator()
+            }).disposed(by: disposeBag)
+        
+        let output = viewModel.transform(input: input)
+        
         output.questionsAnswers
             .bind(to: collectionView.rx.items(cellIdentifier: MainCell.identifier, cellType: MainCell.self)
             ) { [weak self] (index, questionAnswer, cell) in
