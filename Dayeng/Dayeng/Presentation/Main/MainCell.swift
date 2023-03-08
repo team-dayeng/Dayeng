@@ -42,14 +42,4 @@ final class MainCell: UICollectionViewCell {
             $0.top.equalToSuperview().offset(40)
         }
     }
-    
-    func bindQuestion(_ question: Question) {
-        mainView.questionLabel.text = question.english
-        mainView.koreanQuestionLabel.text = question.korean
-    }
-    
-    func bindAnswer(_ answer: Answer) {
-        mainView.dateLabel.text = answer.date
-        mainView.answerLabel.text = answer.answer
-    }
 }
