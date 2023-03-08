@@ -32,6 +32,7 @@ final class CommonMainView: UIView {
         label.numberOfLines = 0
         return label
     }()
+    
     lazy var koreanQuestionLabel: UILabel = {
         var label: UILabel = UILabel()
         label.font = UIFont(name: "Chalkboard SE", size: 16)
@@ -48,6 +49,10 @@ final class CommonMainView: UIView {
         label.text = " A1."
         label.textColor = .lightGray
         label.isEditable = false
+        
+        let tapGestureRecognizer = UITapGestureRecognizer()
+        label.addGestureRecognizer(tapGestureRecognizer)
+        tapGestureRecognizer.rx.event.map { _ in }.bind(to: editButtonDidTapped).disposed(by: disposeBag)
         return label
     }()
     
@@ -56,10 +61,16 @@ final class CommonMainView: UIView {
         label.font = UIFont(name: "HoeflerText-Regular", size: 19)
         label.text = ""
         label.numberOfLines = 0
+        label.isUserInteractionEnabled = true
+        let tapGestureRecognizer = UITapGestureRecognizer()
+        label.addGestureRecognizer(tapGestureRecognizer)
+        tapGestureRecognizer.rx.event.debug("시발아").map { _ in }.bind(to: editButtonDidTapped).disposed(by: disposeBag)
         return label
     }()
     
     // MARK: - Properties
+    var disposeBag = DisposeBag()
+    let editButtonDidTapped = PublishRelay<Void>()
     
     // MARK: - Lifecycles
     init() {
@@ -114,5 +125,16 @@ final class CommonMainView: UIView {
             $0.top.equalTo(koreanQuestionLabel.snp.bottom).offset(60)
             $0.left.right.equalTo(dateLabel)
         }
+    }
+    
+    func bindQuestion(_ question: Question) {
+        questionLabel.text = question.english
+        koreanQuestionLabel.text = question.korean
+    }
+    
+    func bindAnswer(_ answer: Answer) {
+        dateLabel.text = answer.date
+        answerLabel.text = answer.answer
+        answerBackground.isHidden = answer.answer.count > 0
     }
 }
