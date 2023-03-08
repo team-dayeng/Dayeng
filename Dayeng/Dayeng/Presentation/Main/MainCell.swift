@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 
 final class MainCell: UICollectionViewCell {
     // MARK: - UI properties
@@ -25,6 +26,12 @@ final class MainCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        mainView.answerLabel.text = ""
+        mainView.answerBackground.isHidden = false
+        super.prepareForReuse()
     }
     
     // MARK: - Helpers
