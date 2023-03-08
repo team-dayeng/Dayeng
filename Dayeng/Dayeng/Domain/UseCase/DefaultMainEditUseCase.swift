@@ -8,8 +8,9 @@
 import Foundation
 import RxSwift
 
-final class DefaultMainEditUseCase {
+final class DefaultMainEditUseCase: MainEditUseCase {
     private let userRepository: UserRepository
+    private let index: Int
     
     enum EditError: Error, LocalizedError {
         case notEnterInput
@@ -21,10 +22,28 @@ final class DefaultMainEditUseCase {
         }
     }
     
-    init(userRepository: UserRepository) {
+    init(userRepository: UserRepository, index: Int) {
         self.userRepository = userRepository
+        self.index = index
     }
 
+    func fetchQuestion() -> Observable<Question> {
+        Observable.of(DayengDefaults.shared.questions[index])
+    }
+    
+    func fetchAnswer() -> Observable<Answer?> {
+        Observable<Answer?>.create { [weak self] observer in
+            guard let self,
+                  let user = DayengDefaults.shared.user,
+                  (0..<user.answers.count) ~= self.index else {
+                observer.onNext(nil)
+                return Disposables.create()
+            }
+            observer.onNext(user.answers[self.index])
+            return Disposables.create()
+        }
+    }
+    
     func uploadAnswer(answer: String) -> Observable<Void> {
         guard answer != "", answer != "enter your answer." else {
             return Observable.create {
