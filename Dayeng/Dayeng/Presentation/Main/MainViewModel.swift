@@ -12,6 +12,7 @@ import RxRelay
 final class MainViewModel {
     // MARK: - Input
     struct Input {
+        var viewWillAppear: Observable<Void>
         var resetButtonDidTapped: Observable<Void>
         var friendButtonDidTapped: Observable<Void>
         var settingButtonDidTapped: Observable<Void>
@@ -21,7 +22,7 @@ final class MainViewModel {
     }
     // MARK: - Output
     struct Output {
-        
+        var questionsAnswers = BehaviorRelay<[(Question, Answer?)]>(value: [])
     }
     // MARK: - Dependency
     var disposeBag = DisposeBag()
@@ -39,6 +40,16 @@ final class MainViewModel {
     // MARK: - Helper
     func transform(input: Input) -> Output {
         let output = Output()
+        
+        input.viewWillAppear
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.useCase.fetchData()
+                        .bind(to: output.questionsAnswers)
+                        .disposed(by: self.disposeBag)
+            })
+            .disposed(by: disposeBag)
+        
         input.resetButtonDidTapped
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
