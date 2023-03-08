@@ -49,6 +49,7 @@ final class MainEditViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        hideIndicator()
         setupNaviagationBar()
         setupViews()
         bind()
@@ -158,9 +159,18 @@ final class MainEditViewController: UIViewController {
         let output = viewModel.transform(
             input: .init(
                 submitButtonTapped: submitButtonDidTapped,
-                answerText: answerTextView.rx.text.orEmpty.asObservable()
+                answerText: answerTextView.rx.text.orEmpty.asObservable(),
+                viewDidLoad: rx.viewDidLoad.map { _ in }.asObservable()
             )
         )
+        
+        output.question
+            .subscribe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] question in
+                guard let self else { return }
+                self.mainView.bindQuestion(question)
+            })
+            .disposed(by: disposeBag)
         
         output.submitResult
             .subscribe(onNext: { [weak self] error in
@@ -172,6 +182,8 @@ final class MainEditViewController: UIViewController {
                 } else {
                     self.navigationController?.popViewController(animated: true)
                 }
-            }).disposed(by: disposeBag)
+                self.showIndicator()
+            })
+            .disposed(by: disposeBag)
     }
 }
