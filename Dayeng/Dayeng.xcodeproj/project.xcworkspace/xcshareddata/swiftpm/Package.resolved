@@ -145,21 +145,21 @@
       }
     },
     {
-      "identity" : "rxkeyboard",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/RxSwiftCommunity/RxKeyboard",
-      "state" : {
-        "branch" : "master",
-        "revision" : "c532cc3eabedd4f145e27241c5f1591876029608"
-      }
-    },
-    {
       "identity" : "rxalamofire",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/RxSwiftCommunity/RxAlamofire.git",
       "state" : {
         "revision" : "9535b58695b91fb67f56d58d6fd0c76462d7743a",
         "version" : "6.1.2"
+      }
+    },
+    {
+      "identity" : "rxkeyboard",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/RxSwiftCommunity/RxKeyboard",
+      "state" : {
+        "branch" : "master",
+        "revision" : "c532cc3eabedd4f145e27241c5f1591876029608"
       }
     },
     {
