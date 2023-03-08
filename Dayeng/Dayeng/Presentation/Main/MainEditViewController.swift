@@ -33,14 +33,19 @@ final class MainEditViewController: UIViewController {
     
     // MARK: - Properties
     var disposeBag = DisposeBag()
-    let viewModel = MainEditViewModel(
-        useCase: DefaultMainEditUseCase(
-            userRepository: DefaultUserRepository(
-                firestoreService: DefaultFirestoreDatabaseService())))
-    
+    let viewModel: MainEditViewModel
     var submitButtonDidTapped: Observable<Void>!
     
     // MARK: - Lifecycles
+    init(viewModel: MainEditViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
