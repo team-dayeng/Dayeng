@@ -60,7 +60,7 @@ final class MainCoordinator: MainCoordinatorProtocol {
     func showCalendarViewController(ownerType: OwnerType) {
         let firestoreService = DefaultFirestoreDatabaseService()
         let useCase = DefaultCalendarUseCase(
-            userRepository:DefaultUserRepository(firestoreService: firestoreService)
+            userRepository: DefaultUserRepository(firestoreService: firestoreService)
         )
         let viewModel = CalendarViewModel(useCase: useCase)
         let viewController = CalendarViewController(ownerType: ownerType,

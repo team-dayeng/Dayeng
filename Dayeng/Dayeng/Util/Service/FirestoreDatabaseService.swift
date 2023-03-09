@@ -18,5 +18,5 @@ protocol FirestoreDatabaseService {
     func upload<T: Encodable>(api: FirestoreAPI, dto: T) -> Observable<Void>
     func fetch<T: Decodable>(collection: String) -> Observable<[T]>
     func fetch<T: Decodable>(path: String) -> Observable<T>
-    func exist(collection: String, document: String) -> Observable<String>
+    func fetchPath(collection: String, document: String) -> Observable<String>
 }

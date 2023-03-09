@@ -11,6 +11,8 @@ import RxRelay
 
 protocol FriendCoordinatorProtocol: Coordinator {
     func showFriendViewController()
+    func showAddFriendViewController()
+    func showFriendCalendarViewController(user: User)
 }
 
 final class FriendCoordinator: FriendCoordinatorProtocol {

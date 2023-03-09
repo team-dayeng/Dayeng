@@ -121,12 +121,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                           duration: 1.0,
                           options: [.transitionCurlUp],
                           animations: nil) { _ in
-            if viewController is MainViewController {
-                if let acceptFriendCode = self.acceptFriendCode,
-                   let acceptFriendName = self.acceptFriendName {
-                    self.coordinator?.showAcceptFriendViewController(acceptFriendCode: acceptFriendCode,
-                                                                     acceptFriendName: acceptFriendName)
-                }
+            if viewController is MainViewController,
+               let acceptFriendCode = self.acceptFriendCode,
+               let acceptFriendName = self.acceptFriendName {
+                   self.coordinator?.showAcceptFriendViewController(acceptFriendCode: acceptFriendCode,
+                                                                    acceptFriendName: acceptFriendName)
             }
         }
     }

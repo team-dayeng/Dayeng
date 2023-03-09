@@ -41,7 +41,7 @@ final class DefaultAcceptFriendUseCase: AcceptFriendUseCase {
                             .bind(to: observer)
                             .disposed(by: self.disposeBag)
                     }
-                }, onError: { error in
+                }, onError: { _ in
                     observer.onError(AcceptFriendError.wrongUserID)
                 })
                 .disposed(by: self.disposeBag)

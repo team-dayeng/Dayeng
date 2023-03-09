@@ -260,13 +260,10 @@ final class AddFriendViewController: UIViewController {
     private func showActivityViewController(url: URL) {
         let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
         activityVC.popoverPresentationController?.sourceView = self.view
-        activityVC.completionWithItemsHandler = { (_, success, _, _) in
-            if success {
-                print("success")
-            } else {
-                print("cancel")
-            }
-        }
+        activityVC.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX,
+                                                                      y: self.view.bounds.midY,
+                                                                      width: 0,
+                                                                      height: 0)
         
         present(activityVC, animated: true)
     }
@@ -274,24 +271,15 @@ final class AddFriendViewController: UIViewController {
     // MARK: - Object C
     @objc private func tappedShareButton() {
         let linkBuilder = setuplinkBuilder()
-        
-        guard let longDynamicLink = linkBuilder.url else { return }
-        print("The long URL is: \(longDynamicLink)")
-        
-        linkBuilder.shorten { url, warnings, error in
+        linkBuilder.shorten { url, _, error in
             if let error = error {
-                print(error)
+                self.showAlert(title: "다이나믹 링크 생성 오류", message: "\(error)", type: .oneButton)
                 return
             }
-            
-            if let warnings = warnings {
-                for warning in warnings {
-                    print(warning)
-                }
+            guard let url = url else {
+                self.showAlert(title: "다이나믹 링크 생성 오류", message: "url 오류", type: .oneButton)
+                return
             }
-            
-            guard let url = url else { return }
-            print(url)
             self.showActivityViewController(url: url)
         }
     }

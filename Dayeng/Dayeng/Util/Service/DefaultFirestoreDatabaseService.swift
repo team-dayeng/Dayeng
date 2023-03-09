@@ -205,7 +205,7 @@ final class DefaultFirestoreDatabaseService: FirestoreDatabaseService {
         }
     }
     
-    func exist(collection: String, document: String) -> Observable<String> {
+    func fetchPath(collection: String, document: String) -> Observable<String> {
         Observable.create { observer in
             if document.isEmpty {
                 observer.onError(FirestoreError.documentPathEmptyError)

@@ -73,7 +73,7 @@ final class DefaultUserRepository: UserRepository {
     }
     
     func existUser(userID: String) -> Observable<String> {
-        return firestoreService.exist(collection: "users",
+        return firestoreService.fetchPath(collection: "users",
                                       document: userID)
     }
     

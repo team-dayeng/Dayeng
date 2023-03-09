@@ -38,12 +38,11 @@ final class AcceptFriendViewModel {
         let output = Output()
         
         input.addButtonDidTapped
-            .subscribe(onNext: { [weak self] in
-                guard let self else { return }
-                self.useCase.addFriend(userID: self.acceptFriendCode)
-                    .bind(to: output.addFriendResult)
-                    .disposed(by: self.disposeBag)
-            })
+            .withUnretained(self)
+            .flatMap { (onwer, _) in
+                onwer.useCase.addFriend(userID: self.acceptFriendCode)
+            }
+            .bind(to: output.addFriendResult)
             .disposed(by: disposeBag)
         
         return output
