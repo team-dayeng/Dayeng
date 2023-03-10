@@ -179,6 +179,16 @@ final class MainEditViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
+        output.answer
+            .asDriver(onErrorJustReturn: nil)
+            .drive(onNext: { [weak self] answer in
+                guard let self,
+                      let answer else { return }
+                self.answerTextView.text = answer.answer
+                self.mainView.dateLabel.text = answer.date
+            })
+            .disposed(by: disposeBag)
+        
         output.submitResult
             .subscribe(onNext: { [weak self] error in
                 guard let self else { return }
