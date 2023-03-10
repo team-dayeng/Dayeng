@@ -70,6 +70,12 @@ final class MainViewController: UIViewController {
         bind()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        hideIndicator()
+    }
+    
     // MARK: - Helpers
     private func setupNaviagationBar() {
         navigationItem.titleView = UIImageView(image: .dayengLogo)
