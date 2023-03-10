@@ -49,6 +49,12 @@ final class MainCoordinator: MainCoordinatorProtocol {
                 self.showCalendarViewController(ownerType: .me)
             })
             .disposed(by: disposeBag)
+        viewModel.editButtonDidTapped
+            .subscribe(onNext: { [weak self] index in
+                guard let self else { return }
+                self.showEditViewController(index: index)
+            })
+            .disposed(by: disposeBag)
         
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?
             .changeRootViewController(navigationController, viewController)
