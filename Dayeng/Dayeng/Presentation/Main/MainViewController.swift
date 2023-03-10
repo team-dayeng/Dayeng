@@ -119,6 +119,7 @@ final class MainViewController: UIViewController {
         collectionView.delegate = self
         collectionView.register(MainCell.self, forCellWithReuseIdentifier: MainCell.identifier)
         collectionView.isPagingEnabled = true
+        collectionView.isScrollEnabled = false
         collectionView.bounces = false
         collectionView.backgroundColor = .clear
     }
