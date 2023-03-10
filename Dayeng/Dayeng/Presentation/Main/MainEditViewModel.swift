@@ -20,6 +20,7 @@ final class MainEditViewModel {
     struct Output {
         var submitResult = PublishSubject<Error?>()
         var question = ReplaySubject<Question>.create(bufferSize: 1)
+        var answer = ReplaySubject<Answer?>.create(bufferSize: 1)
     }
     
     // MARK: - Dependency
@@ -40,7 +41,8 @@ final class MainEditViewModel {
             .disposed(by: disposeBag)
         
         useCase.fetchAnswer()
-        
+            .bind(to: output.answer)
+            .disposed(by: disposeBag)
         
         input.submitButtonTapped.withLatestFrom(input.answerText)
             .subscribe(onNext: { [weak self] answer in
