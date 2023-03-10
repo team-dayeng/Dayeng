@@ -119,10 +119,10 @@ final class MainEditViewController: UIViewController {
         answerTextView.rx.didBeginEditing
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
-                if self.answerTextView.textColor == .lightGray {
+                if self.answerTextView.text == "enter your answer." {
                     self.answerTextView.text = ""
-                    self.answerTextView.textColor = .black
                 }
+                self.answerTextView.textColor = .black
             }).disposed(by: disposeBag)
         
         answerTextView.rx.didEndEditing
