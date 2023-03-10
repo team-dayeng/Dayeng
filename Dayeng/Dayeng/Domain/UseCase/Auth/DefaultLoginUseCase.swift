@@ -171,7 +171,6 @@ final class DefaultLoginUseCase: LoginUseCase {
         userRepository.uploadUser(user: user)
             .do(onNext: {
                 UserDefaults.userID = user.uid
-                DayengDefaults.shared.questions = []
                 DayengDefaults.shared.user = user
             }, onError: { [weak self] _ in
                 guard let self else { return }
