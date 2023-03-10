@@ -12,6 +12,7 @@ final class DefaultMainUseCase: MainUseCase {
     enum MainUseCaseError: Error {
         case noUserError
     }
+    
     func fetchData() -> Observable<[(Question, Answer?)]> {
         Observable.zip(fetchQuestions(), fetchAnswers())
             .map { questions, answers in
