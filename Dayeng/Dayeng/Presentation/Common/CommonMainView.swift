@@ -64,7 +64,7 @@ final class CommonMainView: UIView {
         label.isUserInteractionEnabled = true
         let tapGestureRecognizer = UITapGestureRecognizer()
         label.addGestureRecognizer(tapGestureRecognizer)
-        tapGestureRecognizer.rx.event.debug("시발아").map { _ in }.bind(to: editButtonDidTapped).disposed(by: disposeBag)
+        tapGestureRecognizer.rx.event.map { _ in }.bind(to: editButtonDidTapped).disposed(by: disposeBag)
         return label
     }()
     

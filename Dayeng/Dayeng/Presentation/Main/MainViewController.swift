@@ -163,7 +163,6 @@ final class MainViewController: UIViewController {
                 cell.mainView.bindQuestion(question)
                 let disposable = cell.mainView.editButtonDidTapped
                     .map { index }
-                    .debug("왜안돼?")
                     .bind(to: self.editButtonDidTapped)
                 
                 self.editButtonDisposables[index] = disposable
