@@ -182,7 +182,7 @@ final class MainEditViewController: UIViewController {
                 } else {
                     self.navigationController?.popViewController(animated: true)
                 }
-                self.showIndicator()
+                self.hideIndicator()
             })
             .disposed(by: disposeBag)
     }
