@@ -164,6 +164,13 @@ final class MainEditViewController: UIViewController {
             )
         )
         
+        submitButtonDidTapped
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.showIndicator()
+            })
+            .disposed(by: disposeBag)
+        
         output.question
             .subscribe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] question in
