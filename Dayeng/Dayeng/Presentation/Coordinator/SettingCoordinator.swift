@@ -56,12 +56,14 @@ final class SettingCoordinator: NSObject, SettingCoordinatorProtocol {
         viewModel.logoutSuccess
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
+                self.navigationController.viewControllers.last?.hideIndicator()
                 self.delegate?.didFinished(childCoordinator: self)
             })
             .disposed(by: disposeBag)
         viewModel.withdrawalSuccess
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
+                self.navigationController.viewControllers.last?.hideIndicator()
                 self.delegate?.didFinished(childCoordinator: self)
             })
             .disposed(by: disposeBag)

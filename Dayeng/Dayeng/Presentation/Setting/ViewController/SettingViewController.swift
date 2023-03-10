@@ -115,6 +115,7 @@ final class SettingViewController: UIViewController {
                     type: .twoButton,
                     rightActionHandler: { [weak self] in
                         guard let self else { return }
+                        self.showIndicator()
                         self.logoutDidTapped.onNext(())
                 })
             })
@@ -130,6 +131,7 @@ final class SettingViewController: UIViewController {
                     type: .twoButton,
                     rightActionHandler: { [weak self] in
                         guard let self else { return }
+                        self.showIndicator()
                         self.withdrawalDidTapped.onNext(())
                 })
             })
@@ -160,7 +162,11 @@ final class SettingViewController: UIViewController {
                 self.showAlert(
                     title: "로그아웃에 실패했습니다",
                     message: "다시 시도해주세요",
-                    type: .oneButton
+                    type: .oneButton,
+                    rightActionHandler: { [weak self] in
+                        guard let self else { return }
+                        self.hideIndicator()
+                    }
                 )
             })
             .disposed(by: disposeBag)
@@ -171,7 +177,11 @@ final class SettingViewController: UIViewController {
                 self.showAlert(
                     title: "회원 탈퇴에 실패했습니다",
                     message: "다시 시도해주세요",
-                    type: .oneButton
+                    type: .oneButton,
+                    rightActionHandler: { [weak self] in
+                        guard let self else { return }
+                        self.hideIndicator()
+                    }
                 )
             })
             .disposed(by: disposeBag)
