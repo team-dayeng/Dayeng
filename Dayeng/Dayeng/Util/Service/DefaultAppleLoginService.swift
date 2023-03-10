@@ -69,7 +69,7 @@ final class DefaultAppleLoginService: AppleLoginService {
         }
     }
     
-    func autoSignIn() -> Observable<Bool> {
+    func isLoggedIn() -> Observable<Bool> {
         Observable.create { observer in
             guard let userID = UserDefaults.appleID else {
                 observer.onNext(false)

@@ -39,7 +39,7 @@ final class DefaultSettingUseCase: SettingUseCase {
                 }
             }
             
-            if self.kakaoLoginService.isAvailableAutoSignIn() {
+            if self.kakaoLoginService.isLoggedIn() {
                 self.kakaoLoginService.signOut()
                     .subscribe(onCompleted: {
                         observer.onNext(true)
@@ -47,8 +47,16 @@ final class DefaultSettingUseCase: SettingUseCase {
                         observer.onNext(false)
                     })
                     .disposed(by: self.disposeBag)
-            } else {    // case: apple login
-//                appleLoginService.signOut()
+            } else {
+                self.appleLoginService.isLoggedIn()
+                    .subscribe(onNext: { result in
+                        if result {
+//                            appleLoginService.signOut()
+                        } else {
+                            observer.onNext(true)
+                        }
+                    })
+                    .disposed(by: self.disposeBag)
             }
             return Disposables.create()
         }
@@ -66,7 +74,7 @@ final class DefaultSettingUseCase: SettingUseCase {
                 }
             }
             
-            if self.kakaoLoginService.isAvailableAutoSignIn() {
+            if self.kakaoLoginService.isLoggedIn() {
                 self.kakaoLoginService.unlink()
                     .subscribe(onCompleted: {
                         observer.onNext(true)
@@ -74,8 +82,16 @@ final class DefaultSettingUseCase: SettingUseCase {
                         observer.onNext(false)
                     })
                     .disposed(by: self.disposeBag)
-            } else {    // case: apple login
-//                appleLoginService.withdrawal()
+            } else {
+                self.appleLoginService.isLoggedIn()
+                    .subscribe(onNext: { result in
+                        if result {
+//                            appleLoginService.withdrawal()
+                        } else {
+                            observer.onNext(true)
+                        }
+                    })
+                    .disposed(by: self.disposeBag)
             }
             return Disposables.create()
         }

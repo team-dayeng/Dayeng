@@ -20,7 +20,7 @@ final class DefaultKakaoLoginService: KakaoLoginService {
     
     private let disposeBag = DisposeBag()
     
-    func isAvailableAutoSignIn() -> Bool {
+    func isLoggedIn() -> Bool {
         AuthApi.hasToken()
     }
     

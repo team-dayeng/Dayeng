@@ -40,7 +40,7 @@ final class DefaultSplashUseCase: SplashUseCase {
                 return Disposables.create()
             }
             
-            if self.kakaoLoginService.isAvailableAutoSignIn() {
+            if self.kakaoLoginService.isLoggedIn() {
                 self.kakaoLoginService.autoSignIn()
                     .do(onNext: { result in
                         if !result { try? Auth.auth().signOut() }
@@ -48,7 +48,7 @@ final class DefaultSplashUseCase: SplashUseCase {
                     .bind(to: observer)
                     .disposed(by: self.disposeBag)
             } else {
-                self.appleLoginService.autoSignIn()
+                self.appleLoginService.isLoggedIn()
                     .do(onNext: { result in
                         if !result { try? Auth.auth().signOut() }
                     })
