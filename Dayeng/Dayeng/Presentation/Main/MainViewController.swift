@@ -162,17 +162,10 @@ final class MainViewController: UIViewController {
         
         output.questionsAnswers
             .bind(to: collectionView.rx.items(cellIdentifier: MainCell.identifier, cellType: MainCell.self)
-            ) { [weak self] (index, questionAnswer, cell) in
+            ) { (_, questionAnswer, cell) in
                 let (question, answer) = questionAnswer
-                guard let self else { return }
                 
                 cell.mainView.bindQuestion(question)
-                let disposable = cell.mainView.editButtonDidTapped
-                    .map { index }
-                    .bind(to: self.editButtonDidTapped)
-                
-                self.editButtonDisposables[index] = disposable
-                
                 if let answer {
                     cell.mainView.bindAnswer(answer)
                 }
@@ -190,5 +183,17 @@ extension MainViewController: UICollectionViewDelegate {
     ) {
         editButtonDisposables[indexPath.row]?.dispose()
         editButtonDisposables.removeValue(forKey: indexPath.row)
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        willDisplay cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath
+    ) {
+        guard let cell = cell as? MainCell else { return }
+        editButtonDisposables[indexPath.row] = cell.mainView.editButtonDidTapped
+            .map { indexPath.row }
+            .bind(to: editButtonDidTapped)
+        
     }
 }
