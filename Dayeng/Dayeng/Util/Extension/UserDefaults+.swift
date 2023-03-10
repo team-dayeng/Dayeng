@@ -15,6 +15,7 @@ extension UserDefaults {
         static let appleID = "appleID"
         static let userID = "userID"
         static let userName = "userName"
+        static let lastAnsweredDate = "lastAnsweredDate"
     }
     
     class var selectedAlarmDays: [Bool] {
@@ -64,5 +65,10 @@ extension UserDefaults {
                 standard.removeObject(forKey: DayengKeys.userName)
             }
         }
+    }
+    
+    class var lastAnsweredDate: Date {
+        get { (standard.object(forKey: DayengKeys.lastAnsweredDate) as? Date) ?? Date(timeIntervalSince1970: 0) }
+        set { standard.set(newValue, forKey: DayengKeys.alarmDate)}
     }
 }
