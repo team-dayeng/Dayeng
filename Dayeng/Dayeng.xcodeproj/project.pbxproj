@@ -109,6 +109,8 @@
 		E5AE4F3729B0EE120029B200 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E5AE4F3629B0EE120029B200 /* GoogleService-Info.plist */; };
 		E5AE4F3D29B37B120029B200 /* CalendarUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE4F3C29B37B120029B200 /* CalendarUseCase.swift */; };
 		E5AE4F3F29B37B1A0029B200 /* DefaultCalendarUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE4F3E29B37B1A0029B200 /* DefaultCalendarUseCase.swift */; };
+		E5AE4F5F29BCACBC0029B200 /* DefaultLinkBuildService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE4F5E29BCACBC0029B200 /* DefaultLinkBuildService.swift */; };
+		E5AE4F6129BCACCD0029B200 /* LinkBuildService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE4F6029BCACCD0029B200 /* LinkBuildService.swift */; };
 		E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */; };
 		E5D4342E2988E22F004EDFC7 /* Dayeng-Book.json in Resources */ = {isa = PBXBuildFile; fileRef = E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */; };
 		E5D43435298A3291004EDFC7 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43434298A3291004EDFC7 /* CalendarViewController.swift */; };
@@ -212,6 +214,8 @@
 		E5AE4F3629B0EE120029B200 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E5AE4F3C29B37B120029B200 /* CalendarUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarUseCase.swift; sourceTree = "<group>"; };
 		E5AE4F3E29B37B1A0029B200 /* DefaultCalendarUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCalendarUseCase.swift; sourceTree = "<group>"; };
+		E5AE4F5E29BCACBC0029B200 /* DefaultLinkBuildService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLinkBuildService.swift; sourceTree = "<group>"; };
+		E5AE4F6029BCACCD0029B200 /* LinkBuildService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkBuildService.swift; sourceTree = "<group>"; };
 		E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Dayeng-Book.json"; sourceTree = "<group>"; };
 		E5D43434298A3291004EDFC7 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
@@ -376,6 +380,8 @@
 				76003E0E29990EE200F15CAE /* DefaultUserNotificationService.swift */,
 				47B5084629AA53A10046A982 /* AppleLoginService.swift */,
 				4799A65729A7E2380071F8F9 /* DefaultAppleLoginService.swift */,
+				E5AE4F5E29BCACBC0029B200 /* DefaultLinkBuildService.swift */,
+				E5AE4F6029BCACCD0029B200 /* LinkBuildService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -775,6 +781,7 @@
 			files = (
 				E5AE4F3329B0E1F30029B200 /* ToastType.swift in Sources */,
 				E52F65EE29AC7E89007C36AE /* AddFriendViewModel.swift in Sources */,
+				E5AE4F6129BCACCD0029B200 /* LinkBuildService.swift in Sources */,
 				7628E68E298E4E83002D86F2 /* FirestoreDatabaseService.swift in Sources */,
 				76280CEB29878A3F0061206A /* ViewController.swift in Sources */,
 				E552C2552994C92700F51179 /* Coordinator.swift in Sources */,
@@ -799,6 +806,7 @@
 				E5883E2229AF6778007BF206 /* DefaultAcceptFriendUseCase.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
 				47E0A5E52997743F0093645B /* DefaultSplashUseCase.swift in Sources */,
+				E5AE4F5F29BCACBC0029B200 /* DefaultLinkBuildService.swift in Sources */,
 				47E0A5E9299775060093645B /* DefaultQuestionRepository.swift in Sources */,
 				E5AE4F3129B0D4EC0029B200 /* DefaultAddFriendUseCase.swift in Sources */,
 				47D1835D298A92C10058C0EC /* AuthType.swift in Sources */,
