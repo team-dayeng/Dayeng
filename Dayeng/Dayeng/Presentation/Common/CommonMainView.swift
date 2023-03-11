@@ -49,7 +49,7 @@ final class CommonMainView: UIView {
         label.text = " A1."
         label.textColor = .lightGray
         label.isEditable = false
-        
+        label.isSelectable = false
         let tapGestureRecognizer = UITapGestureRecognizer()
         label.addGestureRecognizer(tapGestureRecognizer)
         tapGestureRecognizer.rx.event.map { _ in }.bind(to: editButtonDidTapped).disposed(by: disposeBag)
