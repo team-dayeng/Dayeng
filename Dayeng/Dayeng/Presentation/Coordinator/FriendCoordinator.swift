@@ -64,7 +64,7 @@ final class FriendCoordinator: FriendCoordinatorProtocol {
     func showFriendCalendarViewController(user: User) {
         let firestoreService = DefaultFirestoreDatabaseService()
         let useCase = DefaultCalendarUseCase(
-            userRepository:DefaultUserRepository(firestoreService: firestoreService)
+            userRepository: DefaultUserRepository(firestoreService: firestoreService)
         )
         let viewModel = CalendarViewModel(useCase: useCase)
         let viewController = CalendarViewController(ownerType: .friend(user: user),
