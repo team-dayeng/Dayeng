@@ -6,3 +6,13 @@
 //
 
 import Foundation
+import RxSwift
+
+protocol NetworkService {
+    func request(
+        url: URL,
+        method: HTTPMethod,
+        parameters: [String: Any]?,
+        headers: [String: String]?
+    ) -> Observable<Data?>
+}
