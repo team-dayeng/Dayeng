@@ -51,6 +51,9 @@
 		7603FA1E2996522200D2C9C8 /* AlarmSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7603FA1D2996522200D2C9C8 /* AlarmSettingViewModel.swift */; };
 		7603FA202996556200D2C9C8 /* DefaultAlarmSettingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7603FA1F2996556200D2C9C8 /* DefaultAlarmSettingUseCase.swift */; };
 		7603FA22299793B500D2C9C8 /* AlarmSettingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7603FA21299793B500D2C9C8 /* AlarmSettingUseCase.swift */; };
+		7617372729BCB2E300D9A093 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7617372629BCB2E300D9A093 /* HTTPMethod.swift */; };
+		7617372929BCB32E00D9A093 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7617372829BCB32E00D9A093 /* NetworkService.swift */; };
+		7617372B29BCB41300D9A093 /* DefaultNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7617372A29BCB41300D9A093 /* DefaultNetworkService.swift */; };
 		76280CE729878A3F0061206A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE629878A3F0061206A /* AppDelegate.swift */; };
 		76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE829878A3F0061206A /* SceneDelegate.swift */; };
 		76280CF029878A410061206A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76280CEF29878A410061206A /* Assets.xcassets */; };
@@ -155,6 +158,9 @@
 		7603FA1D2996522200D2C9C8 /* AlarmSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewModel.swift; sourceTree = "<group>"; };
 		7603FA1F2996556200D2C9C8 /* DefaultAlarmSettingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAlarmSettingUseCase.swift; sourceTree = "<group>"; };
 		7603FA21299793B500D2C9C8 /* AlarmSettingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingUseCase.swift; sourceTree = "<group>"; };
+		7617372629BCB2E300D9A093 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		7617372829BCB32E00D9A093 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		7617372A29BCB41300D9A093 /* DefaultNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNetworkService.swift; sourceTree = "<group>"; };
 		76280CE329878A3F0061206A /* Dayeng.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dayeng.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76280CE629878A3F0061206A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		76280CE829878A3F0061206A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -367,6 +373,8 @@
 				4799A65729A7E2380071F8F9 /* DefaultAppleLoginService.swift */,
 				47B5084429AA02AF0046A982 /* KakaoLoginService.swift */,
 				47B5084829AA7CB00046A982 /* DefaultKakaoLoginService.swift */,
+				7617372829BCB32E00D9A093 /* NetworkService.swift */,
+				7617372A29BCB41300D9A093 /* DefaultNetworkService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -564,6 +572,7 @@
 				E552C1F1298B911F00F51179 /* OwnerType.swift */,
 				E569162F2998D429006D7231 /* PageType.swift */,
 				76003E13299E448800F15CAE /* MessageUIType.swift */,
+				7617372629BCB2E300D9A093 /* HTTPMethod.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -777,6 +786,7 @@
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
 				7628E67C298D9D31002D86F2 /* AddFriendViewController.swift in Sources */,
 				47D1835F298A94790058C0EC /* UIColor+.swift in Sources */,
+				7617372729BCB2E300D9A093 /* HTTPMethod.swift in Sources */,
 				47E0A5EB2998ED8C0093645B /* Data+.swift in Sources */,
 				47D1835B298A8DDD0058C0EC /* AuthButton.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
@@ -813,6 +823,7 @@
 				76003E12299E361D00F15CAE /* IndicatorView.swift in Sources */,
 				47D18364298D0EDC0058C0EC /* LoginViewModel.swift in Sources */,
 				76003E0F29990EE200F15CAE /* DefaultUserNotificationService.swift in Sources */,
+				7617372929BCB32E00D9A093 /* NetworkService.swift in Sources */,
 				4754942829900414008B581D /* DefaultDayengCacheService.swift in Sources */,
 				E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */,
 				7628E67E298DA61D002D86F2 /* AcceptFriendViewController.swift in Sources */,
@@ -835,6 +846,7 @@
 				E5A2513129AC922E00F62313 /* UIView+.swift in Sources */,
 				477800F5299B64FC008FFE79 /* DayengDefaults.swift in Sources */,
 				E5D43439298A4892004EDFC7 /* NSTextAttachment+.swift in Sources */,
+				7617372B29BCB41300D9A093 /* DefaultNetworkService.swift in Sources */,
 				476A626D2996646A0074231E /* DayengCacheService.swift in Sources */,
 				7628E690298E4E9B002D86F2 /* FirestoreAPI.swift in Sources */,
 				476A62692993FE460074231E /* QuestionDTO.swift in Sources */,
