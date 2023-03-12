@@ -9,6 +9,6 @@ import Foundation
 import RxSwift
 
 protocol SettingUseCase {
-    func logout() -> Observable<Bool>
-    func withdrawal() -> Observable<Bool>
+    func logout() -> Observable<Void>
+    func withdrawal() -> Observable<Void>
 }
