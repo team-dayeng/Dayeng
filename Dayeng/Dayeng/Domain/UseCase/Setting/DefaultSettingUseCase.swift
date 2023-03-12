@@ -97,4 +97,23 @@ final class DefaultSettingUseCase: SettingUseCase {
         }
     }
     
+    /// DB에서 user 삭제
+    private func deleteUser() -> Observable<Void> {
+        Observable.create { [weak self] observer in
+            guard let self else {
+                observer.onError(SettingError.notExistSelf)
+                return Disposables.create()
+            }
+            guard let userID = UserDefaults.userID else {
+                observer.onError(UserError.cannotFetchUserID)
+                return Disposables.create()
+            }
+            
+            self.userRepository.deleteUser(userID: userID)
+                .bind(to: observer)
+                .disposed(by: self.disposeBag)
+
+            return Disposables.create()
+        }
+    }
 }
