@@ -12,4 +12,5 @@ protocol UserRepository {
     func fetchUser(userID: String) -> Observable<User>
     func uploadUser(user: User) -> Observable<Void>
     func uploadAnswer(answer: String) -> Observable<Void>
+    func deleteUser(userID: String) -> Observable<Void>
 }
