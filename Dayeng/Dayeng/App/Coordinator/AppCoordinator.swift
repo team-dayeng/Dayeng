@@ -118,6 +118,7 @@ final class AppCoordinator: AppCoordinatorProtocol {
     
     func showMainViewController() {
         let coordinator = MainCoordinator(navigationController: navigationController)
+        coordinator.delegate = self
         childCoordinators.append(coordinator)
         coordinator.start()
     }
@@ -126,5 +127,6 @@ final class AppCoordinator: AppCoordinatorProtocol {
 extension AppCoordinator: CoordinatorDelegate {
     func didFinished(childCoordinator: Coordinator) {
         childCoordinators = childCoordinators.filter({ $0 !== childCoordinator })
+        showLoginViewController()
     }
 }

@@ -11,5 +11,5 @@ import FirebaseAuth
 
 protocol AppleLoginService {
     func signIn() -> Observable<(credential: OAuthCredential, name: String)>
-    func autoSignIn() -> Observable<Bool>
+    func isLoggedIn() -> Observable<Bool>
 }

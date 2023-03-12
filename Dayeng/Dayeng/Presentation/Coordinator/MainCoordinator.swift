@@ -68,7 +68,15 @@ final class MainCoordinator: MainCoordinatorProtocol {
     
     func showSettingViewController() {
         let coordinator = SettingCoordinator(navigationController: navigationController)
+        coordinator.delegate = self
         childCoordinators.append(coordinator)
         coordinator.start()
+    }
+}
+
+extension MainCoordinator: CoordinatorDelegate {
+    func didFinished(childCoordinator: Coordinator) {
+        childCoordinators = childCoordinators.filter({ $0 !== childCoordinator })
+        delegate?.didFinished(childCoordinator: self)
     }
 }
