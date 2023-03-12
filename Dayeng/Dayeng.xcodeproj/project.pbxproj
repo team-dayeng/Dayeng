@@ -46,6 +46,7 @@
 		47E0A5E9299775060093645B /* DefaultQuestionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5E8299775060093645B /* DefaultQuestionRepository.swift */; };
 		47E0A5EB2998ED8C0093645B /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E0A5EA2998ED8C0093645B /* Data+.swift */; };
 		47F4C4C429BDBAAA0002E51B /* UserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F4C4C329BDBAAA0002E51B /* UserError.swift */; };
+		47F4C4C629BDCA4B0002E51B /* AlertMessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F4C4C529BDCA4B0002E51B /* AlertMessageType.swift */; };
 		76003E092998DF4A00F15CAE /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76003E082998DF4A00F15CAE /* UserDefaults+.swift */; };
 		76003E0D29990ED200F15CAE /* UserNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76003E0C29990ED200F15CAE /* UserNotificationService.swift */; };
 		76003E0F29990EE200F15CAE /* DefaultUserNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76003E0E29990EE200F15CAE /* DefaultUserNotificationService.swift */; };
@@ -153,6 +154,7 @@
 		47E0A5E8299775060093645B /* DefaultQuestionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultQuestionRepository.swift; sourceTree = "<group>"; };
 		47E0A5EA2998ED8C0093645B /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
 		47F4C4C329BDBAAA0002E51B /* UserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserError.swift; sourceTree = "<group>"; };
+		47F4C4C529BDCA4B0002E51B /* AlertMessageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertMessageType.swift; sourceTree = "<group>"; };
 		76003E082998DF4A00F15CAE /* UserDefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
 		76003E0C29990ED200F15CAE /* UserNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationService.swift; sourceTree = "<group>"; };
 		76003E0E29990EE200F15CAE /* DefaultUserNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserNotificationService.swift; sourceTree = "<group>"; };
@@ -573,6 +575,7 @@
 				E569162F2998D429006D7231 /* PageType.swift */,
 				76003E13299E448800F15CAE /* MessageUIType.swift */,
 				47F4C4C329BDBAAA0002E51B /* UserError.swift */,
+				47F4C4C529BDCA4B0002E51B /* AlertMessageType.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -800,6 +803,7 @@
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
 				E552C2202990BE9300F51179 /* SettingViewController.swift in Sources */,
 				4799A65829A7E2380071F8F9 /* DefaultAppleLoginService.swift in Sources */,
+				47F4C4C629BDCA4B0002E51B /* AlertMessageType.swift in Sources */,
 				47E0A5DD299770EA0093645B /* AnswerDTO.swift in Sources */,
 				47D18368298D16730058C0EC /* FriendListViewModel.swift in Sources */,
 				76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */,
