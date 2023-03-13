@@ -15,4 +15,5 @@ protocol FirestoreDatabaseService {
     func fetch<T: Decodable>(api: FirestoreAPI) -> Observable<[T]>
     func upload<T: Encodable>(api: FirestoreAPI, dto: T) -> Observable<Void>
     func fetch<T: Decodable>(collection: String) -> Observable<[T]>
+    func deleteDocument(api: FirestoreAPI) -> Observable<Void>
 }

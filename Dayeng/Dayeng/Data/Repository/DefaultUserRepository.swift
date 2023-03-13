@@ -70,4 +70,8 @@ final class DefaultUserRepository: UserRepository {
             )
         )
     }
+    
+    func deleteUser(userID: String) -> Observable<Void> {
+        firestoreService.deleteDocument(api: .user(userID: userID))
+    }
 }
