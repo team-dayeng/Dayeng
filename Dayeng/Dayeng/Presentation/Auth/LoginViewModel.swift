@@ -22,12 +22,11 @@ final class LoginViewModel {
     
     // MARK: - Output
     struct Output {
-        var loginResult = PublishRelay<Void>()
     }
     
     // MARK: - Properties
     var currentNonce: String?
-    var loginResult = PublishRelay<Void>()
+    var loginResult = PublishSubject<Void>()
     
     // MARK: - Dependency
     private let useCase: LoginUseCase
@@ -50,6 +49,14 @@ extension LoginViewModel {
             .bind(to: loginResult)
             .disposed(by: disposeBag)
         
-        return Output(loginResult: loginResult)
+        input.kakaoLoginButtonDidTap
+            .withUnretained(self)
+            .flatMap { (owner, _) in
+                owner.useCase.kakaoSignIn()
+            }
+            .bind(to: loginResult)
+            .disposed(by: disposeBag)
+        
+        return Output()
     }
 }

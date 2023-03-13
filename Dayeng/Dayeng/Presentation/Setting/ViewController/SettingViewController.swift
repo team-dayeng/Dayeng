@@ -59,13 +59,6 @@ final class SettingViewController: UIViewController {
     }
     
     // MARK: - UI properties
-    private lazy var backgroundImage: UIImageView = {
-        var imageView: UIImageView = UIImageView()
-        imageView.image = UIImage(named: "paperBackground")
-        
-        return imageView
-    }()
-    
     private var collectionView: UICollectionView!
     
     // MARK: - Properties
@@ -73,6 +66,9 @@ final class SettingViewController: UIViewController {
     private var viewModel: SettingViewModel
     private var dataSource: DataSource?
     private var disposeBag = DisposeBag()
+    
+    private var logoutDidTapped = PublishSubject<Void>()
+    private var withdrawalDidTapped = PublishSubject<Void>()
     
     // MARK: - Lifecycles
     init(viewModel: SettingViewModel) {
@@ -102,10 +98,44 @@ final class SettingViewController: UIViewController {
     // MARK: - Helpers
     private func bind() {
         let input = SettingViewModel.Input(
-            cellDidTapped: collectionView.rx.itemSelected.asObservable()
+            cellDidTapped: collectionView.rx.itemSelected.asObservable(),
+            logoutDidTapped: logoutDidTapped.asObservable(),
+            withdrawalDidTapped: withdrawalDidTapped.asObservable()
         )
         
         let output = viewModel.transform(input: input)
+        
+        collectionView.rx.itemSelected
+            .filter { $0 == IndexPath(row: 0, section: 1) }     // 로그아웃
+            .subscribe(onNext: { [weak self] _ in
+                guard let self else { return }
+                
+                self.showAlert(
+                    title: "로그아웃 하시겠습니까?",
+                    type: .twoButton,
+                    rightActionHandler: { [weak self] in
+                        guard let self else { return }
+                        self.showIndicator()
+                        self.logoutDidTapped.onNext(())
+                })
+            })
+            .disposed(by: disposeBag)
+        
+        collectionView.rx.itemSelected
+            .filter { $0 == IndexPath(row: 1, section: 1) }     // 회원 탈퇴
+            .subscribe(onNext: { [weak self] _ in
+                guard let self else { return }
+                
+                self.showAlert(
+                    title: "정말 탈퇴하시겠습니까?",
+                    type: .twoButton,
+                    rightActionHandler: { [weak self] in
+                        guard let self else { return }
+                        self.showIndicator()
+                        self.withdrawalDidTapped.onNext(())
+                })
+            })
+            .disposed(by: disposeBag)
         
         output.showMailComposeViewController
             .asDriver(onErrorJustReturn: .inquiry)
@@ -125,19 +155,43 @@ final class SettingViewController: UIViewController {
                 self.navigationController?.present(viewController, animated: true)
             })
             .disposed(by: disposeBag)
+        
+        output.logoutFailed
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.showAlert(
+                    title: "로그아웃에 실패했습니다",
+                    message: "다시 시도해주세요",
+                    type: .oneButton,
+                    rightActionHandler: { [weak self] in
+                        guard let self else { return }
+                        self.hideIndicator()
+                    }
+                )
+            })
+            .disposed(by: disposeBag)
+        
+        output.withdrawalFailed
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.showAlert(
+                    title: "회원 탈퇴에 실패했습니다",
+                    message: "다시 시도해주세요",
+                    type: .oneButton,
+                    rightActionHandler: { [weak self] in
+                        guard let self else { return }
+                        self.hideIndicator()
+                    }
+                )
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setupViews() {
-        view.addSubview(backgroundImage)
+        view.addBackgroundImage()
     }
     
     private func configureUI() {
-        backgroundImage.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(-50)
-            $0.top.bottom.equalToSuperview().inset(-100)
-        }
-        
         configureCollectionView()
     }
     

@@ -32,7 +32,9 @@ final class AppCoordinator: AppCoordinatorProtocol {
         let firestoreService = DefaultFirestoreDatabaseService()
         let useCase = DefaultSplashUseCase(
             userRepository: DefaultUserRepository(firestoreService: firestoreService),
-            questionRepository: DefaultQuestionRepository(firestoreService: firestoreService)
+            questionRepository: DefaultQuestionRepository(firestoreService: firestoreService),
+            appleLoginService: DefaultAppleLoginService(),
+            kakaoLoginService: DefaultKakaoLoginService()
         )
         let viewModel = SplashViewModel(useCase: useCase)
         let viewController = SplashViewController(viewModel: viewModel)
@@ -67,14 +69,32 @@ final class AppCoordinator: AppCoordinatorProtocol {
         let firestoreService = DefaultFirestoreDatabaseService()
         let userRepository = DefaultUserRepository(firestoreService: firestoreService)
         let appleLoginService = DefaultAppleLoginService()
-        let useCase = DefaultLoginUseCase(userRepository: userRepository, appleLoginService: appleLoginService)
+        let kakaoLoginService = DefaultKakaoLoginService()
+        let useCase = DefaultLoginUseCase(
+            userRepository: userRepository,
+            appleLoginService: appleLoginService,
+            kakaoLoginService: kakaoLoginService
+        )
         let viewModel = LoginViewModel(useCase: useCase)
         let viewController = LoginViewController(viewModel: viewModel)
         
         viewModel.loginResult
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
+                self.navigationController.viewControllers.last?.hideIndicator()
                 self.showMainViewController()
+            }, onError: { [weak self] _ in
+                guard let self else { return }
+                self.navigationController.showAlert(
+                    title: "로그인에 실패했습니다",
+                    message: "다시 시도해주세요",
+                    type: .oneButton,
+                    rightActionHandler: { [weak self] in
+                        guard let self else { return }
+                        self.navigationController.viewControllers.last?.hideIndicator()
+                        self.showLoginViewController()
+                    }
+                )
             })
             .disposed(by: disposeBag)
         
@@ -95,6 +115,7 @@ final class AppCoordinator: AppCoordinatorProtocol {
     
     func showMainViewController() {
         let coordinator = MainCoordinator(navigationController: navigationController)
+        coordinator.delegate = self
         childCoordinators.append(coordinator)
         coordinator.start()
     }
@@ -103,5 +124,6 @@ final class AppCoordinator: AppCoordinatorProtocol {
 extension AppCoordinator: CoordinatorDelegate {
     func didFinished(childCoordinator: Coordinator) {
         childCoordinators = childCoordinators.filter({ $0 !== childCoordinator })
+        showLoginViewController()
     }
 }
