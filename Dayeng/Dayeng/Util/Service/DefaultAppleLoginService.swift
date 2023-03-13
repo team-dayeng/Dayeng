@@ -84,6 +84,14 @@ final class DefaultAppleLoginService: AppleLoginService {
             return Disposables.create()
         }
     }
+    
+//    func signOut() {
+//        UserDefaults.appleID = nil
+//    }
+//    
+//    func withDrawal() {
+//        UserDefaults.appleID = nil
+//    }
 }
 
 extension DefaultAppleLoginService {

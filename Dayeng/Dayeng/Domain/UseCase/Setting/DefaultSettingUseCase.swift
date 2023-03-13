@@ -82,9 +82,8 @@ final class DefaultSettingUseCase: SettingUseCase {
                 if let error {
                     observer.onError(error)
                 } else {
-                    // 에러나면 로그인 후 다시 시도
                     Observable.zip(self.socialWithDrawal(), self.deleteUser())
-                        .map{ (_, _) in }
+                        .map { _ in }
                         .do(onNext: {
                             UserDefaults.userID = nil
                         })
@@ -104,7 +103,7 @@ final class DefaultSettingUseCase: SettingUseCase {
                 return Disposables.create()
             }
             
-            if self.kakaoLoginService.isLoggedIn() {
+            if UserDefaults.appleID == nil {
                 self.kakaoLoginService.signOut()
                     .subscribe(onCompleted: {
                         observer.onNext(())
@@ -135,12 +134,12 @@ final class DefaultSettingUseCase: SettingUseCase {
                 return Disposables.create()
             }
             
-            if self.kakaoLoginService.isLoggedIn() {
+            if UserDefaults.appleID == nil {
                 self.kakaoLoginService.unlink()
                     .subscribe(onCompleted: {
                         observer.onNext(())
-                    }, onError: { error in
-                        observer.onError(error)
+                    }, onError: {
+                        observer.onError($0)
                     })
                     .disposed(by: self.disposeBag)
             } else {

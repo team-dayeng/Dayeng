@@ -40,8 +40,8 @@ final class DefaultSplashUseCase: SplashUseCase {
                 return Disposables.create()
             }
             
-            if self.kakaoLoginService.isLoggedIn() {
-                self.kakaoLoginService.autoSignIn()
+            if UserDefaults.appleID == nil {
+                self.kakaoLoginService.isLoggedIn()
                     .do(onNext: { result in
                         if !result { try? Auth.auth().signOut() }
                     })
