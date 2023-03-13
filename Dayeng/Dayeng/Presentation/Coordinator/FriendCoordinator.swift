@@ -54,7 +54,8 @@ final class FriendCoordinator: FriendCoordinatorProtocol {
     func showAddFriendViewController() {
         let firestoreService = DefaultFirestoreDatabaseService()
         let useCase = DefaultAddFriendUseCase(
-            userRepository: DefaultUserRepository(firestoreService: firestoreService)
+            userRepository: DefaultUserRepository(firestoreService: firestoreService),
+            linkBuilderService: DefaultLinkBuildService()
         )
         let viewModel = AddFriendViewModel(useCase: useCase)
         let viewController = AddFriendViewController(viewModel: viewModel)

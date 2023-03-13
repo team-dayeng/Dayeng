@@ -6,7 +6,10 @@
 //
 
 import Foundation
+import RxSwift
+import FirebaseDynamicLinks
 
 protocol LinkBuildService {
-    
+    func setuplinkBuilder() -> DynamicLinkComponents
+    func fetchDynamicLink() -> Observable<URL>
 }

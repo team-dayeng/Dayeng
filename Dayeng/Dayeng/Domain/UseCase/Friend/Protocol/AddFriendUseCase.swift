@@ -9,5 +9,6 @@ import Foundation
 import RxSwift
 
 protocol AddFriendUseCase {
+    func fetchDynamicLink() -> Observable<URL>
     func addFriend(userID: String) -> Observable<Void>
 }

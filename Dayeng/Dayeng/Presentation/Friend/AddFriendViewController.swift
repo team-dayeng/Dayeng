@@ -20,7 +20,6 @@ final class AddFriendViewController: UIViewController {
         
         return view
     }()
-    
     private lazy var introductionLabel: UILabel = {
         var label = UILabel()
         label.font = .systemFont(ofSize: 20)
@@ -29,13 +28,11 @@ final class AddFriendViewController: UIViewController {
         label.numberOfLines = 2
         return label
     }()
-    
     private lazy var logoImageView: UIImageView = {
         var imageView = UIImageView()
         imageView.image = .dayengLogo
         return imageView
     }()
-    
     private lazy var codeButton: UIButton = {
         var button = UIButton()
         let attributes: [NSAttributedString.Key: Any] = [
@@ -48,7 +45,6 @@ final class AddFriendViewController: UIViewController {
         button.setAttributedTitle(attributedString, for: .normal)
         return button
     }()
-    
     private lazy var copyButton: UIButton = {
         var button = UIButton()
         button.setTitle("복사하기", for: .normal)
@@ -56,7 +52,6 @@ final class AddFriendViewController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         return button
     }()
-    
     private lazy var shareButton: UIButton = {
         var button = UIButton()
         button.setTitle("공유하기", for: .normal)
@@ -67,16 +62,13 @@ final class AddFriendViewController: UIViewController {
         button.backgroundColor = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1)
         button.semanticContentAttribute = .forceRightToLeft
         button.layer.cornerRadius = 8
-        button.addTarget(self, action: #selector(tappedShareButton), for: .touchUpInside)
         return button
     }()
-    
     private lazy var separatorView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
         return view
     }()
-    
     private lazy var codeTextField: UITextField = {
         let textField = UITextField()
         textField.font = .systemFont(ofSize: 20)
@@ -85,7 +77,6 @@ final class AddFriendViewController: UIViewController {
         textField.layer.cornerRadius = 8
         return textField
     }()
-    
     private lazy var addButton: UIButton = {
         let button = UIButton()
         button.setTitle("추가하기", for: .normal)
@@ -126,9 +117,17 @@ final class AddFriendViewController: UIViewController {
             addButtonDidTapped:
                 addButton.rx.tap.map { _ in
                     self.codeTextField.resignFirstResponder()
-                    return self.codeTextField.text ?? "" }.asObservable()
+                    return self.codeTextField.text ?? "" }.asObservable(),
+            shareButtonDidTapped: shareButton.rx.tap.map { _ in }.asObservable()
         )
         let output = viewModel.transform(input: input)
+        output.shareButtonResult
+            .subscribe(onNext: { url in
+                self.showActivityViewController(url: url)
+            }, onError: { error in
+                self.showAlert(title: "다이나믹 링크 생성 오류", message: "\(error)", type: .oneButton)
+            })
+            .disposed(by: disposeBag)
         output.addButtonSuccess
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: {
@@ -266,21 +265,5 @@ final class AddFriendViewController: UIViewController {
                                                                       height: 0)
         
         present(activityVC, animated: true)
-    }
-    
-    // MARK: - Object C
-    @objc private func tappedShareButton() {
-        let linkBuilder = setuplinkBuilder()
-        linkBuilder.shorten { url, _, error in
-            if let error = error {
-                self.showAlert(title: "다이나믹 링크 생성 오류", message: "\(error)", type: .oneButton)
-                return
-            }
-            guard let url = url else {
-                self.showAlert(title: "다이나믹 링크 생성 오류", message: "url 오류", type: .oneButton)
-                return
-            }
-            self.showActivityViewController(url: url)
-        }
     }
 }

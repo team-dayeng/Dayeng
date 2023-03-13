@@ -13,10 +13,12 @@ final class AddFriendViewModel {
     // MARK: - Input
     struct Input {
         var addButtonDidTapped: Observable<String>
+        var shareButtonDidTapped: Observable<Void>
     }
     
     // MARK: - Output
     struct Output {
+        var shareButtonResult = PublishRelay<URL>()
         var addButtonSuccess = PublishSubject<Void>()
         var addButtonError = PublishSubject<String>()
     }
@@ -46,6 +48,14 @@ final class AddFriendViewModel {
                     })
                     .disposed(by: self.disposeBag)
             })
+            .disposed(by: disposeBag)
+        
+        input.shareButtonDidTapped
+            .withUnretained(self)
+            .flatMap { (owner, _) in
+                owner.useCase.fetchDynamicLink()
+            }
+            .bind(to: output.shareButtonResult)
             .disposed(by: disposeBag)
         
         return output

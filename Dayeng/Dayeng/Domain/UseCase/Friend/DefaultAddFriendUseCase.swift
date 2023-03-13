@@ -16,15 +16,21 @@ final class DefaultAddFriendUseCase: AddFriendUseCase {
     }
     
     // MARK: - Properties
+    private let linkBuilderService: LinkBuildService
     private let userRepository: UserRepository
     private let disposeBag = DisposeBag()
     
     // MARK: - Lifecycles
-    init(userRepository: UserRepository) {
+    init(userRepository: UserRepository, linkBuilderService: LinkBuildService) {
         self.userRepository = userRepository
+        self.linkBuilderService = linkBuilderService
     }
     
     // MARK: - Helpers
+    func fetchDynamicLink() -> Observable<URL> {
+        linkBuilderService.fetchDynamicLink()
+    }
+    
     func addFriend(userID: String) -> Observable<Void> {
         Observable.create { [weak self] observer in
             guard let self else { return Disposables.create() }
