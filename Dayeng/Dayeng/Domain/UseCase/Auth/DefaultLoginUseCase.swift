@@ -150,10 +150,15 @@ final class DefaultLoginUseCase: LoginUseCase {
             Auth.auth().createUser(withEmail: email, password: password) { [weak self] (_, error) in
                 guard let self else { return }
                 
-                if error != nil {
-                    self.firebaseSignIn(email: email, password: password, userName: userName)
-                        .bind(to: observer)
-                        .disposed(by: self.disposeBag)
+                if let error = error as? AuthErrorCode {
+                    if error.code == .emailAlreadyInUse {
+                        self.firebaseSignIn(email: email, password: password, userName: userName)
+                            .bind(to: observer)
+                            .disposed(by: self.disposeBag)
+
+                    } else {
+                        observer.onError(error)
+                    }
                     return
                 }
                 
