@@ -16,16 +16,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     var coordinator: AppCoordinator?
+    var acceptFriendCode: String?
+    var acceptFriendName: String?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
-        self.window = UIWindow(windowScene: scene)
-        scene.userActivity = connectionOptions.userActivities.first
         
+        if let userActivity = connectionOptions.userActivities.first {
+            self.scene(scene, continue: userActivity)
+        }
+        
+        self.window = UIWindow(windowScene: scene)
         let navigationController = UINavigationController()
         self.coordinator = AppCoordinator(navigationController: navigationController)
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
+        self.coordinator?.start()
         
         // 앱 실행 중 'Apple ID 사용 중단' 할 경우
         NotificationCenter.default.addObserver(
@@ -62,8 +68,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     })
                 }
             })
-        
-        self.coordinator?.start()
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -108,10 +112,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let linkHandled = DynamicLinks.dynamicLinks().handleUniversalLink(incomingURL) { dynamicLinks, error in
                 guard let dynamiclink = dynamicLinks, let deepLink = dynamiclink.url else { return }
                 let queryItems = URLComponents(url: deepLink, resolvingAgainstBaseURL: true)?.queryItems
-                let code = queryItems?.filter({$0.name == "code"}).first?.value
-
-                print("friendCode", code)
-                self.coordinator?.showAcceptFriendViewController()
+                
+                guard let acceptFriendCode = queryItems?.filter({ $0.name == "code" }).first?.value,
+                      let acceptFriendName = queryItems?.filter({ $0.name == "name" }).first?.value,
+                      let navigationController = self.window?.rootViewController as? UINavigationController else { return }
+        
+                if navigationController.topViewController is SplashViewController ||
+                    navigationController.topViewController is LoginViewController {
+                    self.acceptFriendCode = acceptFriendCode
+                    self.acceptFriendName = acceptFriendName
+                } else {
+                    self.coordinator?.showAcceptFriendViewController(acceptFriendCode: acceptFriendCode,
+                                                                     acceptFriendName: acceptFriendName)
+                }
             }
         } else {
             print("incomingURL is nil")
@@ -124,13 +137,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = navigationController
         
         navigationController.viewControllers = [viewController]
-        UIView.transition(with: window, duration: 1.0, options: [.transitionCurlUp], animations: nil, completion: nil)
+        UIView.transition(with: window,
+                          duration: 1.0,
+                          options: [.transitionCurlUp],
+                          animations: nil) { _ in
+            if viewController is MainViewController,
+               let acceptFriendCode = self.acceptFriendCode,
+               let acceptFriendName = self.acceptFriendName {
+                   self.coordinator?.showAcceptFriendViewController(acceptFriendCode: acceptFriendCode,
+                                                                    acceptFriendName: acceptFriendName)
+            }
+        }
     }
     
     func transitionViewController(_ viewController: UIViewController, option: UIView.AnimationOptions) {
         guard let window = self.window,
               let navigationController = window.rootViewController as? UINavigationController else { return }
-        UIView.transition(with: window, duration: 1.0, options: option) {
+        UIView.transition(with: window,
+                          duration: 1.0,
+                          options: option) {
             navigationController.viewControllers.append(viewController)
         }
     }

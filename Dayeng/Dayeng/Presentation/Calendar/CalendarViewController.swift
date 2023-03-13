@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import RxSwift
 
 final class CalendarViewController: UIViewController {
     // MARK: - UI properties
@@ -20,6 +21,7 @@ final class CalendarViewController: UIViewController {
     // MARK: - Properties
     private let ownerType: OwnerType
     private let viewModel: CalendarViewModel
+    private let disposeBag = DisposeBag()
     
     // MARK: - Lifecycles
     init(ownerType: OwnerType, viewModel: CalendarViewModel) {
@@ -45,10 +47,16 @@ final class CalendarViewController: UIViewController {
     // MARK: - Helpers
     private func bind() {
         let input = CalendarViewModel.Input(
+            viewDidLoad: rx.viewDidLoad.map { _ in }.asObservable(),
             homeButtonDidTapped: homeButton.rx.tap.asObservable()
         )
         
         let output = viewModel.transform(input: input)
+        output.answers
+            .subscribe(onNext: {
+                
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setupViews() {
@@ -62,10 +70,13 @@ final class CalendarViewController: UIViewController {
     }
     
     private func configureNavigationBar() {
-        var title = "달력"
+        var title = ""
         
-        if ownerType == .friend {
-            title = "userName님의 달력"
+        switch ownerType {
+        case .mine:
+            title = "달력"
+        case .friend(let user):
+            title = "\(user.name)님의 달력"
             navigationItem.rightBarButtonItem = homeButton
         }
         

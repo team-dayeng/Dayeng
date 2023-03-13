@@ -11,6 +11,9 @@ import RxRelay
 
 protocol MainCoordinatorProtocol: Coordinator {
     func showMainViewController()
+    func showCalendarViewController(ownerType: OwnerType)
+    func showFriendViewController()
+    func showSettingViewController()
 }
 
 final class MainCoordinator: MainCoordinatorProtocol {
@@ -30,6 +33,7 @@ final class MainCoordinator: MainCoordinatorProtocol {
     func showMainViewController() {
         let viewModel = MainViewModel()
         let viewController = MainViewController(viewModel: viewModel)
+        
         viewModel.friendButtonDidTapped
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
@@ -45,7 +49,7 @@ final class MainCoordinator: MainCoordinatorProtocol {
         viewModel.calendarButtonDidTapped
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
-                self.showCalendarViewController(ownerType: .me)
+                self.showCalendarViewController(ownerType: .mine)
             })
             .disposed(by: disposeBag)
         
@@ -54,7 +58,11 @@ final class MainCoordinator: MainCoordinatorProtocol {
     }
     
     func showCalendarViewController(ownerType: OwnerType) {
-        let viewModel = CalendarViewModel()
+        let firestoreService = DefaultFirestoreDatabaseService()
+        let useCase = DefaultCalendarUseCase(
+            userRepository: DefaultUserRepository(firestoreService: firestoreService)
+        )
+        let viewModel = CalendarViewModel(useCase: useCase)
         let viewController = CalendarViewController(ownerType: ownerType,
                                                     viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)

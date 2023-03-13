@@ -17,6 +17,7 @@ final class DefaultFirestoreDatabaseService: FirestoreDatabaseService {
         case dataNotFoundError
         case decodeError
         case firestoreReferenceError
+        case documentPathEmptyError
     }
     
     func fetch<T: Decodable>(collection: String, document: String) -> Observable<T> {
@@ -125,7 +126,6 @@ final class DefaultFirestoreDatabaseService: FirestoreDatabaseService {
     func upload<T: Encodable>(api: FirestoreAPI, dto: T) -> Observable<Void> {
         return Observable.create { observer in
             do {
-                
                 guard let reference = api.documentReference else {
                     observer.onError(FirestoreError.firestoreReferenceError)
                     return Disposables.create()
@@ -170,6 +170,57 @@ final class DefaultFirestoreDatabaseService: FirestoreDatabaseService {
                     observer.onNext(dtos)
                 }
             
+            return Disposables.create()
+        }
+    }
+    
+    func fetch<T: Decodable>(path: String) -> Observable<T> {
+        return Observable.create { observer in
+            self.firestore.document(path)
+                .getDocument { snapshot, error in
+                    if let error = error {
+                        observer.onError(error)
+                        return
+                    }
+                    
+                    guard let snapshot = snapshot else {
+                        observer.onError(FirestoreError.snapshotNotFoundError)
+                        return
+                    }
+                
+                    guard let data = snapshot.data() else {
+                        observer.onError(FirestoreError.dataNotFoundError)
+                        return
+                    }
+                    
+                    do {
+                        let dto = try Firestore.Decoder().decode(T.self, from: data)
+                        observer.onNext(dto)
+                    } catch {
+                        observer.onError(error)
+                    }
+                }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func fetchPath(collection: String, document: String) -> Observable<String> {
+        Observable.create { observer in
+            if document.isEmpty {
+                observer.onError(FirestoreError.documentPathEmptyError)
+            } else {
+                let documentReference = self.firestore.collection(collection).document(document)
+                documentReference.getDocument { snapshot, _ in
+                        guard let snapshot else { return }
+                        
+                        if snapshot.exists {
+                            observer.onNext(documentReference.path)
+                        } else {
+                            observer.onError(FirestoreError.firestoreReferenceError)
+                        }
+                    }
+            }
             return Disposables.create()
         }
     }

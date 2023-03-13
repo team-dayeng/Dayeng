@@ -66,7 +66,6 @@
 		76280D0A29878C870061206A /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 76280D0929878C870061206A /* FirebaseFirestoreSwift */; };
 		76280D0C29878C870061206A /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 76280D0B29878C870061206A /* FirebaseMessaging */; };
 		76280D2D29879F770061206A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 76280D2C29879F770061206A /* Lottie */; };
-		76280D2F2987A7B50061206A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76280D2E2987A7B50061206A /* GoogleService-Info.plist */; };
 		7628E67C298D9D31002D86F2 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E67B298D9D31002D86F2 /* AddFriendViewController.swift */; };
 		7628E67E298DA61D002D86F2 /* AcceptFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E67D298DA61D002D86F2 /* AcceptFriendViewController.swift */; };
 		7628E680298E4D9C002D86F2 /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E67F298E4D9C002D86F2 /* UserDTO.swift */; };
@@ -105,7 +104,19 @@
 		E569162B2998D1D9006D7231 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569162A2998D1D9006D7231 /* WebViewController.swift */; };
 		E569162E2998D1EB006D7231 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E569162D2998D1EB006D7231 /* WebKit.framework */; };
 		E56916302998D429006D7231 /* PageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569162F2998D429006D7231 /* PageType.swift */; };
+		E5883E2029AF6766007BF206 /* AcceptFriendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5883E1F29AF6766007BF206 /* AcceptFriendUseCase.swift */; };
+		E5883E2229AF6778007BF206 /* DefaultAcceptFriendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5883E2129AF6778007BF206 /* DefaultAcceptFriendUseCase.swift */; };
 		E5A2513129AC922E00F62313 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A2513029AC922E00F62313 /* UIView+.swift */; };
+		E5AE4F2B29B0A8790029B200 /* FriendListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE4F2A29B0A8780029B200 /* FriendListUseCase.swift */; };
+		E5AE4F2D29B0A8BC0029B200 /* DefaultFriendListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE4F2C29B0A8BC0029B200 /* DefaultFriendListUseCase.swift */; };
+		E5AE4F2F29B0D4DE0029B200 /* AddFriendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE4F2E29B0D4DE0029B200 /* AddFriendUseCase.swift */; };
+		E5AE4F3129B0D4EC0029B200 /* DefaultAddFriendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE4F3029B0D4EB0029B200 /* DefaultAddFriendUseCase.swift */; };
+		E5AE4F3329B0E1F30029B200 /* ToastType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE4F3229B0E1F30029B200 /* ToastType.swift */; };
+		E5AE4F3729B0EE120029B200 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E5AE4F3629B0EE120029B200 /* GoogleService-Info.plist */; };
+		E5AE4F3D29B37B120029B200 /* CalendarUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE4F3C29B37B120029B200 /* CalendarUseCase.swift */; };
+		E5AE4F3F29B37B1A0029B200 /* DefaultCalendarUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE4F3E29B37B1A0029B200 /* DefaultCalendarUseCase.swift */; };
+		E5AE4F5F29BCACBC0029B200 /* DefaultLinkBuildService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE4F5E29BCACBC0029B200 /* DefaultLinkBuildService.swift */; };
+		E5AE4F6129BCACCD0029B200 /* LinkBuildService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE4F6029BCACCD0029B200 /* LinkBuildService.swift */; };
 		E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */; };
 		E5D4342E2988E22F004EDFC7 /* Dayeng-Book.json in Resources */ = {isa = PBXBuildFile; fileRef = E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */; };
 		E5D43435298A3291004EDFC7 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43434298A3291004EDFC7 /* CalendarViewController.swift */; };
@@ -165,7 +176,6 @@
 		76280CEF29878A410061206A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		76280CF229878A410061206A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		76280CF429878A410061206A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		76280D2E2987A7B50061206A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7628E67B298D9D31002D86F2 /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
 		7628E67D298DA61D002D86F2 /* AcceptFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptFriendViewController.swift; sourceTree = "<group>"; };
 		7628E67F298E4D9C002D86F2 /* UserDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
@@ -202,7 +212,19 @@
 		E569162A2998D1D9006D7231 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		E569162D2998D1EB006D7231 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		E569162F2998D429006D7231 /* PageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageType.swift; sourceTree = "<group>"; };
+		E5883E1F29AF6766007BF206 /* AcceptFriendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptFriendUseCase.swift; sourceTree = "<group>"; };
+		E5883E2129AF6778007BF206 /* DefaultAcceptFriendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAcceptFriendUseCase.swift; sourceTree = "<group>"; };
 		E5A2513029AC922E00F62313 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		E5AE4F2A29B0A8780029B200 /* FriendListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListUseCase.swift; sourceTree = "<group>"; };
+		E5AE4F2C29B0A8BC0029B200 /* DefaultFriendListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFriendListUseCase.swift; sourceTree = "<group>"; };
+		E5AE4F2E29B0D4DE0029B200 /* AddFriendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendUseCase.swift; sourceTree = "<group>"; };
+		E5AE4F3029B0D4EB0029B200 /* DefaultAddFriendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAddFriendUseCase.swift; sourceTree = "<group>"; };
+		E5AE4F3229B0E1F30029B200 /* ToastType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastType.swift; sourceTree = "<group>"; };
+		E5AE4F3629B0EE120029B200 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E5AE4F3C29B37B120029B200 /* CalendarUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarUseCase.swift; sourceTree = "<group>"; };
+		E5AE4F3E29B37B1A0029B200 /* DefaultCalendarUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCalendarUseCase.swift; sourceTree = "<group>"; };
+		E5AE4F5E29BCACBC0029B200 /* DefaultLinkBuildService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLinkBuildService.swift; sourceTree = "<group>"; };
+		E5AE4F6029BCACCD0029B200 /* LinkBuildService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkBuildService.swift; sourceTree = "<group>"; };
 		E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Dayeng-Book.json"; sourceTree = "<group>"; };
 		E5D43434298A3291004EDFC7 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
@@ -369,6 +391,8 @@
 				76003E0E29990EE200F15CAE /* DefaultUserNotificationService.swift */,
 				47B5084629AA53A10046A982 /* AppleLoginService.swift */,
 				4799A65729A7E2380071F8F9 /* DefaultAppleLoginService.swift */,
+				E5AE4F5E29BCACBC0029B200 /* DefaultLinkBuildService.swift */,
+				E5AE4F6029BCACCD0029B200 /* LinkBuildService.swift */,
 				47B5084429AA02AF0046A982 /* KakaoLoginService.swift */,
 				47B5084829AA7CB00046A982 /* DefaultKakaoLoginService.swift */,
 			);
@@ -379,7 +403,7 @@
 			isa = PBXGroup;
 			children = (
 				E552C2532994C90E00F51179 /* Coordinator */,
-				76280D2E2987A7B50061206A /* GoogleService-Info.plist */,
+				E5AE4F3629B0EE120029B200 /* GoogleService-Info.plist */,
 				76280CE629878A3F0061206A /* AppDelegate.swift */,
 				76280CE829878A3F0061206A /* SceneDelegate.swift */,
 				76280CEF29878A410061206A /* Assets.xcassets */,
@@ -503,6 +527,9 @@
 			isa = PBXGroup;
 			children = (
 				76280D242987928B0061206A /* Protocol */,
+				E5883E2129AF6778007BF206 /* DefaultAcceptFriendUseCase.swift */,
+				E5AE4F2C29B0A8BC0029B200 /* DefaultFriendListUseCase.swift */,
+				E5AE4F3029B0D4EB0029B200 /* DefaultAddFriendUseCase.swift */,
 			);
 			path = Friend;
 			sourceTree = "<group>";
@@ -510,6 +537,9 @@
 		76280D242987928B0061206A /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				E5883E1F29AF6766007BF206 /* AcceptFriendUseCase.swift */,
+				E5AE4F2A29B0A8780029B200 /* FriendListUseCase.swift */,
+				E5AE4F2E29B0D4DE0029B200 /* AddFriendUseCase.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -518,6 +548,7 @@
 			isa = PBXGroup;
 			children = (
 				76280D26298792940061206A /* Protocol */,
+				E5AE4F3E29B37B1A0029B200 /* DefaultCalendarUseCase.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -525,6 +556,7 @@
 		76280D26298792940061206A /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				E5AE4F3C29B37B120029B200 /* CalendarUseCase.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -567,6 +599,7 @@
 				7628E68F298E4E9B002D86F2 /* FirestoreAPI.swift */,
 				47D1835C298A92C10058C0EC /* AuthType.swift */,
 				47549423298F966B008B581D /* AlertType.swift */,
+				E5AE4F3229B0E1F30029B200 /* ToastType.swift */,
 				E552C1F1298B911F00F51179 /* OwnerType.swift */,
 				E569162F2998D429006D7231 /* PageType.swift */,
 				76003E13299E448800F15CAE /* MessageUIType.swift */,
@@ -732,9 +765,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				76280CF329878A410061206A /* LaunchScreen.storyboard in Resources */,
+				E5AE4F3729B0EE120029B200 /* GoogleService-Info.plist in Resources */,
 				E5D4342E2988E22F004EDFC7 /* Dayeng-Book.json in Resources */,
 				76280CF029878A410061206A /* Assets.xcassets in Resources */,
-				76280D2F2987A7B50061206A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -765,7 +798,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5AE4F3329B0E1F30029B200 /* ToastType.swift in Sources */,
 				E52F65EE29AC7E89007C36AE /* AddFriendViewModel.swift in Sources */,
+				E5AE4F6129BCACCD0029B200 /* LinkBuildService.swift in Sources */,
 				7628E68E298E4E83002D86F2 /* FirestoreDatabaseService.swift in Sources */,
 				E552C2552994C92700F51179 /* Coordinator.swift in Sources */,
 				47B5084929AA7CB00046A982 /* DefaultKakaoLoginService.swift in Sources */,
@@ -773,22 +808,28 @@
 				7628E68C298E4E80002D86F2 /* DefaultFirestoreDatabaseService.swift in Sources */,
 				7628E684298E4DA7002D86F2 /* DefaultUserRepository.swift in Sources */,
 				7603FA202996556200D2C9C8 /* DefaultAlarmSettingUseCase.swift in Sources */,
+				E5AE4F3F29B37B1A0029B200 /* DefaultCalendarUseCase.swift in Sources */,
 				4794DB1829B3494B0032AF86 /* SettingUseCase.swift in Sources */,
 				47B5084529AA02AF0046A982 /* KakaoLoginService.swift in Sources */,
 				7628E680298E4D9C002D86F2 /* UserDTO.swift in Sources */,
 				E56916302998D429006D7231 /* PageType.swift in Sources */,
 				E552C22A2990BED800F51179 /* SettingHeaderView.swift in Sources */,
 				47E0A5DB299770890093645B /* Answer.swift in Sources */,
+				E5883E2029AF6766007BF206 /* AcceptFriendUseCase.swift in Sources */,
 				47B5084729AA53A10046A982 /* AppleLoginService.swift in Sources */,
 				47C38781298E390D0030833F /* DayengAlertViewController.swift in Sources */,
+				E5AE4F2F29B0D4DE0029B200 /* AddFriendUseCase.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
 				7628E67C298D9D31002D86F2 /* AddFriendViewController.swift in Sources */,
 				47D1835F298A94790058C0EC /* UIColor+.swift in Sources */,
 				47E0A5EB2998ED8C0093645B /* Data+.swift in Sources */,
 				47D1835B298A8DDD0058C0EC /* AuthButton.swift in Sources */,
+				E5883E2229AF6778007BF206 /* DefaultAcceptFriendUseCase.swift in Sources */,
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
 				47E0A5E52997743F0093645B /* DefaultSplashUseCase.swift in Sources */,
+				E5AE4F5F29BCACBC0029B200 /* DefaultLinkBuildService.swift in Sources */,
 				47E0A5E9299775060093645B /* DefaultQuestionRepository.swift in Sources */,
+				E5AE4F3129B0D4EC0029B200 /* DefaultAddFriendUseCase.swift in Sources */,
 				47D1835D298A92C10058C0EC /* AuthType.swift in Sources */,
 				474575F029A4E1FA0031F1E5 /* DefaultLoginUseCase.swift in Sources */,
 				E552C2242990BEB300F51179 /* AlarmDaySettingViewController.swift in Sources */,
@@ -800,8 +841,10 @@
 				47E0A5DD299770EA0093645B /* AnswerDTO.swift in Sources */,
 				47D18368298D16730058C0EC /* FriendListViewModel.swift in Sources */,
 				76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */,
+				E5AE4F2D29B0A8BC0029B200 /* DefaultFriendListUseCase.swift in Sources */,
 				E552C25C299656F600F51179 /* FriendCoordinator.swift in Sources */,
 				E552C2522994BD3700F51179 /* OwnerType.swift in Sources */,
+				E5AE4F2B29B0A8790029B200 /* FriendListUseCase.swift in Sources */,
 				7603FA1E2996522200D2C9C8 /* AlarmSettingViewModel.swift in Sources */,
 				E552C22C2990BEF200F51179 /* AlarmDayCell.swift in Sources */,
 				476A62672993FE010074231E /* Question.swift in Sources */,
@@ -828,6 +871,7 @@
 				76F6C0AD298D985F00A124CD /* Date+.swift in Sources */,
 				474A62B829A2346A002176AB /* AuthenticationServices+Rx.swift in Sources */,
 				474A62B629A22E42002176AB /* ASAuthorizationControllerProxy.swift in Sources */,
+				E5AE4F3D29B37B120029B200 /* CalendarUseCase.swift in Sources */,
 				47E0A5E7299774C20093645B /* QuestionRepository.swift in Sources */,
 				E569162B2998D1D9006D7231 /* WebViewController.swift in Sources */,
 				E5D43435298A3291004EDFC7 /* CalendarViewController.swift in Sources */,
