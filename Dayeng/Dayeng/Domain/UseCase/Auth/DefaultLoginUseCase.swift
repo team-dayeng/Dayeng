@@ -194,6 +194,7 @@ final class DefaultLoginUseCase: LoginUseCase {
                 
                 self.userRepository.fetchUser(userID: uid)
                     .map { user in
+                        UserDefaults.userID = user.uid
                         DayengDefaults.shared.user = user
                         return
                     }
