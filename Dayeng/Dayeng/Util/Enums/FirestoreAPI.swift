@@ -10,11 +10,16 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 enum FirestoreAPI {
+    case user(userID: String)
     case answer(userID: String, index: Int? = nil)
     case currentIndex(userID: String)
     
     var documentReference: DocumentReference? {
         switch self {
+        case .user(let userID):
+            return Firestore.firestore()
+                .collection("users")
+                .document(userID)
         case .answer(let userID, let index):
             guard let index else { return nil }
             return Firestore.firestore()

@@ -41,24 +41,14 @@ final class SplashViewModel {
                 self.useCase.tryAutoLogin()
                     .subscribe(onNext: { [weak self] result in
                         guard let self else { return }
-                        if result,
-                            let firebaseUserID = UserDefaults.userID {
-                            print("ID 연동 O")
-                            self.loginStatus.onNext(true)
-                            
-                            Observable.zip(
-                                self.useCase.fetchQuestions(),
-                                self.useCase.fetchUser(userID: firebaseUserID)
-                            )
-                            .map { _ in }
-                            .bind(to: self.dataDidLoad)
-                            .disposed(by: self.disposeBag)
-                            
+                        if result, let firebaseUserID = UserDefaults.userID {
+                            self.successAutoLogin(userID: firebaseUserID)
                         } else {
-                            print("ID가 연동되어 있지 않거나 ID를 찾을 수 없음")
-                            self.loginStatus.onNext(false)
-                            self.fetchQuestions()
+                            self.failAutoLogin()
                         }
+                    }, onError: { [weak self] _ in
+                        guard let self else { return }
+                        self.failAutoLogin()
                     })
                     .disposed(by: self.disposeBag)
             })
@@ -67,9 +57,25 @@ final class SplashViewModel {
         return Output()
     }
     
-    private func fetchQuestions() {
+    private func successAutoLogin(userID: String) {
+        print("ID 연동 O")
+        loginStatus.onNext(true)
+        
+        Observable.zip(
+            useCase.fetchQuestions(),
+            useCase.fetchUser(userID: userID)
+        )
+        .map { _ in }
+        .bind(to: dataDidLoad)
+        .disposed(by: disposeBag)
+    }
+    
+    private func failAutoLogin() {
+        print("ID 연동 X")
+        loginStatus.onNext(false)
+        
         useCase.fetchQuestions()
-            .bind(to: self.dataDidLoad)
+            .bind(to: dataDidLoad)
             .disposed(by: disposeBag)
     }
 }

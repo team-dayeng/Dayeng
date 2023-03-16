@@ -224,4 +224,23 @@ final class DefaultFirestoreDatabaseService: FirestoreDatabaseService {
             return Disposables.create()
         }
     }
+
+    func deleteDocument(api: FirestoreAPI) -> Observable<Void> {
+        Observable.create { observer in
+            
+            guard let reference = api.documentReference else {
+                observer.onError(FirestoreError.firestoreReferenceError)
+                return Disposables.create()
+            }
+            
+            reference.delete { error in
+                if let error {
+                    observer.onError(error)
+                    return
+                }
+                observer.onNext(())
+            }
+            return Disposables.create()
+        }
+    }
 }

@@ -156,27 +156,12 @@ final class SettingViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        output.logoutFailed
-            .subscribe(onNext: { [weak self] in
+        output.requestFailed
+            .subscribe(onNext: { [weak self] type in
                 guard let self else { return }
                 self.showAlert(
-                    title: "로그아웃에 실패했습니다",
-                    message: "다시 시도해주세요",
-                    type: .oneButton,
-                    rightActionHandler: { [weak self] in
-                        guard let self else { return }
-                        self.hideIndicator()
-                    }
-                )
-            })
-            .disposed(by: disposeBag)
-        
-        output.withdrawalFailed
-            .subscribe(onNext: { [weak self] in
-                guard let self else { return }
-                self.showAlert(
-                    title: "회원 탈퇴에 실패했습니다",
-                    message: "다시 시도해주세요",
+                    title: type.title,
+                    message: type.message,
                     type: .oneButton,
                     rightActionHandler: { [weak self] in
                         guard let self else { return }
