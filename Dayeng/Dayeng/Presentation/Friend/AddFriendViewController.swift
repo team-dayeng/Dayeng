@@ -20,7 +20,6 @@ final class AddFriendViewController: UIViewController {
         
         return view
     }()
-    
     private lazy var introductionLabel: UILabel = {
         var label = UILabel()
         label.font = .systemFont(ofSize: 20)
@@ -29,13 +28,11 @@ final class AddFriendViewController: UIViewController {
         label.numberOfLines = 2
         return label
     }()
-    
     private lazy var logoImageView: UIImageView = {
         var imageView = UIImageView()
         imageView.image = .dayengLogo
         return imageView
     }()
-    
     private lazy var codeButton: UIButton = {
         var button = UIButton()
         let attributes: [NSAttributedString.Key: Any] = [
@@ -43,11 +40,11 @@ final class AddFriendViewController: UIViewController {
             .underlineStyle: NSUnderlineStyle.thick.rawValue,
             .font: UIFont.boldSystemFont(ofSize: 20)
         ]
-        let attributedString = NSAttributedString(string: "1q2w3e4r", attributes: attributes)
+        guard let user = DayengDefaults.shared.user else { return button }
+        let attributedString = NSAttributedString(string: "\(user.uid)", attributes: attributes)
         button.setAttributedTitle(attributedString, for: .normal)
         return button
     }()
-    
     private lazy var copyButton: UIButton = {
         var button = UIButton()
         button.setTitle("복사하기", for: .normal)
@@ -55,7 +52,6 @@ final class AddFriendViewController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         return button
     }()
-    
     private lazy var shareButton: UIButton = {
         var button = UIButton()
         button.setTitle("공유하기", for: .normal)
@@ -66,16 +62,13 @@ final class AddFriendViewController: UIViewController {
         button.backgroundColor = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1)
         button.semanticContentAttribute = .forceRightToLeft
         button.layer.cornerRadius = 8
-        button.addTarget(self, action: #selector(tappedShareButton), for: .touchUpInside)
         return button
     }()
-    
     private lazy var separatorView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
         return view
     }()
-    
     private lazy var codeTextField: UITextField = {
         let textField = UITextField()
         textField.font = .systemFont(ofSize: 20)
@@ -84,7 +77,6 @@ final class AddFriendViewController: UIViewController {
         textField.layer.cornerRadius = 8
         return textField
     }()
-    
     private lazy var addButton: UIButton = {
         let button = UIButton()
         button.setTitle("추가하기", for: .normal)
@@ -115,11 +107,66 @@ final class AddFriendViewController: UIViewController {
         configureUI()
     }
     // MARK: - Helpers
-    private func bind() {
-        let input = AddFriendViewModel.Input(addButtonDidTapped: addButton.rx.tap.asObservable())
-        let output = viewModel.transform(input: input)
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+      super.touchesEnded(touches, with: event)
+      self.view.endEditing(true)
     }
     
+    private func bind() {
+        let input = AddFriendViewModel.Input(
+            addButtonDidTapped:
+                addButton.rx.tap.map { _ in
+                    self.codeTextField.resignFirstResponder()
+                    return self.codeTextField.text ?? "" }.asObservable(),
+            shareButtonDidTapped: shareButton.rx.tap.map { _ in }.asObservable()
+        )
+        let output = viewModel.transform(input: input)
+        output.shareButtonResult
+            .subscribe(onNext: { url in
+                self.showActivityViewController(url: url)
+            }, onError: { error in
+                self.showAlert(title: "다이나믹 링크 생성 오류", message: "\(error)", type: .oneButton)
+            })
+            .disposed(by: disposeBag)
+        output.addButtonSuccess
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: {
+                self.showAlert(title: "친구 등록 성공", type: .oneButton, rightActionHandler: {
+                    self.codeTextField.text = ""
+                })
+            })
+            .disposed(by: disposeBag)
+        output.addButtonError
+            .asDriver(onErrorJustReturn: "")
+            .drive(onNext: { error in
+                self.showAlert(title: "친구 등록 실패", message: error, type: .oneButton, rightActionHandler: {
+                    self.codeTextField.text = ""
+                })
+            })
+            .disposed(by: disposeBag)
+        RxKeyboard.instance.visibleHeight
+            .skip(1)
+            .drive(onNext: { [weak self] keyboardVisibleHeight in
+                guard let self else { return }
+                self.contentView.snp.updateConstraints {
+                    $0.bottom.equalToSuperview().inset(keyboardVisibleHeight/2)
+                }
+                self.view.layoutIfNeeded()
+            })
+            .disposed(by: disposeBag)
+        copyButton.rx.tap
+            .bind(onNext: {
+                self.showToast(type: .clipboard)
+                UIPasteboard.general.string = self.codeButton.currentAttributedTitle?.string
+            })
+            .disposed(by: disposeBag)
+        codeButton.rx.tap
+            .bind(onNext: {
+                self.showToast(type: .clipboard)
+                UIPasteboard.general.string = self.codeButton.currentAttributedTitle?.string
+            })
+            .disposed(by: disposeBag)
+    }
     private func setupViews() {
         view.addSubview(contentView)
         contentView.addBackgroundImage()
@@ -143,53 +190,60 @@ final class AddFriendViewController: UIViewController {
             $0.edges.equalToSuperview()
         }
         introductionLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(180*heightRatio)
+            $0.bottom.equalTo(logoImageView.snp.top).offset(-12)
             $0.centerX.equalToSuperview()
         }
         logoImageView.snp.makeConstraints {
-            $0.top.equalTo(introductionLabel.snp.bottom).offset(12)
+            $0.bottom.equalTo(codeButton.snp.top).offset(-5)
             $0.height.equalTo(149*heightRatio)
             $0.width.equalTo(295*heightRatio)
             $0.centerX.equalToSuperview()
         }
         codeButton.snp.makeConstraints {
-            $0.top.equalTo(logoImageView.snp.bottom).offset(5)
+            $0.bottom.equalTo(copyButton.snp.top)
             $0.height.equalTo(50*heightRatio)
             $0.centerX.equalToSuperview()
         }
         copyButton.snp.makeConstraints {
-            $0.top.equalTo(codeButton.snp.bottom)
+            $0.bottom.equalTo(shareButton.snp.top).offset(-20*heightRatio)
             $0.centerX.equalToSuperview()
         }
         shareButton.snp.makeConstraints {
-            $0.top.equalTo(copyButton.snp.bottom).offset(20*heightRatio)
+            $0.bottom.equalTo(separatorView.snp.top).offset(-40*heightRatio)
             $0.height.equalTo(50*heightRatio)
             $0.width.equalTo(262*widthRatio)
             $0.centerX.equalToSuperview()
         }
         separatorView.snp.makeConstraints {
-            $0.top.equalTo(shareButton.snp.bottom).offset(40*heightRatio)
+            $0.bottom.equalTo(codeTextField.snp.top).offset(-40*heightRatio)
             $0.height.equalTo(1)
             $0.width.equalTo(shareButton)
             $0.centerX.equalToSuperview()
         }
         codeTextField.snp.makeConstraints {
-            $0.top.equalTo(separatorView.snp.bottom).offset(40*heightRatio)
+            $0.bottom.equalTo(addButton.snp.top).offset(-20*heightRatio)
             $0.height.equalTo(50*heightRatio)
             $0.width.equalTo(shareButton)
             $0.centerX.equalToSuperview()
         }
         addButton.snp.makeConstraints {
-            $0.top.equalTo(codeTextField.snp.bottom).offset(20*heightRatio)
+            $0.bottom.equalToSuperview().offset(-150*heightRatio)
             $0.height.equalTo(50*heightRatio)
             $0.width.equalTo(shareButton)
             $0.centerX.equalToSuperview()
         }
     }
-    
     private func setuplinkBuilder() -> DynamicLinkComponents {
         let dynamicLinksDomainURIPrefix = "https://dayeng.page.link"
-        guard let link = URL(string: "https://dayeng.page.link/inviteFriend?code=\(UIDevice.current.identifierForVendor!.uuidString)"),
+        guard let user = DayengDefaults.shared.user else { return DynamicLinkComponents() }
+        
+        var components = URLComponents(string: "https://dayeng.page.link/inviteFriend")
+        let codeQuery = URLQueryItem(name: "code", value: user.uid)
+        let nameQuery = URLQueryItem(name: "name", value: user.name)
+        components?.queryItems = [codeQuery, nameQuery]
+        
+        guard let components = components,
+              let link = components.url,
               let linkBuilder = DynamicLinkComponents(
                 link: link,
                 domainURIPrefix: dynamicLinksDomainURIPrefix
@@ -202,43 +256,14 @@ final class AddFriendViewController: UIViewController {
         
         return linkBuilder
     }
-    
     private func showActivityViewController(url: URL) {
         let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
         activityVC.popoverPresentationController?.sourceView = self.view
-        activityVC.completionWithItemsHandler = { (_, success, _, _) in
-            if success {
-                print("success")
-            } else {
-                print("cancel")
-            }
-        }
+        activityVC.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX,
+                                                                      y: self.view.bounds.midY,
+                                                                      width: 0,
+                                                                      height: 0)
         
         present(activityVC, animated: true)
-    }
-    
-    // MARK: - Object C
-    @objc private func tappedShareButton() {
-        let linkBuilder = setuplinkBuilder()
-        
-        guard let longDynamicLink = linkBuilder.url else { return }
-        print("The long URL is: \(longDynamicLink)")
-        
-        linkBuilder.shorten { url, warnings, error in
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            if let warnings = warnings {
-                for warning in warnings {
-                    print(warning)
-                }
-            }
-            
-            guard let url = url else { return }
-            print(url)
-            self.showActivityViewController(url: url)
-        }
     }
 }

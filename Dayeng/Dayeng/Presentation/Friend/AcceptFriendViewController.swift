@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import SnapKit
 
 final class AcceptFriendViewController: UIViewController {
     // MARK: - UI properties
@@ -25,7 +27,7 @@ final class AcceptFriendViewController: UIViewController {
     
     private lazy var shareLabel: UILabel = {
         var label = UILabel()
-        label.text = "옹이 님과 dayeng을\n공유해보세요"
+        label.text = "\(acceptFriendName) 님과 dayeng을\n공유해보세요"
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 2
         label.textAlignment = .center
@@ -48,16 +50,18 @@ final class AcceptFriendViewController: UIViewController {
         button.setImage(UIImage(systemName: "multiply"), for: .normal)
         button.tintColor = .dayengMain
         button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 25), forImageIn: .normal)
-        button.addTarget(self, action: #selector(tappedDismissButton), for: .touchUpInside)
         return button
     }()
     
     // MARK: - Properties
     private let viewModel: AcceptFriendViewModel
+    private let disposeBag = DisposeBag()
+    private let acceptFriendName: String
     
     // MARK: - Lifecycles
-    init(viewModel: AcceptFriendViewModel) {
+    init(viewModel: AcceptFriendViewModel, acceptFriendName: String) {
         self.viewModel = viewModel
+        self.acceptFriendName = acceptFriendName
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -74,9 +78,29 @@ final class AcceptFriendViewController: UIViewController {
     
     // MARK: - Helpers
     private func bind() {
-        let input = AcceptFriendViewModel.Input(addButtonDidTapped: addButton.rx.tap.map { self.dismiss(animated: true) }.asObservable())
+        let input = AcceptFriendViewModel.Input(
+            addButtonDidTapped: addButton.rx.tap.map { _ in }.asObservable()
+        )
         
         let output = viewModel.transform(input: input)
+        
+        output.addFriendResult
+            .subscribe(onNext: {
+                self.showAlert(title: "친구 등록 성공", type: .oneButton, rightActionHandler: {
+                    self.dismiss(animated: true)
+                })
+            }, onError: { error in
+                self.showAlert(title: "친구 등록 실패", message: "\(error)", type: .oneButton, rightActionHandler: {
+                    self.dismiss(animated: true)
+                })
+            })
+            .disposed(by: disposeBag)
+        
+        dismissButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self else { return }
+            self.dismiss(animated: true)
+        })
+        .disposed(by: disposeBag)
     }
     
     private func setupViews() {
@@ -117,9 +141,5 @@ final class AcceptFriendViewController: UIViewController {
             $0.leading.equalToSuperview().offset(66)
             $0.trailing.equalToSuperview().offset(-66)
         }
-    }
-    
-    @objc private func tappedDismissButton() {
-        dismiss(animated: true)
     }
 }

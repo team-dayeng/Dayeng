@@ -29,6 +29,7 @@ final class FriendListCell: UICollectionViewCell {
     
     // MARK: - Properties
     static let identifier = "FriendListCell"
+    var userInfo: User?
     
     // MARK: - Lifecycles
     override init(frame: CGRect) {
@@ -63,8 +64,9 @@ final class FriendListCell: UICollectionViewCell {
         }
     }
     
-    func bind(name: String, day: Int) {
-        nameLabel.text = name
-        dayLabel.text = "\(day)일째"
+    func bind(userInfo: User) {
+        self.userInfo = userInfo
+        nameLabel.text = userInfo.name
+        dayLabel.text = "\(userInfo.currentIndex + 1)일째"
     }
 }

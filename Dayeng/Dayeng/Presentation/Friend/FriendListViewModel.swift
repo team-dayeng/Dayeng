@@ -15,41 +15,49 @@ final class FriendListViewModel {
     
     // MARK: - Input
     struct Input {
+        var viewWillAppear: Observable<Void>
         var plusButtonDidTapped: Observable<Void>
-        var friendIndexDidTapped: Observable<Int>
+        var friendIndexDidTapped: Observable<User?>
     }
     
     // MARK: - Output
     struct Output {
-        var friends = BehaviorSubject<[User]>(value: [])
+        var friends = PublishSubject<[User]>()
     }
+    
+    // MARK: - Property
+    var useCase: FriendListUseCase
     
     // MARK: - Dependency
     var plusButtonDidTapped = PublishRelay<Void>()
-    var friendIndexDidTapped = PublishRelay<Void>()
+    var friendIndexDidTapped = PublishRelay<User>()
     
     // MARK: - Lifecycles
+    init(useCase: FriendListUseCase) {
+        self.useCase = useCase
+    }
     
     // MARK: - Helpers
     func transform(input: Input) -> Output {
         let output = Output()
         
-        #warning("dummy")
-        let friends = [User(name: "옹이"),
-                       User(name: "멍이"),
-                       User(name: "남석12!")]
-        output.friends.onNext(friends)
+        input.viewWillAppear
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.useCase.fetchFriends()
+                    .bind(to: output.friends)
+                    .disposed(by: self.disposeBag)
+            })
+            .disposed(by: disposeBag)
         
         input.plusButtonDidTapped
             .bind(to: plusButtonDidTapped)
             .disposed(by: disposeBag)
         
         input.friendIndexDidTapped
-            .subscribe(onNext: { [weak self] in
-                guard let self else { return }
-                print("friendIndexDidTapped, \(friends[$0])")
-                // TODO: 화면 전환
-                self.friendIndexDidTapped.accept(())
+            .subscribe(onNext: { [weak self] user in
+                guard let self, let user else { return }
+                self.friendIndexDidTapped.accept(user)
             })
             .disposed(by: disposeBag)
         

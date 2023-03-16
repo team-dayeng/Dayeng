@@ -65,20 +65,6 @@ final class AppCoordinator: AppCoordinatorProtocol {
         navigationController.viewControllers = [viewController]
     }
     
-    func showAcceptFriendViewController() {
-        let viewModel = AcceptFriendViewModel()
-        let viewController = AcceptFriendViewController(viewModel: viewModel)
-        viewModel.addButtonDidTapped
-            .subscribe(onNext: { [weak self] in
-                guard let self else { return }
-                self.showMainViewController()
-            })
-            .disposed(by: disposeBag)
-        
-        viewController.modalPresentationStyle = .fullScreen
-        navigationController.present(viewController, animated: true)
-    }
-    
     func showLoginViewController() {
         let firestoreService = DefaultFirestoreDatabaseService()
         let userRepository = DefaultUserRepository(firestoreService: firestoreService)
@@ -114,6 +100,17 @@ final class AppCoordinator: AppCoordinatorProtocol {
         
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?
             .changeRootViewController(navigationController, viewController)
+    }
+    
+    func showAcceptFriendViewController(acceptFriendCode: String, acceptFriendName: String) {
+        let firestoreService = DefaultFirestoreDatabaseService()
+        let userRepository = DefaultUserRepository(firestoreService: firestoreService)
+        let useCase = DefaultAcceptFriendUseCase(userRepository: userRepository)
+        let viewModel = AcceptFriendViewModel(useCase: useCase, acceptFriendCode: acceptFriendCode)
+        let viewController = AcceptFriendViewController(viewModel: viewModel, acceptFriendName: acceptFriendName)
+        
+        viewController.modalPresentationStyle = .fullScreen
+        navigationController.present(viewController, animated: true)
     }
     
     func showMainViewController() {
