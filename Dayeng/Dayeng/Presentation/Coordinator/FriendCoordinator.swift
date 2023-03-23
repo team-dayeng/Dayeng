@@ -36,18 +36,21 @@ final class FriendCoordinator: FriendCoordinatorProtocol {
         )
         let viewModel = FriendListViewModel(useCase: useCase)
         let viewController = FriendListViewController(viewModel: viewModel)
+        
         viewModel.plusButtonDidTapped
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
                 self.showAddFriendViewController()
             })
             .disposed(by: disposeBag)
+        
         viewModel.friendIndexDidTapped
             .subscribe(onNext: { [weak self] user in
                 guard let self else { return }
                 self.showFriendCalendarViewController(user: user)
             })
             .disposed(by: disposeBag)
+        
         navigationController.pushViewController(viewController, animated: true)
     }
     
@@ -67,15 +70,30 @@ final class FriendCoordinator: FriendCoordinatorProtocol {
         let useCase = DefaultCalendarUseCase(
             userRepository: DefaultUserRepository(firestoreService: firestoreService)
         )
-        let viewModel = CalendarViewModel(useCase: useCase)
-        let viewController = CalendarViewController(ownerType: .friend(user: user),
-                                                    viewModel: viewModel)
+        let viewModel = CalendarViewModel(useCase: useCase, ownerType: .friend(user: user))
+        let viewController = CalendarViewController(viewModel: viewModel)
         viewModel.homeButtonDidTapped
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
                 self.returnMainViewController()
             })
             .disposed(by: disposeBag)
+        
+        viewModel.cannotFindUserError
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.navigationController.showAlert(
+                    title: AlertMessageType.cannotFindUser.title,
+                    message: AlertMessageType.cannotFindUser.message,
+                    type: .oneButton,
+                    rightActionHandler: { [weak self] in
+                        guard let self else { return }
+                        self.navigationController.viewControllers.last?.hideIndicator()
+                        self.delegate?.didFinished(childCoordinator: self)
+                })
+            })
+            .disposed(by: disposeBag)
+        
         navigationController.pushViewController(viewController, animated: true)
     }
     

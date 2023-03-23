@@ -19,15 +19,12 @@ final class CalendarViewController: UIViewController {
                                                   action: nil)
     
     // MARK: - Properties
-    private let ownerType: OwnerType
     private let viewModel: CalendarViewModel
     
     private let disposeBag = DisposeBag()
-    private let cannotFindUserError = PublishSubject<Void>()
     
     // MARK: - Lifecycles
-    init(ownerType: OwnerType, viewModel: CalendarViewModel) {
-        self.ownerType = ownerType
+    init(viewModel: CalendarViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -48,15 +45,21 @@ final class CalendarViewController: UIViewController {
     private func bind() {
         let input = CalendarViewModel.Input(
             viewDidLoad: rx.viewDidLoad.map { _ in }.asObservable(),
-            homeButtonDidTapped: homeButton.rx.tap.asObservable()
+            homeButtonDidTapped: homeButton.rx.tap.asObservable(),
+            cellDidTapped: collectionView.rx.itemSelected.map { _ in }
         )
         
         let output = viewModel.transform(input: input)
-        output.answers
-            .subscribe(onNext: {
-
-            })
-            .disposed(by: disposeBag)
+        
+        configureNavigationBar(ownerType: output.ownerType)
+        
+        output.answers.bind(to: collectionView.rx.items(
+            cellIdentifier: CommonCalendarCell.identifier,
+            cellType: CommonCalendarCell.self
+        )) { (index, answer, cell) in
+            cell.bind(index: index, answer: answer, currentIndex: output.currentIndex)
+        }
+        .disposed(by: disposeBag)
     }
     
     private func setupViews() {
@@ -64,11 +67,10 @@ final class CalendarViewController: UIViewController {
     }
     
     private func configureUI() {
-        configureNavigationBar()
         configureCollectionView()
     }
     
-    private func configureNavigationBar() {
+    private func configureNavigationBar(ownerType: OwnerType) {
         var title = ""
         
         switch ownerType {
@@ -89,8 +91,6 @@ final class CalendarViewController: UIViewController {
     
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
-        collectionView.delegate = self
-        collectionView.dataSource = self
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.backgroundColor = .clear
         collectionView.isScrollEnabled = false
@@ -98,7 +98,6 @@ final class CalendarViewController: UIViewController {
         collectionView.register(CommonCalendarCell.self, forCellWithReuseIdentifier: CommonCalendarCell.identifier)
         
         view.addSubview(collectionView)
-        
         collectionView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(30)
             $0.leading.trailing.equalToSuperview()
@@ -129,60 +128,5 @@ final class CalendarViewController: UIViewController {
         section.orthogonalScrollingBehavior = .paging
         
         return UICollectionViewCompositionalLayout(section: section)
-    }
-}
-
-extension CalendarViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return DayengDefaults.shared.questions.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: CommonCalendarCell.identifier,
-            for: indexPath
-        ) as? CommonCalendarCell else {
-            return UICollectionViewCell()
-        }
-        
-        let index = indexPath.row
-        
-        switch ownerType {
-        case .mine:
-            guard let user = DayengDefaults.shared.user else {
-                self.showCannotFindUserAlert()
-                return cell
-            }
-            cell.bind(
-                index: index,
-                answer: (user.answers.count > index ? user.answers[index] : nil),
-                currentIndex: user.currentIndex
-            )
-        case .friend(let user):
-            cell.bind(
-                index: index,
-                answer: (user.answers.count > index ? user.answers[index] : nil),
-                currentIndex: user.currentIndex
-            )
-        }
-        
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // 싱글톤에서 알맞은 질문과 대답을 찾은 후, 뷰전환
-        print(indexPath.row + 1)
-    }
-    
-    private func showCannotFindUserAlert() {
-        showAlert(
-            title: AlertMessageType.cannotFindUser.title,
-            message: AlertMessageType.cannotFindUser.message,
-            type: .oneButton,
-            rightActionHandler: { [weak self] in
-                guard let self else { return }
-                self.cannotFindUserError.onNext(())
-        })
     }
 }
