@@ -21,7 +21,9 @@ final class CalendarViewController: UIViewController {
     // MARK: - Properties
     private let ownerType: OwnerType
     private let viewModel: CalendarViewModel
+    
     private let disposeBag = DisposeBag()
+    private let cannotFindUserError = PublishSubject<Void>()
     
     // MARK: - Lifecycles
     init(ownerType: OwnerType, viewModel: CalendarViewModel) {
@@ -36,8 +38,6 @@ final class CalendarViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .white
         
         setupViews()
         configureUI()
@@ -54,7 +54,7 @@ final class CalendarViewController: UIViewController {
         let output = viewModel.transform(input: input)
         output.answers
             .subscribe(onNext: {
-                
+
             })
             .disposed(by: disposeBag)
     }
@@ -64,7 +64,6 @@ final class CalendarViewController: UIViewController {
     }
     
     private func configureUI() {
-        view.backgroundColor = .white
         configureNavigationBar()
         configureCollectionView()
     }
@@ -82,8 +81,8 @@ final class CalendarViewController: UIViewController {
         
         navigationItem.title = title
         navigationController?.navigationBar.titleTextAttributes = [.font: UIFont.systemFont(ofSize: 20,
-                                                                                                 weight: .bold),
-                                                                        .foregroundColor: UIColor.black]
+                                                                                            weight: .bold),
+                                                                   .foregroundColor: UIColor.black]
         navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.topItem?.title = ""
     }
@@ -111,7 +110,7 @@ final class CalendarViewController: UIViewController {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                               heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 2, bottom: 0, trailing: 2)
         
         let rowGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                   heightDimension: .fractionalHeight(1))
@@ -135,18 +134,30 @@ final class CalendarViewController: UIViewController {
 
 extension CalendarViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        // 365 대신 싱글톤에 저장되어있는 질문 개수
-        return 365
+        return DayengDefaults.shared.questions.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CommonCalendarCell.identifier,
-                                                            for: indexPath) as? CommonCalendarCell else {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: CommonCalendarCell.identifier,
+            for: indexPath
+        ) as? CommonCalendarCell else {
             return UICollectionViewCell()
         }
-        cell.configureNumberLabel(number: indexPath.row + 1)
+        
+        let index = indexPath.row
+        
+        switch ownerType {
+        case .mine:
+            guard let user = DayengDefaults.shared.user else {
+                self.showCannotFindUserAlert()
+                return cell
+            }
+            cell.bind(index: index, answer: (user.answers.count > index ? user.answers[index] : nil))
+        case .friend(let user):
+            cell.bind(index: index, answer: (user.answers.count > index ? user.answers[index] : nil))
+        }
         
         return cell
     }
@@ -154,5 +165,16 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // 싱글톤에서 알맞은 질문과 대답을 찾은 후, 뷰전환
         print(indexPath.row + 1)
+    }
+    
+    private func showCannotFindUserAlert() {
+        showAlert(
+            title: AlertMessageType.cannotFindUser.title,
+            message: AlertMessageType.cannotFindUser.message,
+            type: .oneButton,
+            rightActionHandler: { [weak self] in
+                guard let self else { return }
+                self.cannotFindUserError.onNext(())
+        })
     }
 }
