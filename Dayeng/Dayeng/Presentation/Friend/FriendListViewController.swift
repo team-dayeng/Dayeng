@@ -172,6 +172,7 @@ extension FriendListViewController {
         if !snapshot.sectionIdentifiers.contains("friends") {
             snapshot.appendSections(["friends"])
         }
+        snapshot.deleteItems(snapshot.itemIdentifiers(inSection: "friends"))
         snapshot.appendItems(friends, toSection: "friends")
         dataSource.apply(snapshot) {
             self.hideIndicator()
