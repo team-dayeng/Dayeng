@@ -65,8 +65,13 @@ final class CommonCalendarCell: UICollectionViewCell {
         }
     }
     
-    func bind(index: Int, answer: Answer?) {
+    func bind(index: Int, answer: Answer?, currentIndex: Int) {
         numberLabel.text = "\(index + 1)"
+        
+        if index == currentIndex {
+            numberLabel.textColor = .dayengMain
+            return
+        }
         
         guard let answer else {
             let imageAttachment = NSTextAttachment()

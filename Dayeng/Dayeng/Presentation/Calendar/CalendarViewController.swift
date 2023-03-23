@@ -154,9 +154,17 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
                 self.showCannotFindUserAlert()
                 return cell
             }
-            cell.bind(index: index, answer: (user.answers.count > index ? user.answers[index] : nil))
+            cell.bind(
+                index: index,
+                answer: (user.answers.count > index ? user.answers[index] : nil),
+                currentIndex: user.currentIndex
+            )
         case .friend(let user):
-            cell.bind(index: index, answer: (user.answers.count > index ? user.answers[index] : nil))
+            cell.bind(
+                index: index,
+                answer: (user.answers.count > index ? user.answers[index] : nil),
+                currentIndex: user.currentIndex
+            )
         }
         
         return cell
