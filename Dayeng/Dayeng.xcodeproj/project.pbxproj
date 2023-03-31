@@ -85,6 +85,7 @@
 		76F6C0A9298D97A700A124CD /* MainEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0A8298D97A700A124CD /* MainEditViewController.swift */; };
 		76F6C0AD298D985F00A124CD /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0AC298D985F00A124CD /* Date+.swift */; };
 		E51C6DF429D7028900D40EC9 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51C6DF329D7028900D40EC9 /* NetworkMonitor.swift */; };
+		E51C6DF629D7032200D40EC9 /* NetworkDisconnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51C6DF529D7032200D40EC9 /* NetworkDisconnectViewController.swift */; };
 		E52F65EE29AC7E89007C36AE /* AddFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52F65ED29AC7E89007C36AE /* AddFriendViewModel.swift */; };
 		E52F65F129AC7F20007C36AE /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = E52F65F029AC7F20007C36AE /* RxKeyboard */; };
 		E52F65F329AC7F79007C36AE /* FirebaseDynamicLinks in Frameworks */ = {isa = PBXBuildFile; productRef = E52F65F229AC7F79007C36AE /* FirebaseDynamicLinks */; };
@@ -198,6 +199,7 @@
 		76F6C0A8298D97A700A124CD /* MainEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainEditViewController.swift; sourceTree = "<group>"; };
 		76F6C0AC298D985F00A124CD /* Date+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		E51C6DF329D7028900D40EC9 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		E51C6DF529D7032200D40EC9 /* NetworkDisconnectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDisconnectViewController.swift; sourceTree = "<group>"; };
 		E52F65ED29AC7E89007C36AE /* AddFriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewModel.swift; sourceTree = "<group>"; };
 		E52F65F429AC859F007C36AE /* AcceptFriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptFriendViewModel.swift; sourceTree = "<group>"; };
 		E552C1F1298B911F00F51179 /* OwnerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerType.swift; sourceTree = "<group>"; };
@@ -444,6 +446,7 @@
 				47D1835A298A8DDD0058C0EC /* AuthButton.swift */,
 				E569162A2998D1D9006D7231 /* WebViewController.swift */,
 				76003E11299E361D00F15CAE /* IndicatorView.swift */,
+				E51C6DF529D7032200D40EC9 /* NetworkDisconnectViewController.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -886,6 +889,7 @@
 				47E0A5E7299774C20093645B /* QuestionRepository.swift in Sources */,
 				E569162B2998D1D9006D7231 /* WebViewController.swift in Sources */,
 				E5D43435298A3291004EDFC7 /* CalendarViewController.swift in Sources */,
+				E51C6DF629D7032200D40EC9 /* NetworkDisconnectViewController.swift in Sources */,
 				76F6C0A7298D96CF00A124CD /* CommonMainView.swift in Sources */,
 				E552C2572994C93700F51179 /* AppCoordinator.swift in Sources */,
 				7628E68A298E4E76002D86F2 /* MainEditViewModel.swift in Sources */,
