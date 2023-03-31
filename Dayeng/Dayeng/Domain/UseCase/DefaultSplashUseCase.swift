@@ -59,18 +59,4 @@ final class DefaultSplashUseCase: SplashUseCase {
             return Disposables.create()
         }
     }
-    
-    func fetchQuestions() -> Observable<Void> {
-        questionRepository.fetchAll()
-            .map { questions in
-                DayengDefaults.shared.questions = questions
-            }
-    }
-    
-    func fetchUser(userID: String) -> Observable<Void> {
-        userRepository.fetchUser(userID: userID)
-            .map { user in
-                DayengDefaults.shared.user = user
-            }
-    }
 }

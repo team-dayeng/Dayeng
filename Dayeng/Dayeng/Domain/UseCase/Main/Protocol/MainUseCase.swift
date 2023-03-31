@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol MainUseCase {
-    
+    func fetchQuestions() -> Observable<Void>
+    func fetchUser() -> Observable<Void>
 }

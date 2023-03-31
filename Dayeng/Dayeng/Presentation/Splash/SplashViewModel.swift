@@ -41,41 +41,16 @@ final class SplashViewModel {
                 self.useCase.tryAutoLogin()
                     .subscribe(onNext: { [weak self] result in
                         guard let self else { return }
-                        if result, let firebaseUserID = UserDefaults.userID {
-                            self.successAutoLogin(userID: firebaseUserID)
-                        } else {
-                            self.failAutoLogin()
-                        }
+                        self.loginStatus.onNext(result)
+                        self.loginStatus.onCompleted()
                     }, onError: { [weak self] _ in
                         guard let self else { return }
-                        self.failAutoLogin()
+                        self.loginStatus.onNext(false)
                     })
                     .disposed(by: self.disposeBag)
             })
             .disposed(by: disposeBag)
         
         return Output()
-    }
-    
-    private func successAutoLogin(userID: String) {
-        print("ID 연동 O")
-        loginStatus.onNext(true)
-        
-        Observable.zip(
-            useCase.fetchQuestions(),
-            useCase.fetchUser(userID: userID)
-        )
-        .map { _ in }
-        .bind(to: dataDidLoad)
-        .disposed(by: disposeBag)
-    }
-    
-    private func failAutoLogin() {
-        print("ID 연동 X")
-        loginStatus.onNext(false)
-        
-        useCase.fetchQuestions()
-            .bind(to: dataDidLoad)
-            .disposed(by: disposeBag)
     }
 }
