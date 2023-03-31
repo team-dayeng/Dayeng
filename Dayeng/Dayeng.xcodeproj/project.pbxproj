@@ -86,6 +86,8 @@
 		76F6C0AD298D985F00A124CD /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0AC298D985F00A124CD /* Date+.swift */; };
 		E51C6DF429D7028900D40EC9 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51C6DF329D7028900D40EC9 /* NetworkMonitor.swift */; };
 		E51C6DF629D7032200D40EC9 /* NetworkDisconnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51C6DF529D7032200D40EC9 /* NetworkDisconnectViewController.swift */; };
+		E51C6DF829D70DBE00D40EC9 /* DefaultMainUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51C6DF729D70DBE00D40EC9 /* DefaultMainUseCase.swift */; };
+		E51C6DFA29D70DC500D40EC9 /* MainUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51C6DF929D70DC500D40EC9 /* MainUseCase.swift */; };
 		E52F65EE29AC7E89007C36AE /* AddFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52F65ED29AC7E89007C36AE /* AddFriendViewModel.swift */; };
 		E52F65F129AC7F20007C36AE /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = E52F65F029AC7F20007C36AE /* RxKeyboard */; };
 		E52F65F329AC7F79007C36AE /* FirebaseDynamicLinks in Frameworks */ = {isa = PBXBuildFile; productRef = E52F65F229AC7F79007C36AE /* FirebaseDynamicLinks */; };
@@ -200,6 +202,8 @@
 		76F6C0AC298D985F00A124CD /* Date+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		E51C6DF329D7028900D40EC9 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		E51C6DF529D7032200D40EC9 /* NetworkDisconnectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDisconnectViewController.swift; sourceTree = "<group>"; };
+		E51C6DF729D70DBE00D40EC9 /* DefaultMainUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMainUseCase.swift; sourceTree = "<group>"; };
+		E51C6DF929D70DC500D40EC9 /* MainUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUseCase.swift; sourceTree = "<group>"; };
 		E52F65ED29AC7E89007C36AE /* AddFriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewModel.swift; sourceTree = "<group>"; };
 		E52F65F429AC859F007C36AE /* AcceptFriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptFriendViewModel.swift; sourceTree = "<group>"; };
 		E552C1F1298B911F00F51179 /* OwnerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerType.swift; sourceTree = "<group>"; };
@@ -575,6 +579,7 @@
 			isa = PBXGroup;
 			children = (
 				76280D282987929C0061206A /* Protocol */,
+				E51C6DF729D70DBE00D40EC9 /* DefaultMainUseCase.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -582,6 +587,7 @@
 		76280D282987929C0061206A /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				E51C6DF929D70DC500D40EC9 /* MainUseCase.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -840,6 +846,7 @@
 				76280CE729878A3F0061206A /* AppDelegate.swift in Sources */,
 				47E0A5E52997743F0093645B /* DefaultSplashUseCase.swift in Sources */,
 				E5AE4F5F29BCACBC0029B200 /* DefaultLinkBuildService.swift in Sources */,
+				E51C6DF829D70DBE00D40EC9 /* DefaultMainUseCase.swift in Sources */,
 				47E0A5E9299775060093645B /* DefaultQuestionRepository.swift in Sources */,
 				E5AE4F3129B0D4EC0029B200 /* DefaultAddFriendUseCase.swift in Sources */,
 				47D1835D298A92C10058C0EC /* AuthType.swift in Sources */,
@@ -851,6 +858,7 @@
 				E552C2202990BE9300F51179 /* SettingViewController.swift in Sources */,
 				4799A65829A7E2380071F8F9 /* DefaultAppleLoginService.swift in Sources */,
 				47F4C4C629BDCA4B0002E51B /* AlertMessageType.swift in Sources */,
+				E51C6DFA29D70DC500D40EC9 /* MainUseCase.swift in Sources */,
 				47E0A5DD299770EA0093645B /* AnswerDTO.swift in Sources */,
 				47D18368298D16730058C0EC /* FriendListViewModel.swift in Sources */,
 				76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */,
