@@ -187,6 +187,11 @@ extension MainViewController: UICollectionViewDelegate {
     ) {
         editButtonDisposables[indexPath.row]?.dispose()
         editButtonDisposables.removeValue(forKey: indexPath.row)
+        
+        if indexPath.row == collectionView.numberOfItems(inSection: 0)-1 {
+            resetButton.tintColor = .clear
+            resetButton.isEnabled = false
+        }
     }
     
     func collectionView(
@@ -198,6 +203,10 @@ extension MainViewController: UICollectionViewDelegate {
         editButtonDisposables[indexPath.row] = cell.mainView.editButtonDidTapped
             .map { indexPath.row }
             .bind(to: editButtonDidTapped)
-        
+
+        if indexPath.row == collectionView.numberOfItems(inSection: 0)-1 {
+            resetButton.tintColor = .black
+            resetButton.isEnabled = true
+        }
     }
 }

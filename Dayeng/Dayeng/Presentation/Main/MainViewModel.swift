@@ -23,6 +23,7 @@ final class MainViewModel {
     // MARK: - Output
     struct Output {
         var questionsAnswers = BehaviorRelay<[(Question, Answer?)]>(value: [])
+        var isLockLastQuestion = BehaviorRelay(value: false)
         var bonusQuestionResult = PublishRelay<Bool>()
     }
     // MARK: - Dependency
@@ -77,6 +78,10 @@ final class MainViewModel {
             .bind(to: editButtonDidTapped)
             .disposed(by: disposeBag)
             
+        useCase.isBlurLastCell()
+            .bind(to: output.isLockLastQuestion)
+            .disposed(by: disposeBag)
+        
         return output
     }
 }

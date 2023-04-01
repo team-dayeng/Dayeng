@@ -33,4 +33,11 @@ final class DayengDefaults {
         user?.friends.append(friend)
     }
     
+    func getBonusQuestion() {
+        user?.bonusQuestionDate = Date()
+        user?.answers.append(Answer(date: Date().convertToString(format: "yyyy.MM.dd.E"),
+                                    answer: " "))
+        user?.currentIndex += 1
+    }
+
 }
