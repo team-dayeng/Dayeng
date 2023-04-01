@@ -69,7 +69,7 @@ final class DefaultKakaoLoginService: KakaoLoginService {
         UserApi.shared.rx.logout()
     }
     
-    func unlink() -> Completable {
+    func withdrawal() -> Completable {
         UserApi.shared.rx.unlink()
     }
     

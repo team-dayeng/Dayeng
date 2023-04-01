@@ -12,5 +12,5 @@ protocol KakaoLoginService {
     func isLoggedIn() -> Observable<Bool>
     func signIn() -> Observable<(email: String, password: String, userName: String)>
     func signOut() -> Completable
-    func unlink() -> Completable
+    func withdrawal() -> Completable
 }

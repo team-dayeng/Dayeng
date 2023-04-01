@@ -50,12 +50,17 @@ final class DefaultSettingUseCase: SettingUseCase {
             
             do {
                 try Auth.auth().signOut()
-                self.socialLogout()
-                    .do(onNext: {
-                        UserDefaults.userID = nil
-                    })
-                    .bind(to: observer)
-                    .disposed(by: self.disposeBag)
+                if UserDefaults.appleID == nil {
+                    self.kakaoLogout()
+                        .do(onNext: {
+                            UserDefaults.userID = nil
+                        })
+                        .bind(to: observer)
+                        .disposed(by: self.disposeBag)
+                } else {
+                    UserDefaults.userID = nil
+                    observer.onNext(())
+                }
             } catch {
                 observer.onError(SettingError.firebaseAuthSignOutError)
             }
@@ -96,33 +101,19 @@ final class DefaultSettingUseCase: SettingUseCase {
         }
     }
     
-    private func socialLogout() -> Observable<Void> {
+    private func kakaoLogout() -> Observable<Void> {
         Observable.create { [weak self] observer in
             guard let self else {
                 observer.onError(SettingError.notExistSelf)
                 return Disposables.create()
             }
-            
-            if UserDefaults.appleID == nil {
-                self.kakaoLoginService.signOut()
-                    .subscribe(onCompleted: {
-                        observer.onNext(())
-                    }, onError: { error in
-                        observer.onError(error)
-                    })
-                    .disposed(by: self.disposeBag)
-            } else {
-                self.appleLoginService.isLoggedIn()
-                    .subscribe(onNext: { result in
-                        if result {
-//                            appleLoginService.signOut()
-                        } else {
-                            observer.onError(SettingError.notSocialLogined)
-                        }
-                    })
-                    .disposed(by: self.disposeBag)
-            }
-            
+            self.kakaoLoginService.signOut()
+                .subscribe(onCompleted: {
+                    observer.onNext(())
+                }, onError: { error in
+                    observer.onError(error)
+                })
+                .disposed(by: self.disposeBag)
             return Disposables.create()
         }
     }
@@ -135,7 +126,7 @@ final class DefaultSettingUseCase: SettingUseCase {
             }
             
             if UserDefaults.appleID == nil {
-                self.kakaoLoginService.unlink()
+                self.kakaoLoginService.withdrawal()
                     .subscribe(onCompleted: {
                         observer.onNext(())
                     }, onError: {
