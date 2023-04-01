@@ -44,10 +44,7 @@ final class DefaultUserRepository: UserRepository {
     
     func uploadAnswer(answer: String) -> Observable<Void> {
         guard let user = DayengDefaults.shared.user else {
-            return Observable<Void>.create { observer in
-                observer.onError(UserRepositoryError.noUserError)
-                return Disposables.create()
-            }
+            return Observable.error(UserRepositoryError.noUserError)
         }
         
         let answerDate = Date().convertToString(format: "yyyy.MM.dd.E")
