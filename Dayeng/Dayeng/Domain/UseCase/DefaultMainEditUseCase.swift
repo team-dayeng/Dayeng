@@ -14,10 +14,13 @@ final class DefaultMainEditUseCase: MainEditUseCase {
     
     enum EditError: Error, LocalizedError {
         case notEnterInput
+        case noUserError
         var errorDescription: String? {
             switch self {
             case .notEnterInput:
                 return NSLocalizedString("데잉을 입력해주세요!", comment: "")
+            case .noUserError:
+                return NSLocalizedString("회원 정보에 문제가 있습니다!", comment: "")
             }
         }
     }
