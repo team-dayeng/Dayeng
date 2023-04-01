@@ -92,6 +92,8 @@ final class CommonCalendarCell: UICollectionViewCell {
     
     /// "2023.03.16.Thu" 에서 "23.03.16" 만 추출
     private func fetchDate(_ fullDate: String) -> String {
-        String(String(fullDate.prefix(10)).suffix(8))
+        let startIndex = fullDate.index(fullDate.startIndex, offsetBy: 2)
+        let endIndex = fullDate.index(fullDate.startIndex, offsetBy: 9)
+        return String(fullDate[startIndex...endIndex])
     }
 }

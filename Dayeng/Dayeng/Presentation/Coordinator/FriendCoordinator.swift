@@ -72,6 +72,7 @@ final class FriendCoordinator: FriendCoordinatorProtocol {
         )
         let viewModel = CalendarViewModel(useCase: useCase, ownerType: .friend(user: user))
         let viewController = CalendarViewController(viewModel: viewModel)
+        
         viewModel.homeButtonDidTapped
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
