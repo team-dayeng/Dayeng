@@ -37,8 +37,7 @@ final class DefaultCalendarUseCase: CalendarUseCase {
         case .friend(let user):
             answers = user.answers
         }
-        
-        let currentIndex = answers.count
+    
         while DayengDefaults.shared.questions.count > answers.count {
             answers.append(nil)
         }
