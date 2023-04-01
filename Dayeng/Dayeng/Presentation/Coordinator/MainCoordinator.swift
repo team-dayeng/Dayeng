@@ -28,7 +28,9 @@ final class MainCoordinator: MainCoordinatorProtocol {
     }
     
     func showMainViewController() {
-        let useCase = DefaultMainUseCase()
+        let firestoreService = DefaultFirestoreDatabaseService()
+        let userRepository = DefaultUserRepository(firestoreService: firestoreService)
+        let useCase = DefaultMainUseCase(userRepository: userRepository)
         let viewModel = MainViewModel(useCase: useCase)
         let viewController = MainViewController(viewModel: viewModel)
         viewModel.friendButtonDidTapped

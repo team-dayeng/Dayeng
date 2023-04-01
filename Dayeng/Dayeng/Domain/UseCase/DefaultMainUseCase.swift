@@ -9,6 +9,12 @@ import Foundation
 import RxSwift
 
 final class DefaultMainUseCase: MainUseCase {
+    private let userRepository: UserRepository
+    
+    init(userRepository: UserRepository) {
+        self.userRepository = userRepository
+    }
+    
     enum MainUseCaseError: Error {
         case noUserError
     }
