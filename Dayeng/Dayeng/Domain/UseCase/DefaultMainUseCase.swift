@@ -29,6 +29,14 @@ final class DefaultMainUseCase: MainUseCase {
             }
     }
     
+    func getBonusQuestion() -> Observable<Void> {
+        guard let user = DayengDefaults.shared.user else {
+            return Observable.error(MainUseCaseError.noUserError)
+        }
+        DayengDefaults.shared.getBonusQuestion()
+        return userRepository.uploadUser(user: user)
+    }
+    
     private func fetchQuestions() -> Observable<[Question]> {
         Observable.of(DayengDefaults.shared.questions)
             .map { questions in

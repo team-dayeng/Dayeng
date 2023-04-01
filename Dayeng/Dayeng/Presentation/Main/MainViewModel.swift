@@ -23,6 +23,7 @@ final class MainViewModel {
     // MARK: - Output
     struct Output {
         var questionsAnswers = BehaviorRelay<[(Question, Answer?)]>(value: [])
+        var bonusQuestionResult = PublishRelay<Bool>()
     }
     // MARK: - Dependency
     var disposeBag = DisposeBag()
@@ -51,10 +52,14 @@ final class MainViewModel {
             .disposed(by: disposeBag)
         
         input.resetButtonDidTapped
-            .subscribe(onNext: { [weak self] in
-                guard let self else { return }
-                print("tapped reset button")
-            }).disposed(by: disposeBag)
+            .flatMapLatest { [weak self] _ -> Observable<Bool> in
+                guard let self else { return .just(false) }
+                return self.useCase.getBonusQuestion()
+                    .map { _ in true }
+                    .catchAndReturn(false)
+            }
+            .bind(to: output.bonusQuestionResult)
+            .disposed(by: disposeBag)
         
         input.friendButtonDidTapped
             .bind(to: friendButtonDidTapped)

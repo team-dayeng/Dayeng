@@ -169,6 +169,9 @@ final class MainViewController: UIViewController {
                 cell.mainView.bindQuestion(question)
                 if let answer {
                     cell.mainView.bindAnswer(answer)
+                if index == self.collectionView.numberOfItems(inSection: 0)-1,
+                   output.isLockLastQuestion.value {
+                    cell.blur()
                 }
             }
             .disposed(by: disposeBag)

@@ -10,4 +10,5 @@ import RxSwift
 
 protocol MainUseCase {
     func fetchData() -> Observable<[(Question, Answer?)]>
+    func getBonusQuestion() -> Observable<Void>
 }
