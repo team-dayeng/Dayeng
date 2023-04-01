@@ -29,7 +29,7 @@ final class DefaultMainEditUseCase: MainEditUseCase {
         self.userRepository = userRepository
         self.index = index
     }
-
+    
     func fetchQuestion() -> Observable<Question> {
         Observable.of(DayengDefaults.shared.questions[index])
     }
@@ -49,11 +49,16 @@ final class DefaultMainEditUseCase: MainEditUseCase {
     
     func uploadAnswer(answer: String) -> Observable<Void> {
         guard answer != "", answer != "enter your answer." else {
-            return Observable.create {
-                $0.onError(EditError.notEnterInput)
-                return Disposables.create()
-            }
+            return Observable.error(EditError.notEnterInput)
         }
-        return userRepository.uploadAnswer(answer: answer)
+        guard let user = DayengDefaults.shared.user else {
+            return Observable.error(EditError.noUserError)
+        }
+        
+        if user.currentIndex == index {
+            return userRepository.uploadAnswer(answer: answer)
+        }
+        
+        return userRepository.editAnswer(answer: answer, index: index)
     }
 }
