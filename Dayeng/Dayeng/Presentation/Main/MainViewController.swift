@@ -163,19 +163,18 @@ final class MainViewController: UIViewController {
         
         output.questionsAnswers
             .bind(to: collectionView.rx.items(cellIdentifier: MainCell.identifier, cellType: MainCell.self)
-            ) { (_, questionAnswer, cell) in
-                let (question, answer) = questionAnswer
+            ) { [weak self] (index, questionAnswer, cell) in
+                guard let self else { return }
                 
-                cell.mainView.bindQuestion(question)
-                if let answer {
-                    cell.mainView.bindAnswer(answer)
+                let (question, answer) = questionAnswer
+                cell.mainView.bind(question, answer)
+                
                 if index == self.collectionView.numberOfItems(inSection: 0)-1,
                    output.isLockLastQuestion.value {
                     cell.blur()
                 }
             }
             .disposed(by: disposeBag)
-        
     }
 }
 

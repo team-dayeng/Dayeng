@@ -44,11 +44,11 @@ final class MainViewModel {
         let output = Output()
         
         input.viewWillAppear
-            .subscribe(onNext: { [weak self] in
+            .subscribe(onNext: { [weak self] _ in
                 guard let self else { return }
                 self.useCase.fetchData()
-                        .bind(to: output.questionsAnswers)
-                        .disposed(by: self.disposeBag)
+                    .bind(to: output.questionsAnswers)
+                    .disposed(by: self.disposeBag)
             })
             .disposed(by: disposeBag)
         
