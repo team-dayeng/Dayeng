@@ -22,8 +22,9 @@ final class DefaultMainUseCase: MainUseCase {
     func fetchData() -> Observable<[(Question, Answer?)]> {
         Observable.zip(fetchQuestions(), fetchAnswers())
             .map { questions, answers in
-                questions.enumerated().map {
-                    ($0.element, (answers.count > $0.offset ? answers[$0.offset] : nil))
+                questions.enumerated().map { (index, question) in
+                    let answer = answers.count > index ? answers[index] : nil
+                    return (question, answer)
                 }
             }
     }
@@ -38,13 +39,6 @@ final class DefaultMainUseCase: MainUseCase {
     }
     
     private func fetchAnswers() -> Observable<[Answer]> {
-        Observable.create { observer in
-            guard let user = DayengDefaults.shared.user else {
-                observer.onNext([])
-                return Disposables.create()
-            }
-            observer.onNext(user.answers)
-            return Disposables.create()
-        }
+        Observable.just(DayengDefaults.shared.user?.answers ?? [])
     }
 }
