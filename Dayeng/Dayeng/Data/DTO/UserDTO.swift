@@ -12,12 +12,15 @@ struct UserDTO: Codable {
     var answers: [AnswerDTO]?
     var currentIndex: Int
     var friends: [String]
+    var bonusQuestionDate: Date?
     
     func toDomain(uid: String) -> User {
         User(uid: uid,
              name: name,
              answers: answers != nil ? answers!.map { $0.toDomain() } : [],
              currentIndex: currentIndex,
-             friends: friends)
+             friends: friends,
+             bonusQuestionDate: bonusQuestionDate
+        )
     }
 }
