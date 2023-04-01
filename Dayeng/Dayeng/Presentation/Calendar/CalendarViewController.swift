@@ -53,13 +53,14 @@ final class CalendarViewController: UIViewController {
         
         configureNavigationBar(ownerType: output.ownerType)
         
-        output.answers.bind(to: collectionView.rx.items(
-            cellIdentifier: CommonCalendarCell.identifier,
-            cellType: CommonCalendarCell.self
-        )) { (index, answer, cell) in
-            cell.bind(index: index, answer: answer, currentIndex: output.currentIndex)
-        }
-        .disposed(by: disposeBag)
+        output.answers
+            .bind(to: collectionView.rx.items(
+                cellIdentifier: CommonCalendarCell.identifier,
+                cellType: CommonCalendarCell.self
+            )) { (index, answer, cell) in
+                cell.bind(index: index, answer: answer, currentIndex: output.currentIndex)
+            }
+            .disposed(by: disposeBag)
     }
     
     private func setupViews() {

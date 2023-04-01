@@ -20,7 +20,7 @@ final class CalendarViewModel {
     // MARK: - Output
     struct Output {
         let ownerType: OwnerType
-        let answers: Observable<[Answer?]>
+        let answers = ReplaySubject<[Answer?]>.create(bufferSize: 1)
         let currentIndex: Int
     }
     
@@ -29,41 +29,28 @@ final class CalendarViewModel {
     
     // MARK: - Properties
     private let disposeBag = DisposeBag()
-    private let ownerType: OwnerType
     let homeButtonDidTapped = PublishRelay<Void>()
     let cannotFindUserError = PublishSubject<Void>()
     
     // MARK: - LifeCycle
-    init(useCase: CalendarUseCase, ownerType: OwnerType) {
+    init(useCase: CalendarUseCase) {
         self.useCase = useCase
-        self.ownerType = ownerType
     }
     
     // MARK: - Helper
     func transform(input: Input) -> Output {
-        var answers = [Answer?]()
-        
-        switch ownerType {
-        case .mine:
-            if let user = DayengDefaults.shared.user {
-                answers = user.answers
-            } else {
-                cannotFindUserError.onNext(())
-            }
-        case .friend(let user):
-            answers = user.answers
-        }
-        
-        let currentIndex = answers.count
-        while DayengDefaults.shared.questions.count > answers.count {
-            answers.append(nil)
-        }
-        
         let output = Output(
-            ownerType: ownerType,
-            answers: Observable.just(answers),
-            currentIndex: currentIndex
+            ownerType: useCase.fetchOwnerType(),
+            currentIndex: useCase.fetchCurrentIndex()
         )
+        
+        useCase.fetchAnswers()
+            .do(onError: { [weak self] _ in
+                guard let self else { return }
+                self.cannotFindUserError.onNext(())
+            })
+            .bind(to: output.answers)
+            .disposed(by: disposeBag)
         
         input.homeButtonDidTapped
             .bind(to: homeButtonDidTapped)
