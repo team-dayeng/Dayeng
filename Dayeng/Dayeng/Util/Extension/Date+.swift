@@ -8,6 +8,10 @@
 import Foundation
 
 extension Date {
+    var isToday: Bool {
+        Calendar.current.isDateInToday(self)
+    }
+    
     func convertToString(format: String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
