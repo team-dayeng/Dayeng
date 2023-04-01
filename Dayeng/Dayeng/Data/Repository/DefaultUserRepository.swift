@@ -70,4 +70,20 @@ final class DefaultUserRepository: UserRepository {
             )
         )
     }
+    
+    func editAnswer(answer: String, index: Int) -> Observable<Void> {
+        guard let user = DayengDefaults.shared.user else {
+            return Observable.error(UserRepositoryError.noUserError)
+        }
+        
+        DayengDefaults.shared.editAnswer(
+            Answer(date: user.answers[index].date, answer: answer), index
+        )
+        
+        return firestoreService.upload(
+            api: .answer(userID: user.uid, index: index),
+            dto: AnswerDTO(date: user.answers[index].date,
+                           answer: answer)
+        )
+    }
 }
