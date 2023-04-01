@@ -36,7 +36,7 @@ final class DefaultUserRepository: UserRepository {
             collection: "users",
             document: user.uid,
             dto: UserDTO(name: user.name,
-                         answers: nil,
+                         answers: user.answers.map { AnswerDTO(date: $0.date, answer: $0.answer)},
                          currentIndex: user.currentIndex,
                          friends: user.friends)
         )
