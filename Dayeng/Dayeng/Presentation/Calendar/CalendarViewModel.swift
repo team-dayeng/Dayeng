@@ -14,17 +14,23 @@ final class CalendarViewModel {
     struct Input {
         var viewDidLoad: Observable<Void>
         var homeButtonDidTapped: Observable<Void>
+        var cellDidTapped: Observable<Void>
     }
     
     // MARK: - Output
     struct Output {
-        var answers = PublishSubject<Void>()
+        let ownerType: OwnerType
+        let answers = ReplaySubject<[Answer?]>.create(bufferSize: 1)
+        let currentIndex: Int
     }
     
     // MARK: - Dependency
     private let useCase: CalendarUseCase
+    
+    // MARK: - Properties
     private let disposeBag = DisposeBag()
     let homeButtonDidTapped = PublishRelay<Void>()
+    let cannotFindUserError = PublishSubject<Void>()
     
     // MARK: - LifeCycle
     init(useCase: CalendarUseCase) {
@@ -33,7 +39,18 @@ final class CalendarViewModel {
     
     // MARK: - Helper
     func transform(input: Input) -> Output {
-        let output = Output()
+        let output = Output(
+            ownerType: useCase.fetchOwnerType(),
+            currentIndex: useCase.fetchCurrentIndex()
+        )
+        
+        useCase.fetchAnswers()
+            .do(onError: { [weak self] _ in
+                guard let self else { return }
+                self.cannotFindUserError.onNext(())
+            })
+            .bind(to: output.answers)
+            .disposed(by: disposeBag)
         
         input.homeButtonDidTapped
             .bind(to: homeButtonDidTapped)

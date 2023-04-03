@@ -60,11 +60,27 @@ final class MainCoordinator: MainCoordinatorProtocol {
     func showCalendarViewController(ownerType: OwnerType) {
         let firestoreService = DefaultFirestoreDatabaseService()
         let useCase = DefaultCalendarUseCase(
-            userRepository: DefaultUserRepository(firestoreService: firestoreService)
+            userRepository: DefaultUserRepository(firestoreService: firestoreService),
+            ownerType: ownerType
         )
         let viewModel = CalendarViewModel(useCase: useCase)
-        let viewController = CalendarViewController(ownerType: ownerType,
-                                                    viewModel: viewModel)
+        let viewController = CalendarViewController(viewModel: viewModel)
+        
+        viewModel.cannotFindUserError
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.navigationController.showAlert(
+                    title: AlertMessageType.cannotFindUser.title,
+                    message: AlertMessageType.cannotFindUser.message,
+                    type: .oneButton,
+                    rightActionHandler: { [weak self] in
+                        guard let self else { return }
+                        self.navigationController.viewControllers.last?.hideIndicator()
+                        self.delegate?.didFinished(childCoordinator: self)
+                })
+            })
+            .disposed(by: disposeBag)
+        
         navigationController.pushViewController(viewController, animated: true)
     }
     

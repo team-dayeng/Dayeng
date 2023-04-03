@@ -9,5 +9,7 @@ import Foundation
 import RxSwift
 
 protocol CalendarUseCase {
-    
+    func fetchOwnerType() -> OwnerType
+    func fetchAnswers() -> Observable<[Answer?]>
+    func fetchCurrentIndex() -> Int
 }

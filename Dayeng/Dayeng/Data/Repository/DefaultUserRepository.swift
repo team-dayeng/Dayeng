@@ -83,13 +83,12 @@ final class DefaultUserRepository: UserRepository {
             if paths.isEmpty {
                 observer.onNext([])
             } else {
-                Observable.zip(paths.map { path in
-                    self.firestoreService.fetch(path: path)
-                        .map { (userDTO: UserDTO) in
-                            let uid = path.split(separator: "/").map { String($0) }[1]
-                            return userDTO.toDomain(uid: uid)
-                        }
-                })
+                Observable.zip(
+                    paths.map { path in
+                        let uid = path.split(separator: "/").map { String($0) }[1]
+                        return self.fetchUser(userID: uid)
+                    }
+                )
                 .bind(to: observer)
                 .disposed(by: self.disposeBag)
             }

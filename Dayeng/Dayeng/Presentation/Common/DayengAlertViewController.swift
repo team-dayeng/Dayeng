@@ -106,7 +106,7 @@ final class DayengAlertViewController: UIViewController {
         containerView.snp.makeConstraints {
             $0.centerY.equalToSuperview().offset(-2)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
-            $0.height.greaterThanOrEqualTo(200)
+            $0.height.greaterThanOrEqualTo(150)
         }
         
         titleLabel.snp.makeConstraints {
@@ -119,7 +119,8 @@ final class DayengAlertViewController: UIViewController {
         messageLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(titleLabel.snp.bottom).offset(10)
-            $0.leading.trailing.height.equalTo(titleLabel)
+            $0.leading.trailing.equalTo(titleLabel)
+            $0.height.lessThanOrEqualTo(50)
         }
         
         buttonStackView.snp.makeConstraints {

@@ -24,16 +24,6 @@ final class CommonCalendarCell: UICollectionViewCell {
         label.font = .systemFont(ofSize: 12, weight: .semibold)
         label.textColor = .black
         label.textAlignment = .center
-        
-        let attributedString = NSMutableAttributedString(string: "")
-        
-        let imageAttachment = NSTextAttachment()
-        imageAttachment.image = UIImage(named: "lock")
-        imageAttachment.setImageHeight(height: 20)
-        
-        attributedString.append(NSAttributedString(attachment: imageAttachment))
-        
-        label.attributedText = attributedString
         return label
     }()
     
@@ -50,6 +40,11 @@ final class CommonCalendarCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        statusLabel.attributedText = nil
     }
     
     // MARK: - Helpers
@@ -70,11 +65,35 @@ final class CommonCalendarCell: UICollectionViewCell {
         }
     }
     
-    func configureNumberLabel(number: Int) {
-        numberLabel.text = "\(number)"
+    func bind(index: Int, answer: Answer?, currentIndex: Int) {
+        numberLabel.text = "\(index + 1)"
+        
+        if index == currentIndex {
+            numberLabel.textColor = .dayengMain
+            return
+        }
+        
+        guard let answer else {
+            let imageAttachment = NSTextAttachment()
+            imageAttachment.image = UIImage(named: "lock")
+            imageAttachment.setImageHeight(height: 20)
+            
+            let attributedString = NSMutableAttributedString(string: "")
+            attributedString.append(NSAttributedString(attachment: imageAttachment))
+            statusLabel.attributedText = attributedString
+            return
+        }
+        
+        statusLabel.text = fetchDate(answer.date)
+        if answer.answer.isEmpty {
+            statusLabel.text = "X"
+        }
     }
     
-    func configureStatusLabel() {
-        
+    /// "2023.03.16.Thu" 에서 "23.03.16" 만 추출
+    private func fetchDate(_ fullDate: String) -> String {
+        let startIndex = fullDate.index(fullDate.startIndex, offsetBy: 2)
+        let endIndex = fullDate.index(fullDate.startIndex, offsetBy: 9)
+        return String(fullDate[startIndex...endIndex])
     }
 }

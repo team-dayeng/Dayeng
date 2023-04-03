@@ -51,12 +51,15 @@ final class FriendListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupNavigationBar()
+    
         setupCollectionView()
         setupViews()
         configureUI()
         bind()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        setupNavigationBar()
     }
 }
 
@@ -68,6 +71,7 @@ extension FriendListViewController {
         title = "친구 목록"
         navigationItem.rightBarButtonItem = plusButton
         navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.titleTextAttributes = nil
     }
     
     private func setupCollectionView() {
@@ -168,6 +172,7 @@ extension FriendListViewController {
         if !snapshot.sectionIdentifiers.contains("friends") {
             snapshot.appendSections(["friends"])
         }
+        snapshot.deleteItems(snapshot.itemIdentifiers(inSection: "friends"))
         snapshot.appendItems(friends, toSection: "friends")
         dataSource.apply(snapshot) {
             self.hideIndicator()
