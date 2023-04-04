@@ -13,7 +13,6 @@ final class MainViewModel {
     // MARK: - Input
     struct Input {
         var viewWillAppear: Observable<Void>
-        var resetButtonDidTapped: Observable<Void>
         var friendButtonDidTapped: Observable<Void>
         var settingButtonDidTapped: Observable<Void>
         var calendarButtonDidTapped: Observable<Void>
@@ -47,21 +46,12 @@ final class MainViewModel {
                 guard let self else { return }
                 self.useCase.fetchData()
                     .bind(to: output.questionsAnswers)
+                    .disposed(by: self.disposeBag)
                 
                 self.useCase.getBlurStartingIndex()
                     .bind(to: output.startBluringIndex)
                     .disposed(by: self.disposeBag)
             })
-            .disposed(by: disposeBag)
-        
-        input.resetButtonDidTapped
-            .flatMapLatest { [weak self] _ -> Observable<Bool> in
-                guard let self else { return .just(false) }
-                return self.useCase.getBonusQuestion()
-                    .map { _ in true }
-                    .catchAndReturn(false)
-            }
-            .bind(to: output.bonusQuestionResult)
             .disposed(by: disposeBag)
         
         input.friendButtonDidTapped

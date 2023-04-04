@@ -38,12 +38,6 @@ final class MainViewController: UIViewController {
         target: nil,
         action: nil)
     
-    private lazy var resetButton = UIBarButtonItem(
-        image: UIImage(systemName: "arrow.clockwise"),
-        style: .plain,
-        target: nil,
-        action: nil)
-    
     // MARK: - Properties
     var disposeBag = DisposeBag()
     let viewModel: MainViewModel
@@ -82,7 +76,6 @@ final class MainViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .black
         
         navigationItem.leftBarButtonItem = calendarButton
-        navigationItem.rightBarButtonItem = resetButton
     }
     
     private func setupViews() {
@@ -146,7 +139,6 @@ final class MainViewController: UIViewController {
     func bind() {
         let input = MainViewModel.Input(
             viewWillAppear: rx.viewWillAppear.map { _ in }.asObservable(),
-            resetButtonDidTapped: resetButton.rx.tap.asObservable(),
             friendButtonDidTapped: friendButton.rx.tap.asObservable(),
             settingButtonDidTapped: settingButton.rx.tap.asObservable(),
             calendarButtonDidTapped: calendarButton.rx.tap.asObservable(),
@@ -189,11 +181,6 @@ extension MainViewController: UICollectionViewDelegate {
     ) {
         editButtonDisposables[indexPath.row]?.dispose()
         editButtonDisposables.removeValue(forKey: indexPath.row)
-        
-        if indexPath.row == collectionView.numberOfItems(inSection: 0)-1 {
-            resetButton.tintColor = .clear
-            resetButton.isEnabled = false
-        }
     }
     
     func collectionView(
@@ -205,10 +192,5 @@ extension MainViewController: UICollectionViewDelegate {
         editButtonDisposables[indexPath.row] = cell.mainView.editButtonDidTapped
             .map { indexPath.row }
             .bind(to: editButtonDidTapped)
-
-        if indexPath.row == collectionView.numberOfItems(inSection: 0)-1 {
-            resetButton.tintColor = .black
-            resetButton.isEnabled = true
-        }
     }
 }
