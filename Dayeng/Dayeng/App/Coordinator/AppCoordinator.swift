@@ -49,7 +49,7 @@ final class AppCoordinator: AppCoordinatorProtocol {
                         self.showLoginViewController()
                     }
                 }
-            }, onCompleted: {
+            }, onDisposed: {
                 DispatchQueue.main.async {
                     (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?
                         .setNetworkMonitor()
