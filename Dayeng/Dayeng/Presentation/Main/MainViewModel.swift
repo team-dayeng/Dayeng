@@ -23,6 +23,7 @@ final class MainViewModel {
     // MARK: - Output
     struct Output {
         var questionsAnswers = BehaviorRelay<[(Question, Answer?)]>(value: [])
+        var startBluringIndex = BehaviorRelay<Int?>(value: nil)
     }
     // MARK: - Dependency
     var disposeBag = DisposeBag()
@@ -46,6 +47,9 @@ final class MainViewModel {
                 guard let self else { return }
                 self.useCase.fetchData()
                     .bind(to: output.questionsAnswers)
+                
+                self.useCase.getBlurStartingIndex()
+                    .bind(to: output.startBluringIndex)
                     .disposed(by: self.disposeBag)
             })
             .disposed(by: disposeBag)

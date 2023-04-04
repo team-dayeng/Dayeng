@@ -29,14 +29,19 @@ final class DefaultMainUseCase: MainUseCase {
             }
     }
     
+    func getBlurStartingIndex() -> Observable<Int?> {
         guard let user = DayengDefaults.shared.user else {
             return Observable.error(MainUseCaseError.noUserError)
         }
+        if user.currentIndex >= DayengDefaults.shared.questions.count {
+            return Observable.just(nil)
         }
         
         let today = Date().convertToString(format: "yyyy.MM.dd.E")
         let isAnswered = user.answers.last?.date == today
+        let startIndex = isAnswered ? user.currentIndex : (user.currentIndex + 1)
         
+        return Observable.just(startIndex)
     }
     
     private func fetchQuestions() -> Observable<[Question]> {
