@@ -13,17 +13,6 @@ final class MainCell: UICollectionViewCell {
     lazy var mainView = {
        CommonMainView()
     }()
-    
-    lazy var blurView = {
-        let view = UIImageView()
-        view.backgroundColor = .white
-        view.isHidden = true
-        view.layer.cornerRadius = 20
-        view.alpha = 0.6
-        view.contentMode = .topLeft
-        return view
-    }()
-    
     lazy var lockedLabel = {
         let label = UILabel()
         label.text = "질문은 하루에 하나씩 공개됩니다"
@@ -36,6 +25,17 @@ final class MainCell: UICollectionViewCell {
         let imageView = UIImageView(image: UIImage(systemName: "lock"))
         imageView.tintColor = .black
         imageView.isHidden = true
+        return imageView
+    }()
+    
+    lazy var blurImageView = {
+        let imageView = UIImageView(image: UIImage.mainBlur?.resized(scaledToWidth: frame.width-30))
+        imageView.backgroundColor = .white
+        imageView.isHidden = true
+        imageView.contentMode = .top
+        imageView.alpha = 0.6
+        imageView.layer.cornerRadius = 20
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -54,11 +54,8 @@ final class MainCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
-        mainView.answerLabel.text = ""
-        mainView.answerBackground.isHidden = false
-        blurView.isHidden = true
-        mainView.isHidden = false
-        lockedLabel.isHidden = true
+        mainView.answerLabel.text = nil
+        unBlur()
         
         super.prepareForReuse()
     }
@@ -66,7 +63,7 @@ final class MainCell: UICollectionViewCell {
     // MARK: - Helpers
     private func setupViews() {
         addSubview(mainView)
-        addSubview(blurView)
+        addSubview(blurImageView)
         addSubview(lockedLabel)
         addSubview(lockerView)
         configureUI()
@@ -80,42 +77,30 @@ final class MainCell: UICollectionViewCell {
         mainView.dateLabel.snp.updateConstraints {
             $0.top.equalToSuperview().offset(40)
         }
-        blurView.snp.makeConstraints {
+        blurImageView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(15)
-            $0.left.right.equalToSuperview().inset(15)
             $0.bottom.equalToSuperview().offset(-150)
+            $0.leading.trailing.equalToSuperview().inset(15)
         }
         lockedLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalToSuperview().offset(200)
         }
         lockerView.snp.makeConstraints {
-            $0.center.equalTo(blurView)
+            $0.centerX.equalTo(blurImageView)
+            $0.top.equalTo(lockedLabel).offset(30)
             $0.width.height.equalTo(70)
         }
     }
     
     func blur() {
-        UIGraphicsBeginImageContext(CGSize(width: bounds.size.height - 165,
-                                           height: bounds.size.width - 30))
-        layer.render(in: UIGraphicsGetCurrentContext()!)
-        guard let image = UIGraphicsGetImageFromCurrentImageContext(),
-              let blurFilter = CIFilter(name: "CIGaussianBlur") else {
-            UIGraphicsEndImageContext()
-            return
-        }
-        UIGraphicsEndImageContext()
-
-        blurFilter.setValue(3, forKey: kCIInputRadiusKey)
-        blurFilter.setValue(CIImage(image: image), forKey: kCIInputImageKey)
-        
-        guard let blurredImage = blurFilter.outputImage,
-              let cgImage = CIContext().createCGImage(blurredImage, from: blurredImage.extent) else { return }
-        blurView.image = UIImage(cgImage: cgImage)
-        blurView.backgroundColor = .white
-        blurView.isHidden = false
         mainView.isHidden = true
-        lockedLabel.isHidden = false
-        lockerView.isHidden = false
+        [blurImageView, lockerView, lockedLabel].forEach { $0.isHidden = false }
     }
+
+    func unBlur() {
+        mainView.isHidden = false
+        [blurImageView, lockerView, lockedLabel].forEach { $0.isHidden = true }
+    }
+
 }
