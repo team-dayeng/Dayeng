@@ -29,56 +29,14 @@ final class DefaultMainUseCase: MainUseCase {
             }
     }
     
-    func isBlurLastCell() -> Observable<Bool> {
         guard let user = DayengDefaults.shared.user else {
             return Observable.error(MainUseCaseError.noUserError)
         }
+        }
+        
         let today = Date().convertToString(format: "yyyy.MM.dd.E")
-        
         let isAnswered = user.answers.last?.date == today
-        let isUsedBonus = user.bonusQuestionDate?.isToday ?? false
-        let isAnsweredBonus = user.answers.filter { $0.date == today }.count >= 2
         
-        var isBlur = true
-        
-        if isAnswered {
-            if isUsedBonus {
-                isBlur = isAnsweredBonus
-            } else {
-                isBlur = true
-            }
-        } else {
-            isBlur = false
-        }
-        
-        return Observable.just(isBlur)
-    }
-    
-    func canGetBonus() -> Observable<Bool> {
-        guard let user = DayengDefaults.shared.user else {
-            return Observable.error(MainUseCaseError.noUserError)
-        }
-        let today = Date().convertToString(format: "yyyy.MM.dd.E")
-        
-        let isAnswered = user.answers.last?.date == today
-        let isUsedBonus = user.bonusQuestionDate?.isToday ?? false
-        let isAnsweredBonus = user.answers.filter { $0.date == today }.count >= 2
-        
-        var canGetBonus = false
-        
-        if isAnswered {
-            canGetBonus = !isAnsweredBonus
-        }
-        
-        return Observable.just(canGetBonus)
-    }
-    
-    func getBonusQuestion() -> Observable<Void> {
-        guard let user = DayengDefaults.shared.user else {
-            return Observable.error(MainUseCaseError.noUserError)
-        }
-        DayengDefaults.shared.getBonusQuestion()
-        return userRepository.uploadUser(user: user)
     }
     
     private func fetchQuestions() -> Observable<[Question]> {

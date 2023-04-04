@@ -169,8 +169,6 @@ final class MainViewController: UIViewController {
                 let (question, answer) = questionAnswer
                 cell.mainView.bind(question, answer)
                 
-                if index == self.collectionView.numberOfItems(inSection: 0)-1,
-                   output.isLockLastQuestion.value {
                     cell.blur()
                 }
             }

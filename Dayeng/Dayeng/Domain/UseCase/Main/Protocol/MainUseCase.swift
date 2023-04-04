@@ -10,7 +10,4 @@ import RxSwift
 
 protocol MainUseCase {
     func fetchData() -> Observable<[(Question, Answer?)]>
-    func isBlurLastCell() -> Observable<Bool>
-    func canGetBonus() -> Observable<Bool>
-    func getBonusQuestion() -> Observable<Void>
 }

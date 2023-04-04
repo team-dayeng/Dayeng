@@ -14,19 +14,16 @@ struct User: Hashable {
     var answers: [Answer]
     var currentIndex: Int
     var friends: [String]
-    var bonusQuestionDate: Date?
     
     init(uid: String = UUID().uuidString,
          name: String,
          answers: [Answer] = [],
          currentIndex: Int = 0,
-         friends: [String] = [],
-         bonusQuestionDate: Date? = nil) {
+         friends: [String] = []) {
         self.uid = uid
         self.name = name
         self.answers = answers
         self.currentIndex = currentIndex
         self.friends = friends
-        self.bonusQuestionDate = bonusQuestionDate
     }
 }
