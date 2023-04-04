@@ -39,29 +39,24 @@ final class AppCoordinator: AppCoordinatorProtocol {
         let viewModel = SplashViewModel(useCase: useCase)
         let viewController = SplashViewController(viewModel: viewModel)
         
-        Observable.zip(viewModel.loginStatus, viewModel.dataDidLoad)
-            .subscribe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] (loginResult, _) in
+        viewModel.loginStatus
+            .subscribe(onNext: { [weak self] loginResult in
                 guard let self else { return }
+                DispatchQueue.main.async {
                     if loginResult {
                         self.showMainViewController()
                     } else {
                         self.showLoginViewController()
                     }
-            }, onError: { [weak self] error in
-                guard let self else { return }
-                print(error.localizedDescription)
-                self.navigationController.showAlert(
-                    title: "네트워크에 연결되지 않았습니다.",
-                    message: "다시 시도해주세요.",
-                    type: .oneButton,
-                    rightActionHandler: { [weak self] in
-                        guard let self else { return }
-                        self.showSplashViewController()
-                })
+                }
+            }, onDisposed: {
+                DispatchQueue.main.async {
+                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?
+                        .setNetworkMonitor()
+                }
             })
             .disposed(by: disposeBag)
-
+        
         navigationController.viewControllers = [viewController]
     }
     

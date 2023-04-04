@@ -107,22 +107,10 @@ final class MainViewController: UIViewController {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.dataSource = self
-        collectionView.delegate = self
         collectionView.register(MainCell.self, forCellWithReuseIdentifier: MainCell.identifier)
         collectionView.isPagingEnabled = true
         collectionView.bounces = false
         collectionView.backgroundColor = .clear
-        
-        if let user = DayengDefaults.shared.user {
-            DispatchQueue.main.async { [weak self] in
-                guard let self else { return }
-                self.collectionView.scrollToItem(
-                    at: IndexPath(row: user.currentIndex, section: 0),
-                    at: .centeredHorizontally,
-                    animated: false)
-            }
-        }
     }
     
     private func collectionViewLayout() -> UICollectionViewCompositionalLayout {
@@ -146,12 +134,34 @@ final class MainViewController: UIViewController {
     
     func bind() {
         let input = MainViewModel.Input(
+            viewWillAppear: rx.methodInvoked(#selector(viewWillAppear(_ :))).map { _ in
+                self.showIndicator()
+            }.asObservable(),
             resetButtonDidTapped: resetButton.rx.tap.asObservable(),
             friendButtonDidTapped: friendButton.rx.tap.asObservable(),
             settingButtonDidTapped: settingButton.rx.tap.asObservable(),
             calendarButtonDidTapped: calendarButton.rx.tap.asObservable()
         )
-        _ = viewModel.transform(input: input)
+        
+        let output = viewModel.transform(input: input)
+        output.successLoad
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.hideIndicator()
+                self.collectionView.dataSource = self
+                self.collectionView.delegate = self
+                
+                if let user = DayengDefaults.shared.user {
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self else { return }
+                        self.collectionView.scrollToItem(
+                            at: IndexPath(row: user.currentIndex, section: 0),
+                            at: .centeredHorizontally,
+                            animated: false)
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
     }
 }
 
