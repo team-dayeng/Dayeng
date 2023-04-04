@@ -132,6 +132,7 @@ final class DefaultLoginUseCase: LoginUseCase {
                 } else {    // 이전 로그인 기록 O
                     self.userRepository.fetchUser(userID: uid)
                         .map { user in
+                            UserDefaults.userID = user.uid
                             DayengDefaults.shared.user = user
                             return
                         }
