@@ -11,6 +11,7 @@ extension UIImage {
     
     static let dayengBackground = UIImage(named: "paperBackground")
     static let dayengLogo = UIImage(named: "LogoImage")
+    static let mainBlur = UIImage(named: "MainBlur")
     
     /// 입력한 width, height로 이미지 리사이즈
     func resized(to size: CGSize) -> UIImage {
