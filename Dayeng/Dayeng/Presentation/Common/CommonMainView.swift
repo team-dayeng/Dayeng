@@ -128,13 +128,13 @@ final class CommonMainView: UIView {
     }
     
     func bind(_ question: Question, _ answer: Answer?) {
-        questionLabel.text = question.english
-        koreanQuestionLabel.text = question.korean
+        bindQuestion(question)
         
         if let answer = answer {
-            dateLabel.text = answer.date
-            answerLabel.text = answer.answer
-            answerBackground.isHidden = answer.answer.count > 0
+            bindAnswer(answer)
+        } else {
+            answerBackground.isHidden = false
+            answerBackground.text = " A1."
         }
     }
     
