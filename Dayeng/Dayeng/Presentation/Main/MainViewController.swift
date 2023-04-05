@@ -109,7 +109,6 @@ final class MainViewController: UIViewController {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.delegate = self
         collectionView.register(MainCell.self, forCellWithReuseIdentifier: MainCell.identifier)
         collectionView.isPagingEnabled = true
         collectionView.isScrollEnabled = false
@@ -170,27 +169,37 @@ final class MainViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-    }
-}
-
-extension MainViewController: UICollectionViewDelegate {
-    func collectionView(
-        _ collectionView: UICollectionView,
-        didEndDisplaying cell: UICollectionViewCell,
-        forItemAt indexPath: IndexPath
-    ) {
-        editButtonDisposables[indexPath.row]?.dispose()
-        editButtonDisposables.removeValue(forKey: indexPath.row)
-    }
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        willDisplay cell: UICollectionViewCell,
-        forItemAt indexPath: IndexPath
-    ) {
-        guard let cell = cell as? MainCell else { return }
-        editButtonDisposables[indexPath.row] = cell.mainView.editButtonDidTapped
-            .map { indexPath.row }
-            .bind(to: editButtonDidTapped)
+        output.startBluringIndex
+            .subscribe(onNext: { [weak self] startBluringIndex in
+                guard let self else { return }
+                self.initialIndexPath = IndexPath(
+                    row: (startBluringIndex ?? output.questionsAnswers.value.count)-1,
+                    section: 0)
+            })
+            .disposed(by: disposeBag)
+        
+        collectionView.rx.willDisplayCell
+            .subscribe(onNext: { cell, indexPath in
+                guard let cell = cell as? MainCell else { return }
+                if let initialIndexPath = self.initialIndexPath {
+                    self.collectionView.scrollToItem(at: initialIndexPath,
+                                                     at: .centeredVertically,
+                                                     animated: false)
+                    self.initialIndexPath = nil
+                }
+                self.editButtonDisposables[indexPath.row] = cell.mainView.editButtonDidTapped
+                    .map { indexPath.row }
+                    .bind(to: self.editButtonDidTapped)
+                
+            })
+            .disposed(by: disposeBag)
+        
+        collectionView.rx.didEndDisplayingCell
+            .subscribe(onNext: { cell, indexPath in
+                self.editButtonDisposables[indexPath.row]?.dispose()
+                self.editButtonDisposables.removeValue(forKey: indexPath.row)
+            })
+            .disposed(by: disposeBag)
+        
     }
 }
