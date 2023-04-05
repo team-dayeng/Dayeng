@@ -43,6 +43,7 @@ final class MainViewController: UIViewController {
     let viewModel: MainViewModel
     private let editButtonDidTapped = PublishSubject<Int>()
     var editButtonDisposables = [Int: Disposable]()
+    var initialIndexPath: IndexPath?
     
     // MARK: - Lifecycles
     init(viewModel: MainViewModel) {
@@ -155,14 +156,10 @@ final class MainViewController: UIViewController {
         output.questionsAnswers
             .bind(to: collectionView.rx.items(cellIdentifier: MainCell.identifier, cellType: MainCell.self)
             ) { (index, questionAnswer, cell) in
-                
                 let (question, answer) = questionAnswer
                 cell.mainView.bind(question, answer)
                 
                 guard let startIndex = output.startBluringIndex.value else { return }
-                self.collectionView.scrollToItem(at: IndexPath(row: startIndex-1, section: .zero),
-                                                 at: .top,
-                                                 animated: true)
                 if index >= startIndex {
                     cell.blur()
                 }
