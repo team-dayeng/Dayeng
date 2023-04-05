@@ -192,7 +192,7 @@ final class MainViewController: UIViewController {
             .disposed(by: disposeBag)
         
         collectionView.rx.didEndDisplayingCell
-            .subscribe(onNext: { cell, indexPath in
+            .subscribe(onNext: { _, indexPath in
                 self.editButtonDisposables[indexPath.row]?.dispose()
                 self.editButtonDisposables.removeValue(forKey: indexPath.row)
             })
