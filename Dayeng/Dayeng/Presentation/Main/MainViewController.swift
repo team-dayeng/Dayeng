@@ -74,7 +74,15 @@ final class MainViewController: UIViewController {
     
     // MARK: - Helpers
     private func setupNaviagationBar() {
-        navigationItem.titleView = UIImageView(image: .dayengLogo)
+        let titleImageView = UIImageView(image: .dayengLogo)
+        let tapGestureRecognizer = UITapGestureRecognizer()
+        titleImageView.isUserInteractionEnabled = true
+        titleImageView.addGestureRecognizer(tapGestureRecognizer)
+        tapGestureRecognizer.rx.event.map { _ in }
+            .bind(to: titleViewDidTapped)
+            .disposed(by: disposeBag)
+        
+        navigationItem.titleView = titleImageView
         navigationController?.navigationBar.tintColor = .black
         
         navigationItem.leftBarButtonItem = calendarButton
@@ -201,5 +209,18 @@ final class MainViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
+        titleViewDidTapped.withLatestFrom(output.startBluringIndex)
+            .subscribe(onNext: { [weak self] startBluringIndex in
+                guard let self else { return }
+                let indexPath = IndexPath(
+                    row: (startBluringIndex ?? output.questionsAnswers.value.count)-1,
+                    section: 0
+                )
+                
+                self.collectionView.scrollToItem(at: indexPath,
+                                                 at: .centeredVertically,
+                                                 animated: true)
+            })
+            .disposed(by: disposeBag)
     }
 }
