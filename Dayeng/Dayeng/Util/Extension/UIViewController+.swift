@@ -25,7 +25,7 @@ extension UIViewController {
         if let navigationController = navigationController {
             let indicators = navigationController.view.subviews
                 .filter { $0 is IndicatorView }
-                .map {$0 as? IndicatorView }
+                .map { $0 as? IndicatorView }
             indicators.forEach {
                 $0?.stop()
                 $0?.removeFromSuperview()

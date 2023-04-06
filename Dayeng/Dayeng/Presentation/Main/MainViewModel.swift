@@ -17,7 +17,6 @@ final class MainViewModel {
         var settingButtonDidTapped: Observable<Void>
         var calendarButtonDidTapped: Observable<Void>
         var edidButtonDidTapped: Observable<Int>
-        
     }
     // MARK: - Output
     struct Output {
