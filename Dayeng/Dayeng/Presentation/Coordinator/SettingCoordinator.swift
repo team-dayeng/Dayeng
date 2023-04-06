@@ -34,6 +34,11 @@ final class SettingCoordinator: NSObject, SettingCoordinatorProtocol {
         let useCase = DefaultSettingUseCase(
             appleLoginService: DefaultAppleLoginService(),
             kakaoLoginService: DefaultKakaoLoginService(),
+            authService: DefaultAuthService(
+                firebaseAuthService: DefaultFirebaseAuthService(),
+                appleLoginService: DefaultAppleLoginService(),
+                kakaoLoginService: DefaultKakaoLoginService()
+            ),
             userRepository: userRepository
         )
         let viewModel = SettingViewModel(useCase: useCase)

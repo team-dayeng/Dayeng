@@ -68,17 +68,12 @@ final class SettingViewModel {
         input.logoutDidTapped
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
-                self.useCase.logout()
-                    .subscribe(onNext: { [weak self] _ in
+                self.useCase.signOut()
+                    .subscribe(onSuccess: { [weak self] _ in
                         guard let self else { return }
                         self.showLoginViewController.accept(.logoutSuccess)
-                    }, onError: { error in
-                        if let error = error as? UserError,
-                           error == .notExistCurrentUser {
-                            self.showLoginViewController.accept(.cannotFindUser)
-                        } else {
-                            output.requestFailed.accept(.logoutFail(error: error))
-                        }
+                    }, onFailure: { error in
+                        self.showLoginViewController.accept(.logoutFail(error: error))
                     })
                     .disposed(by: self.disposeBag)
             })

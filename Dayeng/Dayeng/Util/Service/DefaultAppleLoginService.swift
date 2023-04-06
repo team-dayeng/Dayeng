@@ -85,11 +85,21 @@ final class DefaultAppleLoginService: AppleLoginService {
         }
     }
     
-//    func signOut() {
-//        UserDefaults.appleID = nil
-//    }
-//    
-//    func withDrawal() {
+    func getCredential() -> OAuthCredential? {
+        guard let nonce = DefaultAppleLoginService.currentNonce, let idTokenString = DefaultAppleLoginService.idTokenString else {
+            return nil
+        }
+        return OAuthProvider.credential(withProviderID: "apple.com",
+                                                  idToken: idTokenString,
+                                                  rawNonce: nonce)
+    }
+    
+    func signOut() {
+        // idtokenString 저장해서 시도해ㅗ보고, 갱신 필요하면 사인인 후 로그아웃
+        UserDefaults.appleID = nil
+    }
+    
+//    func withdrawal() -> Completable {
 //        UserDefaults.appleID = nil
 //    }
 }

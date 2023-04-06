@@ -21,7 +21,7 @@ enum AlertMessageType {
         case .withdrawalSuccess:
             return "탈퇴 되었습니다."
         case .logoutFail:
-            return "로그아웃에 실패했습니다. 다시 시도해주세요"
+            return "로그아웃에 실패했습니다. 로그인 후 다시 시도해주세요"
         case .withdrawalFail:
             return "탈퇴에 실패했습니다. 다시 시도해주세요"
         case .cannotFindUser:

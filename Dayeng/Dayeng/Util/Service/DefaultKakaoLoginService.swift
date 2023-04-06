@@ -15,8 +15,10 @@ import RxSwift
 
 final class DefaultKakaoLoginService: KakaoLoginService {
     
-    enum KakaoLoginError: Error {
+    enum KakaoLoginServiceError: Error {
+        case notExistSelf
         case notFetchUser
+        case signOutError
     }
     
     private let disposeBag = DisposeBag()
@@ -50,7 +52,10 @@ final class DefaultKakaoLoginService: KakaoLoginService {
     
     func signIn() -> Observable<(email: String, password: String, userName: String)> {
         Observable.create { [weak self] observer in
-            guard let self else { return Disposables.create() }
+            guard let self else {
+                observer.onError(KakaoLoginServiceError.notExistSelf)
+                return Disposables.create()
+            }
             self.loginWithKakaoTalk()
                 .withUnretained(self)
                 .subscribe(onNext: { (owner, _) in
@@ -65,12 +70,38 @@ final class DefaultKakaoLoginService: KakaoLoginService {
         }
     }
     
-    func signOut() -> Completable {
-        UserApi.shared.rx.logout()
+    func signOut() -> Single<Void> {
+        Single.create { [weak self] single in
+            guard let self else {
+                single(.failure(KakaoLoginServiceError.notExistSelf))
+                return Disposables.create()
+            }
+            UserApi.shared.rx.logout()
+                .subscribe(onCompleted: {
+                    single(.success(()))
+                }, onError: { _ in
+                    single(.failure(KakaoLoginServiceError.signOutError))
+                })
+                .disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
     }
     
-    func withdrawal() -> Completable {
-        UserApi.shared.rx.unlink()
+    func withdrawal() -> Single<Void> {
+        Single.create { [weak self] single in
+            guard let self else {
+                single(.failure(KakaoLoginServiceError.notExistSelf))
+                return Disposables.create()
+            }
+            UserApi.shared.rx.unlink()
+                .subscribe(onCompleted: {
+                    single(.success(()))
+                }, onError: {
+                    single(.failure($0))
+                })
+                .disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
     }
     
     private func loginWithKakaoTalk() -> Observable<OAuthToken> {
@@ -87,7 +118,7 @@ final class DefaultKakaoLoginService: KakaoLoginService {
                 guard let email = user.kakaoAccount?.email,
                       let userID = user.id,
                       let userName = user.kakaoAccount?.profile?.nickname else {
-                    throw KakaoLoginError.notFetchUser
+                    throw KakaoLoginServiceError.notFetchUser
                 }
                 return (email, String(userID), userName)
             }

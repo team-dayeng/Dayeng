@@ -13,8 +13,8 @@ final class DefaultSettingUseCase: SettingUseCase {
     
     enum SettingError: Error {
         case notExistSelf
-        case firebaseAuthSignOutError
         case notSocialLogined
+        case authCredentialError
     }
     
     // MARK: - Properties
@@ -23,50 +23,24 @@ final class DefaultSettingUseCase: SettingUseCase {
     // MARK: - Dependencies
     private let appleLoginService: AppleLoginService
     private let kakaoLoginService: KakaoLoginService
+    private let authService: AuthService
     private let userRepository: UserRepository
     
     // MARK: - LifeCycles
     init(
         appleLoginService: AppleLoginService,
         kakaoLoginService: KakaoLoginService,
+        authService: AuthService,
         userRepository: UserRepository
     ) {
         self.appleLoginService = appleLoginService
         self.kakaoLoginService = kakaoLoginService
+        self.authService = authService
         self.userRepository = userRepository
     }
     
-    func logout() -> Observable<Void> {
-        Observable.create { [weak self] observer in
-            guard let self else {
-                observer.onError(SettingError.notExistSelf)
-                return Disposables.create()
-            }
-            
-            guard Auth.auth().currentUser != nil else {
-                observer.onError(UserError.notExistCurrentUser)
-                return Disposables.create()
-            }
-            
-            do {
-                try Auth.auth().signOut()
-                if UserDefaults.appleID == nil {
-                    self.kakaoLogout()
-                        .do(onNext: {
-                            UserDefaults.userID = nil
-                        })
-                        .bind(to: observer)
-                        .disposed(by: self.disposeBag)
-                } else {
-                    UserDefaults.userID = nil
-                    observer.onNext(())
-                }
-            } catch {
-                observer.onError(SettingError.firebaseAuthSignOutError)
-            }
-            
-            return Disposables.create()
-        }
+    func signOut() -> Single<Void> {
+        authService.signOut()
     }
     
     func withdrawal() -> Observable<Void> {
@@ -97,23 +71,6 @@ final class DefaultSettingUseCase: SettingUseCase {
                 }
             }
         
-            return Disposables.create()
-        }
-    }
-    
-    private func kakaoLogout() -> Observable<Void> {
-        Observable.create { [weak self] observer in
-            guard let self else {
-                observer.onError(SettingError.notExistSelf)
-                return Disposables.create()
-            }
-            self.kakaoLoginService.signOut()
-                .subscribe(onCompleted: {
-                    observer.onNext(())
-                }, onError: { error in
-                    observer.onError(error)
-                })
-                .disposed(by: self.disposeBag)
             return Disposables.create()
         }
     }
