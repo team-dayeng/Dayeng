@@ -8,10 +8,10 @@
 import Foundation
 
 extension Date {
-    func convertToString(format: String) -> String {
+    func convertToString(format: String, locale: LocaleType? = nil) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
-        dateFormatter.locale = Locale(identifier: "en_US")
+        dateFormatter.locale = Locale(identifier: locale?.text ?? "en_US")
         return dateFormatter.string(from: self)
     }
     
