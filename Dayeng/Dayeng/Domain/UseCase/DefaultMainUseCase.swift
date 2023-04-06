@@ -46,11 +46,6 @@ final class DefaultMainUseCase: MainUseCase {
     
     private func fetchQuestions() -> Observable<[Question]> {
         Observable.of(DayengDefaults.shared.questions)
-            .map { questions in
-                guard let user = DayengDefaults.shared.user,
-                      questions.count >= user.currentIndex+1 else { return [] }
-                return questions[0..<user.currentIndex+1].map { $0 }
-            }
     }
     
     private func fetchAnswers() -> Observable<[Answer]> {
