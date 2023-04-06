@@ -158,18 +158,14 @@ final class MainEditViewController: UIViewController {
     private func bind() {
         let output = viewModel.transform(
             input: .init(
-                submitButtonTapped: submitButtonDidTapped,
+                submitButtonTapped: submitButtonDidTapped.map { [weak self] _ in
+                        guard let self else { return }
+                        self.showIndicator()
+                    },
                 answerText: answerTextView.rx.text.orEmpty.asObservable(),
                 viewDidLoad: rx.viewDidLoad.map { _ in }.asObservable()
             )
         )
-        
-        submitButtonDidTapped
-            .subscribe(onNext: { [weak self] in
-                guard let self else { return }
-                self.showIndicator()
-            })
-            .disposed(by: disposeBag)
         
         output.question
             .subscribe(on: MainScheduler.instance)
@@ -192,6 +188,7 @@ final class MainEditViewController: UIViewController {
         output.submitResult
             .subscribe(onNext: { [weak self] error in
                 guard let self else { return }
+                self.hideIndicator()
                 if let error {
                     self.showAlert(title: "데잉 작성에 실패했습니다.",
                                    message: error.localizedDescription,
@@ -199,7 +196,6 @@ final class MainEditViewController: UIViewController {
                 } else {
                     self.navigationController?.popViewController(animated: true)
                 }
-                self.hideIndicator()
             })
             .disposed(by: disposeBag)
     }
