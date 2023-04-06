@@ -74,20 +74,15 @@ final class DefaultAlarmSettingUseCase: AlarmSettingUseCase {
     func onAlarm() -> Observable<Bool> {
         Observable.create { [weak self] observer in
             guard let self else { return Disposables.create() }
-            if UserDefaults.selectedAlarmDays.filter({ $0 == false}).count == 7 {
-                UserDefaults.isAlarmOn = true
-                observer.onNext(true)
-            } else {
-                self.userNotificationService.createNotification(time: UserDefaults.alarmDate,
-                                                                daysOfWeek: UserDefaults.selectedAlarmDays)
-                .subscribe(onNext: { allow in
-                    if allow {
-                        UserDefaults.isAlarmOn = true
-                    }
-                    observer.onNext(allow)
-                })
-                .disposed(by: self.disposeBag)
-            }
+            self.userNotificationService.createNotification(time: UserDefaults.alarmDate,
+                                                            daysOfWeek: UserDefaults.selectedAlarmDays)
+            .subscribe(onNext: { allow in
+                if allow {
+                    UserDefaults.isAlarmOn = true
+                }
+                observer.onNext(allow)
+            })
+            .disposed(by: self.disposeBag)
             
             return Disposables.create()
         }

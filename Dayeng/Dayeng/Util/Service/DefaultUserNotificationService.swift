@@ -47,11 +47,15 @@ final class DefaultUserNotificationService: UserNotificationService {
                             return self.createNotification(time: time, weekDay: indexToWeekDay, content: content)
                         }
                         
-                        Observable.zip(createdNotificationResults)
-                            .subscribe(onNext: { results in
-                                observer.onNext(!results.contains(false))
-                            })
-                            .disposed(by: self.disposeBag)
+                        if createdNotificationResults.isEmpty {
+                            observer.onNext(true)
+                        } else {
+                            Observable.zip(createdNotificationResults)
+                                .subscribe(onNext: { results in
+                                    observer.onNext(!results.contains(false))
+                                })
+                                .disposed(by: self.disposeBag)
+                        }
                     } else {
                         observer.onNext(false)
                     }
