@@ -123,6 +123,7 @@ final class DefaultAppleLoginService: AppleLoginService {
     }
     
     func withdrawal() {
+        UserDefaults.isAppleSignedIn = false
         UserDefaults.appleID = nil
     }
 }

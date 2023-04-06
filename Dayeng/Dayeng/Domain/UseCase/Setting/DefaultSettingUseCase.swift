@@ -50,7 +50,6 @@ final class DefaultSettingUseCase: SettingUseCase {
         Single.zip(authService.withdrawal(), deleteUser())
             .map { _ in }
             .do(onSuccess: {
-                UserDefaults.userName = nil
                 UserDefaults.userID = nil
             }, onError: { _ in
                 UserDefaults.userID = nil

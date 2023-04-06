@@ -47,14 +47,14 @@ final class DefaultLoginUseCase: LoginUseCase {
             self.appleLoginService.signIn()
                 .subscribe(onNext: { [weak self] (credential, userName) in
                     guard let self else { return }
-                
                     self.firebaseSignIn(credential: credential, userName: userName)
-//                        .do(onError: {
-//                            // 애플 로그아웃
-//                        })
+                        .do(onNext: {
+                            UserDefaults.isAppleSignedIn = true
+                        }, onError: { _ in
+                            UserDefaults.appleID = nil
+                        })
                         .bind(to: observer)
                         .disposed(by: self.disposeBag)
-                    
                 }, onError: { error in
                     UserDefaults.appleID = nil
                     observer.onError(error)
@@ -130,15 +130,22 @@ final class DefaultLoginUseCase: LoginUseCase {
                         .disposed(by: self.disposeBag)
                     
                 } else {    // 이전 로그인 기록 O
-                    self.userRepository.fetchUser(userID: uid)
-                        .map { user in
-                            DayengDefaults.shared.user = user
-                            return
-                        }
-                        .bind(to: observer)
-                        .disposed(by: self.disposeBag)
+                    if UserDefaults.isAppleSignedIn {
+                        self.userRepository.fetchUser(userID: uid)
+                            .map { user in
+                                UserDefaults.userID = user.uid
+                                DayengDefaults.shared.user = user
+                                return
+                            }
+                            .bind(to: observer)
+                            .disposed(by: self.disposeBag)
+                    } else if let userName = UserDefaults.userName {    // 애플 탈퇴 후 애플 로그인하는 경우
+                        let newUser = User(uid: uid, name: userName)
+                        self.uploadUser(newUser)
+                            .bind(to: observer)
+                            .disposed(by: self.disposeBag)
+                    }
                 }
-                
             }
             return Disposables.create()
         }
