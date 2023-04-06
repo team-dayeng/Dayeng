@@ -30,11 +30,23 @@ final class AlarmSettingViewController: UIViewController {
         return label
     }()
     
+    private lazy var dateDiscriptionLabel: UILabel = {
+        let label = UILabel()
+        label.text = ""
+        label.isHidden = true
+        label.textColor = .gray
+        label.font = .systemFont(ofSize: 16, weight: .regular)
+        
+        return label
+    }()
+    
     private lazy var discriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "설정한 시간에 오늘의 질문을 알려드려요."
         label.textColor = .gray
         label.font = .systemFont(ofSize: 16, weight: .regular)
+        label.textAlignment = .left
+        label.sizeToFit()
         
         return label
     }()
@@ -126,6 +138,7 @@ final class AlarmSettingViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         configureNavigationBar()
     }
     
@@ -135,6 +148,7 @@ final class AlarmSettingViewController: UIViewController {
         view.addBackgroundImage()
         view.addSubview(contentView)
         contentView.addSubview(titleLable)
+        contentView.addSubview(dateDiscriptionLabel)
         contentView.addSubview(discriptionLabel)
         contentView.addSubview(switchButton)
         contentView.addSubview(hiddenContentView)
@@ -155,6 +169,11 @@ final class AlarmSettingViewController: UIViewController {
         titleLable.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(15)
             $0.top.equalToSuperview().inset(20)
+        }
+        
+        dateDiscriptionLabel.snp.makeConstraints {
+            $0.leading.equalTo(titleLable.snp.trailing).offset(8)
+            $0.bottom.equalTo(titleLable.snp.bottom)
         }
         
         discriptionLabel.snp.makeConstraints {
@@ -199,12 +218,6 @@ final class AlarmSettingViewController: UIViewController {
             $0.top.equalTo(daysOfWeek.snp.bottom).offset(50)
             $0.height.equalTo(50)
         }
-        
-        switchButton.rx.isOn
-            .subscribe(onNext: { [weak self] isOn in
-                guard let self else { return }
-                    self.showSwitchAnimation(isOn)
-            }).disposed(by: disposeBag)
     }
     
     private func configureNavigationBar() {
@@ -228,20 +241,21 @@ final class AlarmSettingViewController: UIViewController {
         )
         
         let output = viewModel.transform(input: input)
-        
+  
         output.initialyIsAlarmOn
             .asDriver(onErrorJustReturn: false)
             .drive(onNext: { [weak self] isOn in
                 guard let self else { return }
-                self.switchButton.isOn = isOn
-                self.showSwitchAnimation(isOn)
-            }).disposed(by: disposeBag)
+                self.configureSwitchView(isOn)
+            })
+            .disposed(by: disposeBag)
         
         output.dayList
             .asDriver(onErrorJustReturn: "안 함")
             .drive(onNext: { [weak self] dayList in
                 guard let self else { return }
                 self.dayListLabel.text = dayList
+                self.dateDiscriptionLabel.text = "\(dayList) " + (self.dateDiscriptionLabel.text ?? "")
             }).disposed(by: disposeBag)
         
         output.setDate
@@ -249,6 +263,7 @@ final class AlarmSettingViewController: UIViewController {
             .drive(onNext: { [weak self] date in
                 guard let self else { return }
                 self.timePicker.date = date
+                self.dateDiscriptionLabel.text = date.convertToString(format: "a HH : mm", locale: .korea)
             }).disposed(by: disposeBag)
         
         output.registResult
@@ -256,6 +271,8 @@ final class AlarmSettingViewController: UIViewController {
             .drive(onNext: { [weak self] result in
                 guard let self else { return }
                 switch result {
+                case .change(let isOn):
+                    self.showSwitchAnimation(isOn)
                 case .notAuthorized:
                     self.showAlert(title: "알림 서비스를 사용할 수 없습니다.",
                                    message: "기기의 '설정 > Dayeng'에서\n 알림 접근을 허용해주세요.",
@@ -266,27 +283,47 @@ final class AlarmSettingViewController: UIViewController {
                         UIApplication.shared.open(settingURL)
                     })
                     self.switchButton.isOn = false
-                    self.showSwitchAnimation(false)
                 case .notInputDays:
                         self.showAlert(title: "요일을 선택해 주세요.", type: .oneButton)
-                case .success:
+                case .success(let selectedDays, let date):
+                    self.dateDiscriptionLabel.text = """
+                    \(selectedDays) \
+                    \(date.convertToString(format: "a HH : mm", locale: .korea))
+                    """
                     self.showAlert(title: "알림 설정이 완료되었습니다.", type: .oneButton)
                 }
             }).disposed(by: disposeBag)
     }
     
+    private func configureSwitchView(_ isOn: Bool) {
+        switchButton.isOn = isOn
+        hiddenContentView.isHidden = !isOn
+        dateDiscriptionLabel.isHidden = !isOn
+        if isOn {
+            self.contentView.snp.updateConstraints {
+                $0.height.equalTo(450)
+            }
+        } else {
+            self.contentView.snp.updateConstraints {
+                $0.height.equalTo(100)
+            }
+        }
+    }
+    
     private func showSwitchAnimation(_ isOn: Bool) {
         if isOn {
-            UIView.animate(withDuration: 0.51) { [weak self] in
+            UIView.animate(withDuration: 0.5) { [weak self] in
                 guard let self else { return }
                 self.contentView.snp.updateConstraints {
                     $0.height.equalTo(450)
                 }
                 self.view.layoutIfNeeded()
             } completion: { _ in
+                self.dateDiscriptionLabel.isHidden = false
                 self.hiddenContentView.isHidden = false
             }
         } else {
+            self.dateDiscriptionLabel.isHidden = true
             self.hiddenContentView.isHidden = true
             UIView.animate(withDuration: 0.5) { [weak self] in
                 guard let self else { return }
@@ -294,9 +331,8 @@ final class AlarmSettingViewController: UIViewController {
                     $0.height.equalTo(100)
                 }
                 self.view.layoutIfNeeded()
-            } completion: { _ in
-                self.hiddenContentView.isHidden = true
             }
         }
     }
 }
+

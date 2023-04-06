@@ -12,10 +12,10 @@ import RxRelay
 protocol AlarmSettingUseCase {
     var selectedDays: BehaviorRelay<[Bool]> { get set }
     var alarmDate: BehaviorRelay<Date> { get set }
-    var initialyIsAlarmOn: BehaviorRelay<Bool> { get set }
     var isAuthorized: PublishRelay<Bool> { get set }
     var selectedDaysDescription: String { get }
-    func registAlarm(_ date: Date) -> Observable<Void>
-    func onAlarm() -> Observable<Void>
+    func checkInitialyIsAlarmOn() -> Observable<Bool>
+    func registAlarm(_ date: Date) -> Observable<Bool>
+    func onAlarm() -> Observable<Bool>
     func offAlarm()
 }

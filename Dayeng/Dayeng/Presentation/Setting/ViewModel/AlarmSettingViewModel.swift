@@ -13,7 +13,8 @@ final class AlarmSettingViewModel {
     enum RegistResult {
         case notAuthorized
         case notInputDays
-        case success
+        case success(String, Date)
+        case change(Bool)
     }
     // MARK: - Input
     struct Input {
@@ -25,7 +26,7 @@ final class AlarmSettingViewModel {
     }
     // MARK: - Output
     struct Output {
-        var initialyIsAlarmOn = ReplayRelay<Bool>.create(bufferSize: 1)
+        var initialyIsAlarmOn = PublishSubject<Bool>()
         var dayList = PublishRelay<String>()
         var setDate = ReplayRelay<Date>.create(bufferSize: 1)
         var registResult = PublishRelay<RegistResult>()
@@ -44,11 +45,11 @@ final class AlarmSettingViewModel {
     func transform(input: Input) -> Output {
         let output = Output()
         
-        self.useCase.initialyIsAlarmOn
+        useCase.checkInitialyIsAlarmOn()
             .bind(to: output.initialyIsAlarmOn)
-           .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         
-        self.useCase.alarmDate
+        useCase.alarmDate
             .bind(to: output.setDate)
             .disposed(by: self.disposeBag)
         
@@ -72,10 +73,13 @@ final class AlarmSettingViewModel {
                     return
                 }
                 self.useCase.registAlarm(date)
-                    .subscribe(onNext: {
-                        output.registResult.accept(.success)
-                    }, onError: { _ in
-                        output.registResult.accept(.notAuthorized)
+                    .subscribe(onNext: { allow in
+                        if allow {
+                            output.registResult.accept(.success(self.useCase.selectedDaysDescription,
+                                                                date))
+                        } else {
+                            output.registResult.accept(.notAuthorized)
+                        }
                     }).disposed(by: self.disposeBag)
             }).disposed(by: disposeBag)
         
@@ -83,11 +87,16 @@ final class AlarmSettingViewModel {
             .subscribe(onNext: { isOn in
                 if isOn {
                     self.useCase.onAlarm()
-                        .subscribe(onError: { _ in
-                            output.registResult.accept(.notAuthorized)
+                        .subscribe(onNext: { allow in
+                            if allow {
+                                output.registResult.accept(.change(allow))
+                            } else {
+                                output.registResult.accept(.notAuthorized)
+                            }
                         }).disposed(by: self.disposeBag)
                 } else {
                     self.useCase.offAlarm()
+                    output.registResult.accept(.change(false))
                 }
             }).disposed(by: disposeBag)
         return output
