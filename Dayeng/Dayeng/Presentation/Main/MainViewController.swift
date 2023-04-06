@@ -177,8 +177,9 @@ final class MainViewController: UIViewController {
             .disposed(by: disposeBag)
         
         collectionView.rx.willDisplayCell
-            .subscribe(onNext: { cell, indexPath in
-                guard let cell = cell as? MainCell else { return }
+            .subscribe(onNext: { [weak self] cell, indexPath in
+                guard let self,
+                      let cell = cell as? MainCell else { return }
                 if let initialIndexPath = self.initialIndexPath {
                     self.collectionView.scrollToItem(at: initialIndexPath,
                                                      at: .centeredVertically,
@@ -193,7 +194,8 @@ final class MainViewController: UIViewController {
             .disposed(by: disposeBag)
         
         collectionView.rx.didEndDisplayingCell
-            .subscribe(onNext: { _, indexPath in
+            .subscribe(onNext: { [weak self] _, indexPath in
+                guard let self else { return }
                 self.editButtonDisposables[indexPath.row]?.dispose()
                 self.editButtonDisposables.removeValue(forKey: indexPath.row)
             })
