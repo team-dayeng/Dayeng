@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 
 protocol UserNotificationService {
-    func requestAuthorization() -> Observable<Void>
-    func createNotification(time: Date, daysOfWeek: [Bool]) -> Observable<Void>
+    func checkAlertSettings() -> Observable<Bool>
+    func createNotification(time: Date, daysOfWeek: [Bool]) -> Observable<Bool>
     func removeAllNotifications()
 }
