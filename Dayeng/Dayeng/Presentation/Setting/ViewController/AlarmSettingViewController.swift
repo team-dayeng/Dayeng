@@ -255,7 +255,11 @@ final class AlarmSettingViewController: UIViewController {
             .drive(onNext: { [weak self] dayList in
                 guard let self else { return }
                 self.dayListLabel.text = dayList
-                self.dateDiscriptionLabel.text = "\(dayList) " + (self.dateDiscriptionLabel.text ?? "")
+                if dayList != "안 함" {
+                    self.dateDiscriptionLabel.text = "\(dayList) " + (self.dateDiscriptionLabel.text ?? "")
+                } else {
+                    self.dateDiscriptionLabel.text = ""
+                }
             }).disposed(by: disposeBag)
         
         output.setDate
@@ -272,6 +276,7 @@ final class AlarmSettingViewController: UIViewController {
                 guard let self else { return }
                 switch result {
                 case .change(let isOn):
+                    print(isOn)
                     self.showSwitchAnimation(isOn)
                 case .notAuthorized:
                     self.showAlert(title: "알림 서비스를 사용할 수 없습니다.",
@@ -335,4 +340,3 @@ final class AlarmSettingViewController: UIViewController {
         }
     }
 }
-
