@@ -128,6 +128,7 @@
 		E5D43435298A3291004EDFC7 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43434298A3291004EDFC7 /* CalendarViewController.swift */; };
 		E5D43437298A3905004EDFC7 /* CommonCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43436298A3905004EDFC7 /* CommonCalendarCell.swift */; };
 		E5D43439298A4892004EDFC7 /* NSTextAttachment+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43438298A4892004EDFC7 /* NSTextAttachment+.swift */; };
+		E5F08FF329DEB7E900B7DD47 /* LocaleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F08FF229DEB7E900B7DD47 /* LocaleType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -242,6 +243,7 @@
 		E5D43434298A3291004EDFC7 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		E5D43436298A3905004EDFC7 /* CommonCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonCalendarCell.swift; sourceTree = "<group>"; };
 		E5D43438298A4892004EDFC7 /* NSTextAttachment+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextAttachment+.swift"; sourceTree = "<group>"; };
+		E5F08FF229DEB7E900B7DD47 /* LocaleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -616,6 +618,7 @@
 				47D1835C298A92C10058C0EC /* AuthType.swift */,
 				47549423298F966B008B581D /* AlertType.swift */,
 				E5AE4F3229B0E1F30029B200 /* ToastType.swift */,
+				E5F08FF229DEB7E900B7DD47 /* LocaleType.swift */,
 				E552C1F1298B911F00F51179 /* OwnerType.swift */,
 				E569162F2998D429006D7231 /* PageType.swift */,
 				76003E13299E448800F15CAE /* MessageUIType.swift */,
@@ -893,6 +896,7 @@
 				76F6C0AD298D985F00A124CD /* Date+.swift in Sources */,
 				474A62B829A2346A002176AB /* AuthenticationServices+Rx.swift in Sources */,
 				474A62B629A22E42002176AB /* ASAuthorizationControllerProxy.swift in Sources */,
+				E5F08FF329DEB7E900B7DD47 /* LocaleType.swift in Sources */,
 				E5AE4F3D29B37B120029B200 /* CalendarUseCase.swift in Sources */,
 				47E0A5E7299774C20093645B /* QuestionRepository.swift in Sources */,
 				E569162B2998D1D9006D7231 /* WebViewController.swift in Sources */,
