@@ -276,7 +276,6 @@ final class AlarmSettingViewController: UIViewController {
                 guard let self else { return }
                 switch result {
                 case .change(let isOn):
-                    print(isOn)
                     self.showSwitchAnimation(isOn)
                 case .notAuthorized:
                     self.showAlert(title: "알림 서비스를 사용할 수 없습니다.",
