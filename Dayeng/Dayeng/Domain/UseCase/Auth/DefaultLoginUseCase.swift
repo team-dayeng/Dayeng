@@ -151,7 +151,7 @@ final class DefaultLoginUseCase: LoginUseCase {
         }
     }
     
-    /// 카카오 로그인시 사용
+    /// 카카오 로그인시 사용 (이전 가입 기록 X)
     private func firebaseSignUp(email: String, password: String, userName: String) -> Observable<Void> {
         Observable.create { observer in
             Auth.auth().createUser(withEmail: email, password: password) { [weak self] (_, error) in
@@ -183,7 +183,7 @@ final class DefaultLoginUseCase: LoginUseCase {
         }
     }
     
-    /// 카카오 로그인시 사용 (이전 로그인 기록 O)
+    /// 카카오 로그인시 사용 (이전 가입 기록 O)
     private func firebaseSignIn(email: String, password: String, userName: String) -> Observable<Void> {
         Observable.create { observer in
             Auth.auth().signIn(withEmail: email, password: password) { [weak self] (_, error) in
