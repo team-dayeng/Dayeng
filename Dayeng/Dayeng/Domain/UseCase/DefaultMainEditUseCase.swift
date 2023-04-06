@@ -31,7 +31,7 @@ final class DefaultMainEditUseCase: MainEditUseCase {
     }
     
     func fetchQuestion() -> Observable<Question> {
-        Observable.of(DayengDefaults.shared.questions[index])
+        Observable.just(DayengDefaults.shared.questions[index])
     }
     
     func fetchAnswer() -> Observable<Answer?> {
