@@ -10,4 +10,5 @@ import RxSwift
 
 protocol AuthService {
     func signOut() -> Single<Void>
+    func withdrawal() -> Single<Void>
 }

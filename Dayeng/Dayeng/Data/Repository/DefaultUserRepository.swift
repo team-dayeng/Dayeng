@@ -12,6 +12,7 @@ final class DefaultUserRepository: UserRepository {
     
     enum UserRepositoryError: Error {
         case noUserError
+        case notExistSelf
     }
     
     let firestoreService: FirestoreDatabaseService
@@ -106,7 +107,20 @@ final class DefaultUserRepository: UserRepository {
                                                     friends: user.friends))
 	}
 
-    func deleteUser(userID: String) -> Observable<Void> {
-        firestoreService.deleteDocument(api: .user(userID: userID))
+    func deleteUser(userID: String) -> Single<Void> {
+        Single.create { [weak self] single in
+            guard let self else {
+                single(.failure(UserRepositoryError.notExistSelf))
+                return Disposables.create()
+            }
+            self.firestoreService.deleteDocument(api: .user(userID: userID))
+                .subscribe(onNext: {
+                    single(.success(()))
+                }, onError: {
+                    single(.failure($0))
+                })
+                .disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
     }
 }

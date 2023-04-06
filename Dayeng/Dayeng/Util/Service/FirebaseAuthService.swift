@@ -7,7 +7,10 @@
 
 import Foundation
 import RxSwift
+import FirebaseAuth
 
 protocol FirebaseAuthService {
     func signOut() -> Single<Void>
+    func withdrawal() -> Single<Void>
+    func reauthenticateAuth(with credential: AuthCredential) -> Single<Void>
 }

@@ -83,16 +83,11 @@ final class SettingViewModel {
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
                 self.useCase.withdrawal()
-                    .subscribe(onNext: { [weak self] _ in
+                    .subscribe(onSuccess: { [weak self] _ in
                         guard let self else { return }
                         self.showLoginViewController.accept(.withdrawalSuccess)
-                    }, onError: { error in
-                        if let error = error as? UserError,
-                           error == .notExistCurrentUser {
-                            self.showLoginViewController.accept(.cannotFindUser)
-                        } else {
-                            output.requestFailed.accept(.withdrawalFail(error: error))
-                        }
+                    }, onFailure: { error in
+                        self.showLoginViewController.accept(.withdrawalFail(error: error))
                     })
                     .disposed(by: self.disposeBag)
             })

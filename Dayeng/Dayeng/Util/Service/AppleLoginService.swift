@@ -12,7 +12,7 @@ import FirebaseAuth
 protocol AppleLoginService {
     func signIn() -> Observable<(credential: OAuthCredential, name: String?)>
     func isLoggedIn() -> Observable<Bool>
-    func getCredential() -> OAuthCredential?
+    func reauthenticate() -> Observable<OAuthCredential>
     func signOut()
-//    func withdrawal() -> Completable
+    func withdrawal()
 }

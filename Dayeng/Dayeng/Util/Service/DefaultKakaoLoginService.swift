@@ -19,6 +19,7 @@ final class DefaultKakaoLoginService: KakaoLoginService {
         case notExistSelf
         case notFetchUser
         case signOutError
+        case withdrawalError
     }
     
     private let disposeBag = DisposeBag()
@@ -96,8 +97,8 @@ final class DefaultKakaoLoginService: KakaoLoginService {
             UserApi.shared.rx.unlink()
                 .subscribe(onCompleted: {
                     single(.success(()))
-                }, onError: {
-                    single(.failure($0))
+                }, onError: { _ in
+                    single(.failure(KakaoLoginServiceError.withdrawalError))
                 })
                 .disposed(by: self.disposeBag)
             return Disposables.create()
