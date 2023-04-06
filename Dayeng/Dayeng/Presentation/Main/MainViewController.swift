@@ -40,10 +40,11 @@ final class MainViewController: UIViewController {
     
     // MARK: - Properties
     var disposeBag = DisposeBag()
-    let viewModel: MainViewModel
-    private let editButtonDidTapped = PublishSubject<Int>()
-    var editButtonDisposables = [Int: Disposable]()
-    var initialIndexPath: IndexPath?
+    private let viewModel: MainViewModel
+    private let editButtonDidTapped = PublishRelay<Int>()
+    private let titleViewDidTapped = PublishRelay<Void>()
+    private var editButtonDisposables = [Int: Disposable]()
+    private var initialIndexPath: IndexPath?
     
     // MARK: - Lifecycles
     init(viewModel: MainViewModel) {
