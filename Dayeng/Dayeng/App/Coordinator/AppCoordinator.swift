@@ -85,11 +85,12 @@ final class AppCoordinator: AppCoordinatorProtocol {
                 guard let self else { return }
                 self.navigationController.viewControllers.last?.hideIndicator()
                 self.showMainViewController()
-            }, onError: { [weak self] _ in
+            }, onError: { [weak self] error in
                 guard let self else { return }
+                let loginFailAlert = AlertMessageType.loginFail(error: error)
                 self.navigationController.showAlert(
-                    title: "로그인에 실패했습니다",
-                    message: "다시 시도해주세요",
+                    title: loginFailAlert.title,
+                    message: loginFailAlert.message,
                     type: .oneButton,
                     rightActionHandler: { [weak self] in
                         guard let self else { return }
