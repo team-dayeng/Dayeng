@@ -15,7 +15,7 @@ extension UserDefaults {
         static let appleID = "appleID"
         static let userID = "userID"
         static let userName = "userName"
-        static let isAppleSignedIn = "isAppleSignedIn"
+        static let isAppleSignedUp = "isAppleSignedUp"
     }
     
     class var selectedAlarmDays: [Bool] {
@@ -67,10 +67,10 @@ extension UserDefaults {
         }
     }
     
-    class var isAppleSignedIn: Bool {
-        get { standard.bool(forKey: DayengKeys.isAppleSignedIn) }
+    class var isAppleSignedUp: Bool {
+        get { standard.bool(forKey: DayengKeys.isAppleSignedUp) }
         set {
-            standard.set(newValue, forKey: DayengKeys.isAppleSignedIn)
+            standard.set(newValue, forKey: DayengKeys.isAppleSignedUp)
         }
     }
 }

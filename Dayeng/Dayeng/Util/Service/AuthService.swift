@@ -9,6 +9,8 @@ import Foundation
 import RxSwift
 
 protocol AuthService {
+    func appleSignUp() -> Single<User>
+    func appleSignIn() -> Single<String>
     func signOut() -> Single<Void>
     func withdrawal() -> Single<Void>
 }

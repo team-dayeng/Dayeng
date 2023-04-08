@@ -26,7 +26,7 @@ final class DefaultAppleLoginService: AppleLoginService {
         case notAppleLoggedIn
     }
     
-    func signIn() -> Observable<(credential: OAuthCredential, name: String?)> {
+    func signIn() -> Observable<(credential: OAuthCredential, name: String)> {
         guard let nonce = randomNonceString() else {
             return Observable.error(AppleLoginError.cannotCreateNonce)
         }
@@ -56,7 +56,10 @@ final class DefaultAppleLoginService: AppleLoginService {
                 
                 let fullName = (appleIDCredential.fullName?.familyName ?? "")
                                 + (appleIDCredential.fullName?.givenName ?? "")
-                let userName = fullName != "" ? fullName : nil
+                
+                guard let userName = fullName != "" ? fullName : UserDefaults.userName else {
+                    throw AppleLoginError.cannotFetchUserName
+                }
 
                 UserDefaults.appleID = appleIDCredential.user
                 
@@ -123,7 +126,7 @@ final class DefaultAppleLoginService: AppleLoginService {
     }
     
     func withdrawal() {
-        UserDefaults.isAppleSignedIn = false
+        UserDefaults.isAppleSignedUp = false
         UserDefaults.appleID = nil
     }
 }

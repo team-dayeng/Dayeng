@@ -10,6 +10,7 @@ import RxSwift
 import FirebaseAuth
 
 protocol FirebaseAuthService {
+    func signUp(with credential: OAuthCredential) -> Single<String>
     func signOut() -> Single<Void>
     func withdrawal() -> Single<Void>
     func reauthenticateAuth(with credential: AuthCredential) -> Single<Void>

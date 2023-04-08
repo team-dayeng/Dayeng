@@ -30,6 +30,61 @@ final class DefaultAuthService: AuthService {
         self.kakaoLoginService = kakaoLoginService
     }
     
+    func appleSignUp() -> Single<User> {
+        Single.create { [weak self] single in
+            guard let self else {
+                single(.failure(AuthError.notExistSelf))
+                return Disposables.create()
+            }
+            self.appleLoginService.signIn()
+                .subscribe(onNext: { [weak self] (credential, userName) in
+                    guard let self else {
+                        single(.failure(AuthError.notExistSelf))
+                        return
+                    }
+                    self.firebaseAuthService.signUp(with: credential)
+                        .subscribe(onSuccess: { uid in
+                            let newUser = User(uid: uid, name: userName)
+                            single(.success(newUser))
+                        }, onFailure: {
+                            single(.failure($0))
+                        })
+                        .disposed(by: self.disposeBag)
+                }, onError: {
+                    single(.failure($0))
+                })
+                .disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
+    }
+    
+    func appleSignIn() -> Single<String> {
+        Single.create { [weak self] single in
+            guard let self else {
+                single(.failure(AuthError.notExistSelf))
+                return Disposables.create()
+            }
+            self.appleLoginService.signIn()
+                .subscribe(onNext: { [weak self] (credential, _) in
+                    guard let self else {
+                        single(.failure(AuthError.notExistSelf))
+                        return
+                    }
+                    self.firebaseAuthService.signUp(with: credential)
+                        .subscribe(onSuccess: { uid in
+                            single(.success(uid))
+                        }, onFailure: {
+                            single(.failure($0))
+                        })
+                        .disposed(by: self.disposeBag)
+                }, onError: {
+                    single(.failure($0))
+                })
+                .disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
+    }
+    
     func signOut() -> Single<Void> {
         if UserDefaults.appleID == nil {
             return Single.zip(kakaoLoginService.signOut(), firebaseAuthService.signOut())

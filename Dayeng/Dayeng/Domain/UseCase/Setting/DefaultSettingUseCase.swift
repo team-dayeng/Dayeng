@@ -49,11 +49,9 @@ final class DefaultSettingUseCase: SettingUseCase {
     func withdrawal() -> Single<Void> {
         Single.zip(authService.withdrawal(), deleteUser())
             .map { _ in }
-            .do(onSuccess: {
+            .do {
                 UserDefaults.userID = nil
-            }, onError: { _ in
-                UserDefaults.userID = nil
-            })
+            }
     }
     
     /// DB에서 user 삭제

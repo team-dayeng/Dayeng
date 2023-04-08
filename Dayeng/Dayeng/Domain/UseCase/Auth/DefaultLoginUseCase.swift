@@ -18,7 +18,7 @@ final class DefaultLoginUseCase: LoginUseCase {
     
     // MARK: - Properties
     private let disposeBag = DisposeBag()
-    private let appleLoginService: AppleLoginService
+    private let authService: AuthService
     private let kakaoLoginService: KakaoLoginService
     
     // MARK: - Dependencies
@@ -27,11 +27,11 @@ final class DefaultLoginUseCase: LoginUseCase {
     // MARK: - LifeCycles
     init(
         userRepository: UserRepository,
-        appleLoginService: AppleLoginService,
+        authService: AuthService,
         kakaoLoginService: KakaoLoginService
     ) {
         self.userRepository = userRepository
-        self.appleLoginService = appleLoginService
+        self.authService = authService
         self.kakaoLoginService = kakaoLoginService
     }
     
@@ -43,26 +43,47 @@ final class DefaultLoginUseCase: LoginUseCase {
                 observer.onError(LoginError.notExistSelf)
                 return Disposables.create()
             }
-            
-            self.appleLoginService.signIn()
-                .subscribe(onNext: { [weak self] (credential, userName) in
-                    guard let self else { return }
-                    self.firebaseSignIn(credential: credential, userName: userName)
-                        .do(onNext: {
-                            UserDefaults.isAppleSignedIn = true
-                        }, onError: { _ in
-                            UserDefaults.appleID = nil
-                        })
-                        .bind(to: observer)
-                        .disposed(by: self.disposeBag)
-                }, onError: { error in
-                    UserDefaults.appleID = nil
-                    observer.onError(error)
-                })
-                .disposed(by: self.disposeBag)
-            
+            if UserDefaults.isAppleSignedUp {   // 회원가입 O
+                self.authService.appleSignIn()
+                    .subscribe(onSuccess: { [weak self] uid in
+                        guard let self else {
+                            observer.onError(LoginError.notExistSelf)
+                            return
+                        }
+                        self.userRepository.fetchUser(userID: uid)
+                            .map { user in
+                                UserDefaults.userID = user.uid
+                                UserDefaults.userName = user.name
+                                DayengDefaults.shared.user = user
+                                return
+                            }
+                            .bind(to: observer)
+                            .disposed(by: self.disposeBag)
+                    }, onFailure: {
+                        observer.onError($0)
+                    })
+                    .disposed(by: self.disposeBag)
+            } else {    // 회원가입 X 또는 탈퇴
+                self.authService.appleSignUp()
+                    .subscribe(onSuccess: { [weak self] newUser in
+                        guard let self else {
+                            observer.onError(LoginError.notExistSelf)
+                            return
+                        }
+                        self.uploadUser(newUser)
+                            .do(onNext: {
+                                UserDefaults.isAppleSignedUp = true
+                            })
+                            .bind(to: observer)
+                            .disposed(by: self.disposeBag)
+                    })
+                    .disposed(by: self.disposeBag)
+            }
             return Disposables.create()
         }
+        .do(onError: { _ in
+            UserDefaults.appleID = nil
+        })
     }
     
     func kakaoSignIn() -> Observable<Void> {
@@ -102,52 +123,6 @@ final class DefaultLoginUseCase: LoginUseCase {
             try Auth.auth().signOut()
         } catch {
             print("sign out error: \(error)")
-        }
-    }
-    
-    /// 애플 로그인시 사용
-    private func firebaseSignIn(credential: OAuthCredential, userName: String?) -> Observable<Void> {
-        Observable.create { observer in
-            Auth.auth().signIn(with: credential) { [weak self] (_, error) in
-                guard let self else { return }
-                
-                if let error {
-                    observer.onError(error)
-                    return
-                }
-                
-                guard let uid = Auth.auth().currentUser?.uid else {
-                    observer.onError(LoginError.cannotFetchUserUid)
-                    return
-                }
-                
-                if let userName {   // 첫 로그인
-                    UserDefaults.userName = userName
-                    
-                    let newUser = User(uid: uid, name: userName)
-                    self.uploadUser(newUser)
-                        .bind(to: observer)
-                        .disposed(by: self.disposeBag)
-                    
-                } else {    // 이전 로그인 기록 O
-                    if UserDefaults.isAppleSignedIn {
-                        self.userRepository.fetchUser(userID: uid)
-                            .map { user in
-                                UserDefaults.userID = user.uid
-                                DayengDefaults.shared.user = user
-                                return
-                            }
-                            .bind(to: observer)
-                            .disposed(by: self.disposeBag)
-                    } else if let userName = UserDefaults.userName {    // 애플 탈퇴 후 애플 로그인하는 경우
-                        let newUser = User(uid: uid, name: userName)
-                        self.uploadUser(newUser)
-                            .bind(to: observer)
-                            .disposed(by: self.disposeBag)
-                    }
-                }
-            }
-            return Disposables.create()
         }
     }
     
@@ -216,6 +191,7 @@ final class DefaultLoginUseCase: LoginUseCase {
         userRepository.uploadUser(user: user)
             .do(onNext: {
                 UserDefaults.userID = user.uid
+                UserDefaults.userName = user.name
                 DayengDefaults.shared.user = user
             }, onError: { [weak self] _ in
                 guard let self else { return }
