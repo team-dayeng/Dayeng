@@ -121,7 +121,6 @@ final class DefaultAppleLoginService: AppleLoginService {
     }
     
     func signOut() {
-        // idtokenString 저장해서 시도해ㅗ보고, 갱신 필요하면 사인인 후 로그아웃
         UserDefaults.appleID = nil
     }
     

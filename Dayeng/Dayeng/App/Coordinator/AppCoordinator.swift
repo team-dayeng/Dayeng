@@ -73,11 +73,9 @@ final class AppCoordinator: AppCoordinatorProtocol {
             appleLoginService: DefaultAppleLoginService(),
             kakaoLoginService: DefaultKakaoLoginService()
         )
-        let kakaoLoginService = DefaultKakaoLoginService()
         let useCase = DefaultLoginUseCase(
             userRepository: userRepository,
-            authService: authService,
-            kakaoLoginService: kakaoLoginService
+            authService: authService
         )
         let viewModel = LoginViewModel(useCase: useCase)
         let viewController = LoginViewController(viewModel: viewModel)

@@ -85,6 +85,36 @@ final class DefaultAuthService: AuthService {
         }
     }
     
+    func kakaoSignIn() -> Single<(user: User, isAlreadySignUp: Bool)> {
+        Single.create { [weak self] single in
+            guard let self else {
+                single(.failure(AuthError.notExistSelf))
+                return Disposables.create()
+            }
+            
+            self.kakaoLoginService.signIn()
+                .subscribe(onNext: { [weak self] (email, password, userName) in
+                    guard let self else {
+                        single(.failure(AuthError.notExistSelf))
+                        return
+                    }
+                    self.firebaseAuthService.signUp(email: email, password: password)
+                        .subscribe(onSuccess: { (uid, isAlreadySignUp) in
+                            let user = User(uid: uid, name: userName)
+                            single(.success((user, isAlreadySignUp)))
+                        }, onFailure: {
+                            single(.failure($0))
+                        })
+                        .disposed(by: self.disposeBag)
+                }, onError: {
+                    single(.failure($0))
+                })
+                .disposed(by: self.disposeBag)
+            
+            return Disposables.create()
+        }
+    }
+    
     func signOut() -> Single<Void> {
         if UserDefaults.appleID == nil {
             return Single.zip(kakaoLoginService.signOut(), firebaseAuthService.signOut())

@@ -13,13 +13,11 @@ final class DefaultLoginUseCase: LoginUseCase {
     
     enum LoginError: Error {
         case notExistSelf
-        case cannotFetchUserUid
     }
     
     // MARK: - Properties
     private let disposeBag = DisposeBag()
     private let authService: AuthService
-    private let kakaoLoginService: KakaoLoginService
     
     // MARK: - Dependencies
     private let userRepository: UserRepository
@@ -27,16 +25,13 @@ final class DefaultLoginUseCase: LoginUseCase {
     // MARK: - LifeCycles
     init(
         userRepository: UserRepository,
-        authService: AuthService,
-        kakaoLoginService: KakaoLoginService
+        authService: AuthService
     ) {
         self.userRepository = userRepository
         self.authService = authService
-        self.kakaoLoginService = kakaoLoginService
     }
     
     // MARK: - Helpers
-    
     func appleSignIn() -> Observable<Void> {
         Observable.create { [weak self] observer in
             guard let self else {
@@ -50,13 +45,7 @@ final class DefaultLoginUseCase: LoginUseCase {
                             observer.onError(LoginError.notExistSelf)
                             return
                         }
-                        self.userRepository.fetchUser(userID: uid)
-                            .map { user in
-                                UserDefaults.userID = user.uid
-                                UserDefaults.userName = user.name
-                                DayengDefaults.shared.user = user
-                                return
-                            }
+                        self.fetchUser(uid)
                             .bind(to: observer)
                             .disposed(by: self.disposeBag)
                     }, onFailure: {
@@ -93,96 +82,27 @@ final class DefaultLoginUseCase: LoginUseCase {
                 return Disposables.create()
             }
             
-            self.kakaoLoginService.signIn()
-                .subscribe(onNext: { [weak self] (email, password, userName) -> Void in
-                    guard let self else { return }
+            self.authService.kakaoSignIn()
+                .subscribe(onSuccess: { [weak self] (user, isAlreadySignUp) in
+                    guard let self else {
+                        observer.onError(LoginError.notExistSelf)
+                        return
+                    }
                     
-                    self.firebaseSignUp(email: email, password: password, userName: userName)
-                        .do(onError: { [weak self] _ in
-                            guard let self else { return }
-                            self.kakaoLoginService.signOut()
-                                .asObservable()
-                                .map { _ in }
-                                .bind(to: observer)
-                                .disposed(by: self.disposeBag)
-                        })
-                        .bind(to: observer)
-                        .disposed(by: self.disposeBag)
-                            
-                }, onError: {
+                    if isAlreadySignUp {
+                        self.fetchUser(user.uid)
+                            .bind(to: observer)
+                            .disposed(by: self.disposeBag)
+                    } else {
+                        self.uploadUser(user)
+                            .bind(to: observer)
+                            .disposed(by: self.disposeBag)
+                    }
+                }, onFailure: {
                     observer.onError($0)
                 })
                 .disposed(by: self.disposeBag)
             
-            return Disposables.create()
-        }
-    }
-    
-    private func firebaseSignOut() {
-        do {
-            try Auth.auth().signOut()
-        } catch {
-            print("sign out error: \(error)")
-        }
-    }
-    
-    /// 카카오 로그인시 사용 (이전 가입 기록 X)
-    private func firebaseSignUp(email: String, password: String, userName: String) -> Observable<Void> {
-        Observable.create { observer in
-            Auth.auth().createUser(withEmail: email, password: password) { [weak self] (_, error) in
-                guard let self else { return }
-                
-                if let error = error as? AuthErrorCode {
-                    if error.code == .emailAlreadyInUse {
-                        self.firebaseSignIn(email: email, password: password, userName: userName)
-                            .bind(to: observer)
-                            .disposed(by: self.disposeBag)
-
-                    } else {
-                        observer.onError(error)
-                    }
-                    return
-                }
-                
-                guard let uid = Auth.auth().currentUser?.uid else {
-                    observer.onError(LoginError.cannotFetchUserUid)
-                    return
-                }
-                
-                let newUser = User(uid: uid, name: userName)
-                self.uploadUser(newUser)
-                    .bind(to: observer)
-                    .disposed(by: self.disposeBag)
-            }
-            return Disposables.create()
-        }
-    }
-    
-    /// 카카오 로그인시 사용 (이전 가입 기록 O)
-    private func firebaseSignIn(email: String, password: String, userName: String) -> Observable<Void> {
-        Observable.create { observer in
-            Auth.auth().signIn(withEmail: email, password: password) { [weak self] (_, error) in
-                guard let self else { return }
-                
-                if let error {
-                    observer.onError(error)
-                    return
-                }
-                
-                guard let uid = Auth.auth().currentUser?.uid else {
-                    observer.onError(LoginError.cannotFetchUserUid)
-                    return
-                }
-                
-                self.userRepository.fetchUser(userID: uid)
-                    .map { user in
-                        UserDefaults.userID = user.uid
-                        DayengDefaults.shared.user = user
-                        return
-                    }
-                    .bind(to: observer)
-                    .disposed(by: self.disposeBag)
-            }
             return Disposables.create()
         }
     }
@@ -193,9 +113,16 @@ final class DefaultLoginUseCase: LoginUseCase {
                 UserDefaults.userID = user.uid
                 UserDefaults.userName = user.name
                 DayengDefaults.shared.user = user
-            }, onError: { [weak self] _ in
-                guard let self else { return }
-                self.firebaseSignOut()
             })
+    }
+    
+    private func fetchUser(_ uid: String) -> Observable<Void> {
+        userRepository.fetchUser(userID: uid)
+            .map { user in
+                UserDefaults.userID = user.uid
+                UserDefaults.userName = user.name
+                DayengDefaults.shared.user = user
+                return
+            }
     }
 }
