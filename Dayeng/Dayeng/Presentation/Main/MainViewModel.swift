@@ -25,11 +25,13 @@ final class MainViewModel {
     }
     
     // MARK: - Properites
-    let useCase: MainUseCase
+    private var disposeBag = DisposeBag()
+    private let useCase: MainUseCase
     var friendButtonDidTapped = PublishRelay<Void>()
     var settingButtonDidTapped = PublishRelay<Void>()
     var calendarButtonDidTapped = PublishRelay<Void>()
     var editButtonDidTapped = PublishRelay<Int>()
+    var cannotFindUserError = PublishSubject<Void>()
     
     // MARK: - LifeCycle
     init(useCase: MainUseCase) {

@@ -47,7 +47,6 @@ final class MainEditViewModel {
         input.submitButtonTapped.withLatestFrom(input.answerText)
             .subscribe(onNext: { [weak self] answer in
                 guard let self else { return }
-                #warning("user로 변경")
                 self.useCase.uploadAnswer(answer: answer)
                     .subscribe(onNext: {
                         output.submitResult.onNext(nil)

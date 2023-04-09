@@ -33,7 +33,9 @@ final class MainCoordinator: MainCoordinatorProtocol {
     func showMainViewController() {
         let firestoreService = DefaultFirestoreDatabaseService()
         let userRepository = DefaultUserRepository(firestoreService: firestoreService)
-        let useCase = DefaultMainUseCase(userRepository: userRepository)
+        let questionRepository = DefaultQuestionRepository(firestoreService: firestoreService)
+        let useCase = DefaultMainUseCase(userRepository: userRepository,
+                                         questionRepository: questionRepository)
         let viewModel = MainViewModel(useCase: useCase)
         let viewController = MainViewController(viewModel: viewModel)
         
@@ -56,9 +58,16 @@ final class MainCoordinator: MainCoordinatorProtocol {
             })
             .disposed(by: disposeBag)
         viewModel.editButtonDidTapped
-            .subscribe(onNext: { [weak self] index in
+            .subscribe(onNext: { [weak self] (index: Int) in
                 guard let self else { return }
                 self.showEditViewController(index: index)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.cannotFindUserError
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.showCannotFindUserAlert()
             })
             .disposed(by: disposeBag)
         
@@ -78,15 +87,7 @@ final class MainCoordinator: MainCoordinatorProtocol {
         viewModel.cannotFindUserError
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
-                self.navigationController.showAlert(
-                    title: AlertMessageType.cannotFindUser.title,
-                    message: AlertMessageType.cannotFindUser.message,
-                    type: .oneButton,
-                    rightActionHandler: { [weak self] in
-                        guard let self else { return }
-                        self.navigationController.viewControllers.last?.hideIndicator()
-                        self.delegate?.didFinished(childCoordinator: self)
-                })
+                self.showCannotFindUserAlert()
             })
             .disposed(by: disposeBag)
         
@@ -113,6 +114,18 @@ final class MainCoordinator: MainCoordinatorProtocol {
         let viewModel = MainEditViewModel(useCase: useCase)
         let viewController = MainEditViewController(viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showCannotFindUserAlert() {
+        navigationController.showAlert(
+            title: AlertMessageType.cannotFindUser.title,
+            message: AlertMessageType.cannotFindUser.message,
+            type: .oneButton,
+            rightActionHandler: { [weak self] in
+                guard let self else { return }
+                self.navigationController.viewControllers.last?.hideIndicator()
+                self.delegate?.didFinished(childCoordinator: self)
+        })
     }
 }
 
