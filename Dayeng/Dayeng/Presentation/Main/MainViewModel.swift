@@ -43,12 +43,16 @@ final class MainViewModel {
         input.viewWillAppear
             .subscribe(onNext: { [weak self] _ in
                 guard let self else { return }
-                self.useCase.fetchData()
-                    .bind(to: output.questionsAnswers)
-                    .disposed(by: self.disposeBag)
                 
-                self.useCase.getBlurStartingIndex()
-                    .bind(to: output.startBluringIndex)
+                self.useCase.fetchData()
+                    .debug()
+                    .subscribe(onNext: { data, index in
+                        output.startBluringIndex.accept(index)
+                        output.questionsAnswers.accept(data)
+                    }, onError: { [weak self] _ in
+                        guard let self else { return }
+                        self.cannotFindUserError.onNext(())
+                    })
                     .disposed(by: self.disposeBag)
             })
             .disposed(by: disposeBag)

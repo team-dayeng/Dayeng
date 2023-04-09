@@ -23,29 +23,29 @@ final class DefaultMainUseCase: MainUseCase {
         case noUserError
     }
     
-    func fetchData() -> Observable<[(Question, Answer?)]> {
+    // MARK: - Helper
+    func fetchData() -> Observable<([(Question, Answer?)], Int?)> {
         Observable.zip(fetchQuestions(), fetchAnswers())
-            .map { questions, answers in
-                questions.enumerated().map { (index, question) in
+            .map { [weak self] questions, answers in
+                (questions.enumerated().map { (index, question) in
                     let answer = answers.count > index ? answers[index] : nil
                     return (question, answer)
-                }
+                }, self?.getBlurStartingIndex())
+                
             }
     }
     
-    func getBlurStartingIndex() -> Observable<Int?> {
-        guard let user = DayengDefaults.shared.user else {
-            return Observable.error(MainUseCaseError.noUserError)
-        }
-        if user.currentIndex >= DayengDefaults.shared.questions.count {
-            return Observable.just(nil)
+    func getBlurStartingIndex() -> Int? {
+        guard let user = DayengDefaults.shared.user,
+              user.currentIndex < DayengDefaults.shared.questions.count else {
+            return nil
         }
         
         let today = Date().convertToString(format: "yyyy.MM.dd.E")
         let isAnswered = user.answers.last?.date == today
         let startIndex = isAnswered ? user.currentIndex : (user.currentIndex + 1)
         
-        return Observable.just(startIndex)
+        return startIndex
     }
     
     func fetchQuestions() -> Observable<[Question]> {

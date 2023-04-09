@@ -9,6 +9,5 @@ import Foundation
 import RxSwift
 
 protocol MainUseCase {
-    func fetchData() -> Observable<[(Question, Answer?)]>
-    func getBlurStartingIndex() -> Observable<Int?>
+    func fetchData() -> Observable<([(Question, Answer?)], Int?)>
 }
