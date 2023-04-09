@@ -9,18 +9,20 @@ import Foundation
 import RxSwift
 
 final class DefaultMainUseCase: MainUseCase {
+    // MARK: - Dependency
     private let userRepository: UserRepository
     private let questionRepository: QuestionRepository
     private let disposeBag = DisposeBag()
     
+    enum MainUseCaseError: Error {
+        case noUserError
+    }
+    
+    // MARK: - LifeCycle
     init(userRepository: UserRepository,
          questionRepository: QuestionRepository) {
         self.userRepository = userRepository
         self.questionRepository = questionRepository
-    }
-    
-    enum MainUseCaseError: Error {
-        case noUserError
     }
     
     // MARK: - Helper
@@ -58,19 +60,18 @@ final class DefaultMainUseCase: MainUseCase {
                 DayengDefaults.shared.questions = questions
                 return questions
             }
-            .disposed(by: disposeBag)
     }
     
     func fetchAnswers() -> Observable<[Answer]> {
         fetchUser()
-            .map{ $0.answer }
+            .map { $0.answers }
     }
     
     func fetchUser() -> Observable<User> {
-        guard let userID = UserDefaults.userID else { return MainUseCaseError.noUserError }
+        guard let userID = UserDefaults.userID else { return Observable.error(MainUseCaseError.noUserError) }
         
-        if let user == DayengDefaults.shared.user {
-            return Observable.just(user.answer)
+        if let user = DayengDefaults.shared.user {
+            return Observable.just(user)
         }
         
         return userRepository.fetchUser(userID: userID)

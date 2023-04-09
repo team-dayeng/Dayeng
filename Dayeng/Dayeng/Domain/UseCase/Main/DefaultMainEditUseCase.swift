@@ -9,6 +9,7 @@ import Foundation
 import RxSwift
 
 final class DefaultMainEditUseCase: MainEditUseCase {
+    // MARK: - Dependency
     private let userRepository: UserRepository
     private let index: Int
     
@@ -25,11 +26,13 @@ final class DefaultMainEditUseCase: MainEditUseCase {
         }
     }
     
+    // MARK: - LifeCycle
     init(userRepository: UserRepository, index: Int) {
         self.userRepository = userRepository
         self.index = index
     }
     
+    // MARK: - Helper
     func fetchQuestion() -> Observable<Question> {
         Observable.just(DayengDefaults.shared.questions[index])
     }
