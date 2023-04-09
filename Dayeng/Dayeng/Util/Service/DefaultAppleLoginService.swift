@@ -24,7 +24,7 @@ final class DefaultAppleLoginService: AppleLoginService {
         case credentialTypeCastingError
     }
     
-    func signIn() -> Observable<(credential: OAuthCredential, name: String)> {
+    func signIn() -> Observable<(credential: OAuthCredential, name: String?)> {
         guard let nonce = randomNonceString() else {
             return Observable.error(AppleLoginError.notExistNonce)
         }
@@ -52,12 +52,9 @@ final class DefaultAppleLoginService: AppleLoginService {
                 
                 let fullName = (appleIDCredential.fullName?.familyName ?? "")
                                 + (appleIDCredential.fullName?.givenName ?? "")
-                guard let userName = fullName != "" ? fullName : UserDefaults.userName else {
-                    throw AppleLoginError.cannotFetchUserName
-                }
-                
+                let userName = fullName != "" ? fullName : nil
+
                 UserDefaults.appleID = appleIDCredential.user
-                UserDefaults.userName = userName
                 
                 let credential = OAuthProvider.credential(withProviderID: "apple.com",
                                                           idToken: idTokenString,
@@ -69,7 +66,7 @@ final class DefaultAppleLoginService: AppleLoginService {
         }
     }
     
-    func autoSignIn() -> Observable<Bool> {
+    func isLoggedIn() -> Observable<Bool> {
         Observable.create { observer in
             guard let userID = UserDefaults.appleID else {
                 observer.onNext(false)
@@ -87,6 +84,14 @@ final class DefaultAppleLoginService: AppleLoginService {
             return Disposables.create()
         }
     }
+    
+//    func signOut() {
+//        UserDefaults.appleID = nil
+//    }
+//    
+//    func withDrawal() {
+//        UserDefaults.appleID = nil
+//    }
 }
 
 extension DefaultAppleLoginService {

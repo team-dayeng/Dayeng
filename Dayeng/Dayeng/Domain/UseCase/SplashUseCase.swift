@@ -10,6 +10,4 @@ import RxSwift
 
 protocol SplashUseCase {
     func tryAutoLogin() -> Observable<Bool>
-    func fetchQuestions() -> Observable<Void>
-    func fetchUser(userID: String) -> Observable<Void>
 }

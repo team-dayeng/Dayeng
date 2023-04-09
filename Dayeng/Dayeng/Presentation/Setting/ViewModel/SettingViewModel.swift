@@ -13,18 +13,30 @@ final class SettingViewModel {
     // MARK: - Input
     struct Input {
         var cellDidTapped: Observable<IndexPath>
+        var logoutDidTapped: Observable<Void>
+        var withdrawalDidTapped: Observable<Void>
     }
+    
     // MARK: - Output
     struct Output {
         var showMailComposeViewController = PublishRelay<MessageUIType>()
+        var requestFailed = PublishRelay<AlertMessageType>()
     }
-    // MARK: - Dependency
-    var disposeBag = DisposeBag()
+    
+    // MARK: - Properties
+    private var disposeBag = DisposeBag()
     var alarmCellDidTapped = PublishRelay<Void>()
     var openSourceCellDidTapped = PublishRelay<Void>()
     var aboutCellDidTapped = PublishRelay<Void>()
+    var showLoginViewController = PublishRelay<AlertMessageType>()
+    
+    // MARK: - Dependency
+    private let useCase: SettingUseCase
     
     // MARK: - LifeCycle
+    init(useCase: SettingUseCase) {
+        self.useCase = useCase
+    }
     
     // MARK: - Helper
     func transform(input: Input) -> Output {
@@ -39,10 +51,6 @@ final class SettingViewModel {
                 switch (section, row) {
                 case (0, 0):
                     self.alarmCellDidTapped.accept(())
-                case (1, 0):
-                    break
-                case (1, 1):
-                    break
                 case (2, 0): // 추천
                     output.showMailComposeViewController.accept(.recommendQuestion)
                 case (2, 1): // 문의
@@ -54,6 +62,44 @@ final class SettingViewModel {
                 default:
                     break
                 }
+            })
+            .disposed(by: disposeBag)
+        
+        input.logoutDidTapped
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.useCase.logout()
+                    .subscribe(onNext: { [weak self] _ in
+                        guard let self else { return }
+                        self.showLoginViewController.accept(.logoutSuccess)
+                    }, onError: { error in
+                        if let error = error as? UserError,
+                           error == .notExistCurrentUser {
+                            self.showLoginViewController.accept(.cannotFindUser)
+                        } else {
+                            output.requestFailed.accept(.logoutFail(error: error))
+                        }
+                    })
+                    .disposed(by: self.disposeBag)
+            })
+            .disposed(by: disposeBag)
+        
+        input.withdrawalDidTapped
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.useCase.withdrawal()
+                    .subscribe(onNext: { [weak self] _ in
+                        guard let self else { return }
+                        self.showLoginViewController.accept(.withdrawalSuccess)
+                    }, onError: { error in
+                        if let error = error as? UserError,
+                           error == .notExistCurrentUser {
+                            self.showLoginViewController.accept(.cannotFindUser)
+                        } else {
+                            output.requestFailed.accept(.withdrawalFail(error: error))
+                        }
+                    })
+                    .disposed(by: self.disposeBag)
             })
             .disposed(by: disposeBag)
         

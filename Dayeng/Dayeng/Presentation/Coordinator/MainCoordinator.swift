@@ -11,6 +11,9 @@ import RxRelay
 
 protocol MainCoordinatorProtocol: Coordinator {
     func showMainViewController()
+    func showCalendarViewController(ownerType: OwnerType)
+    func showFriendViewController()
+    func showSettingViewController()
 }
 
 final class MainCoordinator: MainCoordinatorProtocol {
@@ -33,6 +36,7 @@ final class MainCoordinator: MainCoordinatorProtocol {
         let useCase = DefaultMainUseCase(userRepository: userRepository)
         let viewModel = MainViewModel(useCase: useCase)
         let viewController = MainViewController(viewModel: viewModel)
+        
         viewModel.friendButtonDidTapped
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
@@ -48,7 +52,7 @@ final class MainCoordinator: MainCoordinatorProtocol {
         viewModel.calendarButtonDidTapped
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
-                self.showCalendarViewController(ownerType: .me)
+                self.showCalendarViewController(ownerType: .mine)
             })
             .disposed(by: disposeBag)
         viewModel.editButtonDidTapped
@@ -63,9 +67,29 @@ final class MainCoordinator: MainCoordinatorProtocol {
     }
     
     func showCalendarViewController(ownerType: OwnerType) {
-        let viewModel = CalendarViewModel()
-        let viewController = CalendarViewController(ownerType: ownerType,
-                                                    viewModel: viewModel)
+        let firestoreService = DefaultFirestoreDatabaseService()
+        let useCase = DefaultCalendarUseCase(
+            userRepository: DefaultUserRepository(firestoreService: firestoreService),
+            ownerType: ownerType
+        )
+        let viewModel = CalendarViewModel(useCase: useCase)
+        let viewController = CalendarViewController(viewModel: viewModel)
+        
+        viewModel.cannotFindUserError
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.navigationController.showAlert(
+                    title: AlertMessageType.cannotFindUser.title,
+                    message: AlertMessageType.cannotFindUser.message,
+                    type: .oneButton,
+                    rightActionHandler: { [weak self] in
+                        guard let self else { return }
+                        self.navigationController.viewControllers.last?.hideIndicator()
+                        self.delegate?.didFinished(childCoordinator: self)
+                })
+            })
+            .disposed(by: disposeBag)
+        
         navigationController.pushViewController(viewController, animated: true)
     }
     
@@ -77,6 +101,7 @@ final class MainCoordinator: MainCoordinatorProtocol {
     
     func showSettingViewController() {
         let coordinator = SettingCoordinator(navigationController: navigationController)
+        coordinator.delegate = self
         childCoordinators.append(coordinator)
         coordinator.start()
     }
@@ -88,5 +113,12 @@ final class MainCoordinator: MainCoordinatorProtocol {
         let viewModel = MainEditViewModel(useCase: useCase)
         let viewController = MainEditViewController(viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
+    }
+}
+
+extension MainCoordinator: CoordinatorDelegate {
+    func didFinished(childCoordinator: Coordinator) {
+        childCoordinators = childCoordinators.filter({ $0 !== childCoordinator })
+        delegate?.didFinished(childCoordinator: self)
     }
 }

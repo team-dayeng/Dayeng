@@ -28,6 +28,7 @@ final class FriendListViewController: UIViewController {
         label.textColor = .black
         label.numberOfLines = 0
         label.textAlignment = .center
+        label.isHidden = true
         return label
     }()
     
@@ -50,12 +51,15 @@ final class FriendListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupNavigationBar()
+    
         setupCollectionView()
         setupViews()
         configureUI()
         bind()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        setupNavigationBar()
     }
 }
 
@@ -67,6 +71,7 @@ extension FriendListViewController {
         title = "친구 목록"
         navigationItem.rightBarButtonItem = plusButton
         navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.titleTextAttributes = nil
     }
     
     private func setupCollectionView() {
@@ -114,10 +119,7 @@ extension FriendListViewController {
                     for: indexPath) as? FriendListCell else {
                     return FriendListCell()
                 }
-                cell.bind(
-                    name: item.name,
-                    day: item.currentIndex + 1
-                )
+                cell.bind(userInfo: item)
                 return cell
         })
     }
@@ -138,14 +140,20 @@ extension FriendListViewController {
             $0.center.equalToSuperview()
         }
     }
-}
-
-extension FriendListViewController {
     
     private func bind() {
         let input = FriendListViewModel.Input(
+            viewWillAppear: rx.methodInvoked(#selector(viewWillAppear(_ :))).map { _ in
+                self.showIndicator()
+            }.asObservable(),
             plusButtonDidTapped: plusButton.rx.tap.asObservable(),
-            friendIndexDidTapped: collectionView.rx.itemSelected.asObservable().map { $0.row }
+            friendIndexDidTapped: collectionView.rx.itemSelected.asObservable().map { indexPath in
+                if let cell = self.collectionView.cellForItem(at: indexPath) as? FriendListCell,
+                   let user = cell.userInfo {
+                   return user
+                }
+                return nil
+            }
         )
         let output = viewModel.transform(input: input)
         
@@ -161,8 +169,13 @@ extension FriendListViewController {
     private func makeSnapshot(friends: [User]) {
         guard let dataSource else { return }
         var snapshot = dataSource.snapshot()
-        snapshot.appendSections(["friends"])
+        if !snapshot.sectionIdentifiers.contains("friends") {
+            snapshot.appendSections(["friends"])
+        }
+        snapshot.deleteItems(snapshot.itemIdentifiers(inSection: "friends"))
         snapshot.appendItems(friends, toSection: "friends")
-        dataSource.apply(snapshot)
+        dataSource.apply(snapshot) {
+            self.hideIndicator()
+        }
     }
 }

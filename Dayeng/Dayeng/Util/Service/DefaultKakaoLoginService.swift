@@ -8,6 +8,7 @@
 import Foundation
 import KakaoSDKAuth
 import KakaoSDKUser
+import KakaoSDKCommon
 import RxKakaoSDKAuth
 import RxKakaoSDKUser
 import RxSwift
@@ -19,24 +20,30 @@ final class DefaultKakaoLoginService: KakaoLoginService {
     }
     
     private let disposeBag = DisposeBag()
-    
-    func isAvailableAutoSignIn() -> Bool {
-        AuthApi.hasToken()
-    }
-    
-    func autoSignIn() -> Observable<Bool> {
+
+    func isLoggedIn() -> Observable<Bool> {
         Observable.create { [weak self] observer in
             guard let self else {
                 observer.onNext(false)
                 return Disposables.create()
             }
-            UserApi.shared.rx.accessTokenInfo()
-                .subscribe(onSuccess: { _ in
-                    observer.onNext(true)
-                }, onFailure: { _ in
-                    observer.onNext(false)
-                })
-                .disposed(by: self.disposeBag)
+            if AuthApi.hasToken() {
+                UserApi.shared.rx.accessTokenInfo()
+                    .subscribe(onSuccess: { _ in
+                        observer.onNext(true)
+                    }, onFailure: { error in
+                        if let sdkError = error as? SdkError,
+                           sdkError.isInvalidTokenError() == true {
+                            observer.onNext(false)
+                        } else {
+                            observer.onError(error)
+                        }
+                    })
+                    .disposed(by: self.disposeBag)
+            } else {
+                observer.onNext(false)
+            }
+            
             return Disposables.create()
         }
     }

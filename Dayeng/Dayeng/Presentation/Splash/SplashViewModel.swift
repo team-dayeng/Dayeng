@@ -41,35 +41,16 @@ final class SplashViewModel {
                 self.useCase.tryAutoLogin()
                     .subscribe(onNext: { [weak self] result in
                         guard let self else { return }
-                        if result,
-                            let firebaseUserID = UserDefaults.userID {
-                            print("ID 연동 O")
-                            self.loginStatus.onNext(true)
-                            
-                            Observable.zip(
-                                self.useCase.fetchQuestions(),
-                                self.useCase.fetchUser(userID: firebaseUserID)
-                            )
-                            .map { _ in }
-                            .bind(to: self.dataDidLoad)
-                            .disposed(by: self.disposeBag)
-                            
-                        } else {
-                            print("ID가 연동되어 있지 않거나 ID를 찾을 수 없음")
-                            self.loginStatus.onNext(false)
-                            self.fetchQuestions()
-                        }
+                        self.loginStatus.onNext(result)
+                        self.loginStatus.onCompleted()
+                    }, onError: { [weak self] _ in
+                        guard let self else { return }
+                        self.loginStatus.onNext(false)
                     })
                     .disposed(by: self.disposeBag)
             })
             .disposed(by: disposeBag)
         
         return Output()
-    }
-    
-    private func fetchQuestions() {
-        useCase.fetchQuestions()
-            .bind(to: self.dataDidLoad)
-            .disposed(by: disposeBag)
     }
 }

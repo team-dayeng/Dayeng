@@ -29,7 +29,14 @@ final class SettingCoordinator: NSObject, SettingCoordinatorProtocol {
     }
     
     func showSettingViewController() {
-        let viewModel = SettingViewModel()
+        let firestoreDatabaseService = DefaultFirestoreDatabaseService()
+        let userRepository = DefaultUserRepository(firestoreService: firestoreDatabaseService)
+        let useCase = DefaultSettingUseCase(
+            appleLoginService: DefaultAppleLoginService(),
+            kakaoLoginService: DefaultKakaoLoginService(),
+            userRepository: userRepository
+        )
+        let viewModel = SettingViewModel(useCase: useCase)
         let viewController = SettingViewController(viewModel: viewModel)
         viewModel.alarmCellDidTapped
             .subscribe(onNext: { [weak self] in
@@ -49,6 +56,21 @@ final class SettingCoordinator: NSObject, SettingCoordinatorProtocol {
                 self.showWebViewController(url: PageType.about.url)
             })
             .disposed(by: disposeBag)
+        viewModel.showLoginViewController
+            .subscribe(onNext: { [weak self] type in
+                guard let self else { return }
+                self.navigationController.showAlert(
+                    title: type.title,
+                    message: type.message,
+                    type: .oneButton,
+                    rightActionHandler: { [weak self] in
+                        guard let self else { return }
+                        self.navigationController.viewControllers.last?.hideIndicator()
+                        self.delegate?.didFinished(childCoordinator: self)
+                })
+            })
+            .disposed(by: disposeBag)
+
         navigationController.pushViewController(viewController, animated: true)
     }
     

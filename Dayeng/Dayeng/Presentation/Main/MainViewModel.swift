@@ -23,8 +23,8 @@ final class MainViewModel {
         var questionsAnswers = BehaviorRelay<[(Question, Answer?)]>(value: [])
         var startBluringIndex = BehaviorRelay<Int?>(value: nil)
     }
-    // MARK: - Dependency
-    var disposeBag = DisposeBag()
+    
+    // MARK: - Properites
     let useCase: MainUseCase
     var friendButtonDidTapped = PublishRelay<Void>()
     var settingButtonDidTapped = PublishRelay<Void>()

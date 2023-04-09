@@ -2,13 +2,7 @@
 //  MainUseCase.swift
 //  Dayeng
 //
-//  Created by 조승기 on 2023/03/03.
+//  Created by 조승기 on 2023/04/08.
 //
 
 import Foundation
-import RxSwift
-
-protocol MainUseCase {
-    func fetchData() -> Observable<[(Question, Answer?)]>
-    func getBlurStartingIndex() -> Observable<Int?>
-}

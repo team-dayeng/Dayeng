@@ -15,6 +15,7 @@ final class DefaultUserRepository: UserRepository {
     }
     
     let firestoreService: FirestoreDatabaseService
+    private let disposeBag = DisposeBag()
     
     init(firestoreService: FirestoreDatabaseService) {
         self.firestoreService = firestoreService
@@ -82,5 +83,42 @@ final class DefaultUserRepository: UserRepository {
             dto: AnswerDTO(date: user.answers[index].date,
                            answer: answer)
         )
+    }
+    
+    func existUser(userID: String) -> Observable<String> {
+        return firestoreService.fetchPath(collection: "users",
+                                      document: userID)
+    }
+    
+    func fetchFriends(paths: [String]) -> Observable<[User]> {
+        Observable.create { observer in
+            
+            if paths.isEmpty {
+                observer.onNext([])
+            } else {
+                Observable.zip(
+                    paths.map { path in
+                        let uid = path.split(separator: "/").map { String($0) }[1]
+                        return self.fetchUser(userID: uid)
+                    }
+                )
+                .bind(to: observer)
+                .disposed(by: self.disposeBag)
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func addFriend(user: User) -> Observable<Void> {
+        return firestoreService.upload(collection: "users",
+                                       document: user.uid,
+                                       dto: UserDTO(name: user.name,
+                                                    currentIndex: user.currentIndex,
+                                                    friends: user.friends))
+	}
+
+    func deleteUser(userID: String) -> Observable<Void> {
+        firestoreService.deleteDocument(api: .user(userID: userID))
     }
 }

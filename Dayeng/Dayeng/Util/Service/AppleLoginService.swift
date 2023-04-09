@@ -10,6 +10,6 @@ import RxSwift
 import FirebaseAuth
 
 protocol AppleLoginService {
-    func signIn() -> Observable<(credential: OAuthCredential, name: String)>
-    func autoSignIn() -> Observable<Bool>
+    func signIn() -> Observable<(credential: OAuthCredential, name: String?)>
+    func isLoggedIn() -> Observable<Bool>
 }

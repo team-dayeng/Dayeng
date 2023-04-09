@@ -40,15 +40,15 @@ final class DefaultSplashUseCase: SplashUseCase {
                 return Disposables.create()
             }
             
-            if self.kakaoLoginService.isAvailableAutoSignIn() {
-                self.kakaoLoginService.autoSignIn()
+            if UserDefaults.appleID == nil {
+                self.kakaoLoginService.isLoggedIn()
                     .do(onNext: { result in
                         if !result { try? Auth.auth().signOut() }
                     })
                     .bind(to: observer)
                     .disposed(by: self.disposeBag)
             } else {
-                self.appleLoginService.autoSignIn()
+                self.appleLoginService.isLoggedIn()
                     .do(onNext: { result in
                         if !result { try? Auth.auth().signOut() }
                     })
@@ -58,19 +58,5 @@ final class DefaultSplashUseCase: SplashUseCase {
             
             return Disposables.create()
         }
-    }
-    
-    func fetchQuestions() -> Observable<Void> {
-        questionRepository.fetchAll()
-            .map { questions in
-                DayengDefaults.shared.questions = questions
-            }
-    }
-    
-    func fetchUser(userID: String) -> Observable<Void> {
-        userRepository.fetchUser(userID: userID)
-            .map { user in
-                DayengDefaults.shared.user = user
-            }
     }
 }

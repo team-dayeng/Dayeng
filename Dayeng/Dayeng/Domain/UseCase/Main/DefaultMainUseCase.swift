@@ -10,9 +10,13 @@ import RxSwift
 
 final class DefaultMainUseCase: MainUseCase {
     private let userRepository: UserRepository
+    private let questionRepository: QuestionRepository
+    private let disposeBag = DisposeBag()
     
-    init(userRepository: UserRepository) {
+    init(userRepository: UserRepository,
+         questionRepository: QuestionRepository) {
         self.userRepository = userRepository
+        self.questionRepository = questionRepository
     }
     
     enum MainUseCaseError: Error {
@@ -44,11 +48,35 @@ final class DefaultMainUseCase: MainUseCase {
         return Observable.just(startIndex)
     }
     
-    private func fetchQuestions() -> Observable<[Question]> {
-        Observable.of(DayengDefaults.shared.questions)
+    func fetchQuestions() -> Observable<[Question]> {
+        if !DayengDefaults.shared.questions.isEmpty {
+            return Observable.just(DayengDefaults.shared.questions)
+        }
+        
+        return questionRepository.fetchAll()
+            .map { questions in
+                DayengDefaults.shared.questions = questions
+                return questions
+            }
+            .disposed(by: disposeBag)
     }
     
-    private func fetchAnswers() -> Observable<[Answer]> {
-        Observable.just(DayengDefaults.shared.user?.answers ?? [])
+    func fetchAnswers() -> Observable<[Answer]> {
+        fetchUser()
+            .map{ $0.answer }
+    }
+    
+    func fetchUser() -> Observable<User> {
+        guard let userID = UserDefaults.userID else { return MainUseCaseError.noUserError }
+        
+        if let user == DayengDefaults.shared.user {
+            return Observable.just(user.answer)
+        }
+        
+        return userRepository.fetchUser(userID: userID)
+             .map { user in
+                 DayengDefaults.shared.user = user
+                 return user
+             }
     }
 }
