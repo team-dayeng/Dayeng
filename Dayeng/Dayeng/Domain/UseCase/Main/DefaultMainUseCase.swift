@@ -16,6 +16,7 @@ final class DefaultMainUseCase: MainUseCase {
     
     enum MainUseCaseError: Error {
         case noUserError
+        case noSelfError
     }
     
     // MARK: - LifeCycle
@@ -29,11 +30,11 @@ final class DefaultMainUseCase: MainUseCase {
     func fetchData() -> Observable<([(Question, Answer?)], Int?)> {
         Observable.zip(fetchQuestions(), fetchAnswers())
             .map { [weak self] questions, answers in
-                (questions.enumerated().map { (index, question) in
+                guard let self else { throw MainUseCaseError.noSelfError }
+                return (questions.enumerated().map { (index, question) in
                     let answer = answers.count > index ? answers[index] : nil
                     return (question, answer)
-                }, self?.getBlurStartingIndex())
-                
+                }, self.getBlurStartingIndex())
             }
     }
     
@@ -75,9 +76,9 @@ final class DefaultMainUseCase: MainUseCase {
         }
         
         return userRepository.fetchUser(userID: userID)
-             .map { user in
-                 DayengDefaults.shared.user = user
-                 return user
-             }
+            .map { user in
+                DayengDefaults.shared.user = user
+                return user
+            }
     }
 }
