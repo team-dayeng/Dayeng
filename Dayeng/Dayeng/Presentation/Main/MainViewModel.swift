@@ -47,7 +47,6 @@ final class MainViewModel {
                 guard let self else { return }
                 
                 self.useCase.fetchData()
-                    .debug()
                     .subscribe(onNext: { data, index in
                         output.startBluringIndex.accept(index)
                         output.questionsAnswers.accept(data)
