@@ -45,10 +45,7 @@ final class DefaultUserRepository: UserRepository {
     
     func uploadAnswer(answer: String) -> Observable<Void> {
         guard let user = DayengDefaults.shared.user else {
-            return Observable<Void>.create { observer in
-                observer.onError(UserRepositoryError.noUserError)
-                return Disposables.create()
-            }
+            return Observable.error(UserRepositoryError.noUserError)
         }
         
         let answerDate = Date().convertToString(format: "yyyy.MM.dd.E")
@@ -69,6 +66,22 @@ final class DefaultUserRepository: UserRepository {
                 api: .currentIndex(userID: user.uid),
                 dto: ["currentIndex": user.currentIndex + 1]
             )
+        )
+    }
+    
+    func editAnswer(answer: String, index: Int) -> Observable<Void> {
+        guard let user = DayengDefaults.shared.user else {
+            return Observable.error(UserRepositoryError.noUserError)
+        }
+        
+        DayengDefaults.shared.editAnswer(
+            Answer(date: user.answers[index].date, answer: answer), index
+        )
+        
+        return firestoreService.upload(
+            api: .answer(userID: user.uid, index: index),
+            dto: AnswerDTO(date: user.answers[index].date,
+                           answer: answer)
         )
     }
     

@@ -38,15 +38,13 @@ final class MainViewController: UIViewController {
         target: nil,
         action: nil)
     
-    private lazy var resetButton = UIBarButtonItem(
-        image: UIImage(systemName: "arrow.clockwise"),
-        style: .plain,
-        target: nil,
-        action: nil)
-    
     // MARK: - Properties
     var disposeBag = DisposeBag()
-    let viewModel: MainViewModel
+    private let viewModel: MainViewModel
+    private let editButtonDidTapped = PublishRelay<Int>()
+    private let titleViewDidTapped = PublishRelay<Void>()
+    private var editButtonDisposables = [Int: Disposable]()
+    private var initialIndexPath: IndexPath?
     
     // MARK: - Lifecycles
     init(viewModel: MainViewModel) {
@@ -61,19 +59,33 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        hideIndicator()
         setupNaviagationBar()
         configureCollectionView()
         setupViews()
         bind()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        hideIndicator()
+    }
+    
     // MARK: - Helpers
     private func setupNaviagationBar() {
-        navigationItem.titleView = UIImageView(image: .dayengLogo)
+        let titleImageView = UIImageView(image: .dayengLogo)
+        let tapGestureRecognizer = UITapGestureRecognizer()
+        titleImageView.isUserInteractionEnabled = true
+        titleImageView.addGestureRecognizer(tapGestureRecognizer)
+        tapGestureRecognizer.rx.event.map { _ in }
+            .bind(to: titleViewDidTapped)
+            .disposed(by: disposeBag)
+        
+        navigationItem.titleView = titleImageView
         navigationController?.navigationBar.tintColor = .black
         
         navigationItem.leftBarButtonItem = calendarButton
-        navigationItem.rightBarButtonItem = resetButton
     }
     
     private func setupViews() {
@@ -109,6 +121,7 @@ final class MainViewController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(MainCell.self, forCellWithReuseIdentifier: MainCell.identifier)
         collectionView.isPagingEnabled = true
+        collectionView.isScrollEnabled = false
         collectionView.bounces = false
         collectionView.backgroundColor = .clear
     }
@@ -134,68 +147,80 @@ final class MainViewController: UIViewController {
     
     func bind() {
         let input = MainViewModel.Input(
-            viewWillAppear: rx.methodInvoked(#selector(viewWillAppear(_ :))).map { _ in
-                self.showIndicator()
-            }.asObservable(),
-            resetButtonDidTapped: resetButton.rx.tap.asObservable(),
+            viewWillAppear: rx.viewWillAppear.map { _ in }.asObservable(),
             friendButtonDidTapped: friendButton.rx.tap.asObservable(),
             settingButtonDidTapped: settingButton.rx.tap.asObservable(),
-            calendarButtonDidTapped: calendarButton.rx.tap.asObservable()
+            calendarButtonDidTapped: calendarButton.rx.tap.asObservable(),
+            edidButtonDidTapped: editButtonDidTapped.asObservable()
         )
         
-        let output = viewModel.transform(input: input)
-        output.successLoad
-            .subscribe(onNext: { [weak self] in
+        editButtonDidTapped
+            .subscribe(onNext: { [weak self] _ in
                 guard let self else { return }
-                self.hideIndicator()
-                self.collectionView.dataSource = self
-                self.collectionView.delegate = self
+                self.showIndicator()
+            }).disposed(by: disposeBag)
+        
+        let output = viewModel.transform(input: input)
+        
+        output.questionsAnswers
+            .bind(to: collectionView.rx.items(cellIdentifier: MainCell.identifier, cellType: MainCell.self)
+            ) { (index, questionAnswer, cell) in
+                let (question, answer) = questionAnswer
+                cell.mainView.bind(question, answer)
                 
-                if let user = DayengDefaults.shared.user {
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self else { return }
-                        self.collectionView.scrollToItem(
-                            at: IndexPath(row: user.currentIndex, section: 0),
-                            at: .centeredHorizontally,
-                            animated: false)
-                    }
+                guard let startIndex = output.startBluringIndex.value else { return }
+                if index >= startIndex {
+                    cell.blur()
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        output.startBluringIndex
+            .subscribe(onNext: { [weak self] startBluringIndex in
+                guard let self else { return }
+                self.initialIndexPath = IndexPath(
+                    row: (startBluringIndex ?? output.questionsAnswers.value.count)-1,
+                    section: 0)
             })
             .disposed(by: disposeBag)
-    }
-}
-
-extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        numberOfItemsInSection section: Int
-    ) -> Int {
-        if let user = DayengDefaults.shared.user {
-            return user.currentIndex + 1
-        }
-        return 0
-    }
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: MainCell.identifier,
-            for: indexPath
-        ) as? MainCell else {
-            return UICollectionViewCell()
-        }
         
-        if DayengDefaults.shared.questions.count > indexPath.row {
-            cell.bindQuestion(DayengDefaults.shared.questions[indexPath.row])
-        }
-        if let user = DayengDefaults.shared.user,
-           user.answers.count > indexPath.row {
-            cell.bindAnswer(user.answers[indexPath.row])
-        }
+        collectionView.rx.willDisplayCell
+            .subscribe(onNext: { [weak self] cell, indexPath in
+                guard let self,
+                      let cell = cell as? MainCell else { return }
+                if let initialIndexPath = self.initialIndexPath {
+                    self.collectionView.scrollToItem(at: initialIndexPath,
+                                                     at: .centeredVertically,
+                                                     animated: false)
+                    self.initialIndexPath = nil
+                }
+                self.editButtonDisposables[indexPath.row] = cell.mainView.editButtonDidTapped
+                    .map { indexPath.row }
+                    .bind(to: self.editButtonDidTapped)
+                
+            })
+            .disposed(by: disposeBag)
         
-        return cell
+        collectionView.rx.didEndDisplayingCell
+            .subscribe(onNext: { [weak self] _, indexPath in
+                guard let self else { return }
+                self.editButtonDisposables[indexPath.row]?.dispose()
+                self.editButtonDisposables.removeValue(forKey: indexPath.row)
+            })
+            .disposed(by: disposeBag)
+        
+        titleViewDidTapped.withLatestFrom(output.startBluringIndex)
+            .subscribe(onNext: { [weak self] startBluringIndex in
+                guard let self else { return }
+                let indexPath = IndexPath(
+                    row: (startBluringIndex ?? output.questionsAnswers.value.count)-1,
+                    section: 0
+                )
+                
+                self.collectionView.scrollToItem(at: indexPath,
+                                                 at: .centeredVertically,
+                                                 animated: true)
+            })
+            .disposed(by: disposeBag)
     }
 }

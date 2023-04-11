@@ -23,8 +23,13 @@ final class DayengDefaults {
         user?.currentIndex += 1
     }
     
+    func editAnswer(_ answer: Answer, _ index: Int) {
+        guard var user = user,
+              index < user.answers.count else { return }
+        user.answers[index] = answer
+    }
+    
     func addFriend(_ friend: String) {
         user?.friends.append(friend)
     }
-    
 }

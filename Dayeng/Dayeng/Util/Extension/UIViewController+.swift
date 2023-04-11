@@ -25,7 +25,7 @@ extension UIViewController {
         if let navigationController = navigationController {
             let indicators = navigationController.view.subviews
                 .filter { $0 is IndicatorView }
-                .map {$0 as? IndicatorView }
+                .map { $0 as? IndicatorView }
             indicators.forEach {
                 $0?.stop()
                 $0?.removeFromSuperview()
@@ -102,6 +102,11 @@ extension UIViewController {
 public extension Reactive where Base: UIViewController {
     var viewDidLoad: ControlEvent<Void> {
         let source = self.methodInvoked(#selector(Base.viewDidLoad)).map { _ in }
+        return ControlEvent(events: source)
+    }
+    
+    var viewWillAppear: ControlEvent<Void> {
+        let source = self.methodInvoked(#selector(Base.viewWillAppear(_:))).map { _ in }
         return ControlEvent(events: source)
     }
 }

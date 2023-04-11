@@ -13,25 +13,25 @@ final class MainViewModel {
     // MARK: - Input
     struct Input {
         var viewWillAppear: Observable<Void>
-        var resetButtonDidTapped: Observable<Void>
         var friendButtonDidTapped: Observable<Void>
         var settingButtonDidTapped: Observable<Void>
         var calendarButtonDidTapped: Observable<Void>
-        
+        var edidButtonDidTapped: Observable<Int>
     }
     // MARK: - Output
     struct Output {
-        var successLoad = PublishSubject<Void>()
+        var questionsAnswers = BehaviorRelay<[(Question, Answer?)]>(value: [])
+        var startBluringIndex = BehaviorRelay<Int?>(value: nil)
     }
     
     // MARK: - Properites
+    private var disposeBag = DisposeBag()
+    private let useCase: MainUseCase
     var friendButtonDidTapped = PublishRelay<Void>()
     var settingButtonDidTapped = PublishRelay<Void>()
     var calendarButtonDidTapped = PublishRelay<Void>()
-    
-    // MARK: - Dependency
-    var disposeBag = DisposeBag()
-    private let useCase: MainUseCase
+    var editButtonDidTapped = PublishRelay<Int>()
+    var cannotFindUserError = PublishSubject<Void>()
     
     // MARK: - LifeCycle
     init(useCase: MainUseCase) {
@@ -41,24 +41,22 @@ final class MainViewModel {
     // MARK: - Helper
     func transform(input: Input) -> Output {
         let output = Output()
+        
         input.viewWillAppear
-            .subscribe(onNext: { [weak self] in
+            .subscribe(onNext: { [weak self] _ in
                 guard let self else { return }
-                Observable.zip(
-                    self.useCase.fetchUser(),
-                    self.useCase.fetchQuestions()
-                )
-                .map { _ in }
-                .bind(to: output.successLoad)
-                .disposed(by: self.disposeBag)
+                
+                self.useCase.fetchData()
+                    .subscribe(onNext: { data, index in
+                        output.startBluringIndex.accept(index)
+                        output.questionsAnswers.accept(data)
+                    }, onError: { [weak self] _ in
+                        guard let self else { return }
+                        self.cannotFindUserError.onNext(())
+                    })
+                    .disposed(by: self.disposeBag)
             })
             .disposed(by: disposeBag)
-        
-        input.resetButtonDidTapped
-            .subscribe(onNext: { [weak self] in
-                guard let self else { return }
-                print("tapped reset button")
-            }).disposed(by: disposeBag)
         
         input.friendButtonDidTapped
             .bind(to: friendButtonDidTapped)
@@ -71,6 +69,11 @@ final class MainViewModel {
         input.calendarButtonDidTapped
             .bind(to: calendarButtonDidTapped)
             .disposed(by: disposeBag)
+        
+        input.edidButtonDidTapped
+            .bind(to: editButtonDidTapped)
+            .disposed(by: disposeBag)
+        
         return output
     }
 }

@@ -18,6 +18,7 @@ struct UserDTO: Codable {
              name: name,
              answers: answers != nil ? answers!.map { $0.toDomain() } : [],
              currentIndex: currentIndex,
-             friends: friends)
+             friends: friends
+        )
     }
 }

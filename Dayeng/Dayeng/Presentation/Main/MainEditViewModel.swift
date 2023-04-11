@@ -13,11 +13,14 @@ final class MainEditViewModel {
     struct Input {
         var submitButtonTapped: Observable<Void>
         var answerText: Observable<String>
+        var viewDidLoad: Observable<Void>
     }
     
     // MARK: - Output
     struct Output {
         var submitResult = PublishSubject<Error?>()
+        var question = ReplaySubject<Question>.create(bufferSize: 1)
+        var answer = ReplaySubject<Answer?>.create(bufferSize: 1)
     }
     
     // MARK: - Dependency
@@ -32,10 +35,18 @@ final class MainEditViewModel {
     // MARK: - Helper
     func transform(input: Input) -> Output {
         let output = Output()
+        
+        useCase.fetchQuestion()
+            .bind(to: output.question)
+            .disposed(by: disposeBag)
+        
+        useCase.fetchAnswer()
+            .bind(to: output.answer)
+            .disposed(by: disposeBag)
+        
         input.submitButtonTapped.withLatestFrom(input.answerText)
             .subscribe(onNext: { [weak self] answer in
                 guard let self else { return }
-                #warning("user로 변경")
                 self.useCase.uploadAnswer(answer: answer)
                     .subscribe(onNext: {
                         output.submitResult.onNext(nil)

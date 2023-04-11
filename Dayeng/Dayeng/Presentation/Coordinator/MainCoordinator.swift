@@ -32,10 +32,10 @@ final class MainCoordinator: MainCoordinatorProtocol {
     
     func showMainViewController() {
         let firestoreService = DefaultFirestoreDatabaseService()
-        let useCase = DefaultMainUseCase(
-            userRepository: DefaultUserRepository(firestoreService: firestoreService),
-            questionRepository: DefaultQuestionRepository(firestoreService: firestoreService)
-        )
+        let userRepository = DefaultUserRepository(firestoreService: firestoreService)
+        let questionRepository = DefaultQuestionRepository(firestoreService: firestoreService)
+        let useCase = DefaultMainUseCase(userRepository: userRepository,
+                                         questionRepository: questionRepository)
         let viewModel = MainViewModel(useCase: useCase)
         let viewController = MainViewController(viewModel: viewModel)
         
@@ -57,6 +57,19 @@ final class MainCoordinator: MainCoordinatorProtocol {
                 self.showCalendarViewController(ownerType: .mine)
             })
             .disposed(by: disposeBag)
+        viewModel.editButtonDidTapped
+            .subscribe(onNext: { [weak self] (index: Int) in
+                guard let self else { return }
+                self.showEditViewController(index: index)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.cannotFindUserError
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.showCannotFindUserAlert()
+            })
+            .disposed(by: disposeBag)
         
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?
             .changeRootViewController(navigationController, viewController)
@@ -74,15 +87,7 @@ final class MainCoordinator: MainCoordinatorProtocol {
         viewModel.cannotFindUserError
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
-                self.navigationController.showAlert(
-                    title: AlertMessageType.cannotFindUser.title,
-                    message: AlertMessageType.cannotFindUser.message,
-                    type: .oneButton,
-                    rightActionHandler: { [weak self] in
-                        guard let self else { return }
-                        self.navigationController.viewControllers.last?.hideIndicator()
-                        self.delegate?.didFinished(childCoordinator: self)
-                })
+                self.showCannotFindUserAlert()
             })
             .disposed(by: disposeBag)
         
@@ -100,6 +105,27 @@ final class MainCoordinator: MainCoordinatorProtocol {
         coordinator.delegate = self
         childCoordinators.append(coordinator)
         coordinator.start()
+    }
+    
+    func showEditViewController(index: Int) {
+        let firestoreService = DefaultFirestoreDatabaseService()
+        let userRepository = DefaultUserRepository(firestoreService: firestoreService)
+        let useCase = DefaultMainEditUseCase(userRepository: userRepository, index: index)
+        let viewModel = MainEditViewModel(useCase: useCase)
+        let viewController = MainEditViewController(viewModel: viewModel)
+        navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showCannotFindUserAlert() {
+        navigationController.showAlert(
+            title: AlertMessageType.cannotFindUser.title,
+            message: AlertMessageType.cannotFindUser.message,
+            type: .oneButton,
+            rightActionHandler: { [weak self] in
+                guard let self else { return }
+                self.navigationController.viewControllers.last?.hideIndicator()
+                self.delegate?.didFinished(childCoordinator: self)
+        })
     }
 }
 
