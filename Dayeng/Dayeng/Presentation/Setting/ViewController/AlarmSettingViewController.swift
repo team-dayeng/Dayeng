@@ -230,8 +230,6 @@ final class AlarmSettingViewController: UIViewController {
         let input = AlarmSettingViewModel.Input(
             viewWillAppear:
                 rx.methodInvoked(#selector(viewWillAppear(_:))).map { _ in }.asObservable(),
-            viewDidLoad:
-                rx.viewDidLoad.map { _ in }.asObservable(),
             registButtonDidTapped:
                 registButton.rx.tap.map { self.timePicker.date },
             daysOfWeekDidTapped:
@@ -242,6 +240,21 @@ final class AlarmSettingViewController: UIViewController {
         
         let output = viewModel.transform(input: input)
   
+        output.initialyDiscriptionLabel
+            .asDriver(onErrorJustReturn: (Date(), "안 함"))
+            .drive(onNext: { [weak self] (date, dayList) in
+                guard let self else { return }
+                if dayList == "안 함" {
+                    self.dateDiscriptionLabel.text = dayList
+                } else {
+                    self.dateDiscriptionLabel.text = """
+                    \(dayList) \
+                    \(date.convertToString(format: "a HH : mm", locale: .korea))
+                    """
+                }
+            })
+            .disposed(by: disposeBag)
+        
         output.initialyIsAlarmOn
             .asDriver(onErrorJustReturn: false)
             .drive(onNext: { [weak self] isOn in
@@ -256,14 +269,6 @@ final class AlarmSettingViewController: UIViewController {
                 guard let self else { return }
                 self.dayListLabel.text = dayList
                 self.timePicker.date = date
-                if dayList == "안 함" {
-                    self.dateDiscriptionLabel.text = dayList
-                } else {
-                    self.dateDiscriptionLabel.text = """
-                    \(dayList) \
-                    \(date.convertToString(format: "a HH : mm", locale: .korea))
-                    """
-                }
             })
             .disposed(by: disposeBag)
         

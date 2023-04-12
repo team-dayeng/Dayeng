@@ -19,14 +19,14 @@ final class AlarmSettingViewModel {
     // MARK: - Input
     struct Input {
         var viewWillAppear: Observable<Void>
-        var viewDidLoad: Observable<Void>
         var registButtonDidTapped: Observable<Date>
         var daysOfWeekDidTapped: Observable<Void>
         var isAlarmSwitchOn: Observable<Bool>
     }
     // MARK: - Output
     struct Output {
-        var initialyIsAlarmOn = PublishSubject<Bool>()
+        var initialyIsAlarmOn = PublishRelay<Bool>()
+        var initialyDiscriptionLabel = PublishRelay<(Date, String)>()
         var dayList = PublishRelay<String>()
         var setDate = ReplayRelay<Date>.create(bufferSize: 1)
         var registResult = PublishRelay<RegistResult>()
@@ -46,7 +46,17 @@ final class AlarmSettingViewModel {
         let output = Output()
         
         useCase.checkInitialyIsAlarmOn()
+            .observe(on: MainScheduler.asyncInstance)
             .bind(to: output.initialyIsAlarmOn)
+            .disposed(by: disposeBag)
+        
+        useCase.alarmDate
+            .observe(on: MainScheduler.asyncInstance)
+            .subscribe(onNext: { [weak self] date in
+                guard let self else { return }
+                let dayList = self.useCase.selectedDaysDescription
+                output.initialyDiscriptionLabel.accept((date, dayList))
+            })
             .disposed(by: disposeBag)
         
         input.viewWillAppear
