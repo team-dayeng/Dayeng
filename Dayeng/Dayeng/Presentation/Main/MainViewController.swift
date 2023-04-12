@@ -72,6 +72,7 @@ final class MainViewController: UIViewController {
         navigationItem.titleView = UIImageView(image: .dayengLogo)
         navigationController?.navigationBar.tintColor = .black
         
+        navigationItem.title = ""
         navigationItem.leftBarButtonItem = calendarButton
         navigationItem.rightBarButtonItem = resetButton
     }
