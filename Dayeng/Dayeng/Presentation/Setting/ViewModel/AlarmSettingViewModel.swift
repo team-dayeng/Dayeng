@@ -49,14 +49,13 @@ final class AlarmSettingViewModel {
             .bind(to: output.initialyIsAlarmOn)
             .disposed(by: disposeBag)
         
-        useCase.alarmDate
-            .bind(to: output.setDate)
-            .disposed(by: self.disposeBag)
-        
         input.viewWillAppear
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
                 output.dayList.accept(self.useCase.selectedDaysDescription)
+                self.useCase.alarmDate
+                    .bind(to: output.setDate)
+                    .disposed(by: self.disposeBag)
             }).disposed(by: disposeBag)
         
         input.daysOfWeekDidTapped

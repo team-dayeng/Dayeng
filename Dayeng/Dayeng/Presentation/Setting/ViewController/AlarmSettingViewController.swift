@@ -250,25 +250,22 @@ final class AlarmSettingViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        output.dayList
-            .asDriver(onErrorJustReturn: "안 함")
-            .drive(onNext: { [weak self] dayList in
+        Observable.zip(output.dayList, output.setDate)
+            .asDriver(onErrorJustReturn: ("안 함", Date()))
+            .drive(onNext: { [weak self] (dayList, date) in
                 guard let self else { return }
                 self.dayListLabel.text = dayList
-                if dayList != "안 함" {
-                    self.dateDiscriptionLabel.text = "\(dayList) " + (self.dateDiscriptionLabel.text ?? "")
-                } else {
-                    self.dateDiscriptionLabel.text = ""
-                }
-            }).disposed(by: disposeBag)
-        
-        output.setDate
-            .asDriver(onErrorJustReturn: Date())
-            .drive(onNext: { [weak self] date in
-                guard let self else { return }
                 self.timePicker.date = date
-                self.dateDiscriptionLabel.text = date.convertToString(format: "a HH : mm", locale: .korea)
-            }).disposed(by: disposeBag)
+                if dayList == "안 함" {
+                    self.dateDiscriptionLabel.text = dayList
+                } else {
+                    self.dateDiscriptionLabel.text = """
+                    \(dayList) \
+                    \(date.convertToString(format: "a HH : mm", locale: .korea))
+                    """
+                }
+            })
+            .disposed(by: disposeBag)
         
         output.registResult
             .asDriver(onErrorJustReturn: .notAuthorized)
