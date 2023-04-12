@@ -47,20 +47,10 @@ final class DefaultAlarmSettingUseCase: AlarmSettingUseCase {
     }
     
     func checkInitialyIsAlarmOn() -> Observable<Bool> {
-        Observable.create { [weak self] observer in
-            guard let self else { return Disposables.create() }
-            if UserDefaults.isAlarmOn {
-                self.userNotificationService.checkAlertSettings()
-                    .subscribe(onNext: { allow in
-                        observer.onNext(allow)
-                    })
-                    .disposed(by: self.disposeBag)
-            } else {
-                observer.onNext(false)
-            }
-            
-            return Disposables.create()
+        if UserDefaults.isAlarmOn {
+            return self.userNotificationService.checkAlertSettings()
         }
+        return Observable.just(false)
     }
     
     func registAlarm(_ date: Date) -> Observable<Bool> {
@@ -72,19 +62,11 @@ final class DefaultAlarmSettingUseCase: AlarmSettingUseCase {
     }
     
     func onAlarm() -> Observable<Bool> {
-        Observable.create { [weak self] observer in
-            guard let self else { return Disposables.create() }
-            self.userNotificationService.createNotification(time: UserDefaults.alarmDate,
-                                                            daysOfWeek: UserDefaults.selectedAlarmDays)
-            .subscribe(onNext: { allow in
-                if allow {
-                    UserDefaults.isAlarmOn = true
-                }
-                observer.onNext(allow)
-            })
-            .disposed(by: self.disposeBag)
-            
-            return Disposables.create()
+        userNotificationService.createNotification(time: UserDefaults.alarmDate,
+                                                               daysOfWeek: UserDefaults.selectedAlarmDays)
+        .map { allow in
+            UserDefaults.isAlarmOn = allow ? true : UserDefaults.isAlarmOn
+            return allow
         }
     }
     

@@ -303,14 +303,8 @@ final class AlarmSettingViewController: UIViewController {
         switchButton.isOn = isOn
         hiddenContentView.isHidden = !isOn
         dateDiscriptionLabel.isHidden = !isOn
-        if isOn {
-            self.contentView.snp.updateConstraints {
-                $0.height.equalTo(450)
-            }
-        } else {
-            self.contentView.snp.updateConstraints {
-                $0.height.equalTo(100)
-            }
+        contentView.snp.updateConstraints {
+            $0.height.equalTo(isOn ? 450 : 100)
         }
     }
     

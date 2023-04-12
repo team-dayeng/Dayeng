@@ -35,35 +35,26 @@ final class DefaultUserNotificationService: UserNotificationService {
         let content = UNMutableNotificationContent()
         content.title = "데잉을 쓸 시간이에요!"
         content.body = "오늘의 일기를 작성해보아요"
-        
-        return Observable.create { [weak self] observer in
-            guard let self else { return Disposables.create() }
-            
-            self.checkAlertSettings()
-                .subscribe(onNext: { allow in
-                    if allow {
-                        let createdNotificationResults = daysOfWeek.enumerated().filter {$0.element}.map { (index, _) in
-                            let indexToWeekDay = ((index+1)%7)+1
-                            return self.createNotification(time: time, weekDay: indexToWeekDay, content: content)
-                        }
-                        
-                        if createdNotificationResults.isEmpty {
-                            observer.onNext(true)
-                        } else {
-                            Observable.zip(createdNotificationResults)
-                                .subscribe(onNext: { results in
-                                    observer.onNext(!results.contains(false))
-                                })
-                                .disposed(by: self.disposeBag)
-                        }
-                    } else {
-                        observer.onNext(false)
+        return checkAlertSettings()
+            .flatMap { [weak self] allow in
+                guard let self else { return Observable.just(false) }
+                if !allow {
+                    return Observable.just(false)
+                }
+                let createdNotificationResults = daysOfWeek.enumerated().filter {$0.element}.map { (index, _) in
+                    let indexToWeekDay = ((index+1)%7)+1
+                    return self.createNotification(time: time, weekDay: indexToWeekDay, content: content)
+                }
+                
+                if createdNotificationResults.isEmpty {
+                    return Observable.just(true)
+                }
+                
+                return Observable.zip(createdNotificationResults)
+                    .map { results in
+                        !results.contains(false)
                     }
-                })
-                .disposed(by: self.disposeBag)
-            
-            return Disposables.create()
-        }
+            }
     }
     
     func removeAllNotifications() {
