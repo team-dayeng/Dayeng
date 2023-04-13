@@ -19,11 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         RxKakaoSDK.initSDK(appKey: "983c5ee200890b63e1e68e303ffd0114")
         
-        DefaultUserNotificationService().requestAuthorization()
-            .subscribe(onError: { _ in
-                print("권한 없음")
-                UserDefaults.isAlarmOn = false
-            }).dispose()
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { isAllowd, _ in
+            if !isAllowd { UserDefaults.isAlarmOn = false }
+        }
+        
         return true
     }
 

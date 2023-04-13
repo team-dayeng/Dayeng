@@ -85,6 +85,7 @@ final class MainViewController: UIViewController {
         navigationItem.titleView = titleImageView
         navigationController?.navigationBar.tintColor = .black
         
+        navigationItem.title = ""
         navigationItem.leftBarButtonItem = calendarButton
     }
     

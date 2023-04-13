@@ -16,7 +16,6 @@ final class DefaultAlarmSettingUseCase: AlarmSettingUseCase {
     private var disposeBag = DisposeBag()
     var selectedDays: BehaviorRelay<[Bool]>
     var alarmDate: BehaviorRelay<Date>
-    var initialyIsAlarmOn: BehaviorRelay<Bool>
     var isAuthorized = PublishRelay<Bool>()
     
     var selectedDaysDescription: String {
@@ -45,40 +44,30 @@ final class DefaultAlarmSettingUseCase: AlarmSettingUseCase {
         
         selectedDays = BehaviorRelay(value: UserDefaults.selectedAlarmDays)
         alarmDate = BehaviorRelay(value: UserDefaults.alarmDate)
-        initialyIsAlarmOn = BehaviorRelay(value: UserDefaults.isAlarmOn)
-        
-        initialyIsAlarmOn
-            .subscribe(onNext: { [weak self] isOn in
-                guard let self else { return }
-                if isOn {
-                    self.userNotificationService.requestAuthorization()
-                        .subscribe(onError: { [weak self] _ in
-                            guard let self else { return }
-                            self.initialyIsAlarmOn.accept(false)
-                        }).disposed(by: self.disposeBag)
-                }
-            }).disposed(by: disposeBag)
     }
     
-    func registAlarm(_ date: Date) -> Observable<Void> {
+    func checkInitialyIsAlarmOn() -> Observable<Bool> {
+        if UserDefaults.isAlarmOn {
+            return self.userNotificationService.checkAlertSettings()
+        }
+        return Observable.just(false)
+    }
+    
+    func registAlarm(_ date: Date) -> Observable<Bool> {
         UserDefaults.selectedAlarmDays = selectedDays.value
         UserDefaults.alarmDate = date
         UserDefaults.isAlarmOn = true
         
-        return Observable.combineLatest(
-            userNotificationService.requestAuthorization(),
-            userNotificationService.createNotification(time: date, daysOfWeek: selectedDays.value),
-            resultSelector: { (_, _) in
-                return ()
-            })
+        return userNotificationService.createNotification(time: date, daysOfWeek: selectedDays.value)
     }
     
-    func onAlarm() -> Observable<Void> {
-        UserDefaults.isAlarmOn = true
-        return userNotificationService
-            .requestAuthorization()
-            .withLatestFrom(userNotificationService.createNotification(time: UserDefaults.alarmDate,
-                                                                       daysOfWeek: UserDefaults.selectedAlarmDays))
+    func onAlarm() -> Observable<Bool> {
+        userNotificationService.createNotification(time: UserDefaults.alarmDate,
+                                                               daysOfWeek: UserDefaults.selectedAlarmDays)
+        .map { isAllowd in
+            UserDefaults.isAlarmOn = isAllowd ? true : UserDefaults.isAlarmOn
+            return isAllowd
+        }
     }
     
     func offAlarm() {
