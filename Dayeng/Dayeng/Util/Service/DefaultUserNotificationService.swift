@@ -36,9 +36,9 @@ final class DefaultUserNotificationService: UserNotificationService {
         content.title = "데잉을 쓸 시간이에요!"
         content.body = "오늘의 일기를 작성해보아요"
         return checkAlertSettings()
-            .flatMap { [weak self] allow in
+            .flatMap { [weak self] isAllowd in
                 guard let self else { return Observable.just(false) }
-                if !allow {
+                if !isAllowd {
                     return Observable.just(false)
                 }
                 let createdNotificationResults = daysOfWeek.enumerated().filter {$0.element}.map { (index, _) in

@@ -64,9 +64,9 @@ final class DefaultAlarmSettingUseCase: AlarmSettingUseCase {
     func onAlarm() -> Observable<Bool> {
         userNotificationService.createNotification(time: UserDefaults.alarmDate,
                                                                daysOfWeek: UserDefaults.selectedAlarmDays)
-        .map { allow in
-            UserDefaults.isAlarmOn = allow ? true : UserDefaults.isAlarmOn
-            return allow
+        .map { isAllowd in
+            UserDefaults.isAlarmOn = isAllowd ? true : UserDefaults.isAlarmOn
+            return isAllowd
         }
     }
     

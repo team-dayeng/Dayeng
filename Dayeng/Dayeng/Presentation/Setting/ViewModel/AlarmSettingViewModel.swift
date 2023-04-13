@@ -82,8 +82,8 @@ final class AlarmSettingViewModel {
                     return
                 }
                 self.useCase.registAlarm(date)
-                    .subscribe(onNext: { allow in
-                        if allow {
+                    .subscribe(onNext: { isAllowd in
+                        if isAllowd {
                             output.registResult.accept(.success(self.useCase.selectedDaysDescription,
                                                                 date))
                         } else {
@@ -96,9 +96,9 @@ final class AlarmSettingViewModel {
             .subscribe(onNext: { isOn in
                 if isOn {
                     self.useCase.onAlarm()
-                        .subscribe(onNext: { allow in
-                            if allow {
-                                output.registResult.accept(.change(allow))
+                        .subscribe(onNext: { isAllowd in
+                            if isAllowd {
+                                output.registResult.accept(.change(isAllowd))
                             } else {
                                 output.registResult.accept(.notAuthorized)
                             }

@@ -19,8 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         RxKakaoSDK.initSDK(appKey: "983c5ee200890b63e1e68e303ffd0114")
         
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { allow, _ in
-            if !allow { UserDefaults.isAlarmOn = false }
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { isAllowd, _ in
+            if !isAllowd { UserDefaults.isAlarmOn = false }
         }
         
         return true
