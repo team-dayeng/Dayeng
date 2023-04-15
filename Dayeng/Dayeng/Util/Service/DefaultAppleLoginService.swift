@@ -14,19 +14,21 @@ import FirebaseAuth
 final class DefaultAppleLoginService: AppleLoginService {
     
     var currentNonce: String?
+    private let disposeBag = DisposeBag()
     
     enum AppleLoginError: Error {
         case notExistSelf
-        case notExistNonce
+        case cannotCreateNonce
         case cannotFetchIdToken
         case tokenSerializationFail
         case cannotFetchUserName
         case credentialTypeCastingError
+        case notAppleLoggedIn
     }
     
-    func signIn() -> Observable<(credential: OAuthCredential, name: String?)> {
+    func signIn() -> Observable<(credential: OAuthCredential, name: String)> {
         guard let nonce = randomNonceString() else {
-            return Observable.error(AppleLoginError.notExistNonce)
+            return Observable.error(AppleLoginError.cannotCreateNonce)
         }
         currentNonce = nonce
         
@@ -35,11 +37,13 @@ final class DefaultAppleLoginService: AppleLoginService {
             nonce: sha256(nonce)
         )
         .map { [weak self] authorization in
-            guard let self else { throw AppleLoginError.notExistSelf }
+            guard let self else {
+                throw AppleLoginError.notExistSelf
+            }
             
             if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
                 guard let nonce = self.currentNonce else {
-                    throw AppleLoginError.notExistNonce
+                    throw AppleLoginError.cannotCreateNonce
                 }
                 
                 guard let appleIDToken = appleIDCredential.identityToken else {
@@ -52,7 +56,10 @@ final class DefaultAppleLoginService: AppleLoginService {
                 
                 let fullName = (appleIDCredential.fullName?.familyName ?? "")
                                 + (appleIDCredential.fullName?.givenName ?? "")
-                let userName = fullName != "" ? fullName : nil
+                
+                guard let userName = fullName != "" ? fullName : UserDefaults.userName else {
+                    throw AppleLoginError.cannotFetchUserName
+                }
 
                 UserDefaults.appleID = appleIDCredential.user
                 
@@ -85,13 +92,42 @@ final class DefaultAppleLoginService: AppleLoginService {
         }
     }
     
-//    func signOut() {
-//        UserDefaults.appleID = nil
-//    }
-//    
-//    func withDrawal() {
-//        UserDefaults.appleID = nil
-//    }
+    func reauthenticate() -> Observable<OAuthCredential> {
+        Observable.create { [weak self] observer in
+            guard let self else {
+                observer.onError(AppleLoginError.notExistSelf)
+                return Disposables.create()
+            }
+            self.isLoggedIn()
+                .subscribe(onNext: { [weak self] result in
+                    guard let self else {
+                        observer.onError(AppleLoginError.notExistSelf)
+                        return
+                    }
+                    if result {
+                        DispatchQueue.main.async {
+                            self.signIn()
+                                .map { $0.credential }
+                                .bind(to: observer)
+                                .disposed(by: self.disposeBag)
+                        }
+                    } else {
+                        observer.onError(AppleLoginError.notAppleLoggedIn)
+                    }
+                })
+                .disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
+    }
+    
+    func signOut() {
+        UserDefaults.appleID = nil
+    }
+    
+    func withdrawal() {
+        UserDefaults.isAppleSignedUp = false
+        UserDefaults.appleID = nil
+    }
 }
 
 extension DefaultAppleLoginService {
