@@ -46,10 +46,7 @@ final class DefaultUserRepository: UserRepository {
     
     func uploadAnswer(answer: String) -> Observable<Void> {
         guard let user = DayengDefaults.shared.user else {
-            return Observable<Void>.create { observer in
-                observer.onError(UserRepositoryError.noUserError)
-                return Disposables.create()
-            }
+            return Observable.error(UserRepositoryError.noUserError)
         }
         
         let answerDate = Date().convertToString(format: "yyyy.MM.dd.E")
@@ -73,6 +70,22 @@ final class DefaultUserRepository: UserRepository {
         )
     }
     
+    func editAnswer(answer: String, index: Int) -> Observable<Void> {
+        guard let user = DayengDefaults.shared.user else {
+            return Observable.error(UserRepositoryError.noUserError)
+        }
+        
+        DayengDefaults.shared.editAnswer(
+            Answer(date: user.answers[index].date, answer: answer), index
+        )
+        
+        return firestoreService.upload(
+            api: .answer(userID: user.uid, index: index),
+            dto: AnswerDTO(date: user.answers[index].date,
+                           answer: answer)
+        )
+    }
+    
     func existUser(userID: String) -> Observable<String> {
         return firestoreService.fetchPath(collection: "users",
                                       document: userID)
@@ -84,13 +97,12 @@ final class DefaultUserRepository: UserRepository {
             if paths.isEmpty {
                 observer.onNext([])
             } else {
-                Observable.zip(paths.map { path in
-                    self.firestoreService.fetch(path: path)
-                        .map { (userDTO: UserDTO) in
-                            let uid = path.split(separator: "/").map { String($0) }[1]
-                            return userDTO.toDomain(uid: uid)
-                        }
-                })
+                Observable.zip(
+                    paths.map { path in
+                        let uid = path.split(separator: "/").map { String($0) }[1]
+                        return self.fetchUser(userID: uid)
+                    }
+                )
                 .bind(to: observer)
                 .disposed(by: self.disposeBag)
             }

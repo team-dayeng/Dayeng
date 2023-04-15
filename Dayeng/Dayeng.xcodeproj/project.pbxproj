@@ -59,6 +59,7 @@
 		7603FA1E2996522200D2C9C8 /* AlarmSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7603FA1D2996522200D2C9C8 /* AlarmSettingViewModel.swift */; };
 		7603FA202996556200D2C9C8 /* DefaultAlarmSettingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7603FA1F2996556200D2C9C8 /* DefaultAlarmSettingUseCase.swift */; };
 		7603FA22299793B500D2C9C8 /* AlarmSettingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7603FA21299793B500D2C9C8 /* AlarmSettingUseCase.swift */; };
+		7617372329B1B52D00D9A093 /* DefaultMainUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7617372229B1B52D00D9A093 /* DefaultMainUseCase.swift */; };
 		76280CE729878A3F0061206A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE629878A3F0061206A /* AppDelegate.swift */; };
 		76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE829878A3F0061206A /* SceneDelegate.swift */; };
 		76280CF029878A410061206A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76280CEF29878A410061206A /* Assets.xcassets */; };
@@ -82,12 +83,16 @@
 		7628E68C298E4E80002D86F2 /* DefaultFirestoreDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E68B298E4E80002D86F2 /* DefaultFirestoreDatabaseService.swift */; };
 		7628E68E298E4E83002D86F2 /* FirestoreDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E68D298E4E82002D86F2 /* FirestoreDatabaseService.swift */; };
 		7628E690298E4E9B002D86F2 /* FirestoreAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628E68F298E4E9B002D86F2 /* FirestoreAPI.swift */; };
+		762A554529ADEF9A0068AE86 /* MainEditUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762A554429ADEF9A0068AE86 /* MainEditUseCase.swift */; };
+		76CD7EB529E165D800AFE950 /* MainUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CD7EB429E165D800AFE950 /* MainUseCase.swift */; };
 		76D47BB1298F91330091F8FB /* MainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D47BB0298F91330091F8FB /* MainCell.swift */; };
 		76F6C0A3298D968D00A124CD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0A2298D968D00A124CD /* MainViewController.swift */; };
 		76F6C0A5298D969700A124CD /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0A4298D969700A124CD /* MainViewModel.swift */; };
 		76F6C0A7298D96CF00A124CD /* CommonMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0A6298D96CF00A124CD /* CommonMainView.swift */; };
 		76F6C0A9298D97A700A124CD /* MainEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0A8298D97A700A124CD /* MainEditViewController.swift */; };
 		76F6C0AD298D985F00A124CD /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F6C0AC298D985F00A124CD /* Date+.swift */; };
+		E51C6DF429D7028900D40EC9 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51C6DF329D7028900D40EC9 /* NetworkMonitor.swift */; };
+		E51C6DF629D7032200D40EC9 /* NetworkDisconnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51C6DF529D7032200D40EC9 /* NetworkDisconnectViewController.swift */; };
 		E52F65EE29AC7E89007C36AE /* AddFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52F65ED29AC7E89007C36AE /* AddFriendViewModel.swift */; };
 		E52F65F129AC7F20007C36AE /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = E52F65F029AC7F20007C36AE /* RxKeyboard */; };
 		E52F65F329AC7F79007C36AE /* FirebaseDynamicLinks in Frameworks */ = {isa = PBXBuildFile; productRef = E52F65F229AC7F79007C36AE /* FirebaseDynamicLinks */; };
@@ -128,6 +133,7 @@
 		E5D43435298A3291004EDFC7 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43434298A3291004EDFC7 /* CalendarViewController.swift */; };
 		E5D43437298A3905004EDFC7 /* CommonCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43436298A3905004EDFC7 /* CommonCalendarCell.swift */; };
 		E5D43439298A4892004EDFC7 /* NSTextAttachment+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43438298A4892004EDFC7 /* NSTextAttachment+.swift */; };
+		E5F08FF329DEB7E900B7DD47 /* LocaleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F08FF229DEB7E900B7DD47 /* LocaleType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -182,6 +188,7 @@
 		7603FA1D2996522200D2C9C8 /* AlarmSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewModel.swift; sourceTree = "<group>"; };
 		7603FA1F2996556200D2C9C8 /* DefaultAlarmSettingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAlarmSettingUseCase.swift; sourceTree = "<group>"; };
 		7603FA21299793B500D2C9C8 /* AlarmSettingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingUseCase.swift; sourceTree = "<group>"; };
+		7617372229B1B52D00D9A093 /* DefaultMainUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMainUseCase.swift; sourceTree = "<group>"; };
 		76280CE329878A3F0061206A /* Dayeng.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dayeng.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76280CE629878A3F0061206A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		76280CE829878A3F0061206A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -198,12 +205,16 @@
 		7628E68B298E4E80002D86F2 /* DefaultFirestoreDatabaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFirestoreDatabaseService.swift; sourceTree = "<group>"; };
 		7628E68D298E4E82002D86F2 /* FirestoreDatabaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreDatabaseService.swift; sourceTree = "<group>"; };
 		7628E68F298E4E9B002D86F2 /* FirestoreAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreAPI.swift; sourceTree = "<group>"; };
+		762A554429ADEF9A0068AE86 /* MainEditUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainEditUseCase.swift; sourceTree = "<group>"; };
+		76CD7EB429E165D800AFE950 /* MainUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUseCase.swift; sourceTree = "<group>"; };
 		76D47BB0298F91330091F8FB /* MainCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCell.swift; sourceTree = "<group>"; };
 		76F6C0A2298D968D00A124CD /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		76F6C0A4298D969700A124CD /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		76F6C0A6298D96CF00A124CD /* CommonMainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonMainView.swift; sourceTree = "<group>"; };
 		76F6C0A8298D97A700A124CD /* MainEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainEditViewController.swift; sourceTree = "<group>"; };
 		76F6C0AC298D985F00A124CD /* Date+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		E51C6DF329D7028900D40EC9 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		E51C6DF529D7032200D40EC9 /* NetworkDisconnectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDisconnectViewController.swift; sourceTree = "<group>"; };
 		E52F65ED29AC7E89007C36AE /* AddFriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewModel.swift; sourceTree = "<group>"; };
 		E52F65F429AC859F007C36AE /* AcceptFriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptFriendViewModel.swift; sourceTree = "<group>"; };
 		E552C1F1298B911F00F51179 /* OwnerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerType.swift; sourceTree = "<group>"; };
@@ -242,6 +253,7 @@
 		E5D43434298A3291004EDFC7 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		E5D43436298A3905004EDFC7 /* CommonCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonCalendarCell.swift; sourceTree = "<group>"; };
 		E5D43438298A4892004EDFC7 /* NSTextAttachment+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextAttachment+.swift"; sourceTree = "<group>"; };
+		E5F08FF229DEB7E900B7DD47 /* LocaleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -276,6 +288,7 @@
 				76280CE529878A3F0061206A /* Dayeng */,
 				76280CE429878A3F0061206A /* Products */,
 				E569162C2998D1EA006D7231 /* Frameworks */,
+				76CD7EB329E1517600AFE950 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -345,7 +358,6 @@
 			children = (
 				76280D29298792A00061206A /* Auth */,
 				76280D272987929A0061206A /* Main */,
-				7628E685298E4DB4002D86F2 /* DefaultMainEditUseCase.swift */,
 				76280D25298792900061206A /* Calendar */,
 				76280D23298792850061206A /* Friend */,
 				76280D22298792680061206A /* Setting */,
@@ -407,6 +419,7 @@
 				E5AE4F6029BCACCD0029B200 /* LinkBuildService.swift */,
 				47B5084429AA02AF0046A982 /* KakaoLoginService.swift */,
 				47B5084829AA7CB00046A982 /* DefaultKakaoLoginService.swift */,
+				E51C6DF329D7028900D40EC9 /* NetworkMonitor.swift */,
 				47811A5B29D97C0D00E672AF /* FirebaseAuthService.swift */,
 				47811A5D29D97C1900E672AF /* DefaultFirebaseAuthService.swift */,
 				4761475829DE68E7000349B1 /* AuthService.swift */,
@@ -453,6 +466,7 @@
 				47D1835A298A8DDD0058C0EC /* AuthButton.swift */,
 				E569162A2998D1D9006D7231 /* WebViewController.swift */,
 				76003E11299E361D00F15CAE /* IndicatorView.swift */,
+				E51C6DF529D7032200D40EC9 /* NetworkDisconnectViewController.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -469,8 +483,8 @@
 		76280D1B298791CD0061206A /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				76F6C0A2298D968D00A124CD /* MainViewController.swift */,
 				76D47BB0298F91330091F8FB /* MainCell.swift */,
+				76F6C0A2298D968D00A124CD /* MainViewController.swift */,
 				76F6C0A4298D969700A124CD /* MainViewModel.swift */,
 				76F6C0A8298D97A700A124CD /* MainEditViewController.swift */,
 				7628E689298E4E76002D86F2 /* MainEditViewModel.swift */,
@@ -581,6 +595,8 @@
 			isa = PBXGroup;
 			children = (
 				76280D282987929C0061206A /* Protocol */,
+				7617372229B1B52D00D9A093 /* DefaultMainUseCase.swift */,
+				7628E685298E4DB4002D86F2 /* DefaultMainEditUseCase.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -588,6 +604,8 @@
 		76280D282987929C0061206A /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				762A554429ADEF9A0068AE86 /* MainEditUseCase.swift */,
+				76CD7EB429E165D800AFE950 /* MainUseCase.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -609,6 +627,13 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		76CD7EB329E1517600AFE950 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		E52CF84B298A59C700829661 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
@@ -616,6 +641,7 @@
 				47D1835C298A92C10058C0EC /* AuthType.swift */,
 				47549423298F966B008B581D /* AlertType.swift */,
 				E5AE4F3229B0E1F30029B200 /* ToastType.swift */,
+				E5F08FF229DEB7E900B7DD47 /* LocaleType.swift */,
 				E552C1F1298B911F00F51179 /* OwnerType.swift */,
 				E569162F2998D429006D7231 /* PageType.swift */,
 				76003E13299E448800F15CAE /* MessageUIType.swift */,
@@ -822,10 +848,12 @@
 				7628E68E298E4E83002D86F2 /* FirestoreDatabaseService.swift in Sources */,
 				E552C2552994C92700F51179 /* Coordinator.swift in Sources */,
 				47B5084929AA7CB00046A982 /* DefaultKakaoLoginService.swift in Sources */,
+				76CD7EB529E165D800AFE950 /* MainUseCase.swift in Sources */,
 				76F6C0A9298D97A700A124CD /* MainEditViewController.swift in Sources */,
 				7628E68C298E4E80002D86F2 /* DefaultFirestoreDatabaseService.swift in Sources */,
 				7628E684298E4DA7002D86F2 /* DefaultUserRepository.swift in Sources */,
 				7603FA202996556200D2C9C8 /* DefaultAlarmSettingUseCase.swift in Sources */,
+				762A554529ADEF9A0068AE86 /* MainEditUseCase.swift in Sources */,
 				E5AE4F3F29B37B1A0029B200 /* DefaultCalendarUseCase.swift in Sources */,
 				4794DB1829B3494B0032AF86 /* SettingUseCase.swift in Sources */,
 				47B5084529AA02AF0046A982 /* KakaoLoginService.swift in Sources */,
@@ -881,6 +909,7 @@
 				47D18359298A86F10058C0EC /* LoginViewController.swift in Sources */,
 				E552C262299658F100F51179 /* CalendarViewModel.swift in Sources */,
 				474575EE29A4DEBD0031F1E5 /* LoginUseCase.swift in Sources */,
+				7617372329B1B52D00D9A093 /* DefaultMainUseCase.swift in Sources */,
 				E552C25A299656EA00F51179 /* MainCoordinator.swift in Sources */,
 				76003E12299E361D00F15CAE /* IndicatorView.swift in Sources */,
 				47D18364298D0EDC0058C0EC /* LoginViewModel.swift in Sources */,
@@ -895,10 +924,12 @@
 				76F6C0AD298D985F00A124CD /* Date+.swift in Sources */,
 				474A62B829A2346A002176AB /* AuthenticationServices+Rx.swift in Sources */,
 				474A62B629A22E42002176AB /* ASAuthorizationControllerProxy.swift in Sources */,
+				E5F08FF329DEB7E900B7DD47 /* LocaleType.swift in Sources */,
 				E5AE4F3D29B37B120029B200 /* CalendarUseCase.swift in Sources */,
 				47E0A5E7299774C20093645B /* QuestionRepository.swift in Sources */,
 				E569162B2998D1D9006D7231 /* WebViewController.swift in Sources */,
 				E5D43435298A3291004EDFC7 /* CalendarViewController.swift in Sources */,
+				E51C6DF629D7032200D40EC9 /* NetworkDisconnectViewController.swift in Sources */,
 				76F6C0A7298D96CF00A124CD /* CommonMainView.swift in Sources */,
 				E552C2572994C93700F51179 /* AppCoordinator.swift in Sources */,
 				7628E68A298E4E76002D86F2 /* MainEditViewModel.swift in Sources */,
@@ -916,6 +947,7 @@
 				476A62692993FE460074231E /* QuestionDTO.swift in Sources */,
 				E552C2602996573A00F51179 /* SplashViewModel.swift in Sources */,
 				76003E0D29990ED200F15CAE /* UserNotificationService.swift in Sources */,
+				E51C6DF429D7028900D40EC9 /* NetworkMonitor.swift in Sources */,
 				7628E682298E4DA4002D86F2 /* UserRepository.swift in Sources */,
 				7628E686298E4DB4002D86F2 /* DefaultMainEditUseCase.swift in Sources */,
 				E5D43437298A3905004EDFC7 /* CommonCalendarCell.swift in Sources */,
@@ -1171,8 +1203,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
-				branch = master;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
 			};
 		};
 		76280D2B29879F770061206A /* XCRemoteSwiftPackageReference "lottie-ios" */ = {

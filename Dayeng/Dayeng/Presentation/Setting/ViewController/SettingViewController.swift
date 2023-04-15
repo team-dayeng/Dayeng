@@ -182,6 +182,7 @@ final class SettingViewController: UIViewController {
     
     private func configureNavigationBar() {
         navigationItem.title = "설정"
+        navigationController?.navigationBar.topItem?.title = ""
         navigationController?.navigationBar.tintColor = .black
     }
     

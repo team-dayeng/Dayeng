@@ -33,17 +33,23 @@ final class MainEditViewController: UIViewController {
     
     // MARK: - Properties
     var disposeBag = DisposeBag()
-    let viewModel = MainEditViewModel(
-        useCase: DefaultMainEditUseCase(
-            userRepository: DefaultUserRepository(
-                firestoreService: DefaultFirestoreDatabaseService())))
-    
+    let viewModel: MainEditViewModel
     var submitButtonDidTapped: Observable<Void>!
     
     // MARK: - Lifecycles
+    init(viewModel: MainEditViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        hideIndicator()
         setupNaviagationBar()
         setupViews()
         bind()
@@ -113,10 +119,10 @@ final class MainEditViewController: UIViewController {
         answerTextView.rx.didBeginEditing
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
-                if self.answerTextView.textColor == .lightGray {
+                if self.answerTextView.text == "enter your answer." {
                     self.answerTextView.text = ""
-                    self.answerTextView.textColor = .black
                 }
+                self.answerTextView.textColor = .black
             }).disposed(by: disposeBag)
         
         answerTextView.rx.didEndEditing
@@ -152,14 +158,37 @@ final class MainEditViewController: UIViewController {
     private func bind() {
         let output = viewModel.transform(
             input: .init(
-                submitButtonTapped: submitButtonDidTapped,
-                answerText: answerTextView.rx.text.orEmpty.asObservable()
+                submitButtonTapped: submitButtonDidTapped.map { [weak self] _ in
+                        guard let self else { return }
+                        self.showIndicator()
+                    },
+                answerText: answerTextView.rx.text.orEmpty.asObservable(),
+                viewDidLoad: rx.viewDidLoad.map { _ in }.asObservable()
             )
         )
+        
+        output.question
+            .subscribe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] question in
+                guard let self else { return }
+                self.mainView.bindQuestion(question)
+            })
+            .disposed(by: disposeBag)
+        
+        output.answer
+            .asDriver(onErrorJustReturn: nil)
+            .drive(onNext: { [weak self] answer in
+                guard let self,
+                      let answer else { return }
+                self.answerTextView.text = answer.answer
+                self.mainView.dateLabel.text = answer.date
+            })
+            .disposed(by: disposeBag)
         
         output.submitResult
             .subscribe(onNext: { [weak self] error in
                 guard let self else { return }
+                self.hideIndicator()
                 if let error {
                     self.showAlert(title: "데잉 작성에 실패했습니다.",
                                    message: error.localizedDescription,
@@ -167,6 +196,7 @@ final class MainEditViewController: UIViewController {
                 } else {
                     self.navigationController?.popViewController(animated: true)
                 }
-            }).disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
     }
 }

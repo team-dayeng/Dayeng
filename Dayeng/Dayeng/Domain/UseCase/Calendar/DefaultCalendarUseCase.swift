@@ -11,12 +11,49 @@ import RxSwift
 final class DefaultCalendarUseCase: CalendarUseCase {
     // MARK: - Properties
     private let userRepository: UserRepository
+    private let ownerType: OwnerType
     private let disposeBag = DisposeBag()
     
     // MARK: - Lifecycles
-    init(userRepository: UserRepository) {
+    init(userRepository: UserRepository, ownerType: OwnerType) {
         self.userRepository = userRepository
+        self.ownerType = ownerType
     }
     
     // MARK: - Helpers
+    func fetchOwnerType() -> OwnerType {
+        return ownerType
+    }
+    
+    func fetchAnswers() -> Observable<[Answer?]> {
+        var answers = [Answer?]()
+        switch ownerType {
+        case .mine:
+            if let user = DayengDefaults.shared.user {
+                answers = user.answers
+            } else {
+                return Observable.error(UserError.notExistCurrentUser)
+            }
+        case .friend(let user):
+            answers = user.answers
+        }
+    
+        while DayengDefaults.shared.questions.count > answers.count {
+            answers.append(nil)
+        }
+        return Observable.just(answers)
+    }
+    
+    func fetchCurrentIndex() -> Int {
+        switch ownerType {
+        case .mine:
+            if let user = DayengDefaults.shared.user {
+                return user.currentIndex
+            } else {
+                return -1
+            }
+        case .friend(let user):
+            return user.currentIndex
+        }
+    }
 }

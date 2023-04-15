@@ -19,13 +19,12 @@ final class CalendarViewController: UIViewController {
                                                   action: nil)
     
     // MARK: - Properties
-    private let ownerType: OwnerType
     private let viewModel: CalendarViewModel
+    
     private let disposeBag = DisposeBag()
     
     // MARK: - Lifecycles
-    init(ownerType: OwnerType, viewModel: CalendarViewModel) {
-        self.ownerType = ownerType
+    init(viewModel: CalendarViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -37,8 +36,6 @@ final class CalendarViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
-        
         setupViews()
         configureUI()
         bind()
@@ -48,14 +45,21 @@ final class CalendarViewController: UIViewController {
     private func bind() {
         let input = CalendarViewModel.Input(
             viewDidLoad: rx.viewDidLoad.map { _ in }.asObservable(),
-            homeButtonDidTapped: homeButton.rx.tap.asObservable()
+            homeButtonDidTapped: homeButton.rx.tap.asObservable(),
+            cellDidTapped: collectionView.rx.itemSelected.map { _ in }
         )
         
         let output = viewModel.transform(input: input)
+        
+        configureNavigationBar(ownerType: output.ownerType)
+        
         output.answers
-            .subscribe(onNext: {
-                
-            })
+            .bind(to: collectionView.rx.items(
+                cellIdentifier: CommonCalendarCell.identifier,
+                cellType: CommonCalendarCell.self
+            )) { (index, answer, cell) in
+                cell.bind(index: index, answer: answer, currentIndex: output.currentIndex)
+            }
             .disposed(by: disposeBag)
     }
     
@@ -64,12 +68,10 @@ final class CalendarViewController: UIViewController {
     }
     
     private func configureUI() {
-        view.backgroundColor = .white
-        configureNavigationBar()
         configureCollectionView()
     }
     
-    private func configureNavigationBar() {
+    private func configureNavigationBar(ownerType: OwnerType) {
         var title = ""
         
         switch ownerType {
@@ -82,16 +84,14 @@ final class CalendarViewController: UIViewController {
         
         navigationItem.title = title
         navigationController?.navigationBar.titleTextAttributes = [.font: UIFont.systemFont(ofSize: 20,
-                                                                                                 weight: .bold),
-                                                                        .foregroundColor: UIColor.black]
+                                                                                            weight: .bold),
+                                                                   .foregroundColor: UIColor.black]
         navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.topItem?.title = ""
     }
     
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
-        collectionView.delegate = self
-        collectionView.dataSource = self
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.backgroundColor = .clear
         collectionView.isScrollEnabled = false
@@ -99,7 +99,6 @@ final class CalendarViewController: UIViewController {
         collectionView.register(CommonCalendarCell.self, forCellWithReuseIdentifier: CommonCalendarCell.identifier)
         
         view.addSubview(collectionView)
-        
         collectionView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(30)
             $0.leading.trailing.equalToSuperview()
@@ -111,7 +110,7 @@ final class CalendarViewController: UIViewController {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                               heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 2, bottom: 0, trailing: 2)
         
         let rowGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                   heightDimension: .fractionalHeight(1))
@@ -130,29 +129,5 @@ final class CalendarViewController: UIViewController {
         section.orthogonalScrollingBehavior = .paging
         
         return UICollectionViewCompositionalLayout(section: section)
-    }
-}
-
-extension CalendarViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        // 365 대신 싱글톤에 저장되어있는 질문 개수
-        return 365
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CommonCalendarCell.identifier,
-                                                            for: indexPath) as? CommonCalendarCell else {
-            return UICollectionViewCell()
-        }
-        cell.configureNumberLabel(number: indexPath.row + 1)
-        
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // 싱글톤에서 알맞은 질문과 대답을 찾은 후, 뷰전환
-        print(indexPath.row + 1)
     }
 }

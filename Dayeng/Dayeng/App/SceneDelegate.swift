@@ -82,6 +82,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This occurs shortly after the scene enters the background, or when its session is discarded.
         // Release any resources associated with this scene that can be re-created the next time the scene connects.
         // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
+        
+        NetworkMonitor.shared.stopMonitoring()
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
@@ -157,6 +159,35 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                           duration: 1.0,
                           options: option) {
             navigationController.viewControllers.append(viewController)
+        }
+    }
+    
+    func setNetworkMonitor() {
+        NetworkMonitor.shared.startMonitoring { [weak self] connectionStatus in
+            guard let self else { return }
+            switch connectionStatus {
+            case .satisfied:
+                self.dismissNetwrokDisConnectView()
+            case .unsatisfied:
+                self.showNetworkDisconnectView()
+            default:
+                break
+            }
+        }
+    }
+    
+    private func showNetworkDisconnectView() {
+        let viewController = NetworkDisconnectViewController()
+        viewController.modalPresentationStyle = .fullScreen
+        
+        if let navigationContorller = self.window?.rootViewController as? UINavigationController {
+            navigationContorller.viewControllers.first?.present(viewController, animated: false)
+        }
+    }
+    
+    private func dismissNetwrokDisConnectView() {
+        if let navigationContorller = self.window?.rootViewController as? UINavigationController {
+            navigationContorller.viewControllers.first?.dismiss(animated: false)
         }
     }
 }
