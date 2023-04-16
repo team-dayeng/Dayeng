@@ -309,8 +309,6 @@
 				76280D1129878E280061206A /* Domain */,
 				76280D182987918E0061206A /* Presentation */,
 				76280D1429878E380061206A /* Util */,
-				474A62B529A22E42002176AB /* ASAuthorizationControllerProxy.swift */,
-				474A62B729A2346A002176AB /* AuthenticationServices+Rx.swift */,
 			);
 			path = Dayeng;
 			sourceTree = "<group>";
@@ -356,13 +354,12 @@
 		76280D1229878E2B0061206A /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				E5C732E129EB76830080012A /* Splash */,
 				76280D29298792A00061206A /* Auth */,
 				76280D272987929A0061206A /* Main */,
 				76280D25298792900061206A /* Calendar */,
 				76280D23298792850061206A /* Friend */,
 				76280D22298792680061206A /* Setting */,
-				47E0A5E2299773CB0093645B /* SplashUseCase.swift */,
-				47E0A5E42997743F0093645B /* DefaultSplashUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -391,13 +388,15 @@
 		76280D1529878E410061206A /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				474A62B729A2346A002176AB /* AuthenticationServices+Rx.swift */,
+				474A62B529A22E42002176AB /* ASAuthorizationControllerProxy.swift */,
 				76F6C0AC298D985F00A124CD /* Date+.swift */,
+				47E0A5EA2998ED8C0093645B /* Data+.swift */,
 				E5D43438298A4892004EDFC7 /* NSTextAttachment+.swift */,
 				47D1835E298A94790058C0EC /* UIColor+.swift */,
 				47D18360298B8D750058C0EC /* UIImage+.swift */,
 				47549416298E4C16008B581D /* UIViewController+.swift */,
 				E5A2513029AC922E00F62313 /* UIView+.swift */,
-				47E0A5EA2998ED8C0093645B /* Data+.swift */,
 				76003E082998DF4A00F15CAE /* UserDefaults+.swift */,
 			);
 			path = Extension;
@@ -406,24 +405,18 @@
 		76280D1629878E460061206A /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				E5C732D129EB75530080012A /* Protocol */,
 				7628E68B298E4E80002D86F2 /* DefaultFirestoreDatabaseService.swift */,
-				7628E68D298E4E82002D86F2 /* FirestoreDatabaseService.swift */,
 				4754942729900414008B581D /* DefaultDayengCacheService.swift */,
-				476A626C2996646A0074231E /* DayengCacheService.swift */,
-				477800F4299B64FC008FFE79 /* DayengDefaults.swift */,
-				76003E0C29990ED200F15CAE /* UserNotificationService.swift */,
 				76003E0E29990EE200F15CAE /* DefaultUserNotificationService.swift */,
-				47B5084629AA53A10046A982 /* AppleLoginService.swift */,
 				4799A65729A7E2380071F8F9 /* DefaultAppleLoginService.swift */,
 				E5AE4F5E29BCACBC0029B200 /* DefaultLinkBuildService.swift */,
-				E5AE4F6029BCACCD0029B200 /* LinkBuildService.swift */,
-				47B5084429AA02AF0046A982 /* KakaoLoginService.swift */,
 				47B5084829AA7CB00046A982 /* DefaultKakaoLoginService.swift */,
-				E51C6DF329D7028900D40EC9 /* NetworkMonitor.swift */,
-				47811A5B29D97C0D00E672AF /* FirebaseAuthService.swift */,
 				47811A5D29D97C1900E672AF /* DefaultFirebaseAuthService.swift */,
-				4761475829DE68E7000349B1 /* AuthService.swift */,
 				4761475A29DE68F1000349B1 /* DefaultAuthService.swift */,
+				476A626C2996646A0074231E /* DayengCacheService.swift */,
+				477800F4299B64FC008FFE79 /* DayengDefaults.swift */,
+				E51C6DF329D7028900D40EC9 /* NetworkMonitor.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -460,13 +453,8 @@
 		76280D19298791BF0061206A /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				76F6C0A6298D96CF00A124CD /* CommonMainView.swift */,
-				E5D43436298A3905004EDFC7 /* CommonCalendarCell.swift */,
-				47C38780298E390D0030833F /* DayengAlertViewController.swift */,
-				47D1835A298A8DDD0058C0EC /* AuthButton.swift */,
-				E569162A2998D1D9006D7231 /* WebViewController.swift */,
-				76003E11299E361D00F15CAE /* IndicatorView.swift */,
-				E51C6DF529D7032200D40EC9 /* NetworkDisconnectViewController.swift */,
+				E5C732DD29EB76450080012A /* View */,
+				E5C732DC29EB76400080012A /* ViewController */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -474,8 +462,8 @@
 		76280D1A298791C60061206A /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				47D18358298A86F10058C0EC /* LoginViewController.swift */,
-				47D18363298D0EDC0058C0EC /* LoginViewModel.swift */,
+				E5C732DB29EB76340080012A /* ViewModel */,
+				E5C732DA29EB762E0080012A /* ViewController */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -483,11 +471,9 @@
 		76280D1B298791CD0061206A /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				76D47BB0298F91330091F8FB /* MainCell.swift */,
-				76F6C0A2298D968D00A124CD /* MainViewController.swift */,
-				76F6C0A4298D969700A124CD /* MainViewModel.swift */,
-				76F6C0A8298D97A700A124CD /* MainEditViewController.swift */,
-				7628E689298E4E76002D86F2 /* MainEditViewModel.swift */,
+				E5C732D929EB76200080012A /* View */,
+				E5C732D829EB761B0080012A /* ViewModel */,
+				E5C732D729EB76160080012A /* ViewController */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -495,8 +481,8 @@
 		76280D1C298791D10061206A /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
-				E5D43434298A3291004EDFC7 /* CalendarViewController.swift */,
-				E552C261299658F100F51179 /* CalendarViewModel.swift */,
+				E5C732D629EB76050080012A /* ViewModel */,
+				E5C732D529EB75FD0080012A /* ViewController */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -504,13 +490,9 @@
 		76280D1D298791DD0061206A /* Friend */ = {
 			isa = PBXGroup;
 			children = (
-				7628E67B298D9D31002D86F2 /* AddFriendViewController.swift */,
-				E52F65ED29AC7E89007C36AE /* AddFriendViewModel.swift */,
-				7628E67D298DA61D002D86F2 /* AcceptFriendViewController.swift */,
-				E52F65F429AC859F007C36AE /* AcceptFriendViewModel.swift */,
-				47D18365298D16640058C0EC /* FriendListViewController.swift */,
-				47D18367298D16730058C0EC /* FriendListViewModel.swift */,
-				47D18369298D1A610058C0EC /* FriendListCell.swift */,
+				E5C732D429EB75E30080012A /* View */,
+				E5C732D329EB75DE0080012A /* ViewModel */,
+				E5C732D229EB75D90080012A /* ViewController */,
 			);
 			path = Friend;
 			sourceTree = "<group>";
@@ -637,16 +619,16 @@
 		E52CF84B298A59C700829661 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
-				7628E68F298E4E9B002D86F2 /* FirestoreAPI.swift */,
 				47D1835C298A92C10058C0EC /* AuthType.swift */,
 				47549423298F966B008B581D /* AlertType.swift */,
-				E5AE4F3229B0E1F30029B200 /* ToastType.swift */,
+				47F4C4C529BDCA4B0002E51B /* AlertMessageType.swift */,
+				7628E68F298E4E9B002D86F2 /* FirestoreAPI.swift */,
 				E5F08FF229DEB7E900B7DD47 /* LocaleType.swift */,
+				76003E13299E448800F15CAE /* MessageUIType.swift */,
 				E552C1F1298B911F00F51179 /* OwnerType.swift */,
 				E569162F2998D429006D7231 /* PageType.swift */,
-				76003E13299E448800F15CAE /* MessageUIType.swift */,
+				E5AE4F3229B0E1F30029B200 /* ToastType.swift */,
 				47F4C4C329BDBAAA0002E51B /* UserError.swift */,
-				47F4C4C529BDCA4B0002E51B /* AlertMessageType.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -707,12 +689,174 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		E5D433FC2988CD9F004EDFC7 /* Splash */ = {
+		E5C732D129EB75530080012A /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				76003E0C29990ED200F15CAE /* UserNotificationService.swift */,
+				E5AE4F6029BCACCD0029B200 /* LinkBuildService.swift */,
+				4761475829DE68E7000349B1 /* AuthService.swift */,
+				47B5084629AA53A10046A982 /* AppleLoginService.swift */,
+				47B5084429AA02AF0046A982 /* KakaoLoginService.swift */,
+				7628E68D298E4E82002D86F2 /* FirestoreDatabaseService.swift */,
+				47811A5B29D97C0D00E672AF /* FirebaseAuthService.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		E5C732D229EB75D90080012A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				47D18365298D16640058C0EC /* FriendListViewController.swift */,
+				7628E67B298D9D31002D86F2 /* AddFriendViewController.swift */,
+				7628E67D298DA61D002D86F2 /* AcceptFriendViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		E5C732D329EB75DE0080012A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				47D18367298D16730058C0EC /* FriendListViewModel.swift */,
+				E52F65ED29AC7E89007C36AE /* AddFriendViewModel.swift */,
+				E52F65F429AC859F007C36AE /* AcceptFriendViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		E5C732D429EB75E30080012A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				47D18369298D1A610058C0EC /* FriendListCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E5C732D529EB75FD0080012A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E5D43434298A3291004EDFC7 /* CalendarViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		E5C732D629EB76050080012A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E552C261299658F100F51179 /* CalendarViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		E5C732D729EB76160080012A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				76F6C0A2298D968D00A124CD /* MainViewController.swift */,
+				76F6C0A8298D97A700A124CD /* MainEditViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		E5C732D829EB761B0080012A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				76F6C0A4298D969700A124CD /* MainViewModel.swift */,
+				7628E689298E4E76002D86F2 /* MainEditViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		E5C732D929EB76200080012A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				76D47BB0298F91330091F8FB /* MainCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E5C732DA29EB762E0080012A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				47D18358298A86F10058C0EC /* LoginViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		E5C732DB29EB76340080012A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				47D18363298D0EDC0058C0EC /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		E5C732DC29EB76400080012A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				47C38780298E390D0030833F /* DayengAlertViewController.swift */,
+				E51C6DF529D7032200D40EC9 /* NetworkDisconnectViewController.swift */,
+				E569162A2998D1D9006D7231 /* WebViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		E5C732DD29EB76450080012A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				47D1835A298A8DDD0058C0EC /* AuthButton.swift */,
+				76F6C0A6298D96CF00A124CD /* CommonMainView.swift */,
+				E5D43436298A3905004EDFC7 /* CommonCalendarCell.swift */,
+				76003E11299E361D00F15CAE /* IndicatorView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E5C732DE29EB765B0080012A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		E5C732DF29EB76610080012A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E552C25F2996573A00F51179 /* SplashViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		E5C732E029EB76650080012A /* View */ = {
 			isa = PBXGroup;
 			children = (
 				76280CF129878A410061206A /* LaunchScreen.storyboard */,
-				E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */,
-				E552C25F2996573A00F51179 /* SplashViewModel.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E5C732E129EB76830080012A /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				E5C732E229EB76890080012A /* Protocol */,
+				47E0A5E42997743F0093645B /* DefaultSplashUseCase.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
+		E5C732E229EB76890080012A /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				47E0A5E2299773CB0093645B /* SplashUseCase.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		E5D433FC2988CD9F004EDFC7 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				E5C732E029EB76650080012A /* View */,
+				E5C732DF29EB76610080012A /* ViewModel */,
+				E5C732DE29EB765B0080012A /* ViewController */,
 			);
 			path = Splash;
 			sourceTree = "<group>";
