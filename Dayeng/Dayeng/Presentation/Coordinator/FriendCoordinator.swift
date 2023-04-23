@@ -10,7 +10,7 @@ import RxSwift
 import RxRelay
 
 protocol FriendCoordinatorProtocol: Coordinator {
-    func showFriendViewController()
+    func showFriendListViewController()
     func showAddFriendViewController()
     func showFriendCalendarViewController(user: User)
 }
@@ -26,10 +26,10 @@ final class FriendCoordinator: FriendCoordinatorProtocol {
     }
     
     func start() {
-        showFriendViewController()
+        showFriendListViewController()
     }
     
-    func showFriendViewController() {
+    func showFriendListViewController() {
         let firestoreService = DefaultFirestoreDatabaseService()
         let useCase = DefaultFriendListUseCase(
             userRepository: DefaultUserRepository(firestoreService: firestoreService)
