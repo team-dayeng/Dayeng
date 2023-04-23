@@ -12,6 +12,7 @@ import RxRelay
 protocol SettingCoordinatorProtocol: Coordinator {
     func showSettingViewController()
     func showAlarmSettingViewController()
+    func showWebViewController(url: String)
 }
 
 final class SettingCoordinator: NSObject, SettingCoordinatorProtocol {
