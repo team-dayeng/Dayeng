@@ -11,7 +11,6 @@ enum OwnerType: Equatable {
     case mine
     case friend(user: User)
     
-    
     static func == (lhs: OwnerType, rhs: OwnerType) -> Bool {
         switch (lhs, rhs) {
         case (.mine, .mine):
