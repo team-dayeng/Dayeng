@@ -171,9 +171,34 @@ final class MainViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        output.firstShowingIndex
+            .subscribe(onNext: { [weak self] index in
+                guard let self, let index = index else { return }
+                self.initialIndexPath = IndexPath(row: index, section: 0)
+            })
+            .disposed(by: disposeBag)
+        
+        titleViewDidTapped.withLatestFrom(output.startBluringIndex)
+            .subscribe(onNext: { [weak self] startBluringIndex in
+                guard let self else { return }
+                let indexPath = IndexPath(
+                    row: (startBluringIndex ?? output.questionsAnswers.value.count)-1,
+                    section: 0
+                )
+                
+                self.collectionView.scrollToItem(at: indexPath,
+                                                 at: .centeredVertically,
+                                                 animated: true)
+            })
+            .disposed(by: disposeBag)
+
         output.startBluringIndex
             .subscribe(onNext: { [weak self] startBluringIndex in
                 guard let self else { return }
+                if let showingIndex = output.firstShowingIndex.value {
+                    self.initialIndexPath = IndexPath(row: showingIndex, section: 0)
+                    return
+                }
                 self.initialIndexPath = IndexPath(
                     row: (startBluringIndex ?? output.questionsAnswers.value.count)-1,
                     section: 0)
@@ -191,12 +216,14 @@ final class MainViewController: UIViewController {
             .subscribe(onNext: { [weak self] cell, indexPath in
                 guard let self,
                       let cell = cell as? MainCell else { return }
+                
                 if let initialIndexPath = self.initialIndexPath {
                     self.collectionView.scrollToItem(at: initialIndexPath,
                                                      at: .centeredVertically,
                                                      animated: false)
                     self.initialIndexPath = nil
                 }
+                
                 self.editButtonDisposables[indexPath.row] = cell.mainView.editButtonDidTapped
                     .map { indexPath.row }
                     .bind(to: self.editButtonDidTapped)
@@ -214,9 +241,7 @@ final class MainViewController: UIViewController {
                 self.editButtonDisposables.removeValue(forKey: indexPath.row)
             })
             .disposed(by: disposeBag)
-        
-        titleViewDidTapped.withLatestFrom(output.startBluringIndex)
-            .subscribe(onNext: { [weak self] startBluringIndex in
+    }
     
     private func bindFriend(output: MainViewModel.Output) {
         friendButton.isHidden = true

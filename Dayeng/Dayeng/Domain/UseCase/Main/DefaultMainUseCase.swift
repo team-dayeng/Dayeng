@@ -14,6 +14,7 @@ final class DefaultMainUseCase: MainUseCase {
     private let questionRepository: QuestionRepository
     private let disposeBag = DisposeBag()
     private let ownerType: OwnerType
+    var firstShowingIndex = BehaviorSubject<Int?>(value: nil)
     
     enum MainUseCaseError: Error {
         case noUserError
@@ -31,15 +32,6 @@ final class DefaultMainUseCase: MainUseCase {
     }
     
     // MARK: - Helper
-    func fetchData() -> Observable<([(Question, Answer?)], Int?)> {
-        Observable.zip(fetchQuestions(), fetchAnswers())
-            .map { [weak self] questions, answers in
-                guard let self else { throw MainUseCaseError.noSelfError }
-                return (questions.enumerated().map { (index, question) in
-                    let answer = answers.count > index ? answers[index] : nil
-                    return (question, answer)
-                }, self.getBlurStartingIndex())
-            }
     func fetchOwnerType() -> OwnerType {
         return ownerType
     }
@@ -78,7 +70,7 @@ final class DefaultMainUseCase: MainUseCase {
         return startIndex
     }
     
-    func fetchQuestions() -> Observable<[Question]> {
+    private func fetchQuestions() -> Observable<[Question]> {
         if !DayengDefaults.shared.questions.isEmpty {
             return Observable.just(DayengDefaults.shared.questions)
         }
@@ -90,12 +82,12 @@ final class DefaultMainUseCase: MainUseCase {
             }
     }
     
-    func fetchAnswers() -> Observable<[Answer]> {
+    private func fetchAnswers() -> Observable<[Answer]> {
         fetchUser()
             .map { $0.answers }
     }
     
-    func fetchUser() -> Observable<User> {
+    private func fetchUser() -> Observable<User> {
         guard let userID = UserDefaults.userID else { return Observable.error(MainUseCaseError.noUserError) }
         
         if let user = DayengDefaults.shared.user {

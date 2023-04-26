@@ -23,6 +23,7 @@ final class MainViewModel {
         let ownerType: OwnerType
         var questionsAnswers = BehaviorRelay<[(Question, Answer?)]>(value: [])
         var startBluringIndex = BehaviorRelay<Int?>(value: nil)
+        var firstShowingIndex = BehaviorRelay<Int?>(value: nil)
     }
     
     // MARK: - Properites
@@ -43,6 +44,9 @@ final class MainViewModel {
     func transform(input: Input) -> Output {
         let output = Output(ownerType: useCase.fetchOwnerType())
         
+        useCase.firstShowingIndex
+            .bind(to: output.firstShowingIndex)
+            .disposed(by: disposeBag)
         
         input.viewWillAppear
             .subscribe(onNext: { [weak self] _ in
