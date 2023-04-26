@@ -70,7 +70,6 @@ final class CommonCalendarCell: UICollectionViewCell {
         
         if index == currentIndex {
             numberLabel.textColor = .dayengMain
-            return
         }
         
         guard let answer else {

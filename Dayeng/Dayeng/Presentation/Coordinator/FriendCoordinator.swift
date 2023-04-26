@@ -96,10 +96,31 @@ final class FriendCoordinator: FriendCoordinatorProtocol {
             })
             .disposed(by: disposeBag)
         
+        viewModel.dayDidTapped
+            .subscribe(onNext: { [weak self] index in
+                guard let self else { return }
+                self.showFriendMainViewController(index, user)
+            })
+            .disposed(by: disposeBag)
+        
         navigationController.pushViewController(viewController, animated: true)
     }
     
     func returnMainViewController() {
         navigationController.popToRootViewController(animated: true)
+    }
+    
+    func showFriendMainViewController(_ index: Int, _ user: User) {
+        let firestoreService = DefaultFirestoreDatabaseService()
+        let userRepository = DefaultUserRepository(firestoreService: firestoreService)
+        let questionRepository = DefaultQuestionRepository(firestoreService: firestoreService)
+        let useCase = DefaultMainUseCase(userRepository: userRepository,
+                                         questionRepository: questionRepository,
+                                         ownerType: .friend(user: user))
+        useCase.firstShowingIndex.onNext(index)
+        
+        let viewModel = MainViewModel(useCase: useCase)
+        let viewController = MainViewController(viewModel: viewModel)
+        navigationController.pushViewController(viewController, animated: true)
     }
 }

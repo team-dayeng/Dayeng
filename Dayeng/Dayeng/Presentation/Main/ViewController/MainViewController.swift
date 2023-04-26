@@ -86,7 +86,7 @@ final class MainViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .black
         
         navigationItem.title = ""
-        navigationItem.leftBarButtonItem = calendarButton
+        navigationController?.navigationBar.topItem?.title = ""
     }
     
     private func setupViews() {
