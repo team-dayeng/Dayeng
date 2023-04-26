@@ -9,5 +9,6 @@ import Foundation
 import RxSwift
 
 protocol MainUseCase {
+    func fetchOwnerType() -> OwnerType
     func fetchData() -> Observable<([(Question, Answer?)], Int?)>
 }

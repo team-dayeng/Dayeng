@@ -179,6 +179,13 @@ final class MainViewController: UIViewController {
                     section: 0)
             })
             .disposed(by: disposeBag)
+    
+        if output.ownerType != .mine {
+            bindFriend(output: output)
+            return
+        }
+        
+        navigationItem.leftBarButtonItem = calendarButton
         
         collectionView.rx.willDisplayCell
             .subscribe(onNext: { [weak self] cell, indexPath in
@@ -210,15 +217,19 @@ final class MainViewController: UIViewController {
         
         titleViewDidTapped.withLatestFrom(output.startBluringIndex)
             .subscribe(onNext: { [weak self] startBluringIndex in
+    
+    private func bindFriend(output: MainViewModel.Output) {
+        friendButton.isHidden = true
+        settingButton.isHidden = true
+        collectionView.rx.willDisplayCell
+            .subscribe(onNext: { [weak self] _, _ in
                 guard let self else { return }
-                let indexPath = IndexPath(
-                    row: (startBluringIndex ?? output.questionsAnswers.value.count)-1,
-                    section: 0
-                )
-                
-                self.collectionView.scrollToItem(at: indexPath,
-                                                 at: .centeredVertically,
-                                                 animated: true)
+                if let initialIndexPath = self.initialIndexPath {
+                    self.collectionView.scrollToItem(at: initialIndexPath,
+                                                     at: .centeredVertically,
+                                                     animated: false)
+                    self.initialIndexPath = nil
+                }
             })
             .disposed(by: disposeBag)
     }

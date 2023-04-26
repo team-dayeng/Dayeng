@@ -20,6 +20,7 @@ final class MainViewModel {
     }
     // MARK: - Output
     struct Output {
+        let ownerType: OwnerType
         var questionsAnswers = BehaviorRelay<[(Question, Answer?)]>(value: [])
         var startBluringIndex = BehaviorRelay<Int?>(value: nil)
     }
@@ -40,7 +41,8 @@ final class MainViewModel {
     
     // MARK: - Helper
     func transform(input: Input) -> Output {
-        let output = Output()
+        let output = Output(ownerType: useCase.fetchOwnerType())
+        
         
         input.viewWillAppear
             .subscribe(onNext: { [weak self] _ in
