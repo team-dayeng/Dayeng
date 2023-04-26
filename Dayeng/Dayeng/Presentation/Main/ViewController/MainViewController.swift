@@ -168,11 +168,6 @@ final class MainViewController: UIViewController {
             ) { (index, questionAnswer, cell) in
                 let (question, answer) = questionAnswer
                 cell.mainView.bind(question, answer)
-                
-                guard let startIndex = output.startBluringIndex.value else { return }
-                if index >= startIndex {
-                    cell.blur()
-                }
             }
             .disposed(by: disposeBag)
         
@@ -198,7 +193,10 @@ final class MainViewController: UIViewController {
                 self.editButtonDisposables[indexPath.row] = cell.mainView.editButtonDidTapped
                     .map { indexPath.row }
                     .bind(to: self.editButtonDidTapped)
-                
+                guard let blurIndex = output.startBluringIndex.value else { return }
+                if indexPath.row >= blurIndex {
+                    cell.blur()
+                }
             })
             .disposed(by: disposeBag)
         
