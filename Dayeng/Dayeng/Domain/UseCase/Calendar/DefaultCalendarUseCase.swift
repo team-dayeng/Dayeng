@@ -48,6 +48,9 @@ final class DefaultCalendarUseCase: CalendarUseCase {
         switch ownerType {
         case .mine:
             if let user = DayengDefaults.shared.user {
+                if user.answers.last?.date == Date().convertToString(format: "yyyy.MM.dd.E") {
+                    return user.currentIndex - 1
+                }
                 return user.currentIndex
             } else {
                 return -1

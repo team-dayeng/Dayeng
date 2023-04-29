@@ -13,6 +13,8 @@ final class DefaultMainUseCase: MainUseCase {
     private let userRepository: UserRepository
     private let questionRepository: QuestionRepository
     private let disposeBag = DisposeBag()
+    private let ownerType: OwnerType
+    var firstShowingIndex = BehaviorSubject<Int?>(value: nil)
     
     enum MainUseCaseError: Error {
         case noUserError
@@ -21,24 +23,41 @@ final class DefaultMainUseCase: MainUseCase {
     
     // MARK: - LifeCycle
     init(userRepository: UserRepository,
-         questionRepository: QuestionRepository) {
+         questionRepository: QuestionRepository,
+         ownerType: OwnerType
+    ) {
         self.userRepository = userRepository
         self.questionRepository = questionRepository
+        self.ownerType = ownerType
     }
     
     // MARK: - Helper
-    func fetchData() -> Observable<([(Question, Answer?)], Int?)> {
-        Observable.zip(fetchQuestions(), fetchAnswers())
-            .map { [weak self] questions, answers in
-                guard let self else { throw MainUseCaseError.noSelfError }
-                return (questions.enumerated().map { (index, question) in
-                    let answer = answers.count > index ? answers[index] : nil
-                    return (question, answer)
-                }, self.getBlurStartingIndex())
-            }
+    func fetchOwnerType() -> OwnerType {
+        return ownerType
     }
     
-    func getBlurStartingIndex() -> Int? {
+    func fetchData() -> Observable<([(Question, Answer?)], Int?)> {
+        switch ownerType {
+        case .mine:
+            return Observable.zip(fetchQuestions(), fetchAnswers())
+                .map { [weak self] questions, answers in
+                    guard let self else { throw MainUseCaseError.noSelfError }
+                    return (questions.enumerated().map { (index, question) in
+                        let answer = answers.count > index ? answers[index] : nil
+                        return (question, answer)
+                    }, self.getBlurStartingIndex())
+                }
+        case .friend(let user):
+            return Observable.zip(fetchQuestions(), Observable.of(user.answers))
+                .map { questions, answers in
+                    (answers.enumerated().map {
+                        (questions[$0.offset], $0.element)
+                    }, nil)
+                }
+        }
+    }
+
+    private func getBlurStartingIndex() -> Int? {
         guard let user = DayengDefaults.shared.user,
               user.currentIndex < DayengDefaults.shared.questions.count else {
             return nil
@@ -51,7 +70,7 @@ final class DefaultMainUseCase: MainUseCase {
         return startIndex
     }
     
-    func fetchQuestions() -> Observable<[Question]> {
+    private func fetchQuestions() -> Observable<[Question]> {
         if !DayengDefaults.shared.questions.isEmpty {
             return Observable.just(DayengDefaults.shared.questions)
         }
@@ -63,12 +82,12 @@ final class DefaultMainUseCase: MainUseCase {
             }
     }
     
-    func fetchAnswers() -> Observable<[Answer]> {
+    private func fetchAnswers() -> Observable<[Answer]> {
         fetchUser()
             .map { $0.answers }
     }
     
-    func fetchUser() -> Observable<User> {
+    private func fetchUser() -> Observable<User> {
         guard let userID = UserDefaults.userID else { return Observable.error(MainUseCaseError.noUserError) }
         
         if let user = DayengDefaults.shared.user {

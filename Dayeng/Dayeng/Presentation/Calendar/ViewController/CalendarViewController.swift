@@ -20,7 +20,6 @@ final class CalendarViewController: UIViewController {
     
     // MARK: - Properties
     private let viewModel: CalendarViewModel
-    
     private let disposeBag = DisposeBag()
     
     // MARK: - Lifecycles
@@ -46,7 +45,7 @@ final class CalendarViewController: UIViewController {
         let input = CalendarViewModel.Input(
             viewDidLoad: rx.viewDidLoad.map { _ in }.asObservable(),
             homeButtonDidTapped: homeButton.rx.tap.asObservable(),
-            cellDidTapped: collectionView.rx.itemSelected.map { _ in }
+            cellDidTapped: collectionView.rx.itemSelected.map { $0.row }
         )
         
         let output = viewModel.transform(input: input)

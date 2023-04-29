@@ -67,26 +67,25 @@ final class CommonCalendarCell: UICollectionViewCell {
     
     func bind(index: Int, answer: Answer?, currentIndex: Int) {
         numberLabel.text = "\(index + 1)"
-        
-        if index == currentIndex {
-            numberLabel.textColor = .dayengMain
-            return
+        numberLabel.textColor = (index == currentIndex) ? .dayengMain : .black
+
+        if let answer = answer {
+            statusLabel.text = fetchDate(answer.date)
+            if answer.answer.isEmpty {
+                statusLabel.text = "X"
+            }
+        } else {
+            statusLabel.text = ""
         }
-        
-        guard let answer else {
+
+        if index > currentIndex {
             let imageAttachment = NSTextAttachment()
             imageAttachment.image = UIImage(named: "lock")
             imageAttachment.setImageHeight(height: 20)
-            
+
             let attributedString = NSMutableAttributedString(string: "")
             attributedString.append(NSAttributedString(attachment: imageAttachment))
             statusLabel.attributedText = attributedString
-            return
-        }
-        
-        statusLabel.text = fetchDate(answer.date)
-        if answer.answer.isEmpty {
-            statusLabel.text = "X"
         }
     }
     

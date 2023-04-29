@@ -86,7 +86,7 @@ final class MainViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .black
         
         navigationItem.title = ""
-        navigationItem.leftBarButtonItem = calendarButton
+        navigationController?.navigationBar.topItem?.title = ""
     }
     
     private func setupViews() {
@@ -168,45 +168,13 @@ final class MainViewController: UIViewController {
             ) { (index, questionAnswer, cell) in
                 let (question, answer) = questionAnswer
                 cell.mainView.bind(question, answer)
-                
-                guard let startIndex = output.startBluringIndex.value else { return }
-                if index >= startIndex {
-                    cell.blur()
-                }
             }
             .disposed(by: disposeBag)
         
-        output.startBluringIndex
-            .subscribe(onNext: { [weak self] startBluringIndex in
-                guard let self else { return }
-                self.initialIndexPath = IndexPath(
-                    row: (startBluringIndex ?? output.questionsAnswers.value.count)-1,
-                    section: 0)
-            })
-            .disposed(by: disposeBag)
-        
-        collectionView.rx.willDisplayCell
-            .subscribe(onNext: { [weak self] cell, indexPath in
-                guard let self,
-                      let cell = cell as? MainCell else { return }
-                if let initialIndexPath = self.initialIndexPath {
-                    self.collectionView.scrollToItem(at: initialIndexPath,
-                                                     at: .centeredVertically,
-                                                     animated: false)
-                    self.initialIndexPath = nil
-                }
-                self.editButtonDisposables[indexPath.row] = cell.mainView.editButtonDidTapped
-                    .map { indexPath.row }
-                    .bind(to: self.editButtonDidTapped)
-                
-            })
-            .disposed(by: disposeBag)
-        
-        collectionView.rx.didEndDisplayingCell
-            .subscribe(onNext: { [weak self] _, indexPath in
-                guard let self else { return }
-                self.editButtonDisposables[indexPath.row]?.dispose()
-                self.editButtonDisposables.removeValue(forKey: indexPath.row)
+        output.firstShowingIndex
+            .subscribe(onNext: { [weak self] index in
+                guard let self, let index = index else { return }
+                self.initialIndexPath = IndexPath(row: index, section: 0)
             })
             .disposed(by: disposeBag)
         
@@ -221,6 +189,72 @@ final class MainViewController: UIViewController {
                 self.collectionView.scrollToItem(at: indexPath,
                                                  at: .centeredVertically,
                                                  animated: true)
+            })
+            .disposed(by: disposeBag)
+
+        output.startBluringIndex
+            .subscribe(onNext: { [weak self] startBluringIndex in
+                guard let self else { return }
+                if let showingIndex = output.firstShowingIndex.value {
+                    self.initialIndexPath = IndexPath(row: showingIndex, section: 0)
+                    return
+                }
+                self.initialIndexPath = IndexPath(
+                    row: (startBluringIndex ?? output.questionsAnswers.value.count)-1,
+                    section: 0)
+            })
+            .disposed(by: disposeBag)
+    
+        if output.ownerType != .mine {
+            bindFriend(output: output)
+            return
+        }
+        
+        navigationItem.leftBarButtonItem = calendarButton
+        
+        collectionView.rx.willDisplayCell
+            .subscribe(onNext: { [weak self] cell, indexPath in
+                guard let self,
+                      let cell = cell as? MainCell else { return }
+                
+                if let initialIndexPath = self.initialIndexPath {
+                    self.collectionView.scrollToItem(at: initialIndexPath,
+                                                     at: .centeredVertically,
+                                                     animated: false)
+                    self.initialIndexPath = nil
+                }
+                
+                self.editButtonDisposables[indexPath.row] = cell.mainView.editButtonDidTapped
+                    .map { indexPath.row }
+                    .bind(to: self.editButtonDidTapped)
+                guard let blurIndex = output.startBluringIndex.value else { return }
+                if indexPath.row >= blurIndex {
+                    cell.blur()
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        collectionView.rx.didEndDisplayingCell
+            .subscribe(onNext: { [weak self] _, indexPath in
+                guard let self else { return }
+                self.editButtonDisposables[indexPath.row]?.dispose()
+                self.editButtonDisposables.removeValue(forKey: indexPath.row)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindFriend(output: MainViewModel.Output) {
+        friendButton.isHidden = true
+        settingButton.isHidden = true
+        collectionView.rx.willDisplayCell
+            .subscribe(onNext: { [weak self] _, _ in
+                guard let self else { return }
+                if let initialIndexPath = self.initialIndexPath {
+                    self.collectionView.scrollToItem(at: initialIndexPath,
+                                                     at: .centeredVertically,
+                                                     animated: false)
+                    self.initialIndexPath = nil
+                }
             })
             .disposed(by: disposeBag)
     }

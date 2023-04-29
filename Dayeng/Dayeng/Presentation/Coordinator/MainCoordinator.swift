@@ -11,7 +11,7 @@ import RxRelay
 
 protocol MainCoordinatorProtocol: Coordinator {
     func showMainViewController()
-    func showCalendarViewController(ownerType: OwnerType)
+    func showCalendarViewController(ownerType: OwnerType) -> Observable<Int>
     func showFriendViewController()
     func showSettingViewController()
 }
@@ -35,7 +35,8 @@ final class MainCoordinator: MainCoordinatorProtocol {
         let userRepository = DefaultUserRepository(firestoreService: firestoreService)
         let questionRepository = DefaultQuestionRepository(firestoreService: firestoreService)
         let useCase = DefaultMainUseCase(userRepository: userRepository,
-                                         questionRepository: questionRepository)
+                                         questionRepository: questionRepository,
+                                         ownerType: .mine)
         let viewModel = MainViewModel(useCase: useCase)
         let viewController = MainViewController(viewModel: viewModel)
         
@@ -55,6 +56,8 @@ final class MainCoordinator: MainCoordinatorProtocol {
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
                 self.showCalendarViewController(ownerType: .mine)
+                    .bind(to: useCase.firstShowingIndex)
+                    .disposed(by: self.disposeBag)
             })
             .disposed(by: disposeBag)
         viewModel.editButtonDidTapped
@@ -75,7 +78,7 @@ final class MainCoordinator: MainCoordinatorProtocol {
             .changeRootViewController(navigationController, viewController)
     }
     
-    func showCalendarViewController(ownerType: OwnerType) {
+    func showCalendarViewController(ownerType: OwnerType) -> Observable<Int> {
         let firestoreService = DefaultFirestoreDatabaseService()
         let useCase = DefaultCalendarUseCase(
             userRepository: DefaultUserRepository(firestoreService: firestoreService),
@@ -92,6 +95,12 @@ final class MainCoordinator: MainCoordinatorProtocol {
             .disposed(by: disposeBag)
         
         navigationController.pushViewController(viewController, animated: true)
+        
+        return viewModel.dayDidTapped
+            .do(onNext: { [weak self] _ in
+                guard let self else { return }
+                self.navigationController.popViewController(animated: true)
+            })
     }
     
     func showFriendViewController() {

@@ -14,7 +14,7 @@ final class CalendarViewModel {
     struct Input {
         var viewDidLoad: Observable<Void>
         var homeButtonDidTapped: Observable<Void>
-        var cellDidTapped: Observable<Void>
+        var cellDidTapped: Observable<Int>
     }
     
     // MARK: - Output
@@ -31,6 +31,7 @@ final class CalendarViewModel {
     private let disposeBag = DisposeBag()
     let homeButtonDidTapped = PublishRelay<Void>()
     let cannotFindUserError = PublishSubject<Void>()
+    let dayDidTapped = PublishRelay<Int>()
     
     // MARK: - LifeCycle
     init(useCase: CalendarUseCase) {
@@ -55,7 +56,18 @@ final class CalendarViewModel {
         input.homeButtonDidTapped
             .bind(to: homeButtonDidTapped)
             .disposed(by: disposeBag)
-        
+                
+        input.cellDidTapped
+                .filter { [weak self] index in
+                    guard let self else { return false }
+                    
+                    if self.useCase.fetchOwnerType() != .mine && index >= self.useCase.fetchCurrentIndex() {
+                        return false
+                    }
+                    return true
+                }
+            .bind(to: dayDidTapped)
+            .disposed(by: disposeBag)
         return output
     }
 }

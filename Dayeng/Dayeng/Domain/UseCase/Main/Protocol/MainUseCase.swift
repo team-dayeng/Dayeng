@@ -9,5 +9,8 @@ import Foundation
 import RxSwift
 
 protocol MainUseCase {
+    var firstShowingIndex: BehaviorSubject<Int?> { get set }
+    
+    func fetchOwnerType() -> OwnerType
     func fetchData() -> Observable<([(Question, Answer?)], Int?)>
 }
