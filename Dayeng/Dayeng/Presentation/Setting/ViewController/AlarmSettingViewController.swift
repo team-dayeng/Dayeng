@@ -70,7 +70,7 @@ final class AlarmSettingViewController: UIViewController {
         picker.datePickerMode = .time
         picker.locale = Locale(identifier: "ko-KR")
         picker.preferredDatePickerStyle = .wheels
-        
+        picker.setValue(UIColor.black, forKeyPath: "textColor")
         return picker
     }()
     

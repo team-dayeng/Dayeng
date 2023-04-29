@@ -32,6 +32,7 @@ final class AcceptFriendViewController: UIViewController {
         label.numberOfLines = 2
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 20)
+        label.textColor = .black
         return label
     }()
     
