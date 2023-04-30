@@ -58,7 +58,8 @@ final class FriendListViewController: UIViewController {
         bind()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setupNavigationBar()
     }
 }
@@ -71,7 +72,7 @@ extension FriendListViewController {
         title = "친구 목록"
         navigationItem.rightBarButtonItem = plusButton
         navigationController?.navigationBar.tintColor = .black
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
     }
     
     private func setupCollectionView() {
