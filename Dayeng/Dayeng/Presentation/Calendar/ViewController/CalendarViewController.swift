@@ -21,6 +21,7 @@ final class CalendarViewController: UIViewController {
     // MARK: - Properties
     private let viewModel: CalendarViewModel
     private let disposeBag = DisposeBag()
+    private var ownerType: OwnerType?
     
     // MARK: - Lifecycles
     init(viewModel: CalendarViewModel) {
@@ -36,11 +37,20 @@ final class CalendarViewController: UIViewController {
         super.viewDidLoad()
         
         setupViews()
-        configureUI()
         bind()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNavigationBar()
+    }
+    
     // MARK: - Helpers
+    private func setupViews() {
+        view.addBackgroundImage()
+        configureCollectionView()
+    }
+    
     private func bind() {
         let input = CalendarViewModel.Input(
             viewDidLoad: rx.viewDidLoad.map { _ in }.asObservable(),
@@ -50,7 +60,8 @@ final class CalendarViewController: UIViewController {
         
         let output = viewModel.transform(input: input)
         
-        configureNavigationBar(ownerType: output.ownerType)
+        ownerType = output.ownerType
+        configureNavigationBar()
         
         output.answers
             .bind(to: collectionView.rx.items(
@@ -62,17 +73,10 @@ final class CalendarViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    private func setupViews() {
-        view.addBackgroundImage()
-    }
-    
-    private func configureUI() {
-        configureCollectionView()
-    }
-    
-    private func configureNavigationBar(ownerType: OwnerType) {
-        var title = ""
+    private func configureNavigationBar() {
+        guard let ownerType else { return }
         
+        var title = ""
         switch ownerType {
         case .mine:
             title = "달력"
@@ -82,9 +86,6 @@ final class CalendarViewController: UIViewController {
         }
         
         navigationItem.title = title
-        navigationController?.navigationBar.titleTextAttributes = [.font: UIFont.systemFont(ofSize: 20,
-                                                                                            weight: .bold),
-                                                                   .foregroundColor: UIColor.black]
         navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.topItem?.title = ""
     }
