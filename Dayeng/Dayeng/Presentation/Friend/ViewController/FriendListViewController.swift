@@ -71,7 +71,7 @@ extension FriendListViewController {
         title = "친구 목록"
         navigationItem.rightBarButtonItem = plusButton
         navigationController?.navigationBar.tintColor = .black
-        navigationController?.navigationBar.titleTextAttributes = nil
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
     }
     
     private func setupCollectionView() {

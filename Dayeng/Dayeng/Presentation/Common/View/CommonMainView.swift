@@ -22,6 +22,7 @@ final class CommonMainView: UIView {
         var label: UILabel = UILabel()
         label.font = UIFont(name: "HoeflerText-Regular", size: 15)
         label.text = Date().convertToString(format: "yyyy.MM.dd.E")
+        label.textColor = .black
         return label
     }()
     
@@ -30,6 +31,7 @@ final class CommonMainView: UIView {
         label.font = UIFont(name: "HoeflerText-Black", size: 22)
         label.text = "Q1. where do you want to live? where do you want to live  "
         label.numberOfLines = 0
+        label.textColor = .black
         return label
     }()
     
@@ -62,6 +64,7 @@ final class CommonMainView: UIView {
         label.text = ""
         label.numberOfLines = 0
         label.isUserInteractionEnabled = true
+        label.textColor = .black
         let tapGestureRecognizer = UITapGestureRecognizer()
         label.addGestureRecognizer(tapGestureRecognizer)
         tapGestureRecognizer.rx.event.map { _ in }.bind(to: editButtonDidTapped).disposed(by: disposeBag)

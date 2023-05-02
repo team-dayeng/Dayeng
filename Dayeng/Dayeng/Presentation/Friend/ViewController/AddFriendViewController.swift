@@ -26,6 +26,7 @@ final class AddFriendViewController: UIViewController {
         label.textAlignment = .center
         label.text = "친구를 맺어,\n일기를 공유해보세요"
         label.numberOfLines = 2
+        label.textColor = .black
         return label
     }()
     private lazy var logoImageView: UIImageView = {
@@ -75,6 +76,7 @@ final class AddFriendViewController: UIViewController {
         textField.placeholder = "  코드 입력"
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 8
+        textField.textColor = .dayengGray
         return textField
     }()
     private lazy var addButton: UIButton = {
