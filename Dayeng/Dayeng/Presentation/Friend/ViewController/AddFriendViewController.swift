@@ -73,10 +73,13 @@ final class AddFriendViewController: UIViewController {
     private lazy var codeTextField: UITextField = {
         let textField = UITextField()
         textField.font = .systemFont(ofSize: 20)
-        textField.placeholder = "  코드 입력"
+        textField.placeholder = "코드 입력"
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 8
         textField.textColor = .dayengGray
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
+        textField.leftView = paddingView
+        textField.leftViewMode = .always
         return textField
     }()
     private lazy var addButton: UIButton = {
@@ -168,6 +171,18 @@ final class AddFriendViewController: UIViewController {
                 UIPasteboard.general.string = self.codeButton.currentAttributedTitle?.string
             })
             .disposed(by: disposeBag)
+        codeTextField.rx.text
+            .orEmpty
+            .skip(1)
+            .distinctUntilChanged()
+            .subscribe(onNext: { changedTest in
+                if changedTest == "" {
+                    self.codeTextField.textColor = .dayengGray
+                } else {
+                    self.codeTextField.textColor = .black
+                }
+            })
+            .disposed(by: disposeBag)
     }
     private func setupViews() {
         view.addSubview(contentView)
@@ -234,29 +249,6 @@ final class AddFriendViewController: UIViewController {
             $0.width.equalTo(shareButton)
             $0.centerX.equalToSuperview()
         }
-    }
-    private func setuplinkBuilder() -> DynamicLinkComponents {
-        let dynamicLinksDomainURIPrefix = "https://dayeng.page.link"
-        guard let user = DayengDefaults.shared.user else { return DynamicLinkComponents() }
-        
-        var components = URLComponents(string: "https://dayeng.page.link/inviteFriend")
-        let codeQuery = URLQueryItem(name: "code", value: user.uid)
-        let nameQuery = URLQueryItem(name: "name", value: user.name)
-        components?.queryItems = [codeQuery, nameQuery]
-        
-        guard let components = components,
-              let link = components.url,
-              let linkBuilder = DynamicLinkComponents(
-                link: link,
-                domainURIPrefix: dynamicLinksDomainURIPrefix
-              ) else { return DynamicLinkComponents()}
-       
-        linkBuilder.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.dayeng.dayeng")
-        linkBuilder.iOSParameters?.appStoreID = "123456789"
-        linkBuilder.navigationInfoParameters = DynamicLinkNavigationInfoParameters()
-        linkBuilder.navigationInfoParameters?.isForcedRedirectEnabled = true
-        
-        return linkBuilder
     }
     private func showActivityViewController(url: URL) {
         let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)

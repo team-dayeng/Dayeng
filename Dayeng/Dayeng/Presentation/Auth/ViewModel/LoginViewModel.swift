@@ -11,9 +11,6 @@ import RxSwift
 import RxCocoa
 
 final class LoginViewModel {
-    
-    var disposeBag = DisposeBag()
-    
     // MARK: - Input
     struct Input {
         var appleLoginButtonDidTap: Observable<Void>
@@ -30,6 +27,7 @@ final class LoginViewModel {
     
     // MARK: - Dependency
     private let useCase: LoginUseCase
+    var disposeBag = DisposeBag()
     
     // MARK: - Lifecycles
     init(useCase: LoginUseCase) {

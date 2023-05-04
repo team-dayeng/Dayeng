@@ -75,7 +75,7 @@ final class MainCoordinator: MainCoordinatorProtocol {
             .disposed(by: disposeBag)
         
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?
-            .changeRootViewController(navigationController, viewController)
+            .changeRootViewController(navigationController, viewController, .transitionCurlUp)
     }
     
     func showCalendarViewController(ownerType: OwnerType) -> Observable<Int> {

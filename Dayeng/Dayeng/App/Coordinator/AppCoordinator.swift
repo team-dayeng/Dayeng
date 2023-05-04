@@ -10,7 +10,7 @@ import RxSwift
 
 protocol AppCoordinatorProtocol: Coordinator {
     func showSplashViewController()
-    func showLoginViewController()
+    func showLoginViewController(_ transitionOption: UIView.AnimationOptions?)
     func showMainViewController()
 }
 
@@ -46,7 +46,7 @@ final class AppCoordinator: AppCoordinatorProtocol {
                     if loginResult {
                         self.showMainViewController()
                     } else {
-                        self.showLoginViewController()
+                        self.showLoginViewController(.transitionCurlUp)
                     }
                 }
             }, onDisposed: {
@@ -60,7 +60,7 @@ final class AppCoordinator: AppCoordinatorProtocol {
         navigationController.viewControllers = [viewController]
     }
     
-    func showLoginViewController() {
+    func showLoginViewController(_ transitionOption: UIView.AnimationOptions? = nil) {
         let firestoreService = DefaultFirestoreDatabaseService()
         let userRepository = DefaultUserRepository(firestoreService: firestoreService)
         let authService = DefaultAuthService(
@@ -122,6 +122,6 @@ final class AppCoordinator: AppCoordinatorProtocol {
 extension AppCoordinator: CoordinatorDelegate {
     func didFinished(childCoordinator: Coordinator) {
         childCoordinators = childCoordinators.filter({ $0 !== childCoordinator })
-        showLoginViewController()
+        showLoginViewController(.transitionCurlUp)
     }
 }
