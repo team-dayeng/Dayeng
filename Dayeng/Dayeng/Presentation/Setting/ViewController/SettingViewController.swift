@@ -142,7 +142,7 @@ final class SettingViewController: UIViewController {
             .drive(onNext: { [weak self] type in
                 guard let self else { return }
                 if !MFMailComposeViewController.canSendMail() {
-                    self.showAlert(title: "에러가 발생했어요.", message: "다시 전송해주세요!", type: .oneButton)
+                    self.showAlert(title: "에러가 발생했어요.", message: "메일이 연동되어있는지 확인해주세요.", type: .oneButton)
                     return
                 }
                 
