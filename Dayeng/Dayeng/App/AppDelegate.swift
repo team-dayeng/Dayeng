@@ -23,6 +23,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if !isAllowd { UserDefaults.isAlarmOn = false }
         }
         
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.configureWithTransparentBackground()
+
+        UINavigationBar.appearance().standardAppearance = navigationBarAppearance
+        UINavigationBar.appearance().compactAppearance = navigationBarAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
+        
         return true
     }
 
