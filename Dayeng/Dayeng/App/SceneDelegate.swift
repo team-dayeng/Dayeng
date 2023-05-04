@@ -134,14 +134,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func changeRootViewController(_ navigationController: UINavigationController,
-                                  _ viewController: UIViewController) {
+                                  _ viewController: UIViewController,
+                                  _ transitionOption: UIView.AnimationOptions? = nil) {
         guard let window = self.window else { return }
         window.rootViewController = navigationController
         
         navigationController.viewControllers = [viewController]
         UIView.transition(with: window,
                           duration: 1.0,
-                          options: [.transitionCurlUp],
+                          options: transitionOption ?? UIView.AnimationOptions(),
                           animations: nil) { _ in
             if viewController is MainViewController,
                let acceptFriendCode = self.acceptFriendCode,
