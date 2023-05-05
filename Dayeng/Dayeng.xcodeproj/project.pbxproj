@@ -100,6 +100,8 @@
 		E54ACBCF2A04C3E30012EEDA /* RxKakaoSDKShare in Frameworks */ = {isa = PBXBuildFile; productRef = E54ACBCE2A04C3E30012EEDA /* RxKakaoSDKShare */; };
 		E54ACBD12A051F330012EEDA /* ShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54ACBD02A051F320012EEDA /* ShareButton.swift */; };
 		E54ACBD32A051F440012EEDA /* ShareType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54ACBD22A051F440012EEDA /* ShareType.swift */; };
+		E54F3E802A05BC5A003B35CF /* KakaoLinkBuildService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54F3E7F2A05BC5A003B35CF /* KakaoLinkBuildService.swift */; };
+		E54F3E822A05BC65003B35CF /* DefaultKakaoLinkBuildService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54F3E812A05BC65003B35CF /* DefaultKakaoLinkBuildService.swift */; };
 		E552C2202990BE9300F51179 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C21F2990BE9300F51179 /* SettingViewController.swift */; };
 		E552C2222990BEA700F51179 /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2212990BEA700F51179 /* AlarmSettingViewController.swift */; };
 		E552C2242990BEB300F51179 /* AlarmDaySettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2232990BEB300F51179 /* AlarmDaySettingViewController.swift */; };
@@ -222,6 +224,8 @@
 		E52F65F429AC859F007C36AE /* AcceptFriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptFriendViewModel.swift; sourceTree = "<group>"; };
 		E54ACBD02A051F320012EEDA /* ShareButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareButton.swift; sourceTree = "<group>"; };
 		E54ACBD22A051F440012EEDA /* ShareType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareType.swift; sourceTree = "<group>"; };
+		E54F3E7F2A05BC5A003B35CF /* KakaoLinkBuildService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLinkBuildService.swift; sourceTree = "<group>"; };
+		E54F3E812A05BC65003B35CF /* DefaultKakaoLinkBuildService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultKakaoLinkBuildService.swift; sourceTree = "<group>"; };
 		E552C1F1298B911F00F51179 /* OwnerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerType.swift; sourceTree = "<group>"; };
 		E552C21F2990BE9300F51179 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		E552C2212990BEA700F51179 /* AlarmSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewController.swift; sourceTree = "<group>"; };
@@ -417,6 +421,7 @@
 				76003E0E29990EE200F15CAE /* DefaultUserNotificationService.swift */,
 				4799A65729A7E2380071F8F9 /* DefaultAppleLoginService.swift */,
 				E5AE4F5E29BCACBC0029B200 /* DefaultLinkBuildService.swift */,
+				E54F3E812A05BC65003B35CF /* DefaultKakaoLinkBuildService.swift */,
 				47B5084829AA7CB00046A982 /* DefaultKakaoLoginService.swift */,
 				47811A5D29D97C1900E672AF /* DefaultFirebaseAuthService.swift */,
 				4761475A29DE68F1000349B1 /* DefaultAuthService.swift */,
@@ -546,8 +551,8 @@
 			children = (
 				76280D242987928B0061206A /* Protocol */,
 				E5883E2129AF6778007BF206 /* DefaultAcceptFriendUseCase.swift */,
-				E5AE4F2C29B0A8BC0029B200 /* DefaultFriendListUseCase.swift */,
 				E5AE4F3029B0D4EB0029B200 /* DefaultAddFriendUseCase.swift */,
+				E5AE4F2C29B0A8BC0029B200 /* DefaultFriendListUseCase.swift */,
 			);
 			path = Friend;
 			sourceTree = "<group>";
@@ -556,8 +561,8 @@
 			isa = PBXGroup;
 			children = (
 				E5883E1F29AF6766007BF206 /* AcceptFriendUseCase.swift */,
-				E5AE4F2A29B0A8780029B200 /* FriendListUseCase.swift */,
 				E5AE4F2E29B0D4DE0029B200 /* AddFriendUseCase.swift */,
+				E5AE4F2A29B0A8780029B200 /* FriendListUseCase.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -701,6 +706,7 @@
 			children = (
 				76003E0C29990ED200F15CAE /* UserNotificationService.swift */,
 				E5AE4F6029BCACCD0029B200 /* LinkBuildService.swift */,
+				E54F3E7F2A05BC5A003B35CF /* KakaoLinkBuildService.swift */,
 				4761475829DE68E7000349B1 /* AuthService.swift */,
 				47B5084629AA53A10046A982 /* AppleLoginService.swift */,
 				47B5084429AA02AF0046A982 /* KakaoLoginService.swift */,
@@ -1019,6 +1025,7 @@
 				47B5084729AA53A10046A982 /* AppleLoginService.swift in Sources */,
 				47C38781298E390D0030833F /* DayengAlertViewController.swift in Sources */,
 				E5AE4F2F29B0D4DE0029B200 /* AddFriendUseCase.swift in Sources */,
+				E54F3E822A05BC65003B35CF /* DefaultKakaoLinkBuildService.swift in Sources */,
 				7628E67C298D9D31002D86F2 /* AddFriendViewController.swift in Sources */,
 				47D1835F298A94790058C0EC /* UIColor+.swift in Sources */,
 				47E0A5EB2998ED8C0093645B /* Data+.swift in Sources */,
@@ -1103,6 +1110,7 @@
 				E51C6DF429D7028900D40EC9 /* NetworkMonitor.swift in Sources */,
 				7628E682298E4DA4002D86F2 /* UserRepository.swift in Sources */,
 				7628E686298E4DB4002D86F2 /* DefaultMainEditUseCase.swift in Sources */,
+				E54F3E802A05BC5A003B35CF /* KakaoLinkBuildService.swift in Sources */,
 				E5D43437298A3905004EDFC7 /* CommonCalendarCell.swift in Sources */,
 				76D47BB1298F91330091F8FB /* MainCell.swift in Sources */,
 			);
