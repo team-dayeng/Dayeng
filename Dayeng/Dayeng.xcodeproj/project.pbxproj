@@ -98,6 +98,8 @@
 		E52F65F529AC859F007C36AE /* AcceptFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52F65F429AC859F007C36AE /* AcceptFriendViewModel.swift */; };
 		E54ACBCD2A04A9D30012EEDA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE629878A3F0061206A /* AppDelegate.swift */; };
 		E54ACBCF2A04C3E30012EEDA /* RxKakaoSDKShare in Frameworks */ = {isa = PBXBuildFile; productRef = E54ACBCE2A04C3E30012EEDA /* RxKakaoSDKShare */; };
+		E54ACBD12A051F330012EEDA /* ShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54ACBD02A051F320012EEDA /* ShareButton.swift */; };
+		E54ACBD32A051F440012EEDA /* ShareType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54ACBD22A051F440012EEDA /* ShareType.swift */; };
 		E552C2202990BE9300F51179 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C21F2990BE9300F51179 /* SettingViewController.swift */; };
 		E552C2222990BEA700F51179 /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2212990BEA700F51179 /* AlarmSettingViewController.swift */; };
 		E552C2242990BEB300F51179 /* AlarmDaySettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2232990BEB300F51179 /* AlarmDaySettingViewController.swift */; };
@@ -218,6 +220,8 @@
 		E51C6DF529D7032200D40EC9 /* NetworkDisconnectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDisconnectViewController.swift; sourceTree = "<group>"; };
 		E52F65ED29AC7E89007C36AE /* AddFriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewModel.swift; sourceTree = "<group>"; };
 		E52F65F429AC859F007C36AE /* AcceptFriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptFriendViewModel.swift; sourceTree = "<group>"; };
+		E54ACBD02A051F320012EEDA /* ShareButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareButton.swift; sourceTree = "<group>"; };
+		E54ACBD22A051F440012EEDA /* ShareType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareType.swift; sourceTree = "<group>"; };
 		E552C1F1298B911F00F51179 /* OwnerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerType.swift; sourceTree = "<group>"; };
 		E552C21F2990BE9300F51179 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		E552C2212990BEA700F51179 /* AlarmSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewController.swift; sourceTree = "<group>"; };
@@ -631,6 +635,7 @@
 				E569162F2998D429006D7231 /* PageType.swift */,
 				E5AE4F3229B0E1F30029B200 /* ToastType.swift */,
 				47F4C4C329BDBAAA0002E51B /* UserError.swift */,
+				E54ACBD22A051F440012EEDA /* ShareType.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -805,6 +810,7 @@
 			isa = PBXGroup;
 			children = (
 				47D1835A298A8DDD0058C0EC /* AuthButton.swift */,
+				E54ACBD02A051F320012EEDA /* ShareButton.swift */,
 				76F6C0A6298D96CF00A124CD /* CommonMainView.swift */,
 				E5D43436298A3905004EDFC7 /* CommonCalendarCell.swift */,
 				76003E11299E361D00F15CAE /* IndicatorView.swift */,
@@ -1036,6 +1042,7 @@
 				76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */,
 				E5AE4F2D29B0A8BC0029B200 /* DefaultFriendListUseCase.swift in Sources */,
 				E552C25C299656F600F51179 /* FriendCoordinator.swift in Sources */,
+				E54ACBD32A051F440012EEDA /* ShareType.swift in Sources */,
 				E552C2522994BD3700F51179 /* OwnerType.swift in Sources */,
 				E5AE4F2B29B0A8790029B200 /* FriendListUseCase.swift in Sources */,
 				7603FA1E2996522200D2C9C8 /* AlarmSettingViewModel.swift in Sources */,
@@ -1069,6 +1076,7 @@
 				76F6C0AD298D985F00A124CD /* Date+.swift in Sources */,
 				474A62B829A2346A002176AB /* AuthenticationServices+Rx.swift in Sources */,
 				474A62B629A22E42002176AB /* ASAuthorizationControllerProxy.swift in Sources */,
+				E54ACBD12A051F330012EEDA /* ShareButton.swift in Sources */,
 				E5F08FF329DEB7E900B7DD47 /* LocaleType.swift in Sources */,
 				E5AE4F3D29B37B120029B200 /* CalendarUseCase.swift in Sources */,
 				47E0A5E7299774C20093645B /* QuestionRepository.swift in Sources */,
