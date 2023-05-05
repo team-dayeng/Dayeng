@@ -257,7 +257,6 @@ final class AddFriendViewController: UIViewController {
                                                                       y: self.view.bounds.midY,
                                                                       width: 0,
                                                                       height: 0)
-        
         present(activityVC, animated: true)
     }
 }
