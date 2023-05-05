@@ -9,5 +9,5 @@ import Foundation
 import RxSwift
 
 protocol KakaoLinkBuildService {
-    func fetchJsonData() -> Observable<Data>
+    func fetchKakaoLink() -> Observable<URL>
 }

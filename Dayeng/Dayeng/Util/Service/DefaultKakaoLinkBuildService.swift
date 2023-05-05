@@ -16,7 +16,7 @@ final class DefaultKakaoLinkBuildService: KakaoLinkBuildService {
         case kakaoAppNotExist
     }
     
-    func fetchJsonData() -> Observable<Data> {
+    func fetchKakaoLink() -> Observable<URL> {
         Observable.create { observer in
             if ShareApi.isKakaoTalkSharingAvailable() {
                 guard let userID = UserDefaults.userID,
@@ -34,7 +34,16 @@ final class DefaultKakaoLinkBuildService: KakaoLinkBuildService {
                                       link: appLink)
                 let template = FeedTemplate(content: content, buttons: [button])
                 if let templateJsonData = (try? SdkJSONEncoder.custom.encode(template)) {
-                    observer.onNext(templateJsonData)
+                    if let templateJsonObject = SdkUtils.toJsonObject(templateJsonData) {
+                        ShareApi.shared.shareDefault(templateObject: templateJsonObject) { (linkResult, error) in
+                            if let error = error {
+                                observer.onError(error)
+                            } else {
+                                guard let linkResult = linkResult else { return }
+                                observer.onNext(linkResult.url)
+                            }
+                        }
+                    }
                 }
             } else {
                 observer.onError(KakaoLinkBuildError.kakaoAppNotExist)
