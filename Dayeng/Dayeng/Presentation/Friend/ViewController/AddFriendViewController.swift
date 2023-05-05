@@ -53,18 +53,8 @@ final class AddFriendViewController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         return button
     }()
-    private lazy var shareButton: UIButton = {
-        var button = UIButton()
-        button.setTitle("공유하기", for: .normal)
-        button.tintColor = .black
-        button.titleLabel?.font = .systemFont(ofSize: 20)
-        button.setTitleColor(.black, for: .normal)
-        button.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
-        button.backgroundColor = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1)
-        button.semanticContentAttribute = .forceRightToLeft
-        button.layer.cornerRadius = 8
-        return button
-    }()
+    private lazy var shareButton = ShareButton(type: .base)
+    private lazy var kakaoShareButton = ShareButton(type: .kakao)
     private lazy var separatorView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
@@ -192,6 +182,7 @@ final class AddFriendViewController: UIViewController {
          codeButton,
          copyButton,
          shareButton,
+         kakaoShareButton,
          separatorView,
          codeTextField,
          addButton].forEach {
@@ -222,23 +213,29 @@ final class AddFriendViewController: UIViewController {
             $0.centerX.equalToSuperview()
         }
         copyButton.snp.makeConstraints {
-            $0.bottom.equalTo(shareButton.snp.top).offset(-20*heightRatio)
+            $0.bottom.equalTo(shareButton.snp.top).offset(-30*heightRatio)
             $0.centerX.equalToSuperview()
         }
         shareButton.snp.makeConstraints {
-            $0.bottom.equalTo(separatorView.snp.top).offset(-40*heightRatio)
+            $0.bottom.equalTo(kakaoShareButton.snp.top).offset(-15*heightRatio)
+            $0.height.equalTo(50*heightRatio)
+            $0.width.equalTo(262*widthRatio)
+            $0.centerX.equalToSuperview()
+        }
+        kakaoShareButton.snp.makeConstraints {
+            $0.bottom.equalTo(separatorView.snp.top).offset(-15*heightRatio)
             $0.height.equalTo(50*heightRatio)
             $0.width.equalTo(262*widthRatio)
             $0.centerX.equalToSuperview()
         }
         separatorView.snp.makeConstraints {
-            $0.bottom.equalTo(codeTextField.snp.top).offset(-40*heightRatio)
+            $0.bottom.equalTo(codeTextField.snp.top).offset(-15*heightRatio)
             $0.height.equalTo(1)
             $0.width.equalTo(shareButton)
             $0.centerX.equalToSuperview()
         }
         codeTextField.snp.makeConstraints {
-            $0.bottom.equalTo(addButton.snp.top).offset(-20*heightRatio)
+            $0.bottom.equalTo(addButton.snp.top).offset(-15*heightRatio)
             $0.height.equalTo(50*heightRatio)
             $0.width.equalTo(shareButton)
             $0.centerX.equalToSuperview()
