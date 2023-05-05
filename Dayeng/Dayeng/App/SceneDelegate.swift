@@ -71,9 +71,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        if let url = URLContexts.first?.url,
-           AuthApi.isKakaoTalkLoginUrl(url) {
+        guard let url = URLContexts.first?.url else { return }
+        if AuthApi.isKakaoTalkLoginUrl(url) {
             _ = AuthController.rx.handleOpenUrl(url: url)
+        }
+        let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems
+        
+        guard let acceptFriendCode = queryItems?.filter({ $0.name == "code" }).first?.value,
+              let acceptFriendName = queryItems?.filter({ $0.name == "name" }).first?.value,
+              let navigationController = self.window?.rootViewController as? UINavigationController else { return }
+
+        if navigationController.topViewController is SplashViewController ||
+            navigationController.topViewController is LoginViewController {
+            self.acceptFriendCode = acceptFriendCode
+            self.acceptFriendName = acceptFriendName
+        } else {
+            self.coordinator?.showAcceptFriendViewController(acceptFriendCode: acceptFriendCode,
+                                                             acceptFriendName: acceptFriendName)
         }
     }
 
