@@ -5,7 +5,7 @@
 //  Created by 배남석 on 2023/05/05.
 //
 
-import Foundation
+import UIKit
 
 enum ShareType {
     case base

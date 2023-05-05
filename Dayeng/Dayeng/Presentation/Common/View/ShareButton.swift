@@ -23,7 +23,7 @@ final class ShareButton: UIButton {
         configureUI(type)
     }
     
-    private func configureUI(_ type: AuthType) {
+    private func configureUI(_ type: ShareType) {
         
         self.setTitle(type.shareMessage, for: .normal)
         self.setTitleColor(.black, for: .normal)
@@ -37,7 +37,7 @@ final class ShareButton: UIButton {
         self.addSubview(logoImageView)
         logoImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().offset(15)
+            $0.trailing.equalTo(titleLabel!.snp.leading).offset(-15)
             $0.width.height.equalTo(18)
         }
         logoImageView.contentMode = .scaleAspectFill
