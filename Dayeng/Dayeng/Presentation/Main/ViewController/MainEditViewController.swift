@@ -10,16 +10,18 @@ import RxSwift
 import RxCocoa
 
 final class MainEditViewController: UIViewController {
+    
+    static let defaultText = "enter your answer."
+    
     // MARK: - UI properties
-    private lazy var mainView = {
-       CommonMainView()
-    }()
+    private lazy var mainView = CommonMainView()
+    
     private lazy var answerTextView: UITextView = {
         var textView: UITextView = UITextView()
         textView.backgroundColor = .clear
         textView.font = UIFont(name: "HoeflerText-Regular", size: 17)
         textView.textColor = .lightGray
-        textView.text = "enter your answer."
+        textView.text = MainEditViewController.defaultText
         textView.isScrollEnabled = false
         return textView
     }()
@@ -123,7 +125,7 @@ final class MainEditViewController: UIViewController {
         answerTextView.rx.didBeginEditing
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
-                if self.answerTextView.text == "enter your answer." {
+                if self.answerTextView.text == MainEditViewController.defaultText {
                     self.answerTextView.text = ""
                 }
                 self.answerTextView.textColor = .black
@@ -133,7 +135,7 @@ final class MainEditViewController: UIViewController {
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
                 if self.answerTextView.text == "" {
-                    self.answerTextView.text = "enter your answer."
+                    self.answerTextView.text = MainEditViewController.defaultText
                     self.answerTextView.textColor = .lightGray
                 }
             }).disposed(by: disposeBag)
@@ -141,11 +143,13 @@ final class MainEditViewController: UIViewController {
         answerTextView.rx.text
             .subscribe(onNext: { [weak self] text in
                 guard let self else { return }
-                guard text != "enter your answer." else {
+                if text == MainEditViewController.defaultText {
                     self.textCountLabel.text = "0/200"
+                    self.answerTextView.textColor = .lightGray
                     return
                 }
                 self.textCountLabel.text = "\(self.answerTextView.text.count)/200"
+                self.answerTextView.textColor = .black
             }).disposed(by: disposeBag)
         
         answerTextView.rx.didChange
