@@ -14,7 +14,7 @@ protocol UserRepository {
     func uploadAnswer(answer: String) -> Observable<Void>
     func editAnswer(answer: String, index: Int) -> Observable<Void>
     func existUser(userID: String) -> Observable<String>
-    func fetchFriends(paths: [String]) -> Observable<[User]>
+    func fetchFriends(paths: [String]) -> Observable<[User?]>
     func addFriend(user: User) -> Observable<Void>
     func deleteUser(userID: String) -> Single<Void>
 }
