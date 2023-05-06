@@ -106,28 +106,28 @@ final class CommonMainView: UIView {
         
         dateLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(150)
-            $0.left.right.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(20)
         }
         
         questionLabel.snp.makeConstraints {
             $0.top.equalTo(dateLabel.snp.bottom).offset(15)
-            $0.left.right.equalTo(dateLabel)
+            $0.leading.trailing.equalTo(dateLabel)
         }
         
         koreanQuestionLabel.snp.makeConstraints {
             $0.top.equalTo(questionLabel.snp.bottom)
-            $0.left.right.equalTo(dateLabel)
+            $0.leading.trailing.equalTo(dateLabel)
         }
         
         answerBackground.snp.makeConstraints {
-            $0.left.right.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(20)
             $0.top.equalTo(koreanQuestionLabel.snp.bottom).offset(35)
             $0.bottom.equalTo(snp.centerY).offset(60)
         }
         
         answerLabel.snp.makeConstraints {
             $0.top.equalTo(koreanQuestionLabel.snp.bottom).offset(60)
-            $0.left.right.equalTo(dateLabel)
+            $0.leading.trailing.equalTo(dateLabel)
         }
     }
     

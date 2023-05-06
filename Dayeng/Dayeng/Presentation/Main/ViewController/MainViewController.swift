@@ -59,7 +59,6 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        hideIndicator()
         setupNaviagationBar()
         configureCollectionView()
         setupViews()
@@ -99,7 +98,7 @@ final class MainViewController: UIViewController {
     
     private func configureUI() {
         collectionView.snp.makeConstraints {
-            $0.top.left.right.equalTo(view.safeAreaLayoutGuide)
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.bottom.equalToSuperview()
         }
         

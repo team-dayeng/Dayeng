@@ -95,15 +95,14 @@ final class MainEditViewController: UIViewController {
         configureUI()
     }
     private func configureUI() {
-        let textViewWidth = CGSize(width: (self.view.frame.width - 40), height: .infinity)
-        
         mainView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         
+        let textViewWidth = CGSize(width: (self.view.frame.width - 40), height: .infinity)
         answerTextView.snp.makeConstraints {
             $0.top.equalTo(mainView.koreanQuestionLabel.snp.bottom).offset(40)
-            $0.left.right.equalTo(mainView.dateLabel)
+            $0.leading.trailing.equalTo(mainView.dateLabel)
             $0.height.equalTo(self.answerTextView.sizeThatFits(textViewWidth).height)
         }
         
