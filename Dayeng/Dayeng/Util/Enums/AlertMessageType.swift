@@ -52,12 +52,12 @@ enum AlertMessageType {
         }
     }
     
-    var rightActionTitle: String? {
+    var rightActionTitle: String {
         switch self {
         case .stopEdit:
             return "나가기"
         default:
-            return nil
+            return "확인"
         }
     }
 }
