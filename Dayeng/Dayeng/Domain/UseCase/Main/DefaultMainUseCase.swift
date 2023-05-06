@@ -88,12 +88,11 @@ final class DefaultMainUseCase: MainUseCase {
     }
     
     private func fetchUser() -> Observable<User> {
-        guard let userID = UserDefaults.userID else { return Observable.error(MainUseCaseError.noUserError) }
-        
         if let user = DayengDefaults.shared.user {
             return Observable.just(user)
         }
         
+        guard let userID = UserDefaults.userID else { return Observable.error(MainUseCaseError.noUserError) }
         return userRepository.fetchUser(userID: userID)
             .map { user in
                 DayengDefaults.shared.user = user

@@ -50,8 +50,7 @@ final class MainViewModel {
         
         input.viewWillAppear
             .subscribe(onNext: { [weak self] _ in
-                guard let self else { return }
-                
+                guard let self else { return }                
                 self.useCase.fetchData()
                     .subscribe(onNext: { data, index in
                         output.startBluringIndex.accept(index)
