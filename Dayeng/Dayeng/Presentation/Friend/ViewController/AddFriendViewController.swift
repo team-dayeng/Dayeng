@@ -11,13 +11,15 @@ import FirebaseDynamicLinks
 import RxSwift
 import RxRelay
 import RxKeyboard
+import KakaoSDKTemplate
+import KakaoSDKShare
+import KakaoSDKCommon
 
 final class AddFriendViewController: UIViewController {
     // MARK: - UI properties
     private lazy var contentView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        
         return view
     }()
     private lazy var introductionLabel: UILabel = {
@@ -53,18 +55,8 @@ final class AddFriendViewController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         return button
     }()
-    private lazy var shareButton: UIButton = {
-        var button = UIButton()
-        button.setTitle("공유하기", for: .normal)
-        button.tintColor = .black
-        button.titleLabel?.font = .systemFont(ofSize: 20)
-        button.setTitleColor(.black, for: .normal)
-        button.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
-        button.backgroundColor = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1)
-        button.semanticContentAttribute = .forceRightToLeft
-        button.layer.cornerRadius = 8
-        return button
-    }()
+    private lazy var shareButton = ShareButton(type: .base)
+    private lazy var kakaoShareButton = ShareButton(type: .kakao)
     private lazy var separatorView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
@@ -100,11 +92,9 @@ final class AddFriendViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
@@ -123,14 +113,30 @@ final class AddFriendViewController: UIViewController {
                 addButton.rx.tap.map { _ in
                     self.codeTextField.resignFirstResponder()
                     return self.codeTextField.text ?? "" }.asObservable(),
-            shareButtonDidTapped: shareButton.rx.tap.map { _ in }.asObservable()
+            shareButtonDidTapped: shareButton.rx.tap.map { _ in }.asObservable(),
+            kakaoShareButtonDidTapped: kakaoShareButton.rx.tap.map { _ in }.asObservable()
         )
         let output = viewModel.transform(input: input)
         output.shareButtonResult
             .subscribe(onNext: { url in
-                self.showActivityViewController(url: url)
+                self.showToast(type: .clipboard)
+                UIPasteboard.general.string = url.absoluteString
             }, onError: { error in
                 self.showAlert(title: "다이나믹 링크 생성 오류", message: "\(error)", type: .oneButton)
+            })
+            .disposed(by: disposeBag)
+        output.kakaoShareButtonResult
+            .subscribe(onNext: { url in
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }, onError: { error in
+                self.showAlert(title: "카카오톡 링크 생성 오류", message: "\(error)", type: .twoButton,
+                               leftActionTitle: "설치하기", leftActionHandler: {
+                    let appId = "362057947"
+                    if let url = URL(string: "itms-apps://itunes.apple.com/app/id\(appId)"),
+                       UIApplication.shared.canOpenURL(url) {
+                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    }
+                })
             })
             .disposed(by: disposeBag)
         output.addButtonSuccess
@@ -192,6 +198,7 @@ final class AddFriendViewController: UIViewController {
          codeButton,
          copyButton,
          shareButton,
+         kakaoShareButton,
          separatorView,
          codeTextField,
          addButton].forEach {
@@ -202,7 +209,6 @@ final class AddFriendViewController: UIViewController {
         title = "친구 추가"
         let heightRatio = view.frame.height / 852
         let widthRatio = view.frame.width / 393
-        
         contentView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
@@ -222,23 +228,29 @@ final class AddFriendViewController: UIViewController {
             $0.centerX.equalToSuperview()
         }
         copyButton.snp.makeConstraints {
-            $0.bottom.equalTo(shareButton.snp.top).offset(-20*heightRatio)
+            $0.bottom.equalTo(shareButton.snp.top).offset(-30*heightRatio)
             $0.centerX.equalToSuperview()
         }
         shareButton.snp.makeConstraints {
-            $0.bottom.equalTo(separatorView.snp.top).offset(-40*heightRatio)
+            $0.bottom.equalTo(kakaoShareButton.snp.top).offset(-15*heightRatio)
+            $0.height.equalTo(50*heightRatio)
+            $0.width.equalTo(262*widthRatio)
+            $0.centerX.equalToSuperview()
+        }
+        kakaoShareButton.snp.makeConstraints {
+            $0.bottom.equalTo(separatorView.snp.top).offset(-15*heightRatio)
             $0.height.equalTo(50*heightRatio)
             $0.width.equalTo(262*widthRatio)
             $0.centerX.equalToSuperview()
         }
         separatorView.snp.makeConstraints {
-            $0.bottom.equalTo(codeTextField.snp.top).offset(-40*heightRatio)
+            $0.bottom.equalTo(codeTextField.snp.top).offset(-15*heightRatio)
             $0.height.equalTo(1)
             $0.width.equalTo(shareButton)
             $0.centerX.equalToSuperview()
         }
         codeTextField.snp.makeConstraints {
-            $0.bottom.equalTo(addButton.snp.top).offset(-20*heightRatio)
+            $0.bottom.equalTo(addButton.snp.top).offset(-15*heightRatio)
             $0.height.equalTo(50*heightRatio)
             $0.width.equalTo(shareButton)
             $0.centerX.equalToSuperview()
@@ -249,15 +261,5 @@ final class AddFriendViewController: UIViewController {
             $0.width.equalTo(shareButton)
             $0.centerX.equalToSuperview()
         }
-    }
-    private func showActivityViewController(url: URL) {
-        let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-        activityVC.popoverPresentationController?.sourceView = self.view
-        activityVC.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX,
-                                                                      y: self.view.bounds.midY,
-                                                                      width: 0,
-                                                                      height: 0)
-        
-        present(activityVC, animated: true)
     }
 }
