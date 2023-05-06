@@ -51,7 +51,6 @@ final class MainEditViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        hideIndicator()
         setupNaviagationBar()
         setupViews()
         bind()

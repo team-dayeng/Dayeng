@@ -65,12 +65,6 @@ final class MainViewController: UIViewController {
         bind()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        hideIndicator()
-    }
-    
     // MARK: - Helpers
     private func setupNaviagationBar() {
         let titleImageView = UIImageView(image: .dayengLogo)
@@ -205,7 +199,6 @@ final class MainViewController: UIViewController {
         
         navigationItem.leftBarButtonItem = calendarButton
         
-        bindEditButton()
         bindCollectionViewWillDisplayCell(startingBlurIndex: output.startBluringIndex)
         bindCollectionViewDidEndDisplayingCell()
     }
@@ -225,15 +218,7 @@ final class MainViewController: UIViewController {
             })
             .disposed(by: disposeBag)
     }
-    
-    private func bindEditButton() {
-        editButtonDidTapped
-            .subscribe(onNext: { [weak self] _ in
-                guard let self else { return }
-                self.showIndicator()
-            }).disposed(by: disposeBag)
-    }
-    
+
     private func bindCollectionViewWillDisplayCell(startingBlurIndex: BehaviorRelay<Int?>) {
         collectionView.rx.willDisplayCell
             .subscribe(onNext: { [weak self] cell, indexPath in
