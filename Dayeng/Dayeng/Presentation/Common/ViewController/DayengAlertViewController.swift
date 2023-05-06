@@ -113,14 +113,14 @@ final class DayengAlertViewController: UIViewController {
             $0.centerX.equalToSuperview()
             $0.top.equalToSuperview().offset(35)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.lessThanOrEqualTo(50)
+            $0.height.greaterThanOrEqualTo(24)
         }
         
         messageLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(titleLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalTo(titleLabel)
-            $0.height.lessThanOrEqualTo(50)
+            $0.height.greaterThanOrEqualTo(0)
         }
         
         buttonStackView.snp.makeConstraints {
