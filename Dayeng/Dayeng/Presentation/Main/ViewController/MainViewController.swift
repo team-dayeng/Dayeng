@@ -65,6 +65,12 @@ final class MainViewController: UIViewController {
         bind()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        showIndicator()
+    }
+    
     // MARK: - Helpers
     private func setupNaviagationBar() {
         let titleImageView = UIImageView(image: .dayengLogo)
@@ -151,6 +157,10 @@ final class MainViewController: UIViewController {
         let output = viewModel.transform(input: input)
         
         output.questionsAnswers
+            .do(onNext: { [weak self] _ in
+                guard let self else { return }
+                self.hideIndicator()
+            })
             .bind(to: collectionView.rx.items(cellIdentifier: MainCell.identifier, cellType: MainCell.self)
             ) { (_, questionAnswer, cell) in
                 let (question, answer) = questionAnswer
