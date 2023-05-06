@@ -64,25 +64,30 @@ final class MainEditViewController: UIViewController {
                                          target: nil,
                                          action: nil)
         navigationItem.leftBarButtonItem = backButton
-        backButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                guard let self else { return }
-                self.showAlert(title: "작성을 그만두시겠습니까?",
-                          message: "변경 사항은 저장되지 않습니다.",
-                          type: .twoButton,
-                          rightActionTitle: "나가기",
-                          rightActionHandler: {
-                    self.navigationController?.popViewController(animated: true)
-                })
-            }).disposed(by: disposeBag)
+        bindBackButton(backButton)
         
         let submitButton = UIBarButtonItem(title: "완료",
                                            style: .done,
                                            target: .none,
                                            action: .none)
-        submitButton.tintColor = UIColor(red: 102/255, green: 103/255, blue: 171/255, alpha: 1)
+        submitButton.tintColor = .dayengMain
         submitButtonDidTapped = submitButton.rx.tap.asObservable()
         navigationItem.rightBarButtonItem = submitButton
+    }
+    
+    private func bindBackButton(_ button: UIBarButtonItem) {
+        button.rx.tap
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.showAlert(
+                    title: AlertMessageType.stopEdit.title,
+                    message: AlertMessageType.stopEdit.message,
+                    type: .twoButton,
+                    rightActionTitle: AlertMessageType.stopEdit.rightActionTitle,
+                    rightActionHandler: {
+                        self.navigationController?.popViewController(animated: true)
+                    })
+            }).disposed(by: disposeBag)
     }
     
     private func setupViews() {
