@@ -58,13 +58,14 @@ final class CommonMainView: UIView {
         return label
     }()
     
-    lazy var answerLabel: UILabel = {
-        var label: UILabel = UILabel()
+    lazy var answerLabel: PaddingLabel = {
+        var label = PaddingLabel()
         label.font = UIFont(name: "HoeflerText-Regular", size: 19)
         label.text = ""
         label.numberOfLines = 0
         label.isUserInteractionEnabled = true
         label.textColor = .black
+        
         let tapGestureRecognizer = UITapGestureRecognizer()
         label.addGestureRecognizer(tapGestureRecognizer)
         tapGestureRecognizer.rx.event.map { _ in }.bind(to: editButtonDidTapped).disposed(by: disposeBag)
