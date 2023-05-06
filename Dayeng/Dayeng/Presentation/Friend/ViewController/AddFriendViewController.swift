@@ -77,9 +77,7 @@ final class AddFriendViewController: UIViewController {
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 8
         textField.textColor = .dayengGray
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
-        textField.leftView = paddingView
-        textField.leftViewMode = .always
+        textField.addLeftPadding()
         return textField
     }()
     private lazy var addButton: UIButton = {

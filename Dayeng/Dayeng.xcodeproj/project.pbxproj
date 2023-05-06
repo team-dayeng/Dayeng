@@ -32,6 +32,7 @@
 		47B5084729AA53A10046A982 /* AppleLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B5084629AA53A10046A982 /* AppleLoginService.swift */; };
 		47B5084929AA7CB00046A982 /* DefaultKakaoLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B5084829AA7CB00046A982 /* DefaultKakaoLoginService.swift */; };
 		47C38781298E390D0030833F /* DayengAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C38780298E390D0030833F /* DayengAlertViewController.swift */; };
+		47C75ABC2A062CAF0070405E /* UITextfield+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C75ABB2A062CAF0070405E /* UITextfield+.swift */; };
 		47D18359298A86F10058C0EC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D18358298A86F10058C0EC /* LoginViewController.swift */; };
 		47D1835B298A8DDD0058C0EC /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D1835A298A8DDD0058C0EC /* AuthButton.swift */; };
 		47D1835D298A92C10058C0EC /* AuthType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D1835C298A92C10058C0EC /* AuthType.swift */; };
@@ -161,6 +162,7 @@
 		47B5084629AA53A10046A982 /* AppleLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginService.swift; sourceTree = "<group>"; };
 		47B5084829AA7CB00046A982 /* DefaultKakaoLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultKakaoLoginService.swift; sourceTree = "<group>"; };
 		47C38780298E390D0030833F /* DayengAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayengAlertViewController.swift; sourceTree = "<group>"; };
+		47C75ABB2A062CAF0070405E /* UITextfield+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextfield+.swift"; sourceTree = "<group>"; };
 		47D18358298A86F10058C0EC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		47D1835A298A8DDD0058C0EC /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 		47D1835C298A92C10058C0EC /* AuthType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthType.swift; sourceTree = "<group>"; };
@@ -398,6 +400,7 @@
 				47549416298E4C16008B581D /* UIViewController+.swift */,
 				E5A2513029AC922E00F62313 /* UIView+.swift */,
 				76003E082998DF4A00F15CAE /* UserDefaults+.swift */,
+				47C75ABB2A062CAF0070405E /* UITextfield+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1032,6 +1035,7 @@
 				47E0A5DD299770EA0093645B /* AnswerDTO.swift in Sources */,
 				47811A5E29D97C1900E672AF /* DefaultFirebaseAuthService.swift in Sources */,
 				47D18368298D16730058C0EC /* FriendListViewModel.swift in Sources */,
+				47C75ABC2A062CAF0070405E /* UITextfield+.swift in Sources */,
 				76280CE929878A3F0061206A /* SceneDelegate.swift in Sources */,
 				E5AE4F2D29B0A8BC0029B200 /* DefaultFriendListUseCase.swift in Sources */,
 				E552C25C299656F600F51179 /* FriendCoordinator.swift in Sources */,
