@@ -51,6 +51,12 @@ final class FriendCoordinator: FriendCoordinatorProtocol {
             })
             .disposed(by: disposeBag)
         
+        viewModel.cannotFindUserError
+            .subscribe(onNext: { [weak self] in
+                self?.showCannotFindUserAlert()  
+            })
+            .disposed(by: disposeBag)
+        
         navigationController.pushViewController(viewController, animated: true)
     }
     
@@ -84,15 +90,7 @@ final class FriendCoordinator: FriendCoordinatorProtocol {
         viewModel.cannotFindUserError
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
-                self.navigationController.showAlert(
-                    title: AlertMessageType.cannotFindUser.title,
-                    message: AlertMessageType.cannotFindUser.message,
-                    type: .oneButton,
-                    rightActionHandler: { [weak self] in
-                        guard let self else { return }
-                        self.navigationController.viewControllers.last?.hideIndicator()
-                        self.delegate?.didFinished(childCoordinator: self)
-                })
+                self.showCannotFindUserAlert()
             })
             .disposed(by: disposeBag)
         
@@ -123,4 +121,17 @@ final class FriendCoordinator: FriendCoordinatorProtocol {
         let viewController = MainViewController(viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
     }
+    
+    func showCannotFindUserAlert() {
+        navigationController.showAlert(
+            title: AlertMessageType.cannotFindUser.title,
+            message: AlertMessageType.cannotFindUser.message,
+            type: .oneButton,
+            rightActionHandler: { [weak self] in
+                guard let self else { return }
+                self.navigationController.viewControllers.last?.hideIndicator()
+                self.delegate?.didFinished(childCoordinator: self)
+        })
+    }
+
 }
