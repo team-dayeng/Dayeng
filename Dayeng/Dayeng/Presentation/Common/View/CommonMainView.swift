@@ -48,7 +48,7 @@ final class CommonMainView: UIView {
         label.backgroundColor = UIColor(white: 1, alpha: 0.5)
         label.layer.cornerRadius = 20
         label.font = UIFont(name: "HoeflerText-Regular", size: 22)
-        label.text = " A1."
+        label.text = " A."
         label.textColor = .lightGray
         label.isEditable = false
         label.isSelectable = false
@@ -137,7 +137,7 @@ final class CommonMainView: UIView {
             bindAnswer(answer)
         } else {
             answerBackground.isHidden = false
-            answerBackground.text = " A1."
+            answerBackground.text = " A."
         }
     }
     
