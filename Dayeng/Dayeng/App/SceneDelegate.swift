@@ -22,16 +22,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         
-        if let userActivity = connectionOptions.userActivities.first {
-            self.scene(scene, continue: userActivity)
-        }
-        
         self.window = UIWindow(windowScene: scene)
         let navigationController = UINavigationController()
         self.coordinator = AppCoordinator(navigationController: navigationController)
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
         self.coordinator?.start()
+        
+        if let userActivity = connectionOptions.userActivities.first {
+            self.scene(scene, continue: userActivity)
+        }
+        
+        if let urlContext = connectionOptions.urlContexts.first {
+            let urlContexts: Set = [urlContext]
+            self.scene(scene, openURLContexts: urlContexts)
+        }
         
         // 앱 실행 중 'Apple ID 사용 중단' 할 경우
         NotificationCenter.default.addObserver(
@@ -75,6 +80,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if AuthApi.isKakaoTalkLoginUrl(url) {
             _ = AuthController.rx.handleOpenUrl(url: url)
         }
+        
         let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems
         
         guard let acceptFriendCode = queryItems?.filter({ $0.name == "code" }).first?.value,
