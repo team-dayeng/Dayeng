@@ -102,6 +102,7 @@
 		E54ACBD32A051F440012EEDA /* ShareType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54ACBD22A051F440012EEDA /* ShareType.swift */; };
 		E54F3E802A05BC5A003B35CF /* KakaoLinkBuildService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54F3E7F2A05BC5A003B35CF /* KakaoLinkBuildService.swift */; };
 		E54F3E822A05BC65003B35CF /* DefaultKakaoLinkBuildService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54F3E812A05BC65003B35CF /* DefaultKakaoLinkBuildService.swift */; };
+		E54F3E852A0680DB003B35CF /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = E54F3E842A0680DB003B35CF /* GoogleMobileAds */; };
 		E552C2202990BE9300F51179 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C21F2990BE9300F51179 /* SettingViewController.swift */; };
 		E552C2222990BEA700F51179 /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2212990BEA700F51179 /* AlarmSettingViewController.swift */; };
 		E552C2242990BEB300F51179 /* AlarmDaySettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2232990BEB300F51179 /* AlarmDaySettingViewController.swift */; };
@@ -286,6 +287,7 @@
 				76280CFC29878B8C0061206A /* SnapKit in Frameworks */,
 				76280D0829878C870061206A /* FirebaseFirestore in Frameworks */,
 				E52F65F329AC7F79007C36AE /* FirebaseDynamicLinks in Frameworks */,
+				E54F3E852A0680DB003B35CF /* GoogleMobileAds in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -916,6 +918,7 @@
 				47B5084029A9E4490046A982 /* RxKakaoSDKCommon */,
 				47B5084229A9E4490046A982 /* RxKakaoSDKUser */,
 				E54ACBCE2A04C3E30012EEDA /* RxKakaoSDKShare */,
+				E54F3E842A0680DB003B35CF /* GoogleMobileAds */,
 			);
 			productName = Dayeng;
 			productReference = 76280CE329878A3F0061206A /* Dayeng.app */;
@@ -952,6 +955,7 @@
 				76280D2B29879F770061206A /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				E52F65EF29AC7F1F007C36AE /* XCRemoteSwiftPackageReference "RxKeyboard" */,
 				47B5083D29A9E4490046A982 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
+				E54F3E832A0680DB003B35CF /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			productRefGroup = 76280CE429878A3F0061206A /* Products */;
 			projectDirPath = "";
@@ -1394,6 +1398,14 @@
 				kind = branch;
 			};
 		};
+		E54F3E832A0680DB003B35CF /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1471,6 +1483,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 47B5083D29A9E4490046A982 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
 			productName = RxKakaoSDKShare;
+		};
+		E54F3E842A0680DB003B35CF /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E54F3E832A0680DB003B35CF /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
