@@ -16,7 +16,7 @@ final class MainViewModel {
         var friendButtonDidTapped: Observable<Void>
         var settingButtonDidTapped: Observable<Void>
         var calendarButtonDidTapped: Observable<Void>
-        var edidButtonDidTapped: Observable<Int>
+        var editButtonDidTapped: Observable<Int>
     }
     // MARK: - Output
     struct Output {
@@ -76,7 +76,7 @@ final class MainViewModel {
             .bind(to: calendarButtonDidTapped)
             .disposed(by: disposeBag)
         
-        input.edidButtonDidTapped
+        input.editButtonDidTapped
             .bind(to: editButtonDidTapped)
             .disposed(by: disposeBag)
         

@@ -151,7 +151,7 @@ final class MainViewController: UIViewController {
             friendButtonDidTapped: friendButton.rx.tap.asObservable(),
             settingButtonDidTapped: settingButton.rx.tap.asObservable(),
             calendarButtonDidTapped: calendarButton.rx.tap.asObservable(),
-            edidButtonDidTapped: editButtonDidTapped.asObservable()
+            editButtonDidTapped: editButtonDidTapped.asObservable()
         )
         
         let output = viewModel.transform(input: input)
