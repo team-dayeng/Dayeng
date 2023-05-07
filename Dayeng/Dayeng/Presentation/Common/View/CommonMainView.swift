@@ -40,6 +40,7 @@ final class CommonMainView: UIView {
         label.font = UIFont(name: "Chalkboard SE", size: 16)
         label.textColor = .gray
         label.text = "어디에 살고 싶나요?"
+        label.numberOfLines = 0
         return label
     }()
     
