@@ -56,6 +56,9 @@ final class DefaultCalendarUseCase: CalendarUseCase {
                 return -1
             }
         case .friend(let user):
+            if user.answers.last?.date == Date().convertToString(format: "yyyy.MM.dd.E") {
+                return user.currentIndex - 1
+            }
             return user.currentIndex
         }
     }

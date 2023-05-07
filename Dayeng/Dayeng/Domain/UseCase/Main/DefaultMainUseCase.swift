@@ -128,7 +128,7 @@ final class DefaultMainUseCase: MainUseCase {
         if let user = DayengDefaults.shared.user {
             return Observable.just(user)
         }
-        
+    
         return userRepository.fetchUser(userID: userID)
             .map { user in
                 DayengDefaults.shared.user = user

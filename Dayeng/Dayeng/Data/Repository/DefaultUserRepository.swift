@@ -107,24 +107,20 @@ final class DefaultUserRepository: UserRepository {
                                       document: userID)
     }
     
-    func fetchFriends(paths: [String]) -> Observable<[User]> {
-        Observable.create { observer in
-            
-            if paths.isEmpty {
-                observer.onNext([])
-            } else {
-                Observable.zip(
-                    paths.map { path in
-                        let uid = path.split(separator: "/").map { String($0) }[1]
-                        return self.fetchUser(userID: uid)
-                    }
-                )
-                .bind(to: observer)
-                .disposed(by: self.disposeBag)
-            }
-            
-            return Disposables.create()
+    func fetchFriends(paths: [String]) -> Observable<[User?]> {
+        if paths.isEmpty {
+            return Observable.just([])
         }
+        
+        return Observable.zip(
+            paths.map { path in
+                let uid = path.split(separator: "/").map { String($0) }[1]
+                
+                return fetchUser(userID: uid)
+                        .map { $0 as User? }
+                        .catchAndReturn(nil)
+            }
+        )
     }
     
     func addFriend(user: User) -> Observable<Void> {

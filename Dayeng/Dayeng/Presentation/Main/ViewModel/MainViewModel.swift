@@ -16,7 +16,7 @@ final class MainViewModel {
         var friendButtonDidTapped: Observable<Void>
         var settingButtonDidTapped: Observable<Void>
         var calendarButtonDidTapped: Observable<Void>
-        var edidButtonDidTapped: Observable<Int>
+        var editButtonDidTapped: Observable<Int>
         var adsViewDidTapped: Observable<Void>
         var adsDidWatched: Observable<Void>
     }
@@ -53,8 +53,7 @@ final class MainViewModel {
         
         input.viewWillAppear
             .subscribe(onNext: { [weak self] _ in
-                guard let self else { return }
-                
+                guard let self else { return }                
                 self.useCase.fetchData()
                     .subscribe(onNext: { data, index in
                         output.startBluringIndex.accept(index)
@@ -79,7 +78,7 @@ final class MainViewModel {
             .bind(to: calendarButtonDidTapped)
             .disposed(by: disposeBag)
         
-        input.edidButtonDidTapped
+        input.editButtonDidTapped
             .bind(to: editButtonDidTapped)
             .disposed(by: disposeBag)
         
