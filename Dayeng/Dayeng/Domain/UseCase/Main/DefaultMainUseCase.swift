@@ -82,7 +82,6 @@ final class DefaultMainUseCase: MainUseCase {
             guard let user = DayengDefaults.shared.user else { return Disposables.create() }
             let today = Date().convertToString(format: "yyyy.MM.dd.E")
             let isAnswered = user.answers.last?.date == today
-            let isWahtchedAds = user.answers.count < user.currentIndex
             if user.answers.count >= 1 {
                 if isAnswered {
                     if user.answers.count == user.currentIndex {
