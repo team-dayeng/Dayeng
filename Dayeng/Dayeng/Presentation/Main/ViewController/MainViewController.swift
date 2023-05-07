@@ -242,7 +242,7 @@ final class MainViewController: UIViewController, GADBannerViewDelegate, GADFull
             .subscribe(onNext: { [weak self] result in
                 guard let self else { return }
                 if result {
-                    if let rewardedAd {
+                    if let rewardedAd = self.rewardedAd {
                         rewardedAd.present(fromRootViewController: self, userDidEarnRewardHandler: {
                             self.adsDidWatched.accept(())
                             self.setupAds()
