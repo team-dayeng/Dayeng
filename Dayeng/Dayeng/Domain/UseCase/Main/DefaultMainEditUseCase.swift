@@ -51,13 +51,13 @@ final class DefaultMainEditUseCase: MainEditUseCase {
     }
     
     func uploadAnswer(answer: String) -> Observable<Void> {
-        guard answer != "", answer != "enter your answer." else {
+        if answer == "" || answer == "enter your answer." {
             return Observable.error(EditError.notEnterInput)
         }
+        
         guard let user = DayengDefaults.shared.user else {
             return Observable.error(EditError.noUserError)
         }
-        
         if user.currentIndex == index {
             return userRepository.uploadAnswer(answer: answer)
         }

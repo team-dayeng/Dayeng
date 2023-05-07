@@ -41,7 +41,6 @@ final class AddFriendViewModel {
         input.addButtonDidTapped
             .subscribe(onNext: { [weak self] text in
                 guard let self else { return }
-                print(text)
                 self.useCase.addFriend(userID: text)
                     .subscribe(onNext: {
                         output.addButtonSuccess.onNext(())

@@ -59,7 +59,6 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        hideIndicator()
         setupNaviagationBar()
         configureCollectionView()
         setupViews()
@@ -69,7 +68,7 @@ final class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        hideIndicator()
+        showIndicator()
     }
     
     // MARK: - Helpers
@@ -99,7 +98,7 @@ final class MainViewController: UIViewController {
     
     private func configureUI() {
         collectionView.snp.makeConstraints {
-            $0.top.left.right.equalTo(view.safeAreaLayoutGuide)
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.bottom.equalToSuperview()
         }
         
@@ -152,20 +151,18 @@ final class MainViewController: UIViewController {
             friendButtonDidTapped: friendButton.rx.tap.asObservable(),
             settingButtonDidTapped: settingButton.rx.tap.asObservable(),
             calendarButtonDidTapped: calendarButton.rx.tap.asObservable(),
-            edidButtonDidTapped: editButtonDidTapped.asObservable()
+            editButtonDidTapped: editButtonDidTapped.asObservable()
         )
-        
-        editButtonDidTapped
-            .subscribe(onNext: { [weak self] _ in
-                guard let self else { return }
-                self.showIndicator()
-            }).disposed(by: disposeBag)
         
         let output = viewModel.transform(input: input)
         
         output.questionsAnswers
+            .do(onNext: { [weak self] _ in
+                guard let self else { return }
+                self.hideIndicator()
+            })
             .bind(to: collectionView.rx.items(cellIdentifier: MainCell.identifier, cellType: MainCell.self)
-            ) { (index, questionAnswer, cell) in
+            ) { (_, questionAnswer, cell) in
                 let (question, answer) = questionAnswer
                 cell.mainView.bind(question, answer)
             }
@@ -212,35 +209,8 @@ final class MainViewController: UIViewController {
         
         navigationItem.leftBarButtonItem = calendarButton
         
-        collectionView.rx.willDisplayCell
-            .subscribe(onNext: { [weak self] cell, indexPath in
-                guard let self,
-                      let cell = cell as? MainCell else { return }
-                
-                if let initialIndexPath = self.initialIndexPath {
-                    self.collectionView.scrollToItem(at: initialIndexPath,
-                                                     at: .centeredVertically,
-                                                     animated: false)
-                    self.initialIndexPath = nil
-                }
-                
-                self.editButtonDisposables[indexPath.row] = cell.mainView.editButtonDidTapped
-                    .map { indexPath.row }
-                    .bind(to: self.editButtonDidTapped)
-                guard let blurIndex = output.startBluringIndex.value else { return }
-                if indexPath.row >= blurIndex {
-                    cell.blur()
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        collectionView.rx.didEndDisplayingCell
-            .subscribe(onNext: { [weak self] _, indexPath in
-                guard let self else { return }
-                self.editButtonDisposables[indexPath.row]?.dispose()
-                self.editButtonDisposables.removeValue(forKey: indexPath.row)
-            })
-            .disposed(by: disposeBag)
+        bindCollectionViewWillDisplayCell(startingBlurIndex: output.startBluringIndex)
+        bindCollectionViewDidEndDisplayingCell()
     }
     
     private func bindFriend(output: MainViewModel.Output) {
@@ -255,6 +225,40 @@ final class MainViewController: UIViewController {
                                                      animated: false)
                     self.initialIndexPath = nil
                 }
+            })
+            .disposed(by: disposeBag)
+    }
+
+    private func bindCollectionViewWillDisplayCell(startingBlurIndex: BehaviorRelay<Int?>) {
+        collectionView.rx.willDisplayCell
+            .subscribe(onNext: { [weak self] cell, indexPath in
+                guard let self,
+                      let cell = cell as? MainCell else { return }
+
+                if let initialIndexPath = self.initialIndexPath {
+                    self.collectionView.scrollToItem(at: initialIndexPath,
+                                                     at: .centeredVertically,
+                                                     animated: false)
+                    self.initialIndexPath = nil
+                }
+
+                self.editButtonDisposables[indexPath.row] = cell.mainView.editButtonDidTapped
+                    .map { indexPath.row }
+                    .bind(to: self.editButtonDidTapped)
+                guard let blurIndex = startingBlurIndex.value else { return }
+                if indexPath.row >= blurIndex {
+                    cell.blur()
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindCollectionViewDidEndDisplayingCell() {
+        collectionView.rx.didEndDisplayingCell
+            .subscribe(onNext: { [weak self] _, indexPath in
+                guard let self else { return }
+                self.editButtonDisposables[indexPath.row]?.dispose()
+                self.editButtonDisposables.removeValue(forKey: indexPath.row)
             })
             .disposed(by: disposeBag)
     }

@@ -60,7 +60,7 @@ final class DefaultFirebaseAuthService: FirebaseAuthService {
                     }
                     return
                 }
-                print("카카오 첫 로그인")
+                
                 guard let uid = Auth.auth().currentUser?.uid else {
                     single(.failure(FirebaseAuthError.cannotFetchUid))
                     return
@@ -75,7 +75,7 @@ final class DefaultFirebaseAuthService: FirebaseAuthService {
     func signIn(email: String, password: String) -> Single<String> {
         Single.create { single in
             Auth.auth().signIn(withEmail: email, password: password) { (_, error) in
-                print("카카오 로그인 (이전 가입 기록 O)")
+                
                 if let error {
                     single(.failure(error))
                     return
