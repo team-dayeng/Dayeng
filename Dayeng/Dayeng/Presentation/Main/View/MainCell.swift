@@ -83,6 +83,7 @@ final class MainCell: UICollectionViewCell {
     override func prepareForReuse() {
         disposeBag = DisposeBag()
         mainView.answerLabel.text = nil
+        mainView.dateLabel.text = Date().convertToString(format: "yyyy.MM.dd.E")
         unBlur()
         
         super.prepareForReuse()
