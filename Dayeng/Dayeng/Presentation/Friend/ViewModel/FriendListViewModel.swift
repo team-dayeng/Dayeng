@@ -31,6 +31,7 @@ final class FriendListViewModel {
     // MARK: - Dependency
     var plusButtonDidTapped = PublishRelay<Void>()
     var friendIndexDidTapped = PublishRelay<User>()
+    var cannotFindUserError = PublishSubject<Void>()
     
     // MARK: - Lifecycles
     init(useCase: FriendListUseCase) {
@@ -45,7 +46,11 @@ final class FriendListViewModel {
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
                 self.useCase.fetchFriends()
-                    .bind(to: output.friends)
+                    .subscribe(onNext: { users in
+                        output.friends.onNext(users)
+                    }, onError: { _ in
+                        self.cannotFindUserError.onNext(())
+                    })
                     .disposed(by: self.disposeBag)
             })
             .disposed(by: disposeBag)
