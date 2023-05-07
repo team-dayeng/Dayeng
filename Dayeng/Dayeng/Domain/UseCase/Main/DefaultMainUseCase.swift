@@ -80,7 +80,22 @@ final class DefaultMainUseCase: MainUseCase {
     func isAvailableWatchAds() -> Observable<Bool> {
         Observable.create { observer in
             guard let user = DayengDefaults.shared.user else { return Disposables.create() }
-            observer.onNext(user.answers.count == user.currentIndex)
+            let today = Date().convertToString(format: "yyyy.MM.dd.E")
+            let isAnswered = user.answers.last?.date == today
+            let isWahtchedAds = user.answers.count < user.currentIndex
+            if user.answers.count >= 1 {
+                if isAnswered {
+                    if user.answers.count == user.currentIndex {
+                        observer.onNext(true)
+                    } else {
+                        observer.onNext(false)
+                    }
+                } else {
+                    observer.onNext(false)
+                }
+            } else {
+                observer.onNext(false)
+            }
             return Disposables.create()
         }
     }
