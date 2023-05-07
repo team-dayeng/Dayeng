@@ -10,32 +10,11 @@ import FirebaseCore
 import FirebaseDynamicLinks
 import RxKakaoSDKCommon
 import GoogleMobileAds
-import AdSupport
-import AppTrackingTransparency
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            if #available(iOS 14, *) {
-                ATTrackingManager.requestTrackingAuthorization { status in
-                    switch status {
-                    case .authorized:           // 허용됨
-                        print("Authorized")
-                        print("IDFA = \(ASIdentifierManager.shared().advertisingIdentifier)")
-                    case .denied:               // 거부됨
-                        print("Denied")
-                    case .notDetermined:        // 결정되지 않음
-                        print("Not Determined")
-                    case .restricted:           // 제한됨
-                        print("Restricted")
-                    @unknown default:           // 알려지지 않음
-                        print("Unknow")
-                    }
-                }
-            }
-        }
         FirebaseApp.configure()
         GADMobileAds.sharedInstance().start(completionHandler:nil)
         RxKakaoSDK.initSDK(appKey: "983c5ee200890b63e1e68e303ffd0114")
