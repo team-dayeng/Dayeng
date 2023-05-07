@@ -9,8 +9,10 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import RxGesture
+import GoogleMobileAds
 
-final class MainViewController: UIViewController {
+final class MainViewController: UIViewController, GADBannerViewDelegate, GADFullScreenContentDelegate {
     // MARK: - UI properties
     private var collectionView: UICollectionView!
     
@@ -44,7 +46,10 @@ final class MainViewController: UIViewController {
     private let editButtonDidTapped = PublishRelay<Int>()
     private let titleViewDidTapped = PublishRelay<Void>()
     private var editButtonDisposables = [Int: Disposable]()
+    private let adsViewDidTapped = PublishRelay<Void>()
+    private let adsDidWatched = PublishRelay<Void>()
     private var initialIndexPath: IndexPath?
+    private var rewardedAd: GADRewardedAd?
     
     // MARK: - Lifecycles
     init(viewModel: MainViewModel) {
@@ -63,6 +68,7 @@ final class MainViewController: UIViewController {
         setupNaviagationBar()
         configureCollectionView()
         setupViews()
+        setupAds()
         bind()
     }
     
@@ -95,6 +101,19 @@ final class MainViewController: UIViewController {
             view.addSubview($0)
         }
         configureUI()
+    }
+    
+    private func setupAds() {
+        GADRewardedAd.load(withAdUnitID: "ca-app-pub-3402143822000520/5224075704",
+                           request: GADRequest()) { (ads, error) in
+          if let error = error {
+            print("Rewarded ad failed to load with error: \(error.localizedDescription)")
+            return
+          }
+          print("Loading Succeeded")
+          self.rewardedAd = ads
+          self.rewardedAd?.fullScreenContentDelegate = self
+        }
     }
     
     private func configureUI() {
@@ -152,7 +171,9 @@ final class MainViewController: UIViewController {
             friendButtonDidTapped: friendButton.rx.tap.asObservable(),
             settingButtonDidTapped: settingButton.rx.tap.asObservable(),
             calendarButtonDidTapped: calendarButton.rx.tap.asObservable(),
-            edidButtonDidTapped: editButtonDidTapped.asObservable()
+            edidButtonDidTapped: editButtonDidTapped.asObservable(),
+            adsViewDidTapped: adsViewDidTapped.asObservable(),
+            adsDidWatched: adsDidWatched.asObservable()
         )
         
         editButtonDidTapped
@@ -168,6 +189,13 @@ final class MainViewController: UIViewController {
             ) { (index, questionAnswer, cell) in
                 let (question, answer) = questionAnswer
                 cell.mainView.bind(question, answer)
+                cell.adsContentView.rx.tapGesture()
+                    .when(.recognized)
+                    .subscribe(onNext: { [weak self] _ in
+                        guard let self else { return }
+                        self.adsViewDidTapped.accept(())
+                    })
+                    .disposed(by: cell.disposeBag)
             }
             .disposed(by: disposeBag)
         
@@ -210,6 +238,22 @@ final class MainViewController: UIViewController {
             return
         }
         
+        output.adsViewTapResult
+            .subscribe(onNext: { [weak self] result in
+                guard let self else { return }
+                if result {
+                    if let rewardedAd {
+                        rewardedAd.present(fromRootViewController: self, userDidEarnRewardHandler: {
+                            self.adsDidWatched.accept(())
+                            self.setupAds()
+                        })
+                    }
+                } else {
+                    self.showAlert(title: "답변하지 않은 질문이 있습니다.", type: .oneButton)
+                }
+            })
+            .disposed(by: disposeBag)
+        
         navigationItem.leftBarButtonItem = calendarButton
         
         collectionView.rx.willDisplayCell
@@ -230,6 +274,10 @@ final class MainViewController: UIViewController {
                 guard let blurIndex = output.startBluringIndex.value else { return }
                 if indexPath.row >= blurIndex {
                     cell.blur()
+                }
+                
+                if indexPath.row == blurIndex {
+                    cell.setupAds()
                 }
             })
             .disposed(by: disposeBag)

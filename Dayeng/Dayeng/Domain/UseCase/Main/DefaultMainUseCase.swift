@@ -65,9 +65,30 @@ final class DefaultMainUseCase: MainUseCase {
         
         let today = Date().convertToString(format: "yyyy.MM.dd.E")
         let isAnswered = user.answers.last?.date == today
-        let startIndex = isAnswered ? user.currentIndex : (user.currentIndex + 1)
-        
-        return startIndex
+        let isWahtchedAds = user.answers.count < user.currentIndex
+        if isAnswered {
+            return user.currentIndex
+        } else {
+            if isWahtchedAds {
+                return user.currentIndex
+            } else {
+                return user.currentIndex + 1
+            }
+        }
+    }
+    
+    func isAvailableWatchAds() -> Observable<Bool> {
+        Observable.create { observer in
+            guard let user = DayengDefaults.shared.user else { return Disposables.create() }
+            observer.onNext(user.answers.count == user.currentIndex)
+            return Disposables.create()
+        }
+    }
+    
+    func updateUserAdsWatching() {
+        DayengDefaults.shared.user?.currentIndex += 1
+        guard let user = DayengDefaults.shared.user else { return }
+        userRepository.uploadUser(user: user).subscribe().disposed(by: disposeBag)
     }
     
     private func fetchQuestions() -> Observable<[Question]> {
