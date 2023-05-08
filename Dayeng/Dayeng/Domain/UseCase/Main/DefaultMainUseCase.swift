@@ -66,37 +66,20 @@ final class DefaultMainUseCase: MainUseCase {
         let today = Date().convertToString(format: "yyyy.MM.dd.E")
         let isAnswered = user.answers.last?.date == today
         let isWahtchedAds = user.answers.count < user.currentIndex
-        if isAnswered {
+        if isAnswered || isWahtchedAds {
             return user.currentIndex
         } else {
-            if isWahtchedAds {
-                return user.currentIndex
-            } else {
-                return user.currentIndex + 1
-            }
+            return user.currentIndex + 1
         }
     }
     
     func isAvailableWatchAds() -> Observable<Bool> {
-        Observable.create { observer in
-            guard let user = DayengDefaults.shared.user else { return Disposables.create() }
-            let today = Date().convertToString(format: "yyyy.MM.dd.E")
-            let isAnswered = user.answers.last?.date == today
-            if user.answers.count >= 1 {
-                if isAnswered {
-                    if user.answers.count == user.currentIndex {
-                        observer.onNext(true)
-                    } else {
-                        observer.onNext(false)
-                    }
-                } else {
-                    observer.onNext(false)
-                }
-            } else {
-                observer.onNext(false)
-            }
-            return Disposables.create()
-        }
+        guard let user = DayengDefaults.shared.user else { return Observable.just(false) }
+        let today = Date().convertToString(format: "yyyy.MM.dd.E")
+        let isAnswered = user.answers.last?.date == today
+        let isAvailable = !user.answers.isEmpty && isAnswered && user.answers.count == user.currentIndex
+        
+        return Observable.just(isAvailable)
     }
     
     func updateUserAdsWatching() {

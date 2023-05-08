@@ -59,14 +59,9 @@ final class DefaultMainEditUseCase: MainEditUseCase {
             return Observable.error(EditError.noUserError)
         }
         
-        if user.answers.count < user.currentIndex {
-            if user.currentIndex == index + 1 {
-                return userRepository.uploadAnswer(answer: answer)
-            }
-        } else {
-            if user.currentIndex == index {
-                return userRepository.uploadAnswer(answer: answer)
-            }
+        let isWatchedAd = user.answers.count < user.currentIndex
+        if (isWatchedAd && user.currentIndex == index + 1) || user.currentIndex == index {
+            return userRepository.uploadAnswer(answer: answer)
         }
         
         return userRepository.editAnswer(answer: answer, index: index)

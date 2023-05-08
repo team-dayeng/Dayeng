@@ -17,7 +17,7 @@ final class MainViewModel {
         var settingButtonDidTapped: Observable<Void>
         var calendarButtonDidTapped: Observable<Void>
         var editButtonDidTapped: Observable<Int>
-        var adsViewDidTapped: Observable<Void>
+        var adsViewDidTapped: Observable<Bool>
         var adsDidWatched: Observable<Void>
     }
     // MARK: - Output
@@ -26,7 +26,7 @@ final class MainViewModel {
         var questionsAnswers = BehaviorRelay<[(Question, Answer?)]>(value: [])
         var startBluringIndex = BehaviorRelay<Int?>(value: nil)
         var firstShowingIndex = BehaviorRelay<Int?>(value: nil)
-        var adsViewTapResult = PublishRelay<Bool>()
+        var adsViewTapResult = PublishRelay<(Bool, String?)>()
     }
     
     // MARK: - Properites
@@ -83,11 +83,21 @@ final class MainViewModel {
             .disposed(by: disposeBag)
         
         input.adsViewDidTapped
-            .subscribe(onNext: { [weak self] in
+            .subscribe(onNext: { [weak self] existRewarded in
                 guard let self else { return }
-                self.useCase.isAvailableWatchAds()
-                    .bind(to: output.adsViewTapResult)
-                    .disposed(by: self.disposeBag)
+                if existRewarded {
+                    self.useCase.isAvailableWatchAds()
+                        .subscribe(onNext: { isAvailable in
+                            if isAvailable {
+                                output.adsViewTapResult.accept((true, nil))
+                            } else {
+                                output.adsViewTapResult.accept((false, AdMessageType.leftQuestion.message))
+                            }
+                        })
+                        .disposed(by: self.disposeBag)
+                } else {
+                    output.adsViewTapResult.accept((false, AdMessageType.notLoadAd.message))
+                }
             })
             .disposed(by: disposeBag)
         

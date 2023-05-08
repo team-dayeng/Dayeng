@@ -46,7 +46,7 @@ final class MainViewController: UIViewController, GADBannerViewDelegate, GADFull
     private let editButtonDidTapped = PublishRelay<Int>()
     private let titleViewDidTapped = PublishRelay<Void>()
     private var editButtonDisposables = [Int: Disposable]()
-    private let adsViewDidTapped = PublishRelay<Void>()
+    private let adsViewDidTapped = PublishRelay<Bool>()
     private let adsDidWatched = PublishRelay<Void>()
     private var initialIndexPath: IndexPath?
     private var rewardedAd: GADRewardedAd?
@@ -80,10 +80,10 @@ final class MainViewController: UIViewController, GADBannerViewDelegate, GADFull
     // MARK: - Helpers
     private func setupNaviagationBar() {
         let titleImageView = UIImageView(image: .dayengLogo)
-        let tapGestureRecognizer = UITapGestureRecognizer()
         titleImageView.isUserInteractionEnabled = true
-        titleImageView.addGestureRecognizer(tapGestureRecognizer)
-        tapGestureRecognizer.rx.event.map { _ in }
+        titleImageView.rx.tapGesture()
+            .when(.recognized)
+            .map { _ in }
             .bind(to: titleViewDidTapped)
             .disposed(by: disposeBag)
         
@@ -185,13 +185,6 @@ final class MainViewController: UIViewController, GADBannerViewDelegate, GADFull
             ) { (_, questionAnswer, cell) in
                 let (question, answer) = questionAnswer
                 cell.mainView.bind(question, answer)
-                cell.adsContentView.rx.tapGesture()
-                    .when(.recognized)
-                    .subscribe(onNext: { [weak self] _ in
-                        guard let self else { return }
-                        self.adsViewDidTapped.accept(())
-                    })
-                    .disposed(by: cell.disposeBag)
             }
             .disposed(by: disposeBag)
         
@@ -235,9 +228,9 @@ final class MainViewController: UIViewController, GADBannerViewDelegate, GADFull
         }
         
         output.adsViewTapResult
-            .subscribe(onNext: { [weak self] result in
+            .subscribe(onNext: { [weak self] (isAvailable, message) in
                 guard let self else { return }
-                if result {
+                if isAvailable {
                     if let rewardedAd = self.rewardedAd {
                         rewardedAd.present(fromRootViewController: self, userDidEarnRewardHandler: {
                             self.adsDidWatched.accept(())
@@ -245,7 +238,9 @@ final class MainViewController: UIViewController, GADBannerViewDelegate, GADFull
                         })
                     }
                 } else {
-                    self.showAlert(title: "답변하지 않은 질문이 있습니다.", type: .oneButton)
+                    if let message {
+                        self.showAlert(title: message, type: .oneButton)
+                    }
                 }
             })
             .disposed(by: disposeBag)
@@ -295,6 +290,17 @@ final class MainViewController: UIViewController, GADBannerViewDelegate, GADFull
                 
                 if indexPath.row == blurIndex {
                     cell.setupAds()
+                    cell.adsContentView.rx.tapGesture()
+                        .when(.recognized)
+                        .subscribe(onNext: { [weak self] _ in
+                            guard let self else { return }
+                            if let rewardedAd = self.rewardedAd {
+                                self.adsViewDidTapped.accept(true)
+                            } else {
+                                self.adsViewDidTapped.accept(false)
+                            }
+                        })
+                        .disposed(by: cell.disposeBag)
                 }
             })
             .disposed(by: disposeBag)

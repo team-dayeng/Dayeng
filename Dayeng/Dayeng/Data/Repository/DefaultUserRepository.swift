@@ -55,25 +55,20 @@ final class DefaultUserRepository: UserRepository {
             answer: answer)
         )
         
+        var answerIndex = 0
+        var currentIndex = 0
+        
         if user.answers.count < user.currentIndex {
-            return Observable.merge(
-                firestoreService.upload(
-                    api: .answer(userID: user.uid, index: user.answers.count),
-                    dto: AnswerDTO(
-                        date: answerDate,
-                        answer: answer
-                    )
-                ),
-                firestoreService.upload(
-                    api: .currentIndex(userID: user.uid),
-                    dto: ["currentIndex": user.currentIndex]
-                )
-            )
+            answerIndex = user.answers.count
+            currentIndex = user.currentIndex
+        } else {
+            answerIndex = user.currentIndex
+            currentIndex = user.currentIndex + 1
         }
         
         return Observable.merge(
             firestoreService.upload(
-                api: .answer(userID: user.uid, index: user.currentIndex),
+                api: .answer(userID: user.uid, index: answerIndex),
                 dto: AnswerDTO(
                     date: answerDate,
                     answer: answer
@@ -81,7 +76,7 @@ final class DefaultUserRepository: UserRepository {
             ),
             firestoreService.upload(
                 api: .currentIndex(userID: user.uid),
-                dto: ["currentIndex": user.currentIndex + 1]
+                dto: ["currentIndex": currentIndex]
             )
         )
     }
