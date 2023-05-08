@@ -22,16 +22,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         
-        if let userActivity = connectionOptions.userActivities.first {
-            self.scene(scene, continue: userActivity)
-        }
-        
         self.window = UIWindow(windowScene: scene)
         let navigationController = UINavigationController()
         self.coordinator = AppCoordinator(navigationController: navigationController)
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
         self.coordinator?.start()
+        
+        if let userActivity = connectionOptions.userActivities.first {
+            self.scene(scene, continue: userActivity)
+        }
+        
+        if let urlContext = connectionOptions.urlContexts.first {
+            let urlContexts: Set = [urlContext]
+            self.scene(scene, openURLContexts: urlContexts)
+        }
         
         // 앱 실행 중 'Apple ID 사용 중단' 할 경우
         NotificationCenter.default.addObserver(
@@ -71,9 +76,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        if let url = URLContexts.first?.url,
-           AuthApi.isKakaoTalkLoginUrl(url) {
+        guard let url = URLContexts.first?.url else { return }
+        if AuthApi.isKakaoTalkLoginUrl(url) {
             _ = AuthController.rx.handleOpenUrl(url: url)
+        }
+        
+        let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems
+        
+        guard let acceptFriendCode = queryItems?.filter({ $0.name == "code" }).first?.value,
+              let acceptFriendName = queryItems?.filter({ $0.name == "name" }).first?.value,
+              let navigationController = self.window?.rootViewController as? UINavigationController else { return }
+
+        if navigationController.topViewController is SplashViewController ||
+            navigationController.topViewController is LoginViewController {
+            self.acceptFriendCode = acceptFriendCode
+            self.acceptFriendName = acceptFriendName
+        } else {
+            self.coordinator?.showAcceptFriendViewController(acceptFriendCode: acceptFriendCode,
+                                                             acceptFriendName: acceptFriendName)
         }
     }
 
@@ -134,14 +154,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func changeRootViewController(_ navigationController: UINavigationController,
-                                  _ viewController: UIViewController) {
+                                  _ viewController: UIViewController,
+                                  _ transitionOption: UIView.AnimationOptions? = nil) {
         guard let window = self.window else { return }
         window.rootViewController = navigationController
         
         navigationController.viewControllers = [viewController]
         UIView.transition(with: window,
                           duration: 1.0,
-                          options: [.transitionCurlUp],
+                          options: transitionOption ?? UIView.AnimationOptions(),
                           animations: nil) { _ in
             if viewController is MainViewController,
                let acceptFriendCode = self.acceptFriendCode,

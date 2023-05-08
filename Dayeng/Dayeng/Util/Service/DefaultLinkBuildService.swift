@@ -31,7 +31,7 @@ final class DefaultLinkBuildService: LinkBuildService {
               ) else { return DynamicLinkComponents()}
        
         linkBuilder.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.dayeng.dayeng")
-        linkBuilder.iOSParameters?.appStoreID = "123456789"
+        linkBuilder.iOSParameters?.appStoreID = "1671113779"
         linkBuilder.navigationInfoParameters = DynamicLinkNavigationInfoParameters()
         linkBuilder.navigationInfoParameters?.isForcedRedirectEnabled = true
         

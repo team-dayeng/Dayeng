@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import RxGesture
 
 final class AlarmSettingViewController: UIViewController {
     // MARK: - UI properties
@@ -78,9 +79,6 @@ final class AlarmSettingViewController: UIViewController {
         let view = UIView()
         view.layer.cornerRadius = 10
         view.layer.backgroundColor = CGColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1.0)
-        let tapGestureRecognizer = UITapGestureRecognizer()
-        view.addGestureRecognizer(tapGestureRecognizer)
-        daysOfWeekDidTapped = tapGestureRecognizer.rx.event.map { _ in }.asObservable()
         return view
     }()
     
@@ -116,7 +114,6 @@ final class AlarmSettingViewController: UIViewController {
     // MARK: - Properties
     var disposeBag = DisposeBag()
     let viewModel: AlarmSettingViewModel
-    var daysOfWeekDidTapped: Observable<Void>!
     
     // MARK: - Lifecycles
     init(alarmSettingViewModel: AlarmSettingViewModel) {
@@ -233,7 +230,7 @@ final class AlarmSettingViewController: UIViewController {
             registButtonDidTapped:
                 registButton.rx.tap.map { self.timePicker.date },
             daysOfWeekDidTapped:
-                daysOfWeekDidTapped,
+                daysOfWeek.rx.tapGesture().when(.recognized).map { _ in }.asObservable(),
             isAlarmSwitchOn:
                 switchButton.rx.isOn.changed.asObservable()
         )

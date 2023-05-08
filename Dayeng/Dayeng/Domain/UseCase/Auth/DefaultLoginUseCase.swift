@@ -65,6 +65,8 @@ final class DefaultLoginUseCase: LoginUseCase {
                             })
                             .bind(to: observer)
                             .disposed(by: self.disposeBag)
+                    }, onFailure: {
+                        observer.onError($0)
                     })
                     .disposed(by: self.disposeBag)
             }

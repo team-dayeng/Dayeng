@@ -19,14 +19,15 @@ final class DayengDefaults {
     private init() { }
     
     func addAnswer(_ answer: Answer) {
+        if user?.answers.count == user?.currentIndex {
+            user?.currentIndex += 1
+        }
         user?.answers.append(answer)
-        user?.currentIndex += 1
     }
     
     func editAnswer(_ answer: Answer, _ index: Int) {
-        guard var user = user,
-              index < user.answers.count else { return }
-        user.answers[index] = answer
+        if let count = user?.answers.count, index >= count { return }
+        user?.answers[index] = answer
     }
     
     func addFriend(_ friend: String) {

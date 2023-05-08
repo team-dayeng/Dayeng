@@ -17,18 +17,26 @@ final class DefaultAddFriendUseCase: AddFriendUseCase {
     
     // MARK: - Properties
     private let linkBuilderService: LinkBuildService
+    private let kakaoLinkBuildService: KakaoLinkBuildService
     private let userRepository: UserRepository
     private let disposeBag = DisposeBag()
     
     // MARK: - Lifecycles
-    init(userRepository: UserRepository, linkBuilderService: LinkBuildService) {
+    init(userRepository: UserRepository,
+         linkBuilderService: LinkBuildService,
+         kakaoLinkBuildService: KakaoLinkBuildService) {
         self.userRepository = userRepository
         self.linkBuilderService = linkBuilderService
+        self.kakaoLinkBuildService = kakaoLinkBuildService
     }
     
     // MARK: - Helpers
     func fetchDynamicLink() -> Observable<URL> {
         linkBuilderService.fetchDynamicLink()
+    }
+    
+    func fetchKakaoLink() -> Observable<URL> {
+        kakaoLinkBuildService.fetchKakaoLink()
     }
     
     func addFriend(userID: String) -> Observable<Void> {
@@ -47,7 +55,7 @@ final class DefaultAddFriendUseCase: AddFriendUseCase {
                             .bind(to: observer)
                             .disposed(by: self.disposeBag)
                     }
-                }, onError: { error in
+                }, onError: { _ in
                     observer.onError(AddFriendUseCase.wrongUserID)
                 })
                 .disposed(by: self.disposeBag)

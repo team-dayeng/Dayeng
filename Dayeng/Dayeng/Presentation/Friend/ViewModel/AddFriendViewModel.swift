@@ -14,11 +14,13 @@ final class AddFriendViewModel {
     struct Input {
         var addButtonDidTapped: Observable<String>
         var shareButtonDidTapped: Observable<Void>
+        var kakaoShareButtonDidTapped: Observable<Void>
     }
     
     // MARK: - Output
     struct Output {
         var shareButtonResult = PublishRelay<URL>()
+        var kakaoShareButtonResult = PublishRelay<URL>()
         var addButtonSuccess = PublishSubject<Void>()
         var addButtonError = PublishSubject<String>()
     }
@@ -39,7 +41,6 @@ final class AddFriendViewModel {
         input.addButtonDidTapped
             .subscribe(onNext: { [weak self] text in
                 guard let self else { return }
-                print(text)
                 self.useCase.addFriend(userID: text)
                     .subscribe(onNext: {
                         output.addButtonSuccess.onNext(())
@@ -56,6 +57,14 @@ final class AddFriendViewModel {
                 owner.useCase.fetchDynamicLink()
             }
             .bind(to: output.shareButtonResult)
+            .disposed(by: disposeBag)
+        
+        input.kakaoShareButtonDidTapped
+            .withUnretained(self)
+            .flatMap { (owner, _) in
+                owner.useCase.fetchKakaoLink()
+            }
+            .bind(to: output.kakaoShareButtonResult)
             .disposed(by: disposeBag)
         
         return output

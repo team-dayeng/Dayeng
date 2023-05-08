@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import RxCocoa
 import RxSwift
+import RxGesture
 
 final class CommonMainView: UIView {
     // MARK: - UI properties
@@ -40,6 +41,7 @@ final class CommonMainView: UIView {
         label.font = UIFont(name: "Chalkboard SE", size: 16)
         label.textColor = .gray
         label.text = "어디에 살고 싶나요?"
+        label.numberOfLines = 0
         return label
     }()
     
@@ -48,26 +50,20 @@ final class CommonMainView: UIView {
         label.backgroundColor = UIColor(white: 1, alpha: 0.5)
         label.layer.cornerRadius = 20
         label.font = UIFont(name: "HoeflerText-Regular", size: 22)
-        label.text = " A1."
+        label.text = " A."
         label.textColor = .lightGray
         label.isEditable = false
         label.isSelectable = false
-        let tapGestureRecognizer = UITapGestureRecognizer()
-        label.addGestureRecognizer(tapGestureRecognizer)
-        tapGestureRecognizer.rx.event.map { _ in }.bind(to: editButtonDidTapped).disposed(by: disposeBag)
         return label
     }()
     
-    lazy var answerLabel: UILabel = {
-        var label: UILabel = UILabel()
+    lazy var answerLabel: PaddingLabel = {
+        var label = PaddingLabel()
         label.font = UIFont(name: "HoeflerText-Regular", size: 19)
         label.text = ""
         label.numberOfLines = 0
         label.isUserInteractionEnabled = true
         label.textColor = .black
-        let tapGestureRecognizer = UITapGestureRecognizer()
-        label.addGestureRecognizer(tapGestureRecognizer)
-        tapGestureRecognizer.rx.event.map { _ in }.bind(to: editButtonDidTapped).disposed(by: disposeBag)
         return label
     }()
     
@@ -80,6 +76,7 @@ final class CommonMainView: UIView {
         super.init(frame: CGRect())
         setupViews()
         configureUI()
+        bind()
     }
     
     required init?(coder: NSCoder) {
@@ -105,29 +102,43 @@ final class CommonMainView: UIView {
         
         dateLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(150)
-            $0.left.right.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(20)
         }
         
         questionLabel.snp.makeConstraints {
             $0.top.equalTo(dateLabel.snp.bottom).offset(15)
-            $0.left.right.equalTo(dateLabel)
+            $0.leading.trailing.equalTo(dateLabel)
         }
         
         koreanQuestionLabel.snp.makeConstraints {
             $0.top.equalTo(questionLabel.snp.bottom)
-            $0.left.right.equalTo(dateLabel)
+            $0.leading.trailing.equalTo(dateLabel)
         }
         
         answerBackground.snp.makeConstraints {
-            $0.left.right.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(20)
             $0.top.equalTo(koreanQuestionLabel.snp.bottom).offset(35)
             $0.bottom.equalTo(snp.centerY).offset(60)
         }
         
         answerLabel.snp.makeConstraints {
             $0.top.equalTo(koreanQuestionLabel.snp.bottom).offset(60)
-            $0.left.right.equalTo(dateLabel)
+            $0.leading.trailing.equalTo(dateLabel)
         }
+    }
+    
+    private func bind() {
+        answerBackground.rx.tapGesture()
+            .when(.recognized)
+            .map { _ in }
+            .bind(to: editButtonDidTapped)
+            .disposed(by: disposeBag)
+        
+        answerLabel.rx.tapGesture()
+            .when(.recognized)
+            .map { _ in }
+            .bind(to: editButtonDidTapped)
+            .disposed(by: disposeBag)
     }
     
     func bind(_ question: Question, _ answer: Answer?) {
@@ -137,7 +148,7 @@ final class CommonMainView: UIView {
             bindAnswer(answer)
         } else {
             answerBackground.isHidden = false
-            answerBackground.text = " A1."
+            answerBackground.text = " A."
         }
     }
     
