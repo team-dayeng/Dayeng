@@ -106,10 +106,9 @@ final class MainViewController: UIViewController, GADBannerViewDelegate, GADFull
         GADRewardedAd.load(withAdUnitID: "ca-app-pub-3402143822000520/5224075704",
                            request: GADRequest()) { (ads, error) in
           if let error = error {
-            print("Rewarded ad failed to load with error: \(error.localizedDescription)")
-            return
+              self.showAlert(title: "\(error.localizedDescription)", type: .oneButton)
+              return
           }
-          print("Loading Succeeded")
           self.rewardedAd = ads
           self.rewardedAd?.fullScreenContentDelegate = self
         }
