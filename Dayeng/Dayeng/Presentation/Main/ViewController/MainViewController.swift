@@ -9,8 +9,10 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import RxGesture
+import GoogleMobileAds
 
-final class MainViewController: UIViewController {
+final class MainViewController: UIViewController, GADBannerViewDelegate, GADFullScreenContentDelegate {
     // MARK: - UI properties
     private var collectionView: UICollectionView!
     
@@ -44,7 +46,10 @@ final class MainViewController: UIViewController {
     private let editButtonDidTapped = PublishRelay<Int>()
     private let titleViewDidTapped = PublishRelay<Void>()
     private var editButtonDisposables = [Int: Disposable]()
+    private let adsViewDidTapped = PublishRelay<Bool>()
+    private let adsDidWatched = PublishRelay<Void>()
     private var initialIndexPath: IndexPath?
+    private var rewardedAd: GADRewardedAd?
     
     // MARK: - Lifecycles
     init(viewModel: MainViewModel) {
@@ -62,6 +67,7 @@ final class MainViewController: UIViewController {
         setupNaviagationBar()
         configureCollectionView()
         setupViews()
+        setupAds()
         bind()
     }
     
@@ -74,10 +80,10 @@ final class MainViewController: UIViewController {
     // MARK: - Helpers
     private func setupNaviagationBar() {
         let titleImageView = UIImageView(image: .dayengLogo)
-        let tapGestureRecognizer = UITapGestureRecognizer()
         titleImageView.isUserInteractionEnabled = true
-        titleImageView.addGestureRecognizer(tapGestureRecognizer)
-        tapGestureRecognizer.rx.event.map { _ in }
+        titleImageView.rx.tapGesture()
+            .when(.recognized)
+            .map { _ in }
             .bind(to: titleViewDidTapped)
             .disposed(by: disposeBag)
         
@@ -94,6 +100,18 @@ final class MainViewController: UIViewController {
             view.addSubview($0)
         }
         configureUI()
+    }
+    
+    private func setupAds() {
+        GADRewardedAd.load(withAdUnitID: "ca-app-pub-3402143822000520/5224075704",
+                           request: GADRequest()) { (ads, error) in
+          if let error = error {
+              self.showAlert(title: "\(error.localizedDescription)", type: .oneButton)
+              return
+          }
+          self.rewardedAd = ads
+          self.rewardedAd?.fullScreenContentDelegate = self
+        }
     }
     
     private func configureUI() {
@@ -151,7 +169,9 @@ final class MainViewController: UIViewController {
             friendButtonDidTapped: friendButton.rx.tap.asObservable(),
             settingButtonDidTapped: settingButton.rx.tap.asObservable(),
             calendarButtonDidTapped: calendarButton.rx.tap.asObservable(),
-            editButtonDidTapped: editButtonDidTapped.asObservable()
+            editButtonDidTapped: editButtonDidTapped.asObservable(),
+            adsViewDidTapped: adsViewDidTapped.asObservable(),
+            adsDidWatched: adsDidWatched.asObservable()
         )
         
         let output = viewModel.transform(input: input)
@@ -207,6 +227,24 @@ final class MainViewController: UIViewController {
             return
         }
         
+        output.adsViewTapResult
+            .subscribe(onNext: { [weak self] (isAvailable, message) in
+                guard let self else { return }
+                if isAvailable {
+                    if let rewardedAd = self.rewardedAd {
+                        rewardedAd.present(fromRootViewController: self, userDidEarnRewardHandler: {
+                            self.adsDidWatched.accept(())
+                            self.setupAds()
+                        })
+                    }
+                } else {
+                    if let message {
+                        self.showAlert(title: message, type: .oneButton)
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
+        
         navigationItem.leftBarButtonItem = calendarButton
         
         bindCollectionViewWillDisplayCell(startingBlurIndex: output.startBluringIndex)
@@ -248,6 +286,21 @@ final class MainViewController: UIViewController {
                 guard let blurIndex = startingBlurIndex.value else { return }
                 if indexPath.row >= blurIndex {
                     cell.blur()
+                }
+                
+                if indexPath.row == blurIndex {
+                    cell.setupAds()
+                    cell.adsContentView.rx.tapGesture()
+                        .when(.recognized)
+                        .subscribe(onNext: { [weak self] _ in
+                            guard let self else { return }
+                            if let rewardedAd = self.rewardedAd {
+                                self.adsViewDidTapped.accept(true)
+                            } else {
+                                self.adsViewDidTapped.accept(false)
+                            }
+                        })
+                        .disposed(by: cell.disposeBag)
                 }
             })
             .disposed(by: disposeBag)

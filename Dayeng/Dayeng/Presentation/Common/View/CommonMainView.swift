@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import RxCocoa
 import RxSwift
+import RxGesture
 
 final class CommonMainView: UIView {
     // MARK: - UI properties
@@ -53,9 +54,6 @@ final class CommonMainView: UIView {
         label.textColor = .lightGray
         label.isEditable = false
         label.isSelectable = false
-        let tapGestureRecognizer = UITapGestureRecognizer()
-        label.addGestureRecognizer(tapGestureRecognizer)
-        tapGestureRecognizer.rx.event.map { _ in }.bind(to: editButtonDidTapped).disposed(by: disposeBag)
         return label
     }()
     
@@ -66,10 +64,6 @@ final class CommonMainView: UIView {
         label.numberOfLines = 0
         label.isUserInteractionEnabled = true
         label.textColor = .black
-        
-        let tapGestureRecognizer = UITapGestureRecognizer()
-        label.addGestureRecognizer(tapGestureRecognizer)
-        tapGestureRecognizer.rx.event.map { _ in }.bind(to: editButtonDidTapped).disposed(by: disposeBag)
         return label
     }()
     
@@ -82,6 +76,7 @@ final class CommonMainView: UIView {
         super.init(frame: CGRect())
         setupViews()
         configureUI()
+        bind()
     }
     
     required init?(coder: NSCoder) {
@@ -130,6 +125,20 @@ final class CommonMainView: UIView {
             $0.top.equalTo(koreanQuestionLabel.snp.bottom).offset(60)
             $0.leading.trailing.equalTo(dateLabel)
         }
+    }
+    
+    private func bind() {
+        answerBackground.rx.tapGesture()
+            .when(.recognized)
+            .map { _ in }
+            .bind(to: editButtonDidTapped)
+            .disposed(by: disposeBag)
+        
+        answerLabel.rx.tapGesture()
+            .when(.recognized)
+            .map { _ in }
+            .bind(to: editButtonDidTapped)
+            .disposed(by: disposeBag)
     }
     
     func bind(_ question: Question, _ answer: Answer?) {

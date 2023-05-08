@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import RxRelay
 
 final class MainCell: UICollectionViewCell {
     // MARK: - UI properties
@@ -29,6 +30,32 @@ final class MainCell: UICollectionViewCell {
         return imageView
     }()
     
+    lazy var adsImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(systemName: "video.square"))
+        imageView.tintColor = .black
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
+    lazy var adsLabel: UILabel = {
+        let label = UILabel()
+        label.text = "바로 질문 보기"
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textColor = .black
+        label.textAlignment = .center
+        return label
+    }()
+    
+    lazy var adsContentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .dayengGray
+        view.layer.cornerRadius = 8
+        view.isHidden = true
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.black.cgColor
+        return view
+    }()
+    
     lazy var blurView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .white
@@ -40,6 +67,7 @@ final class MainCell: UICollectionViewCell {
     
     // MARK: - Properties
     static let identifier: String = "MainCell"
+    var disposeBag = DisposeBag()
     
     // MARK: - Lifecycles
     override init(frame: CGRect) {
@@ -53,7 +81,9 @@ final class MainCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
+        disposeBag = DisposeBag()
         mainView.answerLabel.text = nil
+        mainView.dateLabel.text = Date().convertToString(format: "yyyy.MM.dd.E")
         unBlur()
         
         super.prepareForReuse()
@@ -65,6 +95,8 @@ final class MainCell: UICollectionViewCell {
         addSubview(blurView)
         addSubview(lockedLabel)
         addSubview(lockerView)
+        addSubview(adsContentView)
+        [adsImageView, adsLabel].forEach { adsContentView.addSubview($0) }
         configureUI()
     }
     
@@ -90,6 +122,28 @@ final class MainCell: UICollectionViewCell {
             $0.top.equalTo(lockedLabel).offset(30)
             $0.width.height.equalTo(70)
         }
+        
+        adsContentView.snp.makeConstraints {
+            $0.bottom.equalTo(blurView.snp.bottom).offset(-50)
+            $0.leading.trailing.equalTo(blurView).inset(50)
+            $0.height.equalTo(70)
+        }
+        
+        adsImageView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().inset(10)
+            $0.width.height.equalTo(60)
+        }
+        
+        adsLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(adsImageView.snp.trailing).offset(10)
+            $0.trailing.equalToSuperview().offset(-10)
+        }
+    }
+    
+    func setupAds() {
+        adsContentView.isHidden = false
     }
     
     func blur() {
@@ -119,7 +173,6 @@ final class MainCell: UICollectionViewCell {
 
     func unBlur() {
         mainView.isHidden = false
-        [blurView, lockerView, lockedLabel].forEach { $0.isHidden = true }
+        [blurView, lockerView, lockedLabel, adsContentView].forEach { $0.isHidden = true }
     }
-
 }

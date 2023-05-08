@@ -98,12 +98,16 @@
 		E52F65F129AC7F20007C36AE /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = E52F65F029AC7F20007C36AE /* RxKeyboard */; };
 		E52F65F329AC7F79007C36AE /* FirebaseDynamicLinks in Frameworks */ = {isa = PBXBuildFile; productRef = E52F65F229AC7F79007C36AE /* FirebaseDynamicLinks */; };
 		E52F65F529AC859F007C36AE /* AcceptFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52F65F429AC859F007C36AE /* AcceptFriendViewModel.swift */; };
+		E5302E072A075FA800FE98C1 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = E5302E062A075FA800FE98C1 /* RxGesture */; };
 		E54ACBCD2A04A9D30012EEDA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76280CE629878A3F0061206A /* AppDelegate.swift */; };
 		E54ACBCF2A04C3E30012EEDA /* RxKakaoSDKShare in Frameworks */ = {isa = PBXBuildFile; productRef = E54ACBCE2A04C3E30012EEDA /* RxKakaoSDKShare */; };
 		E54ACBD12A051F330012EEDA /* ShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54ACBD02A051F320012EEDA /* ShareButton.swift */; };
 		E54ACBD32A051F440012EEDA /* ShareType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54ACBD22A051F440012EEDA /* ShareType.swift */; };
 		E54F3E802A05BC5A003B35CF /* KakaoLinkBuildService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54F3E7F2A05BC5A003B35CF /* KakaoLinkBuildService.swift */; };
 		E54F3E822A05BC65003B35CF /* DefaultKakaoLinkBuildService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54F3E812A05BC65003B35CF /* DefaultKakaoLinkBuildService.swift */; };
+		E54F3E852A0680DB003B35CF /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = E54F3E842A0680DB003B35CF /* GoogleMobileAds */; };
+		E54F3E872A0682FD003B35CF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E54F3E862A0682FC003B35CF /* GoogleService-Info.plist */; };
+		E54F3E892A0687CE003B35CF /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E54F3E882A0687CE003B35CF /* FirebaseAnalytics */; };
 		E552C2202990BE9300F51179 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C21F2990BE9300F51179 /* SettingViewController.swift */; };
 		E552C2222990BEA700F51179 /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2212990BEA700F51179 /* AlarmSettingViewController.swift */; };
 		E552C2242990BEB300F51179 /* AlarmDaySettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552C2232990BEB300F51179 /* AlarmDaySettingViewController.swift */; };
@@ -130,11 +134,11 @@
 		E5AE4F2F29B0D4DE0029B200 /* AddFriendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE4F2E29B0D4DE0029B200 /* AddFriendUseCase.swift */; };
 		E5AE4F3129B0D4EC0029B200 /* DefaultAddFriendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE4F3029B0D4EB0029B200 /* DefaultAddFriendUseCase.swift */; };
 		E5AE4F3329B0E1F30029B200 /* ToastType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE4F3229B0E1F30029B200 /* ToastType.swift */; };
-		E5AE4F3729B0EE120029B200 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E5AE4F3629B0EE120029B200 /* GoogleService-Info.plist */; };
 		E5AE4F3D29B37B120029B200 /* CalendarUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE4F3C29B37B120029B200 /* CalendarUseCase.swift */; };
 		E5AE4F3F29B37B1A0029B200 /* DefaultCalendarUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE4F3E29B37B1A0029B200 /* DefaultCalendarUseCase.swift */; };
 		E5AE4F5F29BCACBC0029B200 /* DefaultLinkBuildService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE4F5E29BCACBC0029B200 /* DefaultLinkBuildService.swift */; };
 		E5AE4F6129BCACCD0029B200 /* LinkBuildService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE4F6029BCACCD0029B200 /* LinkBuildService.swift */; };
+		E5C590512A08829000F3DD1E /* AdMessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C590502A08829000F3DD1E /* AdMessageType.swift */; };
 		E5D434002988CDE5004EDFC7 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */; };
 		E5D4342E2988E22F004EDFC7 /* Dayeng-Book.json in Resources */ = {isa = PBXBuildFile; fileRef = E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */; };
 		E5D43435298A3291004EDFC7 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43434298A3291004EDFC7 /* CalendarViewController.swift */; };
@@ -230,6 +234,7 @@
 		E54ACBD22A051F440012EEDA /* ShareType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareType.swift; sourceTree = "<group>"; };
 		E54F3E7F2A05BC5A003B35CF /* KakaoLinkBuildService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLinkBuildService.swift; sourceTree = "<group>"; };
 		E54F3E812A05BC65003B35CF /* DefaultKakaoLinkBuildService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultKakaoLinkBuildService.swift; sourceTree = "<group>"; };
+		E54F3E862A0682FC003B35CF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E552C1F1298B911F00F51179 /* OwnerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerType.swift; sourceTree = "<group>"; };
 		E552C21F2990BE9300F51179 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		E552C2212990BEA700F51179 /* AlarmSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewController.swift; sourceTree = "<group>"; };
@@ -256,11 +261,11 @@
 		E5AE4F2E29B0D4DE0029B200 /* AddFriendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendUseCase.swift; sourceTree = "<group>"; };
 		E5AE4F3029B0D4EB0029B200 /* DefaultAddFriendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAddFriendUseCase.swift; sourceTree = "<group>"; };
 		E5AE4F3229B0E1F30029B200 /* ToastType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastType.swift; sourceTree = "<group>"; };
-		E5AE4F3629B0EE120029B200 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E5AE4F3C29B37B120029B200 /* CalendarUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarUseCase.swift; sourceTree = "<group>"; };
 		E5AE4F3E29B37B1A0029B200 /* DefaultCalendarUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCalendarUseCase.swift; sourceTree = "<group>"; };
 		E5AE4F5E29BCACBC0029B200 /* DefaultLinkBuildService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLinkBuildService.swift; sourceTree = "<group>"; };
 		E5AE4F6029BCACCD0029B200 /* LinkBuildService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkBuildService.swift; sourceTree = "<group>"; };
+		E5C590502A08829000F3DD1E /* AdMessageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdMessageType.swift; sourceTree = "<group>"; };
 		E5D433FF2988CDE5004EDFC7 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		E5D4342D2988E22F004EDFC7 /* Dayeng-Book.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Dayeng-Book.json"; sourceTree = "<group>"; };
 		E5D43434298A3291004EDFC7 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
@@ -282,6 +287,7 @@
 				E54ACBCF2A04C3E30012EEDA /* RxKakaoSDKShare in Frameworks */,
 				76280D0129878BAE0061206A /* RxRelay in Frameworks */,
 				76280D2D29879F770061206A /* Lottie in Frameworks */,
+				E54F3E892A0687CE003B35CF /* FirebaseAnalytics in Frameworks */,
 				76280D0629878C870061206A /* FirebaseAuth in Frameworks */,
 				76280CFF29878BAE0061206A /* RxCocoa in Frameworks */,
 				76280D0A29878C870061206A /* FirebaseFirestoreSwift in Frameworks */,
@@ -290,6 +296,8 @@
 				76280CFC29878B8C0061206A /* SnapKit in Frameworks */,
 				76280D0829878C870061206A /* FirebaseFirestore in Frameworks */,
 				E52F65F329AC7F79007C36AE /* FirebaseDynamicLinks in Frameworks */,
+				E5302E072A075FA800FE98C1 /* RxGesture in Frameworks */,
+				E54F3E852A0680DB003B35CF /* GoogleMobileAds in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,7 +449,7 @@
 			isa = PBXGroup;
 			children = (
 				E552C2532994C90E00F51179 /* Coordinator */,
-				E5AE4F3629B0EE120029B200 /* GoogleService-Info.plist */,
+				E54F3E862A0682FC003B35CF /* GoogleService-Info.plist */,
 				76280CE629878A3F0061206A /* AppDelegate.swift */,
 				76280CE829878A3F0061206A /* SceneDelegate.swift */,
 				76280CEF29878A410061206A /* Assets.xcassets */,
@@ -602,8 +610,8 @@
 		76280D282987929C0061206A /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
-				762A554429ADEF9A0068AE86 /* MainEditUseCase.swift */,
 				76CD7EB429E165D800AFE950 /* MainUseCase.swift */,
+				762A554429ADEF9A0068AE86 /* MainEditUseCase.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -646,6 +654,7 @@
 				E5AE4F3229B0E1F30029B200 /* ToastType.swift */,
 				47F4C4C329BDBAAA0002E51B /* UserError.swift */,
 				E54ACBD22A051F440012EEDA /* ShareType.swift */,
+				E5C590502A08829000F3DD1E /* AdMessageType.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -922,6 +931,9 @@
 				47B5084029A9E4490046A982 /* RxKakaoSDKCommon */,
 				47B5084229A9E4490046A982 /* RxKakaoSDKUser */,
 				E54ACBCE2A04C3E30012EEDA /* RxKakaoSDKShare */,
+				E54F3E842A0680DB003B35CF /* GoogleMobileAds */,
+				E54F3E882A0687CE003B35CF /* FirebaseAnalytics */,
+				E5302E062A075FA800FE98C1 /* RxGesture */,
 			);
 			productName = Dayeng;
 			productReference = 76280CE329878A3F0061206A /* Dayeng.app */;
@@ -958,6 +970,8 @@
 				76280D2B29879F770061206A /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				E52F65EF29AC7F1F007C36AE /* XCRemoteSwiftPackageReference "RxKeyboard" */,
 				47B5083D29A9E4490046A982 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
+				E54F3E832A0680DB003B35CF /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				E5302E052A075FA800FE98C1 /* XCRemoteSwiftPackageReference "RxGesture" */,
 			);
 			productRefGroup = 76280CE429878A3F0061206A /* Products */;
 			projectDirPath = "";
@@ -974,7 +988,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				76280CF329878A410061206A /* LaunchScreen.storyboard in Resources */,
-				E5AE4F3729B0EE120029B200 /* GoogleService-Info.plist in Resources */,
+				E54F3E872A0682FD003B35CF /* GoogleService-Info.plist in Resources */,
 				E5D4342E2988E22F004EDFC7 /* Dayeng-Book.json in Resources */,
 				76280CF029878A410061206A /* Assets.xcassets in Resources */,
 			);
@@ -1114,6 +1128,7 @@
 				7628E690298E4E9B002D86F2 /* FirestoreAPI.swift in Sources */,
 				476A62692993FE460074231E /* QuestionDTO.swift in Sources */,
 				E552C2602996573A00F51179 /* SplashViewModel.swift in Sources */,
+				E5C590512A08829000F3DD1E /* AdMessageType.swift in Sources */,
 				76003E0D29990ED200F15CAE /* UserNotificationService.swift in Sources */,
 				E51C6DF429D7028900D40EC9 /* NetworkMonitor.swift in Sources */,
 				7628E682298E4DA4002D86F2 /* UserRepository.swift in Sources */,
@@ -1278,6 +1293,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-Objc";
 				PRODUCT_BUNDLE_IDENTIFIER = com.team.dayeng;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1317,6 +1333,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-Objc";
 				PRODUCT_BUNDLE_IDENTIFIER = com.team.dayeng;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1402,6 +1419,22 @@
 				kind = branch;
 			};
 		};
+		E5302E052A075FA800FE98C1 /* XCRemoteSwiftPackageReference "RxGesture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxGesture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+		E54F3E832A0680DB003B35CF /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1475,10 +1508,25 @@
 			package = 76280D0429878C870061206A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseDynamicLinks;
 		};
+		E5302E062A075FA800FE98C1 /* RxGesture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E5302E052A075FA800FE98C1 /* XCRemoteSwiftPackageReference "RxGesture" */;
+			productName = RxGesture;
+		};
 		E54ACBCE2A04C3E30012EEDA /* RxKakaoSDKShare */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 47B5083D29A9E4490046A982 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
 			productName = RxKakaoSDKShare;
+		};
+		E54F3E842A0680DB003B35CF /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E54F3E832A0680DB003B35CF /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
+		E54F3E882A0687CE003B35CF /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 76280D0429878C870061206A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
