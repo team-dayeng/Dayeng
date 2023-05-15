@@ -142,7 +142,7 @@ final class MainCell: UICollectionViewCell {
         }
     }
     
-    func setupAds() {
+    func appearAdView() {
         adsContentView.isHidden = false
     }
     
