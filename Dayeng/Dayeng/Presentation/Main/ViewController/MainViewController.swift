@@ -67,7 +67,6 @@ final class MainViewController: UIViewController, GADBannerViewDelegate, GADFull
         setupNaviagationBar()
         configureCollectionView()
         setupViews()
-        setupAds()
         bind()
     }
     
@@ -102,7 +101,7 @@ final class MainViewController: UIViewController, GADBannerViewDelegate, GADFull
         configureUI()
     }
     
-    private func setupAds() {
+    private func setupAd() {
         GADRewardedAd.load(withAdUnitID: "ca-app-pub-3402143822000520/5224075704",
                            request: GADRequest()) { (ads, error) in
           if let error = error {
@@ -225,6 +224,8 @@ final class MainViewController: UIViewController, GADBannerViewDelegate, GADFull
         if output.ownerType != .mine {
             bindFriend(output: output)
             return
+        } else {
+            setupAd()
         }
         
         output.adsViewTapResult
@@ -234,7 +235,7 @@ final class MainViewController: UIViewController, GADBannerViewDelegate, GADFull
                     if let rewardedAd = self.rewardedAd {
                         rewardedAd.present(fromRootViewController: self, userDidEarnRewardHandler: {
                             self.adsDidWatched.accept(())
-                            self.setupAds()
+                            self.setupAd()
                         })
                     }
                 } else {
@@ -263,6 +264,7 @@ final class MainViewController: UIViewController, GADBannerViewDelegate, GADFull
                                                      animated: false)
                     self.initialIndexPath = nil
                 }
+                
             })
             .disposed(by: disposeBag)
     }
@@ -289,7 +291,7 @@ final class MainViewController: UIViewController, GADBannerViewDelegate, GADFull
                 }
                 
                 if indexPath.row == blurIndex {
-                    cell.setupAds()
+                    cell.appearAdView()
                     cell.adsContentView.rx.tapGesture()
                         .when(.recognized)
                         .subscribe(onNext: { [weak self] _ in
